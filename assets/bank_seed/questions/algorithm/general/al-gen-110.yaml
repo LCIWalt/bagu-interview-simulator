@@ -1,0 +1,28 @@
+id: al-gen-110
+title: "归并排序与稳定性（分治）"
+body: "实现归并排序，把给定整数数组按升序排序，要求算法稳定且时间复杂度为 O(n log n)。并说明归并排序为什么稳定，而常见的原地快速排序通常不稳定。"
+topics: [algorithm, sorting, divide-and-conquer]
+role: algorithm
+level: senior
+difficulty: 4
+type: coding
+answer:
+  summary: "把数组从中间二分，递归排序左右两半，再用双指针合并两个有序子数组；合并时相等元素优先取左半部分，因此排序稳定。时间 O(n log n)，需要 O(n) 辅助数组，递归栈 O(log n)。"
+  keyPoints:
+    - "分治三步：取中点递归、双指针合并、把临时结果拷回原数组"
+    - "合并比较时相等取左侧元素，保证相同键值的相对次序不变，即稳定"
+    - "时间 O(n log n)，最好、最坏、平均一致；空间 O(n)，递归栈 O(log n)"
+    - "边界：空数组、单元素、全相同元素、已有序数组都要正确；链表归并可做到 O(1) 额外空间"
+  pitfalls:
+    - "合并时用 <= 判断并取右半元素，破坏稳定性，相等元素的相对顺序被颠倒"
+    - "每层递归都新建数组并反复拷贝，产生 O(n log n) 次分配；应复用一块临时数组"
+followups:
+  - "如何基于归并排序的合并过程统计数组中的逆序对数量？"
+  - "为什么 Java 对对象数组使用稳定的 TimSort，而对基本类型数组使用快速排序？"
+source:
+  url: https://leetcode.cn/problems/sort-an-array/solution/
+  title: "912. 排序数组 - 力扣官方题解"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

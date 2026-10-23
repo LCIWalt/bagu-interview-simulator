@@ -1,0 +1,26 @@
+id: mo-dart-126
+title: "单 isolate 下的 await 交错竞态"
+topics: [dart, concurrency, async]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "单 isolate 不等于无竞态：await 会让出执行权，两个异步流程可在恢复点交错，造成 check-then-act、重复提交与状态覆盖。需要原子性时应在一个同步代码块内完成判断与写入，或用锁、队列串行化。"
+  keyPoints:
+    - "await 前的判断与 await 后的写入之间可能插入其他任务"
+    - "同一 Future 被多处 await 会并发执行后续逻辑"
+    - "用标志位在 await 之前同步置位，防止重复进入"
+    - "需要严格串行时用 Future 链或锁方案"
+  pitfalls:
+    - "认为单线程就不会有并发问题"
+    - "在 await 之后直接使用已过期的局部状态"
+followups:
+  - "Flutter 中按钮防重复点击应该在哪个时机置位？"
+source:
+  url: https://dart.dev/language/concurrency
+  title: "Dart: Concurrency"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

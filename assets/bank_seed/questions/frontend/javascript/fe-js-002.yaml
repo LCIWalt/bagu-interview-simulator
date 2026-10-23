@@ -1,0 +1,24 @@
+id: fe-js-002
+title: "什么是闭包，循环里用 var 为什么会出问题？"
+topics: [javascript, closure, scope]
+role: frontend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "闭包是函数与其词法环境的组合，函数在定义作用域外仍能访问外层变量；var 在循环中只有一个函数级绑定，回调共享同一个变量。"
+  keyPoints:
+    - "词法作用域在函数定义时确定"
+    - "内部函数持有外层变量的引用，延长其生命周期"
+    - "var 是函数作用域，循环中的回调共享同一绑定"
+    - "let 每轮迭代创建新绑定，或使用 IIFE 捕获当前值"
+  pitfalls: ["认为闭包复制了变量的值", "认为 var 具有块级作用域"]
+followups:
+  - "闭包会导致内存泄漏吗？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+  title: "MDN: Closures"
+  license: CC-BY-SA-2.5
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

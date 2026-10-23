@@ -1,0 +1,27 @@
+id: mo-flutter-164
+title: "Flutter 的 fragment shader 动画如何接入与调优？"
+topics: [flutter, rendering, animation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "把 .frag 文件在 pubspec 的 shaders 下声明，运行时用 FragmentProgram.fromAsset 加载一次并缓存，再按 uniform 组合创建 FragmentShader，挂到 Paint.shader 上绘制。每帧只更新 uniform 并重绘局部区域，避免重复加载 program 或全屏重绘。"
+  keyPoints:
+    - "FragmentProgram 加载成本高，应在启动或 initState 阶段加载并长期复用"
+    - "float uniform 按声明顺序占用下标，vec2/vec4 的每个分量要分别 setFloat"
+    - "sampler2D 用 setImageSampler 单独设置，其下标不占用 float uniform 的序号"
+    - "Flutter 只支持片段着色器，且不支持 UBO/SSBO、额外 varying 与无符号整数"
+  pitfalls:
+    - "在 build 或 paint 中每帧调用 FragmentProgram.fromAsset"
+    - "忽略 devicePixelRatio 与 FlutterFragCoord 的像素坐标，图案被拉伸或发虚"
+followups:
+  - "如何让 shader 动画只在局部区域生效？"
+  - "同一个 FragmentProgram 创建多个 FragmentShader 实例有什么意义？"
+source:
+  url: https://docs.flutter.dev/ui/design/graphics/fragment-shaders
+  title: "Writing and using fragment shaders"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

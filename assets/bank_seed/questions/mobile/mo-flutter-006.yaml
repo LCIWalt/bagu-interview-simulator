@@ -1,0 +1,26 @@
+id: mo-flutter-006
+title: "Flutter: Platform channels"
+topics: [flutter, platform-channel, android]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "MethodChannel/EventChannel 用字符串方法名和动态参数通信，灵活但易错；Pigeon 生成类型安全的宿主/客户端代码，减少手写编解码。Dart 侧调用默认在 UI isolate 发起，Android 侧回调在平台主线程（除非显式切换）。"
+  keyPoints:
+    - "MethodChannel 适合简单请求响应"
+    - "EventChannel 适合持续事件流"
+    - "Pigeon 生成类型安全接口，降低拼写/类型错误"
+    - "耗时平台操作要切到工作线程再回主线程"
+  pitfalls:
+    - "在平台主线程做重 IO"
+    - "Channel 参数使用不可序列化对象"
+followups:
+  - "FFI 与 Platform Channel 各自适合什么？"
+source:
+  url: https://docs.flutter.dev/platform-integration/platform-channels
+  title: "Flutter: Platform channels"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

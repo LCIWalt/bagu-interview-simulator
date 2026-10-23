@@ -1,0 +1,27 @@
+id: mo-flutter-172
+title: "addPostFrameCallback 在帧的哪个阶段执行，容易踩什么坑？"
+topics: [flutter, scheduler, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "SchedulerBinding 把一帧分为 transient、midFrameMicrotasks、persistent 与 postFrame 四个阶段，addPostFrameCallback 在 persistent 回调（build、layout、paint 与合成）之后执行。它只对已经排队的下一帧有效，不会自动重复；在回调里 setState 会再排一帧，使用不当会形成每帧的额外重建。"
+  keyPoints:
+    - "post-frame 回调在场景提交之后运行，此时可以安全读取已 layout 的尺寸"
+    - "回调只执行一次，需要持续监听时应重新注册或改用 Ticker/AnimationController"
+    - "endOfFrame 返回当前帧结束的 Future，适合串联依赖布局的异步逻辑"
+    - "在回调里 setState 会调度新帧，需确认这是必要的一次额外帧"
+  pitfalls:
+    - "以为 addPostFrameCallback 会自动每帧执行，动画逻辑因此只跑了一帧"
+    - "在 build 中直接读 RenderBox.size，而不是等到 post-frame"
+followups:
+  - "SchedulerPhase 有哪些取值，各自适合做什么？"
+  - "如何在首帧渲染完成后执行一次性初始化？"
+source:
+  url: https://api.flutter.dev/flutter/scheduler/SchedulerBinding/addPostFrameCallback.html
+  title: "addPostFrameCallback method - SchedulerBinding class - scheduler library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

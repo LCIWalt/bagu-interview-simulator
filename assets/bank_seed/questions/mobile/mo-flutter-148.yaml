@@ -1,0 +1,27 @@
+id: mo-flutter-148
+title: "Flutter 中未捕获异常应该在哪里统一处理？"
+topics: [flutter, error-handling, observability]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "框架回调里抛出的异常走 FlutterError.onError，未捕获的异步错误走 PlatformDispatcher.instance.onError，runZonedGuarded 只能覆盖其所在 zone 内的错误。生产上三者应汇入同一个上报通道，并保留 FlutterErrorDetails 的堆栈与上下文，同时配合符号表还原混淆后的栈。"
+  keyPoints:
+    - "FlutterError.onError 处理 build、layout、paint 等框架回调内的异常"
+    - "PlatformDispatcher.onError 处理未捕获异步错误，返回 true 表示已消费"
+    - "Isolate.spawn 的错误必须在子 isolate 内部捕获并转发"
+    - "上报前做脱敏，保留 symbols 与 dSYM 以便还原崩溃栈"
+  pitfalls:
+    - "只处理同步异常，异步错误仍让应用直接崩溃"
+    - "在错误回调里再次抛异常或做重活，引发递归与卡顿"
+followups:
+  - "如何区分可恢复错误与必须立即上报的崩溃？"
+  - "release 包如何拿到可读的崩溃堆栈？"
+source:
+  url: https://docs.flutter.dev/testing/errors
+  title: "Handling errors in Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

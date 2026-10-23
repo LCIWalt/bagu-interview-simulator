@@ -1,0 +1,27 @@
+id: mo-android-101
+title: "Android: Fragment view 生命周期"
+topics: [android, fragment, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Fragment 实例的生命周期通常长于它的 view：onCreateView 创建视图，onViewCreated 初始化观察者，onDestroyView 后视图不可再访问。用 viewLifecycleOwner 收集 Flow 或启动协程，避免在视图销毁后继续更新 UI。"
+  keyPoints:
+    - "onCreateView 返回的 view 在 onDestroyView 之后不可再访问"
+    - "Fragment 从回退栈返回时 view 会重建，而 Fragment 实例通常保留"
+    - "用 viewLifecycleOwner 启动协程或收集 Flow，随 view 销毁自动取消"
+    - "ViewBinding 在 onDestroyView 中置空，避免 Fragment 实例持有旧 view"
+  pitfalls:
+    - "在 onCreateView 之前调用 requireView()，触发 IllegalStateException"
+    - "用 Fragment 自身的 lifecycleScope 更新 view，视图已销毁仍收到回调"
+followups:
+  - "viewLifecycleOwner 与 Fragment 自身 lifecycle 有什么区别？"
+  - "为什么 Fragment 的 onCreate 通常只调用一次，而 onCreateView 可能多次？"
+source:
+  url: https://developer.android.com/guide/fragments/lifecycle
+  title: "Fragment lifecycle"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

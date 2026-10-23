@@ -1,0 +1,24 @@
+id: al-hash-001
+title: "哈希表如何解决冲突，负载因子为什么重要？"
+topics: [algorithm, hash-table]
+role: algorithm
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "冲突常用链地址法或开放寻址；负载因子过高会让探测链变长、退化到 O(n)，需要在阈值处扩容并重新哈希。"
+  keyPoints:
+    - "链地址法：桶挂链表，Java 8 在长链时转红黑树"
+    - "开放寻址：线性/二次探测或双重哈希"
+    - "负载因子衡量填充程度，超过阈值扩容"
+    - "均摊 O(1)，最坏 O(n)；哈希函数需均匀"
+  pitfalls: ["认为哈希表永远 O(1)", "扩容时忘记重新计算哈希"]
+followups:
+  - "为什么开放寻址删除要用墓碑标记？"
+source:
+  url: https://en.wikipedia.org/wiki/Hash_table
+  title: "Hash table - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

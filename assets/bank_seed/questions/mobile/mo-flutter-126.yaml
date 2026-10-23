@@ -1,0 +1,27 @@
+id: mo-flutter-126
+title: "Flutter 的焦点系统如何支持键盘操作？"
+topics: [flutter, focus, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FocusNode 表示可聚焦节点，FocusScope 管理焦点分组与恢复，TextField 等组件会自动创建节点。桌面端可用 Shortcuts 与 Actions 绑定快捷键，用 FocusTraversalGroup 控制 Tab 顺序；手动创建的 FocusNode 要在 dispose 中释放。"
+  keyPoints:
+    - "FocusNode 描述焦点状态，可监听获得与失去焦点"
+    - "FocusScope 管理一组节点的焦点与恢复"
+    - "Shortcuts 与 Actions 把按键映射为意图与行为"
+    - "FocusTraversalGroup 与 order 控制 Tab 顺序"
+  pitfalls:
+    - "手动创建 FocusNode 后不 dispose"
+    - "弹窗关闭后未把焦点还给触发按钮"
+followups:
+  - "autofocus 与 requestFocus 有什么区别？"
+  - "如何为桌面端实现全局快捷键？"
+source:
+  url: https://docs.flutter.dev/ui/interactivity/focus
+  title: "Understanding Flutter's keyboard focus system"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

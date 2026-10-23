@@ -1,0 +1,27 @@
+id: mo-flutter-137
+title: "golden test 在 CI 上经常失败，如何让它稳定？"
+topics: [flutter, testing, ci]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "golden 是像素级基线，结果受字体、渲染后端、设备像素比与引擎版本影响，同一份代码在 macOS 本地与 Linux 容器里可能生成不同图像。稳定做法是在固定环境（同一容器镜像与 Flutter 版本）生成并校验基线，显式加载测试字体避免回退差异，并把 golden 覆盖范围限制在关键组件而非整页。"
+  keyPoints:
+    - "测试环境默认使用 Ahem 字体，真实字体需通过 loadAppFonts 等方式加载"
+    - "matchesGoldenFile 在 --update-goldens 时重写基线，CI 上不应带该参数"
+    - "在容器内生成基线并在同一镜像中校验，避免跨平台像素差异"
+    - "用 tags 隔离 golden 测试，减少与业务改动无关的 diff 噪声"
+  pitfalls:
+    - "在 macOS 本地生成基线，却让 Linux CI 去比对"
+    - "对含时间、随机数或动画中间帧的整页做 golden"
+followups:
+  - "如何只对一个 widget 做 golden，而不受父级约束影响？"
+  - "golden 测试能替代哪些 widget 测试断言？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html
+  title: "matchesGoldenFile function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

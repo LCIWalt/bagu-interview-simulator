@@ -1,0 +1,28 @@
+id: al-gen-105
+title: "网络延迟时间（Dijkstra 最短路）"
+body: "有 n 个网络节点，给定有向边列表 times，其中 times[i] = (u, v, w) 表示信号从 u 传到 v 需要 w 时间。从节点 k 发出一个信号，返回所有节点都收到信号所需的最短时间；若有节点不可达则返回 -1。"
+topics: [algorithm, graph, shortest-path]
+role: algorithm
+level: senior
+difficulty: 4
+type: coding
+answer:
+  summary: "以 k 为源点运行 Dijkstra，用最小堆每轮取出当前距离最小的未确定节点并松弛其所有出边；结束后取所有节点最短距离的最大值。时间 O((V + E) log V)，空间 O(V + E)。"
+  keyPoints:
+    - "邻接表加小顶堆，堆中存 (dist, node)，弹出时若 dist 已过期直接跳过"
+    - "只适用于非负边权；存在负权边时应改用 Bellman-Ford 或 Johnson 算法"
+    - "时间 O((V + E) log V)，空间 O(V + E)；用斐波那契堆可优化到 O(E + V log V)"
+    - "边界：n = 1 时返回 0；存在不可达节点返回 -1；重边只保留最小权值"
+  pitfalls:
+    - "弹出堆顶后不校验距离是否仍等于 dist[node]，用过期条目松弛会得到偏大甚至错误的结果"
+    - "把不可达节点的距离当成 0 参与取最大值，错误地返回 0 而不是 -1"
+followups:
+  - "如果边权可能为负，应该换用什么算法，复杂度分别是多少？"
+  - "如何在不增加渐进复杂度的前提下还原出一条最短路径？"
+source:
+  url: https://cp-algorithms.com/graph/dijkstra.html
+  title: "Dijkstra - finding shortest paths from given vertex - CP-Algorithms"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

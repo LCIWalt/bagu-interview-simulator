@@ -1,0 +1,26 @@
+id: mo-android-120
+title: "Android: R8 混淆、收缩与 keep 规则"
+topics: [android, r8, build]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "R8 在 release 构建中执行代码收缩、资源收缩、混淆和优化；反射、JNI、序列化和 WebView JS Bridge 等动态访问需要精确的 keep 规则。上线必须按版本归档 mapping.txt，才能还原混淆后的崩溃堆栈。"
+  keyPoints:
+    - "minifyEnabled 开启代码收缩与混淆，shrinkResources 依赖代码收缩结果"
+    - "keep 规则要精确到类和成员，过宽会抵消体积收益"
+    - "mapping.txt 按版本归档，用于 deobfuscate 线上堆栈"
+    - "在 release 变体回归反射、序列化和 JS Bridge 等动态路径"
+  pitfalls:
+    - "用 -keep class ** { *; } 一把梭，导致混淆和收缩失效"
+    - "只测试 debug 包就认为 R8 配置没有问题"
+followups:
+  - "R8 的 full mode 与 compat mode 有什么区别？"
+source:
+  url: https://developer.android.com/build/shrink-code
+  title: "Enable app optimization with R8"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

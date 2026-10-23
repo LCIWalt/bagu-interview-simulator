@@ -1,0 +1,32 @@
+.toolchain/
+.DS_Store
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+.vscode/
+*.log
+.env
+spike/**/build/
+# Local build/tooling artifacts
+dist/
+coverage/
+*.apk
+*.aab
+*.ipa
+*.dmg
+*.xcresult
+flutter_*.log
+
+# CocoaPods / Xcode user state
+ios/Pods/
+macos/Pods/
+ios/Flutter/ephemeral/
+macos/Flutter/ephemeral/
+**/xcuserdata/
+*.xcuserstate
+
+# Local signing / generated bank key
+.toolchain/

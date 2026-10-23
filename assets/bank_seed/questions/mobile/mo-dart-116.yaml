@@ -1,0 +1,26 @@
+id: mo-dart-116
+title: "List、Set、Map 的实现选择与只读封装"
+topics: [dart, collections, memory]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "List 有序可重复，Set 去重且依赖 hashCode，Map 键唯一；默认实现分别是可增长数组、LinkedHashSet 与 LinkedHashMap，都保持插入顺序。只读场景优先返回 Iterable 或 unmodifiable 视图，避免暴露可变内部结构。"
+  keyPoints:
+    - "Set/Map 默认保持插入顺序，不是哈希无序"
+    - "List.unmodifiable 会复制并冻结，const 列表要求元素为常量"
+    - "Map 的键必须正确实现 == 与 hashCode"
+    - "SplayTreeMap/SplayTreeSet 提供有序遍历，操作代价为 O(log n)"
+  pitfalls:
+    - "把可变 List 直接暴露给外部导致状态被篡改"
+    - "用可变对象作 Map 键后又修改其字段"
+followups:
+  - "如何选择 List、Set 与 Queue？"
+source:
+  url: https://dart.dev/language/collections
+  title: "Dart: Collections"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

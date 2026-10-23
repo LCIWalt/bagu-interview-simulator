@@ -1,0 +1,25 @@
+id: fe-gen-103
+title: "强缓存与协商缓存如何配合，Cache-Control 各指令是什么含义？"
+topics: [browser, http, performance]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "强缓存命中时浏览器直接使用本地副本、不发出请求；副本失效后通过 ETag 或 Last-Modified 发起条件请求，由 304 决定是否复用。Cache-Control 的 max-age、no-cache、no-store 与 immutable 决定新鲜期和校验行为。"
+  keyPoints:
+    - "max-age/s-maxage 控制新鲜期，immutable 表示资源内容不会变化"
+    - "no-cache 允许缓存但每次使用前必须校验，no-store 完全不存储"
+    - "ETag/If-None-Match 比 Last-Modified/If-Modified-Since 更精确"
+    - "带内容 hash 的静态资源可长缓存加 immutable，HTML 入口应使用 no-cache"
+  pitfalls: ["把 no-cache 理解成完全不缓存", "只依赖 Last-Modified 导致一秒内的多次修改无法区分"]
+followups:
+  - "用户强制刷新（Ctrl+F5）时各级缓存如何表现？"
+  - "Vary 响应头会如何影响 CDN 的缓存命中率？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching
+  title: "MDN: HTTP caching"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

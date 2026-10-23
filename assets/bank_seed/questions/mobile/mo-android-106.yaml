@@ -1,0 +1,26 @@
+id: mo-android-106
+title: "Android: 分区存储与 MediaStore"
+topics: [android, storage, permissions]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 10 引入分区存储，Android 11 起 targetSdk 30+ 的应用被强制执行。应用只能访问自己的目录，以及通过 MediaStore 或 SAF 获得授权的共享文件；Android 13 又把媒体读权限拆成 READ_MEDIA_IMAGES、READ_MEDIA_VIDEO 和 READ_MEDIA_AUDIO。访问照片视频应优先走 MediaStore 的 content URI，访问任意文档用 SAF，避免申请宽泛的存储权限。"
+  keyPoints:
+    - "应用专属目录无需存储权限，卸载时随应用清理"
+    - "MediaStore 适合共享照片、视频和音频，返回 content URI 而非文件路径"
+    - "Android 13 及以上按媒体类型申请细粒度读权限"
+    - "SAF 通过用户选择授予文件或目录访问，适合文件管理类场景"
+  pitfalls:
+    - "继续用 /sdcard 绝对路径直接读写共享文件"
+    - "为普通功能申请 MANAGE_EXTERNAL_STORAGE，带来上架审核风险"
+followups:
+  - "Android 14 的 Selected Photos Access 如何影响相册选择器？"
+source:
+  url: https://developer.android.com/training/data-storage/shared/media
+  title: "Access media files from shared storage"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-147
+title: "Android 进程被系统回收后，如何恢复页面状态？"
+topics: [flutter, state-restoration, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 可能在后台回收进程，返回时重建 Activity；Flutter 用 RestorationMixin 配合 RestorableProperty 把状态写入 restorationScopeId 对应的恢复数据，由引擎持久化到平台侧。需要给 MaterialApp 设置 restorationScopeId，在 State 中注册 RestorableInt 之类的属性，恢复逻辑放在 restoreState 而不是依赖默认初始化。"
+  keyPoints:
+    - "restorationScopeId 是恢复数据的命名空间，App 与页面层级都可设置"
+    - "状态必须存进 RestorableProperty 并调用 registerForRestoration 才会被保存"
+    - "恢复发生在 restoreState 回调，不能依赖 initState 的默认值"
+    - "只恢复轻量可序列化状态，大数据应重新请求而不是塞进恢复数据"
+  pitfalls:
+    - "用普通字段保存状态，进程被杀后完全丢失"
+    - "多个页面复用同一 restorationId，导致数据互相覆盖"
+followups:
+  - "RestorationMixin 与本地持久化各自的适用边界是什么？"
+  - "如何验证进程被杀后状态确实恢复？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/RestorationMixin-mixin.html
+  title: "RestorationMixin mixin"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,24 @@
+id: fe-react-001
+title: "React 列表 key 的作用是什么，为什么不要用 index？"
+topics: [react, virtual-dom, reconciliation]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "key 帮 React 在同层 diff 中识别节点身份，复用正确的 DOM 与组件状态；用 index 在插入、删除、排序时会让 key 与内容错位。"
+  keyPoints:
+    - "同层比较，key 用于匹配新旧节点"
+    - "稳定唯一的 key 减少卸载重建与状态错位"
+    - "index 作为 key 在列表变动时导致复用错误节点"
+    - "key 不会作为 props 传给组件"
+  pitfalls: ["认为 key 会传给子组件", "用随机数作 key 导致每次都重建"]
+followups:
+  - "受控输入框在列表重排时为什么会串值？"
+source:
+  url: https://react.dev/learn/rendering-lists
+  title: "React: Rendering Lists"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

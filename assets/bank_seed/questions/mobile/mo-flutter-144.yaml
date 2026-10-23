@@ -1,0 +1,27 @@
+id: mo-flutter-144
+title: "Flutter Web 有哪些能力限制，选渲染方案时如何取舍？"
+topics: [flutter, web, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter Web 跑在浏览器沙箱里，没有 dart:io，文件与网络访问受浏览器 API 和 CORS 约束，平台通道要通过 JS 互操作实现，移动端插件基本不可用。渲染上 CanvasKit 以 WebAssembly 绘制到 canvas，图形与文本一致性最好但首屏需要下载 wasm，早期用于减小体积的 HTML 渲染器已被移除。"
+  keyPoints:
+    - "无 dart:io，网络受 CORS 限制，文件访问需要用户手势与浏览器 API"
+    - "CanvasKit 需要下载 wasm，首屏成本高于 DOM，但绘制结果跨浏览器一致"
+    - "Web 的无障碍与 SEO 依赖语义树，需要显式开启 Semantics"
+    - "原生插件在 Web 上不可用，需通过 js_interop 或 Web 专用实现替代"
+  pitfalls:
+    - "直接复用依赖 dart:io 或移动插件的代码"
+    - "认为 Web 上的滚动、输入与返回键行为与移动端一致"
+followups:
+  - "Flutter Web 的首屏加载可以怎样优化？"
+  - "如何为 Web 端做降级渲染或纯 DOM 兜底？"
+source:
+  url: https://docs.flutter.dev/platform-integration/web
+  title: "Web support for Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

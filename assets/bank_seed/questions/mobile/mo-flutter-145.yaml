@@ -1,0 +1,27 @@
+id: mo-flutter-145
+title: "项目：页面反复进出后内存持续上涨，如何定位泄漏？"
+topics: [flutter, performance, devtools]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先用 profile 模式复现，在 DevTools 的 Memory 视图观察 GC 后的基线是否随页面进出单调上升，再抓两次 heap snapshot 做 diff，用 retaining path 找到是谁持有对象。常见根因是未取消的 Stream 订阅、未 dispose 的 Controller、全局缓存与闭包捕获的 BuildContext，修复后重复同样的进出步骤验证基线回落。"
+  keyPoints:
+    - "关注 GC 后的基线而不是瞬时峰值，持续上升才说明泄漏"
+    - "heap snapshot diff 找新增实例类型，retaining path 找持有链"
+    - "在 profile 模式下测量，debug 的断言与 JIT 会让数据失真"
+    - "区分缓存增长与泄漏，ImageCache 与平台视图纹理单独统计"
+  pitfalls:
+    - "在 debug 模式测内存并据此下结论"
+    - "只看总内存曲线，不确认具体对象是否被回收"
+followups:
+  - "如何验证某个页面的 State 在退出后已被回收？"
+  - "闭包捕获 BuildContext 为什么会造成泄漏？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/memory
+  title: "Using the Memory view"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

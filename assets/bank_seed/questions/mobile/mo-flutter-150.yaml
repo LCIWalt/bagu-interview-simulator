@@ -1,0 +1,27 @@
+id: mo-flutter-150
+title: "Flutter 的多环境（dev/staging/prod）该怎么配置？"
+topics: [flutter, flavors, ci]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "环境隔离分两层：原生构建变体（Android productFlavors、iOS Scheme 加 xcconfig）与 Dart 侧编译期常量（--dart-define 或 --dart-define-from-file，代码里用 String.fromEnvironment 读取）。--flavor 只选择原生变体，不会自动改变 Dart 常量，两者必须在构建命令里成对指定，否则可能产出连错后端的包。"
+  keyPoints:
+    - "productFlavors 决定 applicationId、签名与资源，iOS 用 Scheme 加 xcconfig"
+    - "Dart 侧配置走 --dart-define/--dart-define-from-file 与 String.fromEnvironment"
+    - "flutter run 与 build 需同时传 --flavor 与环境配置文件"
+    - "把环境配置文件纳入校验，避免 prod 包指向测试域名"
+  pitfalls:
+    - "只加了 flavor 却忘了 Dart 配置，所有包连同一后端"
+    - "用 kReleaseMode 之类的构建模式代替环境判断"
+followups:
+  - "为什么 API key 不适合通过 --dart-define 注入？"
+  - "如何在运行时校验当前环境与后端域名匹配？"
+source:
+  url: https://docs.flutter.dev/deployment/flavors
+  title: "Flutter flavors"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

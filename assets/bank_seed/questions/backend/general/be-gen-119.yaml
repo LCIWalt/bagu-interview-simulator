@@ -1,0 +1,27 @@
+id: be-gen-119
+title: "epoll 为什么比 select 高效？水平触发和边缘触发怎么选？"
+topics: [os, linux, io]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "select 每次调用都要把 fd 集合从用户态拷贝到内核并线性扫描，且受 FD_SETSIZE 限制；epoll 把注册与等待分离，内核用红黑树管理 fd、用就绪链表返回活跃事件，复杂度只与就绪数相关。LT 会持续通知直到事件被处理，ET 只在状态变化时通知一次，必须配合非阻塞 IO 读到 EAGAIN。"
+  keyPoints:
+    - "epoll_ctl 一次性注册并维护兴趣列表，避免每次等待重复拷贝大量 fd"
+    - "就绪事件挂在 ready list，epoll_wait 只返回活跃 fd，无需遍历全部监听集合"
+    - "LT 编程简单不易丢事件；ET 减少通知次数，但要求一次把数据读干净"
+    - "ET 下必须使用非阻塞 fd，并在 read 返回 EAGAIN 后才停止，否则可能永久丢事件"
+  pitfalls:
+    - "在 ET 模式下只读一次就返回，剩余数据不再触发通知导致请求悬挂"
+    - "认为 epoll 一定比 select 快，在连接数很少时差异并不明显"
+followups:
+  - "epoll 的惊群问题如何产生，又该如何缓解？"
+  - "为什么 Redis 单线程配 epoll 也能有很高吞吐？"
+source:
+  url: https://man7.org/linux/man-pages/man7/epoll.7.html
+  title: "epoll(7) — Linux manual page"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

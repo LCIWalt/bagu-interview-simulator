@@ -1,0 +1,27 @@
+id: mo-flutter-112
+title: "Navigator 1.0 的路由栈如何工作，PopScope 用来做什么？"
+topics: [flutter, navigation, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Navigator 用栈管理路由，push 入栈、pop 出栈，MaterialPageRoute 负责页面切换动画；系统返回键与返回手势最终都会经过 maybePop。WillPopScope 已废弃，改用 PopScope 的 canPop 与 onPopInvokedWithResult 拦截返回，例如未保存表单的二次确认。"
+  keyPoints:
+    - "Navigator 维护路由栈，push 与 pop 对应入栈出栈"
+    - "maybePop 会先询问当前路由是否允许返回"
+    - "PopScope 通过 canPop 控制能否返回"
+    - "onPopInvokedWithResult 在返回动作发生后回调"
+  pitfalls:
+    - "在 pop 回调里再次 pop，造成重复出栈或黑屏"
+    - "用根 Navigator 随意 push，导致页面层级错乱"
+followups:
+  - "pushReplacement 与 popAndPushNamed 有什么区别？"
+  - "如何监听路由返回结果？"
+source:
+  url: https://docs.flutter.dev/ui/navigation
+  title: "Navigation and routing"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-122
+title: "数据库和缓存如何保持一致？为什么推荐先更新数据库再删缓存？"
+topics: [system-design, cache, consistency]
+role: backend
+level: senior
+difficulty: 4
+type: system-design
+answer:
+  summary: "常用 Cache Aside 模式：读时缓存未命中回源并回填，写时先更新数据库再删除缓存。选择删缓存而不是更新缓存，是为了避免并发写导致旧值覆盖新值，同时用删除把回填延迟到真正被读时。"
+  keyPoints:
+    - "先更新 DB 再删缓存，把并发窗口压缩到删缓存前的极短时间，降低脏数据概率"
+    - "更新缓存而不是删除时，两个并发写可能以相反顺序落缓存，长期留下旧值"
+    - "延迟双删在写后延迟再删一次，用于覆盖主从延迟期间被旧读回填的场景"
+    - "更强一致可订阅 binlog 异步失效缓存，并为删除失败加重试与补偿"
+  pitfalls:
+    - "认为先删缓存再更新 DB 更安全，实际读请求可能在更新前回填旧值"
+    - "给缓存设置永不过期又不做失效补偿，脏数据将无法自愈"
+followups:
+  - "延迟双删的延迟时间该怎么估算？"
+  - "强一致要求下，为什么通常要靠分布式锁或串行化而不是缓存模式？"
+source:
+  url: https://redis.io/docs/latest/develop/reference/client-side-caching/
+  title: "Client-side caching"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-124
+title: "令牌桶和漏桶限流有什么区别？分布式限流怎么实现？"
+topics: [system-design, rate-limit, redis]
+role: backend
+level: senior
+difficulty: 4
+type: system-design
+answer:
+  summary: "漏桶以固定速率流出，能把突发流量整形为平滑输出；令牌桶按速率补充令牌并允许桶内积累，因此可以放行一定程度的突发。分布式限流通常用 Redis 加 Lua 脚本原子地完成计数或令牌计算，并配合本地限流降低中心存储压力。"
+  keyPoints:
+    - "漏桶限制的是流出速率，超出部分排队或丢弃，适合保护下游稳定"
+    - "令牌桶限制的是平均速率并允许桶容量内的突发，适合面向用户的 API"
+    - "固定窗口在窗口切换边界可能放行两倍流量，滑动窗口或滑动日志更平滑但成本更高"
+    - "Redis Lua 把读取、判断、写回合成原子操作，并设置合理 TTL 防止键泄漏"
+  pitfalls:
+    - "只用单机内存限流，在多实例部署下限流总额随实例数翻倍"
+    - "限流键设计过粗，导致正常用户被整体误伤，或过细导致键数量爆炸"
+followups:
+  - "被限流的请求应该直接拒绝还是排队？如何选择？"
+  - "Redis 不可用时限流应该放行还是拒绝？"
+source:
+  url: https://redis.io/docs/latest/commands/incr/
+  title: "INCR | Redis"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

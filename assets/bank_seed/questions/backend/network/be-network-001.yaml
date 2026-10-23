@@ -1,0 +1,24 @@
+id: be-network-001
+title: "TCP 为什么需要三次握手，两次不够吗？"
+topics: [network, tcp]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "三次握手交换并确认双方的初始序列号，同时避免历史重复连接请求被服务端误认为新连接；两次无法确认客户端已收到服务端的序列号。"
+  keyPoints:
+    - "SYN、SYN-ACK、ACK 完成序列号交换与确认"
+    - "两次握手无法确认客户端接收能力与服务端初始序列号"
+    - "防止旧连接中滞留的 SYN 建立错误连接"
+    - "半连接队列与 SYN flood 防护相关"
+  pitfalls: ["只背三次握手名称", "认为三次握手保证可靠传输本身"]
+followups:
+  - "SYN flood 如何防护？"
+source:
+  url: https://www.rfc-editor.org/rfc/rfc9293.html
+  title: "RFC 9293: Transmission Control Protocol"
+  license: IETF-Trust
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

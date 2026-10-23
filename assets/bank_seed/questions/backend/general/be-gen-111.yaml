@@ -1,0 +1,27 @@
+id: be-gen-111
+title: "Redis 的 zset 为什么用跳表而不是平衡树？"
+topics: [redis, data-structure, zset]
+role: backend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "zset 同时维护一个 dict 做 member 到 score 的 O(1) 查找，以及一个跳表按 score 排序以支持范围查询。跳表实现简单、范围遍历对缓存友好，插入删除只需局部改链，省去平衡树旋转与再平衡的复杂度。"
+  keyPoints:
+    - "dict 负责 member 到 score 的映射，跳表负责按 score 有序，两者共享成员对象"
+    - "跳表通过多层索引把查找期望复杂度降到 O(log N)，范围查询顺序遍历底层链表"
+    - "插入删除只需修改相邻节点指针，配合随机层高，无需旋转或分裂合并"
+    - "实现比红黑树短且易维护，范围扫描的局部性也更好"
+  pitfalls:
+    - "认为 zset 只用跳表，忽略 dict 在按 member 查询时的作用"
+    - "以为跳表最坏复杂度也是 O(log N)，忽略随机层高带来的概率性"
+followups:
+  - "zset 的 rank 查询为什么能做到 O(log N)？"
+  - "大量同 score 成员时，排序与分页会出现什么问题？"
+source:
+  url: https://redis.io/docs/latest/develop/data-types/sorted-sets/
+  title: "Redis Sorted sets"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

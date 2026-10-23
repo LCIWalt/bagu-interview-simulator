@@ -1,0 +1,26 @@
+id: mo-dart-104
+title: "StreamTransformer：自定义流转换与错误转发"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StreamTransformer 把源 Stream 转换为新 Stream，bind 时创建新的订阅并逐事件处理，内置的 map/where/asyncMap 都是它的语法糖。自定义 transformer 必须显式转发 done 与 error，并在 cancel 时释放内部资源。"
+  keyPoints:
+    - "transform 是组合操作符的底层协议，接收 input 并返回 output"
+    - "错误与 done 必须显式转发，否则下游永远不结束"
+    - "asyncMap 按事件串行 await，慢回调会拖低整体吞吐"
+    - "需要跨事件状态时用 StreamTransformer.fromHandlers 或自定义类"
+  pitfalls:
+    - "自定义 transformer 忘记调用 sink.close()"
+    - "在 map 里做副作用重的异步操作却不用 asyncMap"
+followups:
+  - "如何实现带状态的去重或防抖 transformer？"
+source:
+  url: https://api.dart.dev/stable/dart-async/StreamTransformer-class.html
+  title: "StreamTransformer class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

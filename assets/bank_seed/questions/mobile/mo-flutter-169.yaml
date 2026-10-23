@@ -1,0 +1,27 @@
+id: mo-flutter-169
+title: "Flutter Web 中如何用 dart:js_interop 调用浏览器 API？"
+topics: [flutter, web, interop]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "dart:js_interop 用 @JS 注解与 external 成员声明浏览器 API，package:web 提供类型化的 DOM 绑定，JS 值通过 toDart/toJS 扩展在两侧转换。需要同时支持移动端时，用条件导入把 Web 实现与原生实现分开，避免 Web 产物引用 dart:io 或 dart:html。"
+  keyPoints:
+    - "@JS 与 external 声明让 Dart 直接调用全局 JS 对象与函数，无需自行编解码"
+    - "package:web 是 DOM 的类型化绑定，替代已废弃且在 wasm 下不可用的 dart:html"
+    - "用条件导入按平台选择实现，Web 侧不引入 dart:io 与移动端插件"
+    - "跨语言调用有开销，避免在逐帧或高频循环里反复创建 JS 对象"
+  pitfalls:
+    - "在 Web 构建中直接 import dart:io，或复用依赖移动端插件的实现"
+    - "把 JS 的 Promise 当同步返回值使用，忘记用 toDart 转成 Future"
+followups:
+  - "如何让同一份业务代码在移动端与 Web 端共用？"
+  - "Web 端如何安全访问剪贴板这类受权限约束的 API？"
+source:
+  url: https://api.flutter.dev/flutter/dart-js_interop/dart-js_interop-library.html
+  title: "dart:js_interop library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

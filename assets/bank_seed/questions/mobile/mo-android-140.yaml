@@ -1,0 +1,27 @@
+id: mo-android-140
+title: "Android: Compose 副作用与重组作用域"
+topics: [android, compose, side-effect]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Composable 本身应当无副作用，需要与外部世界交互时使用受控 effect：LaunchedEffect 跟随 key 与组合生命周期，DisposableEffect 负责注册与反注册，SideEffect 在每次成功重组后执行，rememberCoroutineScope 提供绑定组合的作用域。把副作用直接写在 composable 函数体里，会在每次重组时重复执行。"
+  keyPoints:
+    - "LaunchedEffect(key) 进入组合时启动协程，key 变化时取消旧协程并重启"
+    - "DisposableEffect 的 onDispose 用于反注册监听器、释放系统资源"
+    - "SideEffect 在每次成功重组后运行，适合把状态同步给非 Compose 代码"
+    - "rememberUpdatedState 让长生命周期 effect 读取最新 lambda 而不必重启"
+  pitfalls:
+    - "在 composable 函数体直接发起网络或写数据库，重组时重复触发"
+    - "用 rememberCoroutineScope 跑无需组合生命周期的任务，离开屏幕后仍在执行"
+followups:
+  - "LaunchedEffect 与 rememberCoroutineScope 分别适合什么场景？"
+  - "为什么 DisposableEffect 的 key 变化会先执行 onDispose 再重新注册？"
+source:
+  url: https://developer.android.com/develop/ui/compose/side-effects
+  title: "Side effects in Compose"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

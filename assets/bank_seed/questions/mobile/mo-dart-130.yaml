@@ -1,0 +1,26 @@
+id: mo-dart-130
+title: "增强 enum 与 switch 穷尽性"
+topics: [dart, enums, oop]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Dart 2.17+ 的增强 enum 可有字段、构造函数、方法与实现接口，每个枚举值是编译期常量单例。switch 对 enum 可做穷尽检查，新增值会让遗漏分支编译失败，适合建模有限状态。"
+  keyPoints:
+    - "枚举值本质是 const 单例，可用 == 与 identical 比较"
+    - "增强 enum 可定义 final 字段与 getter/方法"
+    - "enum 可实现接口，但不能被继承或混入"
+    - "switch 覆盖全部枚举值时不写 default 以获得穷尽检查"
+  pitfalls:
+    - "在 enum 构造函数里做耗时或依赖运行时的初始化"
+    - "用 index 持久化枚举，重排序后数据错位"
+followups:
+  - "如何为 enum 绑定本地化文案而不破坏穷尽性？"
+source:
+  url: https://dart.dev/language/enums
+  title: "Dart: Enums"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

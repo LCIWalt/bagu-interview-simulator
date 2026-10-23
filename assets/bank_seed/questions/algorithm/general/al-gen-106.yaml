@@ -1,0 +1,28 @@
+id: al-gen-106
+title: "冗余连接（并查集判环）"
+body: "给定一棵树加上一条额外边形成的无向图，边集合 edges[i] = [u, v]，节点编号从 1 开始。返回那条可以删掉的边，使剩余部分仍是一棵树；若有多条可选，返回输入中最后出现的那条。"
+topics: [algorithm, union-find, graph]
+role: algorithm
+level: mid
+difficulty: 3
+type: coding
+answer:
+  summary: "按输入顺序处理每条边，用并查集维护连通性；若一条边的两个端点已经属于同一集合，说明加入它会形成环，这条边就是答案。并查集配合路径压缩与按秩合并，总时间 O(E·α(V))。"
+  keyPoints:
+    - "find 带路径压缩，union 按秩或按集合大小合并，保证树高近似常数"
+    - "树加一条边只形成一个环，因此第一条两端点已连通的边即为冗余边"
+    - "时间 O(E·α(V))，空间 O(V)；α 为反阿克曼函数，实际可视为常数"
+    - "边界：节点编号从 1 开始、边数恰好等于节点数、存在多条冗余边时取最后一条"
+  pitfalls:
+    - "只判断边的两个端点是否直接相连，而不比较并查集根节点，会漏判经过多个节点的长环"
+    - "find 写成无终止条件的递归，深链上栈溢出或死循环；应先判断 parent[x] == x"
+followups:
+  - "如果图是有向的（冗余有向连接），并查集为什么不再适用？应该用什么方法？"
+  - "如何判断删掉某条候选边后，剩余图是否仍然连通？"
+source:
+  url: https://cp-algorithms.com/data_structures/disjoint_set_union.html
+  title: "Disjoint Set Union - CP-Algorithms"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

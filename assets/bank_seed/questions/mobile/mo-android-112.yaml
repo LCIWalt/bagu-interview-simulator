@@ -1,0 +1,26 @@
+id: mo-android-112
+title: "Android: 协程调度器与主线程阻塞"
+topics: [android, coroutines, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dispatchers.Main 用于 UI 更新，Default 适合 CPU 密集计算，IO 适合阻塞式 IO 且线程池可按需扩容。IO 并非无限线程池，大量阻塞任务仍会耗尽资源；主线程上不能执行数据库、文件或网络等待。"
+  keyPoints:
+    - "Main 是单线程 UI 调度器，不能执行耗时操作"
+    - "Default 的并行度通常等于 CPU 核数，适合计算任务"
+    - "IO 使用共享弹性线程池，阻塞任务应配合超时与限流"
+    - "用 withContext 切换上下文，避免在协程中嵌套 runBlocking"
+  pitfalls:
+    - "把 CPU 密集任务全部丢到 IO，误以为线程更多就一定更快"
+    - "在 Dispatchers.Main 中调用 runBlocking，直接阻塞主线程"
+followups:
+  - "limitedParallelism 适合解决什么类型的并发问题？"
+source:
+  url: https://developer.android.com/kotlin/coroutines/coroutines-best-practices
+  title: "Best practices for coroutines in Android"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

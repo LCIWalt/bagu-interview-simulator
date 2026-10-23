@@ -1,0 +1,22 @@
+name: Calibration eval (manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  eval:
+    name: scoring calibration + length perturbation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.7
+          channel: stable
+      - run: flutter pub get
+      - name: Run calibration set (requires SCORER_API_KEY secret)
+        env:
+          SCORER_API_KEY: ${{ secrets.SCORER_API_KEY }}
+          SCORER_BASE_URL: ${{ vars.SCORER_BASE_URL }}
+          SCORER_MODEL: ${{ vars.SCORER_MODEL }}
+        run: dart run tool/eval.dart --perturb

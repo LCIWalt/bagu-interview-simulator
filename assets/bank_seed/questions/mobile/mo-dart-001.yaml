@@ -1,0 +1,26 @@
+id: mo-dart-001
+title: "Dart: Asynchronous programming"
+topics: [dart, event-loop, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 单线程事件循环先执行同步代码，再清空 microtask 队列，然后取一个 event queue 任务；每个 event 之后都会再次清空 microtask。Future 的回调默认进 microtask，Timer/IO 回调进 event queue。"
+  keyPoints:
+    - "同步代码优先，调用栈清空后执行 microtask"
+    - "Future.then、scheduleMicrotask 属于 microtask"
+    - "Timer、IO、平台消息属于 event queue"
+    - "microtask 长时间不结束会阻塞 event 与渲染"
+  pitfalls:
+    - "认为 Future 一定在下一个 event loop 执行"
+    - "忽略 microtask 会在当前 event 后立即清空"
+followups:
+  - "await 之后的代码在哪个队列继续执行？"
+source:
+  url: https://dart.dev/libraries/async/async-await
+  title: "Dart: Asynchronous programming"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

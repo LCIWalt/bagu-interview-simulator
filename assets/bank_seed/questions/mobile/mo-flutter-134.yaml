@@ -1,0 +1,27 @@
+id: mo-flutter-134
+title: "Add-to-App 中 FlutterEngine 应该复用还是每次新建？"
+topics: [flutter, add-to-app, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "新建 FlutterEngine 要初始化 Dart VM、加载 AOT 快照并注册插件，耗时可达数百毫秒，是打开 Flutter 页面最大的固定成本。复用缓存 engine 能显著缩短首屏时间，官方提供 FlutterEngineCache 与 withCachedEngine；代价是 engine 常驻内存，且同一个 engine 的多个 FlutterView 共享 Dart 全局状态与 Navigator。"
+  keyPoints:
+    - "engine 初始化包含 VM、isolate、快照与插件注册，是最贵的部分"
+    - "FlutterEngineCache 按 id 缓存，FlutterActivity 用 withCachedEngine 取用"
+    - "一个 engine 可驱动多个 FlutterView，但路由栈与全局状态共享"
+    - "常驻 engine 占用内存，应按入口频率决定是否预热"
+  pitfalls:
+    - "Activity 销毁时未解绑视图，造成生命周期与内存泄漏"
+    - "以为复用 engine 会重置路由，实际会保留上次的栈"
+followups:
+  - "预热 engine 对冷启动的收益该如何度量？"
+  - "使用缓存 engine 时 initialRoute 为什么可能不生效？"
+source:
+  url: https://docs.flutter.dev/add-to-app/android/add-flutter-fragment
+  title: "Add a Flutter Fragment to an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

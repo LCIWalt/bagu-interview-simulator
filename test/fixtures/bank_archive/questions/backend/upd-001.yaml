@@ -1,0 +1,17 @@
+id: upd-001
+title: "更新包里的示例题目"
+topics: [go]
+role: backend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "示例答案"
+  keyPoints:
+    - "示例评分点"
+source:
+  url: https://example.com
+  title: "example"
+  license: MIT
+status: community
+updatedAt: 2026-10-22

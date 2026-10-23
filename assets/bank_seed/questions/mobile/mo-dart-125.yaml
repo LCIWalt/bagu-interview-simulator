@@ -1,0 +1,26 @@
+id: mo-dart-125
+title: "异步测试：expectLater、Completer 与 fake_async"
+topics: [dart, testing, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 测试中可用 expectLater 配合 emits/emitsInOrder 断言 Stream，用 Completer 精确控制异步完成时机；需要验证 Timer 与延迟逻辑时用 fake_async 推进虚拟时钟，避免真实等待。"
+  keyPoints:
+    - "await expectLater(stream, emitsInOrder([1, 2, done]))"
+    - "Completer 可精确控制 Future 的完成时机"
+    - "FakeAsync().run 内用 elapse 推进虚拟时间，测试无需真实 sleep"
+    - "testWidgets 的 pump 也是虚拟时钟，不要混用真实 Timer"
+  pitfalls:
+    - "在测试里用 Future.delayed 真实等待导致慢且不稳定"
+    - "忘记 await 异步断言，测试提前通过"
+followups:
+  - "如何测试一个会重试三次的异步函数？"
+source:
+  url: https://dart.dev/tools/testing
+  title: "Dart: Testing"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

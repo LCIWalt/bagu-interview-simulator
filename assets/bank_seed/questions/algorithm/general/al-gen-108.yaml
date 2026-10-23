@@ -1,0 +1,28 @@
+id: al-gen-108
+title: "二叉树的最近公共祖先（后序递归）"
+body: "给定一棵二叉树以及树中的两个节点 p 和 q，返回它们的最近公共祖先（LCA）。树中节点值唯一，p 与 q 均存在于树中且互不相同。"
+topics: [algorithm, tree, dfs]
+role: algorithm
+level: senior
+difficulty: 4
+type: coding
+answer:
+  summary: "采用后序遍历递归：当前节点为空或是 p、q 之一时直接返回当前节点；否则分别递归左右子树，若左右返回值都非空，说明 p、q 分居两侧，当前节点即 LCA，否则把非空的那一侧向上传递。时间 O(n)，空间 O(h)。"
+  keyPoints:
+    - "递归终止条件：节点为空或命中 p/q 时返回该节点，空则返回空"
+    - "左右子树返回值都非空则当前节点为 LCA，否则返回非空的一侧"
+    - "时间 O(n)，空间 O(h) 递归栈；树退化成链时 h = n，空间 O(n)"
+    - "边界：p 是 q 的祖先、树退化成链表、树只有一个节点时都要返回正确结果"
+  pitfalls:
+    - "用节点值相等代替节点引用相等做判断，遇到重复值或题目允许重复值时结果错误"
+    - "找到 p 就提前返回而不继续确认 q 是否在同一子树，会漏掉 p 是 q 祖先的情况"
+followups:
+  - "如果树是二叉搜索树，如何利用有序性把复杂度降到 O(h)？"
+  - "需要对同一棵树做多次 LCA 查询时，如何预处理做到 O(1) 或 O(log n) 单次查询？"
+source:
+  url: https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/solution/
+  title: "236. 二叉树的最近公共祖先 - 力扣官方题解"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

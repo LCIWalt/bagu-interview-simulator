@@ -1,0 +1,27 @@
+id: be-gen-102
+title: "Go 的 defer 在什么时机执行？open-coded defer 优化了什么？"
+topics: [go, runtime, memory]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "defer 注册的函数在包含它的函数返回前按后进先出顺序执行，即使发生 panic 也会走 defer 链。编译器对可静态确定 defer 数量且无循环的场景生成 open-coded defer，把调用记录在栈上，避免运行时分配 _defer 结构。"
+  keyPoints:
+    - "defer 的参数在注册时就求值，函数体本身延后到 return 前执行"
+    - "多个 defer 按 LIFO 执行，panic 时同样执行，可用于 recover 与资源释放"
+    - "open-coded defer 把 defer 位图与参数放在栈帧上，正常路径几乎没有额外开销"
+    - "defer 出现在循环或数量动态时退回堆分配 _defer，频繁执行会带来明显开销"
+  pitfalls:
+    - "在循环体内 defer 关闭文件或释放锁，导致资源堆积到函数结束"
+    - "以为 defer 中修改命名返回值一定能生效，忽略 return 赋值与 defer 的先后顺序"
+followups:
+  - "defer 与 recover 配合时，recover 为什么必须直接写在 defer 函数里？"
+  - "defer 闭包捕获循环变量时，Go 1.22 前后行为有什么变化？"
+source:
+  url: https://go.dev/ref/spec#Defer_statements
+  title: "The Go Programming Language Specification: Defer statements"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

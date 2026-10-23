@@ -1,0 +1,27 @@
+id: mo-flutter-111
+title: "Hero 动画的 tag 有什么要求，什么时候会失效？"
+topics: [flutter, animation, navigation]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Hero 通过相同 tag 在两个路由间匹配共享元素，push 或 pop 时由 Overlay 执行飞行动画；同一时刻同一子树内 tag 必须唯一，源页面与目标页面的 tag 必须一致。Hero 需要位于 Material 组件之下，否则文字样式可能异常，也可以用 flightShuttleBuilder 自定义飞行中的内容。"
+  keyPoints:
+    - "tag 在同一路由子树内必须唯一且两端一致"
+    - "飞行过程在 Overlay 中完成，跨路由共享元素"
+    - "Hero 依赖 Material 与 Theme 提供文字样式"
+    - "flightShuttleBuilder 可自定义过渡内容"
+  pitfalls:
+    - "同一页面出现重复 tag，导致运行时异常"
+    - "把 Hero 放在没有 Material 祖先的位置"
+followups:
+  - "Hero 与 PageRouteBuilder 的自定义转场如何配合？"
+  - "为什么 Hero 在 ListView 复用时容易出问题？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Hero-class.html
+  title: "Hero class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

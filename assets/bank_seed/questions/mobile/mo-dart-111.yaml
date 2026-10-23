@@ -1,0 +1,26 @@
+id: mo-dart-111
+title: "mixin 的线性化与 super 解析顺序"
+topics: [dart, oop, mixin]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "mixin 通过 with 叠加到类上，方法解析按声明顺序从右到左覆盖，形成线性化链，super 调用沿这条链向上。mixin 不能有构造函数，但可用 on 限定只能混入某类或其子类。"
+  keyPoints:
+    - "with A, B 时 B 覆盖 A，super 沿链回溯到 A"
+    - "on 约束声明宿主类型，mixin 内可调用该类型成员"
+    - "mixin class 既可当类继承也可当 mixin 使用"
+    - "多个 mixin 的同名方法不会报错，按线性化顺序静默覆盖"
+  pitfalls:
+    - "认为 mixin 方法冲突会在编译期报错"
+    - "在 mixin 中依赖未在 on 约束里声明的成员"
+followups:
+  - "mixin 与 interface class 在复用上的区别？"
+source:
+  url: https://dart.dev/language/mixins
+  title: "Dart: Mixins"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

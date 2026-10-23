@@ -1,0 +1,27 @@
+id: mo-flutter-116
+title: "在 Flutter 中嵌入原生 View 有哪些方式与代价？"
+topics: [flutter, platform-channel, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 用 AndroidView、iOS 用 UiKitView 嵌入原生视图，底层通过 PlatformView 把原生纹理合成到 Flutter 图层。混合合成会带来额外合成与同步开销，手势也可能被原生视图优先消费；能用 Flutter 自绘就优先自绘，必须嵌入时减少视图数量并注意生命周期。"
+  keyPoints:
+    - "AndroidView 与 UiKitView 用于嵌入原生视图"
+    - "Android 侧有 Virtual Display、Hybrid Composition 等模式"
+    - "原生视图会增加合成、内存与首帧开销"
+    - "手势与焦点可能被原生视图截获"
+  pitfalls:
+    - "在长列表中大量使用 PlatformView，导致滚动卡顿"
+    - "忽略原生视图创建销毁与 Flutter 生命周期的对应"
+followups:
+  - "PlatformViewLink 适合什么场景？"
+  - "如何排查 PlatformView 造成的合成开销？"
+source:
+  url: https://docs.flutter.dev/platform-integration/platform-views
+  title: "Hosting native Android views in your Flutter app with Platform Views"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

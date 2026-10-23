@@ -1,0 +1,27 @@
+id: mo-flutter-102
+title: "Flutter 中 LocalKey 与 GlobalKey 分别解决什么问题？"
+topics: [flutter, widgets, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Key 用于在同级同类型 Widget 之间标识身份，帮助 Element 在重建时正确复用。LocalKey 只在兄弟节点之间比较，GlobalKey 在整个树中唯一，可用于跨位置保留 State 或访问其 State 与 Context；列表重排应使用稳定的业务 key，用 index 作 key 会让状态错位。"
+  keyPoints:
+    - "Key 只在同一父级的同 runtimeType 兄弟间参与匹配"
+    - "ValueKey、ObjectKey、UniqueKey 都属于 LocalKey"
+    - "GlobalKey 全局唯一，可在移动位置时保留 State"
+    - "key 改变会销毁旧 Element 并创建新的 Element"
+  pitfalls:
+    - "在可重排或可删除的列表中使用 index 作为 key"
+    - "滥用 GlobalKey，造成额外查找与组件间强耦合"
+followups:
+  - "GlobalKey 为什么不允许重复？"
+  - "每次 build 都新建 UniqueKey 会发生什么？"
+source:
+  url: https://api.flutter.dev/flutter/foundation/Key-class.html
+  title: "Key class - foundation library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

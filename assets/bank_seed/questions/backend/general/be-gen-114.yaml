@@ -1,0 +1,27 @@
+id: be-gen-114
+title: "Redis Cluster 的 16384 个槽是怎么工作的？MOVED 和 ASK 有什么区别？"
+topics: [redis, cluster, architecture]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Redis Cluster 把键空间划分为 16384 个哈希槽，每个主节点负责一部分槽，客户端按 CRC16(key) mod 16384 定位节点。槽归属变化时节点返回 MOVED 让客户端更新路由表，迁移过程中的临时键则返回 ASK 让客户端只对本次请求转向目标节点。"
+  keyPoints:
+    - "槽数固定为 16384，集群用 gossip 传播节点与槽的归属，故障转移由主节点投票完成"
+    - "MOVED 表示槽已永久迁移，客户端应刷新本地槽映射后重试"
+    - "ASK 表示键正在迁移、仅本次请求去目标节点，客户端不应更新路由缓存"
+    - "多 key 操作要求键在同一槽，可用 hash tag 强制相同前缀落到同一节点"
+  pitfalls:
+    - "把 MOVED 与 ASK 都当成重定向并永久改路由，导致迁移期间请求抖动"
+    - "在集群模式使用跨槽的 MGET 或 Lua 脚本，触发 CROSSSLOT 错误"
+followups:
+  - "为什么 Redis Cluster 选择 16384 而不是 65536 个槽？"
+  - "集群脑裂时如何降低数据丢失风险？"
+source:
+  url: https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/
+  title: "Redis cluster specification"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-161
+title: "Flutter 一帧从 build 到上屏经历了哪些阶段？"
+topics: [flutter, rendering, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "一次 vsync 之后，SchedulerBinding 先执行 transient 回调驱动动画，再进入 persistent 回调执行 build、layout、paint 与合成。Widget 配置通过 Element 增量更新，RenderObject 在 PipelineOwner 上依次 flushLayout、flushCompositingBits、flushPaint，最后构建 Scene 交给引擎在 raster 线程光栅化上屏。任一阶段超出帧预算，都会表现为 UI 线程掉帧。"
+  keyPoints:
+    - "build 只处理被标记为 dirty 的 Element，并不是每帧全量重建 Widget 树"
+    - "layout 自顶向下传递约束、自底向上回传尺寸，paint 输出的是绘制指令而不是像素"
+    - "PipelineOwner 依次 flushLayout、flushCompositingBits、flushPaint，再更新语义并合成 Scene"
+    - "Scene 由引擎在 raster 线程光栅化，UI 与 raster 任一侧超预算都会掉帧"
+  pitfalls:
+    - "以为每帧都会重建整棵树，于是把本可局部的状态提升到很高的层级"
+    - "在 build 或 layout 阶段用 GlobalKey 读 size 再 setState，拿到旧值或直接触发断言"
+followups:
+  - "为什么读取渲染尺寸要放到 post-frame 回调里？"
+  - "scheduleFrame 与 ensureVisualUpdate 有什么区别？"
+source:
+  url: https://docs.flutter.dev/resources/architectural-overview
+  title: "Flutter architectural overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

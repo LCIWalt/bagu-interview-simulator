@@ -1,0 +1,27 @@
+id: mo-flutter-131
+title: "Impeller 时代还需要做着色器预热吗？"
+topics: [flutter, impeller, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Skia 后端在首次使用某个着色器时才编译 SkSL，动画首轮会因此掉帧，官方方案是用 --bundle-sksl-path 打包预热产生的 .sksl 文件。Impeller 在构建期预编译着色器，运行时不再做 SkSL 编译，因此该预热文件对 Impeller 无效；是否仍需预热取决于目标平台实际使用的渲染后端。"
+  keyPoints:
+    - "Skia 的 jank 来自运行时 SkSL 编译，warm-up 通过启动时回放动画提前触发编译"
+    - "--bundle-sksl-path 只被 Skia 后端读取，Impeller 会忽略该文件"
+    - "Impeller 在构建阶段把着色器编译为后端 IR，减少首帧的编译停顿"
+    - "可用 --no-enable-impeller 或平台开关对比两种后端，确认 jank 归属"
+  pitfalls:
+    - "以为打包了 .sksl 就能解决 Impeller 下的掉帧"
+    - "在 debug 模式下判断着色器卡顿，JIT 与断言会掩盖真实帧耗时"
+followups:
+  - "如何确认某一帧的掉帧来自着色器编译而不是布局或绘制？"
+  - "Impeller 下还有哪些首次使用导致的卡顿来源？"
+source:
+  url: https://docs.flutter.dev/perf/shader
+  title: "Reduce shader compilation jank on mobile"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

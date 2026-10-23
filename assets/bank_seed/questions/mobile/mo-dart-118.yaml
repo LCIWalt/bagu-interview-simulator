@@ -1,0 +1,26 @@
+id: mo-dart-118
+title: "模式匹配与解构的实战用法"
+topics: [dart, pattern-matching, oop]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 3 的模式匹配支持解构、类型模式、常量模式、逻辑模式以及 list/map 模式，可用于 switch 语句、switch 表达式、if-case 与变量声明。编译器会检查 switch 对 sealed 类型的穷尽性，遗漏分支会直接报错。"
+  keyPoints:
+    - "if (obj case Point(x: 0, y: var y)) 可在条件中解构"
+    - "switch 表达式用 => 返回分支值，适合替代长 if-else"
+    - "sealed 类型加穷尽 switch 可获得编译期完整性检查"
+    - "通配符 _ 与 rest 模式 ... 可忽略剩余部分"
+  pitfalls:
+    - "在非 sealed 类型上以为 switch 一定穷尽"
+    - "误解模式中变量的作用域与遮蔽规则"
+followups:
+  - "switch 中的 guard 子句 when 怎样使用？"
+source:
+  url: https://dart.dev/language/patterns
+  title: "Dart: Patterns"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

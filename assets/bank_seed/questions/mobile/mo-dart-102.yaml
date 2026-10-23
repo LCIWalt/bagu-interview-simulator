@@ -1,0 +1,26 @@
+id: mo-dart-102
+title: "Dart async*：生成器、yield 与取消"
+topics: [dart, async, stream]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "async* 函数返回 Stream，用 yield 逐个产出事件、yield* 转发另一个 Stream，函数体是惰性的，只有被监听后才开始执行。取消订阅会让生成器在下一个 yield 处停止并执行 finally，因此清理逻辑应放在 finally 中。"
+  keyPoints:
+    - "async* 返回 Stream<T>，sync* 返回 Iterable<T>"
+    - "只有 listen 之后函数体才运行，调用函数本身不产生副作用"
+    - "yield* 把内层 Stream 的事件与 done 透传给外层"
+    - "在 async* 中用 await 控制生产节奏，避免同步死循环一次灌满缓冲"
+  pitfalls:
+    - "以为调用 async* 函数就会立刻执行函数体"
+    - "在 async* 中写同步 while 无限 yield，事件堆积且无法及时取消"
+followups:
+  - "async* 与 StreamController 分别适合什么场景？"
+source:
+  url: https://dart.dev/language/generators
+  title: "Dart: Generators"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,25 @@
+id: fe-gen-110
+title: "Flexbox 与 Grid 分别适合什么布局场景，如何选择？"
+topics: [css, layout]
+role: frontend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Flexbox 面向一维内容分布，适合导航、工具栏和卡片内部对齐；Grid 面向二维行列，适合页面骨架以及需要行列同时对齐的布局。可按主轴数量与是否需要显式轨道来选择，两者也常嵌套混用。"
+  keyPoints:
+    - "Flex 主轴是一维的，尺寸由内容与 flex 属性共同决定"
+    - "Grid 可显式定义行列轨道，适合整体页面分区"
+    - "Grid 的 minmax 与 auto-fit 可实现自适应卡片网格"
+    - "常见做法是 Grid 搭外层骨架、Flex 处理组件内部排列"
+  pitfalls: ["用 Flex 强行模拟需要行列同时对齐的二维布局", "混淆 flex-basis 与 width 的优先级关系"]
+followups:
+  - "grid-template-columns 中 repeat(auto-fit, minmax(...)) 是如何工作的？"
+  - "flex: 1 展开后对应哪些属性？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+  title: "MDN: CSS grid layout"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

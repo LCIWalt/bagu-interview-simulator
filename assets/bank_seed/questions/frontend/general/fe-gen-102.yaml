@@ -1,0 +1,25 @@
+id: fe-gen-102
+title: "requestAnimationFrame 与 setTimeout 在渲染帧中的执行时机有何不同？"
+topics: [browser, event-loop, performance]
+role: frontend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "requestAnimationFrame 的回调在下一次重绘之前执行，与屏幕刷新节奏对齐，并在后台标签页自动暂停；setTimeout 只保证延迟下限，回调可能落在帧中间且不保证渲染节奏。动画应优先使用 rAF，但 rAF 中的长任务同样会阻塞渲染。"
+  keyPoints:
+    - "rAF 回调在样式计算、布局与绘制之前批量执行，时间戳对应同一帧"
+    - "rAF 与刷新率同步，后台标签页会暂停，避免无意义计算"
+    - "setTimeout/setInterval 不受帧率约束，易掉帧且后台被节流"
+    - "rAF 中仍有长任务会掉帧，重计算应拆分或移入 Worker"
+  pitfalls: ["认为 setTimeout 延迟 16ms 就等价于 60fps", "在 rAF 回调里做同步重计算导致每帧超时"]
+followups:
+  - "为什么在 rAF 回调里读取布局仍可能触发强制同步布局？"
+  - "后台标签页中 rAF 为什么会暂停？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
+  title: "MDN: Window.requestAnimationFrame()"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

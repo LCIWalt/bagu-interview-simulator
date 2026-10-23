@@ -1,0 +1,27 @@
+id: mo-flutter-136
+title: "Android 平台视图的虚拟显示与混合合成差别在哪？"
+topics: [flutter, platform-view, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "虚拟显示把原生 View 渲染到纹理再交给 Flutter 合成，原生 View 不进入 Flutter 的视图树，交互、焦点与无障碍支持弱，但合成成本低。混合合成把原生 View 直接插入 Flutter 的视图层级，输入与无障碍完整，代价是额外的包装视图与逐帧合成开销，滚动时更容易掉帧。"
+  keyPoints:
+    - "Virtual Display 渲染到纹理，适合纯展示、不需要原生交互的场景"
+    - "Hybrid Composition 让原生 View 参与视图树，触摸与无障碍正常"
+    - "平台视图会打断 Flutter 的图层合并，数量越多滚动越容易掉帧"
+    - "iOS 的 UiKitView 同样存在图层隔离成本，但合成路径与 Android 不同"
+  pitfalls:
+    - "在长列表里为每个 item 创建平台视图"
+    - "以为平台视图可以像普通 Widget 一样被任意裁剪与变换"
+followups:
+  - "如何判断掉帧是否由平台视图引起？"
+  - "Texture Layer Hybrid Composition 解决了什么问题？"
+source:
+  url: https://docs.flutter.dev/platform-integration/android/platform-views
+  title: "Hosting native Android views in your Flutter app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

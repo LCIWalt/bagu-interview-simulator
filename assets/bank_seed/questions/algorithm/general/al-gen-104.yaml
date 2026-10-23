@@ -1,0 +1,28 @@
+id: al-gen-104
+title: "岛屿数量（网格 DFS/BFS）"
+body: "给定由字符 1（陆地）和 0（水）组成的二维网格，岛屿由水平或垂直方向相邻的陆地连接而成，网格四周均被水包围。返回岛屿的数量。要求原地标记已访问格子，不额外申请 visited 矩阵。"
+topics: [algorithm, graph, dfs]
+role: algorithm
+level: mid
+difficulty: 3
+type: coding
+answer:
+  summary: "遍历每个格子，遇到尚未访问的陆地就把计数加一，并从该格出发用 DFS 或 BFS 把整座岛屿的陆地标记为已访问。每个格子最多被访问一次，时间 O(m·n)，空间最坏 O(m·n)（递归栈或队列）。"
+  keyPoints:
+    - "外层双重循环只在发现新陆地时计数，内层洪泛负责标记整个连通块"
+    - "可原地把 1 改成 0 或 2，省去 visited 矩阵，注意不要破坏后续判断"
+    - "时间 O(m·n)，空间 O(m·n) 最坏（全陆地时递归深度或队列长度）"
+    - "边界：空网格、全水、全陆地、单行单列都要返回正确结果"
+  pitfalls:
+    - "忘记在入队或递归前标记，同一块陆地被多次访问，导致重复计数甚至栈溢出"
+    - "递归 DFS 在超大网格（如 300×300 全陆地）可能栈溢出，应改用 BFS 或显式栈"
+followups:
+  - "如果陆地会动态增加并伴随多次查询，如何用并查集维护岛屿数量？"
+  - "若要求最大岛屿面积，代码需要增加什么状态？"
+source:
+  url: https://cp-algorithms.com/graph/breadth-first-search.html
+  title: "Breadth First Search - CP-Algorithms"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

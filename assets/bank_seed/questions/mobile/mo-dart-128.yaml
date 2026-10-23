@@ -1,0 +1,26 @@
+id: mo-dart-128
+title: "== 与 hashCode 的契约"
+topics: [dart, oop, collections]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "重写 == 必须同时重写 hashCode，并保证自反、对称、传递与一致性，否则对象在 Set/Map 中会丢失或重复。可变对象作为键后修改字段会破坏哈希定位，应使用不可变值对象作键。"
+  keyPoints:
+    - "相等对象必须有相同 hashCode，反之不要求"
+    - "hashCode 应用 Object.hash 组合参与相等的字段"
+    - "== 参数类型应为 Object?，并先做 identical 快速判断"
+    - "Set/Map 依赖哈希，键对象应不可变"
+  pitfalls:
+    - "只重写 == 不重写 hashCode"
+    - "用可变对象当 Map 键后修改其字段"
+followups:
+  - "record 与自定义类的相等性实现有何不同？"
+source:
+  url: https://api.dart.dev/stable/dart-core/Object/hashCode.html
+  title: "Object.hashCode"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

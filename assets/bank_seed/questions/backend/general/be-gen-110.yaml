@@ -1,0 +1,27 @@
+id: be-gen-110
+title: "线上 MySQL 出现死锁，你会怎么定位和治理？"
+topics: [mysql, lock, deadlock]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "先用 SHOW ENGINE INNODB STATUS 或 performance_schema 的锁等待视图拿到最近一次死锁的两个事务、持有锁与等待锁，再结合执行计划还原加锁顺序。治理上优先统一访问顺序、缩短事务、补齐索引缩小锁范围，并让业务对死锁错误做有限重试。"
+  keyPoints:
+    - "LATEST DETECTED DEADLOCK 段落给出事务 SQL、持有锁与等待锁，是首要证据"
+    - "死锁常见根因是相反加锁顺序、无索引更新导致锁范围扩大、事务中夹杂慢操作"
+    - "统一按主键或固定顺序批量更新，能消除大部分交叉等待"
+    - "InnoDB 会自动回滚代价较小的事务，应用层应识别 1213 错误并做幂等重试"
+  pitfalls:
+    - "只调大 innodb_lock_wait_timeout，掩盖死锁根因而不是解决它"
+    - "在事务里调用远程服务或等待用户输入，显著拉长持锁时间"
+followups:
+  - "如何用 performance_schema.data_locks 实时观察锁等待？"
+  - "死锁与锁等待超时在错误码和处理策略上有什么区别？"
+source:
+  url: https://dev.mysql.com/doc/refman/8.4/en/innodb-deadlocks.html
+  title: "MySQL 8.4 Reference Manual: Deadlocks in InnoDB"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

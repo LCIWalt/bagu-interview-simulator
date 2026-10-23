@@ -1,0 +1,25 @@
+id: fe-gen-109
+title: "Context 值变化为什么会让大量组件重渲染，如何优化？"
+topics: [react, state-management, performance]
+role: frontend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Context 的 value 变化会让所有读取该 Context 的消费者重新渲染，即使组件只用到其中一部分字段。拆分 Context、稳定 value 引用，或改用支持选择器订阅的方案，可以把更新影响面收窄。"
+  keyPoints:
+    - "Provider 的 value 每次渲染新建对象会触发全部消费者更新"
+    - "按更新频率拆分多个 Context，避免大对象耦合"
+    - "用 useMemo 稳定 value，并用 memo 包裹不依赖该值的子树"
+    - "高频细粒度更新可交给支持选择器订阅的外部 store"
+  pitfalls: ["认为 memo 能阻止 Context 消费者更新", "用 Context 存放每次输入都变化的表单值"]
+followups:
+  - "Context 与 Redux 在订阅粒度上的差异是什么？"
+  - "为什么把 Provider 放到更靠近消费者的位置能减少重渲染？"
+source:
+  url: https://react.dev/learn/passing-data-deeply-with-context
+  title: "React: Passing Data Deeply with Context"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

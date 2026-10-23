@@ -1,0 +1,27 @@
+id: mo-flutter-103
+title: "setState 做了什么，哪些写法会导致问题？"
+topics: [flutter, state, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "setState 把当前 Element 标记为 dirty，向 BuildOwner 注册并在下一帧重建该 State 对应的子树，而不是立即同步 rebuild。回调必须同步执行且只修改状态，异步逻辑应在 await 之后再调用 setState；在 build 中调用会抛异常，dispose 后调用同样非法。"
+  keyPoints:
+    - "setState 只是标脏并调度下一帧，不是立即重建"
+    - "回调不能是 async，也不能有返回值"
+    - "状态修改应放在回调内，保证框架感知变化"
+    - "build 必须无副作用且可重复执行"
+  pitfalls:
+    - "在 build 中调用 setState，造成死循环或异常"
+    - "await 之后不检查 mounted 就直接 setState"
+followups:
+  - "setState 之后为什么有时看不到界面变化？"
+  - "ValueNotifier 与 setState 的适用边界是什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/setState.html
+  title: "setState method - State class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-112
+title: "Redis 的过期键是怎么删除的？内存满了又会怎么淘汰？"
+topics: [redis, expire, memory]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Redis 用惰性删除加定期抽样删除处理过期键：访问时检查过期时间，后台周期性随机抽查并清理。内存达到 maxmemory 后再按 maxmemory-policy 淘汰键，两者是不同机制，过期并不保证立即释放内存。"
+  keyPoints:
+    - "惰性删除在读写键时判断过期，过期键不返回但可能长期占用内存直到被访问"
+    - "定期删除每秒多次随机抽样过期字典，限制单轮耗时，避免阻塞主线程"
+    - "maxmemory-policy 支持 noeviction、allkeys-lru、volatile-lfu 等策略，按场景选择"
+    - "从库不会自行删除过期键，通常等待主库的 DEL 传播，读到过期键时按逻辑过期处理"
+  pitfalls:
+    - "以为设置了 TTL 内存就会准时释放，忽视惰性删除与抽样清理的延迟"
+    - "使用 volatile-* 策略却没有给键设置过期时间，导致内存满后写入直接报错"
+followups:
+  - "LRU 与 LFU 在热点分布不同的业务里怎么选？"
+  - "大量 key 同一时刻过期会带来什么问题？"
+source:
+  url: https://redis.io/docs/latest/develop/reference/eviction/
+  title: "Key eviction"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

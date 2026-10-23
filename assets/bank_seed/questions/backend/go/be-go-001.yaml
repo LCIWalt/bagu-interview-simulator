@@ -1,0 +1,24 @@
+id: be-go-001
+title: "Go 的 GMP 模型里，为什么需要 P？"
+topics: [go, runtime, concurrency]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "G 是 goroutine，M 是内核线程，P 是执行上下文与本地队列；P 让调度主要在用户态完成，并把并行度限制在 GOMAXPROCS 之内。"
+  keyPoints:
+    - "M 必须持有 P 才能执行 G，P 提供执行上下文与本地运行队列"
+    - "每个 P 有本地队列，配合 work stealing 减少对全局队列锁的竞争"
+    - "G 进入 syscall 时 M 与 P 解绑，P 可交给其他 M 继续调度"
+    - "GOMAXPROCS 决定 P 的数量，从而限制用户态并行度"
+  pitfalls: ["把 P 当成线程", "认为 G 直接绑定 M"]
+followups:
+  - "GOMAXPROCS 设得比核数大很多会怎样？"
+source:
+  url: https://go.dev/doc/effective_go
+  title: "Effective Go"
+  license: BSD-3-Clause
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

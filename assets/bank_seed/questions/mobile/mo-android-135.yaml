@@ -1,0 +1,27 @@
+id: mo-android-135
+title: "Android: Play Integrity 的服务端校验"
+topics: [android, security, integrity]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Play Integrity 的判定必须在服务端完成：服务端生成 nonce 并调用 Play Integrity 后端，客户端用 IntegrityManager 取回加密 token，服务端再用 Google Play 的密钥解密。校验时要同时检查包名、证书指纹、nonce、时间戳与 appIntegrity/deviceIntegrity verdict，并按业务风险分级处置，而不是简单一票否决。"
+  keyPoints:
+    - "standard request 由服务端发起并绑定 nonce，客户端只负责请求 token 并回传"
+    - "token 是加密的，只能在服务端解密，客户端返回值不可信"
+    - "校验 packageName、certificateSha256Digest、requestHash 与时间戳防重放"
+    - "appIntegrity、deviceIntegrity、accountDetails 分开判断，按风险等级降级"
+  pitfalls:
+    - "在客户端解密或直接信任 verdict，攻击者改包即可绕过"
+    - "不校验 nonce 与 requestDetails，token 被截获后可重放"
+followups:
+  - "standard request 与 classic request 应该如何取舍？"
+  - "设备完整性不通过时，支付类应用怎样分级处置更合理？"
+source:
+  url: https://developer.android.com/google/play/integrity/overview
+  title: "Play Integrity API overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-dart-124
+title: "rethrow、finally 与堆栈保留"
+topics: [dart, exceptions, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "finally 无论是否抛错都会执行，适合释放资源；catch 中可用 rethrow 保留原始堆栈，直接 throw e 会重置堆栈。catch (e, s) 能拿到 StackTrace，便于日志与崩溃归因。"
+  keyPoints:
+    - "rethrow 保留原堆栈，throw e 从当前位置重新开始"
+    - "finally 中抛错会覆盖 try 中的异常"
+    - "catch (e, s) 的 s 可传给日志或 Error.throwWithStackTrace"
+    - "finally 中不要 return，否则吞掉异常与返回值"
+  pitfalls:
+    - "用 throw e 代替 rethrow 丢失调用栈"
+    - "在 finally 里做可能抛错的清理，掩盖原始错误"
+followups:
+  - "Error.throwWithStackTrace 解决什么问题？"
+source:
+  url: https://api.dart.dev/stable/dart-core/Error/throwWithStackTrace.html
+  title: "Error.throwWithStackTrace static method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-106
+title: "MySQL 联合索引的最左前缀原则是什么？范围查询为什么会中断？"
+topics: [mysql, index, sql]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "联合索引按定义时的列顺序逐列排序，只有从最左列开始连续匹配，才能利用后续列的索引有序性。一旦某列使用范围条件，其后的列无法再用于精确定位，只能回表过滤或在索引中做不完全过滤。"
+  keyPoints:
+    - "索引 (a,b,c) 对 a、a+b、a+b+c 有效，跳过 a 直接查 b 无法走该索引定位"
+    - "等值条件在最左连续列上才能继续用下一列，范围条件会截断后续列的定位能力"
+    - "覆盖索引让查询所需列全部落在索引里，避免回表，是联合索引的重要收益"
+    - "把选择性高、等值查询多的列放在前面，同时兼顾排序与分组需求"
+  pitfalls:
+    - "认为只要 where 里出现索引列就能用上索引，忽视顺序与函数、隐式转换"
+    - "为每个查询都建一条联合索引，导致写放大与索引维护成本失控"
+followups:
+  - "order by 如何利用联合索引避免 filesort？"
+  - "索引下推（ICP）能缓解范围查询后的过滤问题吗？"
+source:
+  url: https://dev.mysql.com/doc/refman/8.4/en/multiple-column-indexes.html
+  title: "MySQL 8.4 Reference Manual: Multiple-Column Indexes"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

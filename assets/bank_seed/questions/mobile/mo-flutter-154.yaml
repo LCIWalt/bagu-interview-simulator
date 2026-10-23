@@ -1,0 +1,27 @@
+id: mo-flutter-154
+title: "CustomMultiChildLayout 与自定义 RenderObject 该怎么选？"
+topics: [flutter, custom-layout, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "CustomMultiChildLayout 通过 MultiChildLayoutDelegate 在 performLayout 中对固定数量的子节点依次 layoutChild 与 positionChild，不用接触 RenderObject 协议，适合结构固定的自定义排布。需要处理滚动、命中测试、语义或大量子节点时，才值得实现自定义 RenderBox 甚至 RenderSliver，代价是自行处理约束、尺寸、绘制与无障碍。"
+  keyPoints:
+    - "每个子节点需要唯一 LayoutId，且数量在编译期固定"
+    - "delegate 中必须先 layoutChild 再 positionChild，否则拿不到尺寸"
+    - "自定义 RenderBox 需实现 performLayout、computeDryLayout、hitTest 与 paint"
+    - "要参与滚动时应实现 RenderSliver，而不是塞进 RenderBox"
+  pitfalls:
+    - "在 layoutChild 之前读取子节点 size，得到零或异常值"
+    - "忘记 markNeedsLayout 或未提供语义节点，导致不刷新与无障碍缺失"
+followups:
+  - "为什么自定义 RenderObject 还要实现 computeDryLayout？"
+  - "自定义布局如何配合 IntrinsicWidth 使用？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/CustomMultiChildLayout-class.html
+  title: "CustomMultiChildLayout class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

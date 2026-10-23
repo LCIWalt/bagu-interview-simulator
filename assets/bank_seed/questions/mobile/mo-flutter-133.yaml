@@ -1,0 +1,27 @@
+id: mo-flutter-133
+title: "什么时候该用 dart:ffi 而不是 MethodChannel？"
+topics: [flutter, ffi, platform-view]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "dart:ffi 直接按 C ABI 调用原生函数，没有编解码与线程跳转，适合高频、小数据、已有 C/C++ 库的场景；MethodChannel 更适合复用平台 SDK 与异步能力。FFI 的代价是要自己管理 native 内存与结构体布局，并且不能直接调用 Java/Kotlin 或 Objective-C 方法，那些仍需平台通道。"
+  keyPoints:
+    - "FFI 走 C ABI，省去 codec 序列化，适合高频调用与成块内存"
+    - "用 Arena 或 NativeFinalizer 管理 malloc 出来的内存生命周期"
+    - "Struct 字段顺序与对齐必须与 C 一致，可用 sizeOf 校验布局"
+    - "同步 FFI 调用会阻塞当前 isolate，重活应放进 Isolate.run"
+  pitfalls:
+    - "以为 FFI 能直接调用 Java 或 Objective-C 的 API"
+    - "free 之后继续使用指针，或忘记释放造成泄漏"
+followups:
+  - "如何把 Uint8List 以零拷贝方式传给 C 函数？"
+  - "FFI 调用抛异常时如何避免 native 资源泄漏？"
+source:
+  url: https://api.flutter.dev/flutter/dart-ffi/dart-ffi-library.html
+  title: "dart:ffi library"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

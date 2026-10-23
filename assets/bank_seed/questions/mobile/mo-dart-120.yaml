@@ -1,0 +1,26 @@
+id: mo-dart-120
+title: "Dart GC：分代回收与分配压力"
+topics: [dart, memory, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart VM 采用分代式 GC：新对象分配在 new space，存活对象晋升到 old space，young GC 频繁且停顿短，old GC 标记整理成本更高。优化方向是减少短命大对象与频繁分配，而不是手动触发 GC。"
+  keyPoints:
+    - "new space 用 bump allocation，回收成本与存活对象数量相关"
+    - "多次存活的对象晋升到 old space，full GC 停顿更长"
+    - "大对象直接进入 old space，容易造成内存峰值"
+    - "Flutter 中在 build 里频繁创建大 List 会放大 GC 压力"
+  pitfalls:
+    - "试图通过手动触发 GC 解决内存问题"
+    - "把 GC 停顿误判为 UI 逻辑卡顿"
+followups:
+  - "DevTools 的 Memory 视图怎样定位分配热点？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Flutter: Performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

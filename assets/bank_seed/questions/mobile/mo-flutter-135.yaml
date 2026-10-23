@@ -1,0 +1,27 @@
+id: mo-flutter-135
+title: "Flutter 与 Android 原生页面混合时，页面栈如何保持正确？"
+topics: [flutter, add-to-app, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Add-to-App 有两种粒度：整屏的 FlutterActivity 由 Android Activity 栈管理，嵌入的 FlutterFragment 由 Fragment 事务管理。Flutter 内部的 Navigator 与原生栈互不感知，返回键必须显式协商，通常先询问 Flutter 是否可 pop，再决定 finish Activity，否则会出现空白页或直接退出。"
+  keyPoints:
+    - "FlutterActivity 对应一个 Activity，FlutterFragment 对应 Fragment 事务"
+    - "原生栈与 Flutter Navigator 是两套栈，需约定返回键处理顺序"
+    - "FlutterActivity 的 initialRoute 指定入口，但缓存 engine 场景下会被忽略"
+    - "透明背景需把 backgroundMode 设为 transparent，否则打开时会闪黑"
+  pitfalls:
+    - "假设 Flutter 内 pop 会自动结束宿主 Activity"
+    - "多入口复用同一 engine，却指望 initialRoute 切换不同页面"
+followups:
+  - "如何让 Android 返回键优先交给 Flutter 的 Navigator 处理？"
+  - "FlutterFragment 在配置变更（旋转）后如何保留状态？"
+source:
+  url: https://docs.flutter.dev/add-to-app/android/add-flutter-screen
+  title: "Add a Flutter screen to an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

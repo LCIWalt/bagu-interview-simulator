@@ -1,0 +1,25 @@
+id: fe-gen-116
+title: "CSRF 攻击的原理是什么，SameSite 与 CSRF Token 如何配合？"
+topics: [security, http, browser]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "CSRF 利用浏览器会自动携带目标站点 Cookie 的特性，诱导已登录用户在不知情的情况下发出状态变更请求。防御需要让请求携带攻击者无法伪造的凭证，或限制跨站请求携带 Cookie。"
+  keyPoints:
+    - "攻击者无需读取响应，只需触发一次携带 Cookie 的写操作"
+    - "SameSite=Lax/Strict 限制跨站请求携带 Cookie，降低攻击面"
+    - "CSRF Token 需绑定会话并在服务端校验，不能放在 URL 中"
+    - "关键操作还应配合 Origin/Referer 校验与二次确认"
+  pitfalls: ["认为使用 JSON Content-Type 就天然免疫 CSRF", "用 GET 执行删除等状态变更操作"]
+followups:
+  - "为什么 SameSite=Lax 仍不能完全替代 CSRF Token？"
+  - "前后端分离架构下 CSRF Token 放在哪里更安全？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
+  title: "MDN: Cross-site request forgery (CSRF)"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

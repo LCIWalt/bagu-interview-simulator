@@ -1,0 +1,25 @@
+id: fe-gen-105
+title: "React 的 useTransition 解决了什么问题，什么时候不该用？"
+topics: [react, performance, concurrency]
+role: frontend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "useTransition 把状态更新标记为非紧急，让 React 优先响应用户输入，并在后台可中断地渲染新树。它适合昂贵但不阻塞交互的更新，例如切换筛选结果或渲染大列表。"
+  keyPoints:
+    - "startTransition 包裹的更新可被更高优先级的更新打断并重新开始"
+    - "isPending 用于展示过渡中的加载态或禁用重复操作"
+    - "只对同步 setState 生效，无法包裹 await 之后的更新"
+    - "过渡渲染仍占用主线程，CPU 密集计算需配合 memo、虚拟化或 Worker"
+  pitfalls: ["用 transition 包裹受控输入的值，反而让输入出现延迟", "认为 transition 会自动把计算并行化"]
+followups:
+  - "useDeferredValue 与 useTransition 的适用场景有何差异？"
+  - "为什么 transition 中的渲染必须可以被中断？"
+source:
+  url: https://react.dev/reference/react/useTransition
+  title: "React: useTransition"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

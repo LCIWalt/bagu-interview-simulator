@@ -1,0 +1,26 @@
+id: mo-flutter-001
+title: "Flutter architectural overview"
+topics: [flutter, rendering, internals]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Widget 是不可变的配置描述；Element 是 Widget 在树中的实例，负责生命周期与复用；RenderObject 负责布局、绘制和命中测试。Widget 重建不等于 RenderObject 重建，框架通过 Element 做 diff 决定是否更新。"
+  keyPoints:
+    - "Widget 不可变，只是配置"
+    - "Element 持有 State 并连接 Widget 与 RenderObject"
+    - "RenderObject 负责 layout/paint"
+    - "canUpdate 依据 runtimeType 与 key 判断复用"
+  pitfalls:
+    - "认为 Widget 重建一定触发重绘"
+    - "在 build 里做昂贵计算"
+followups:
+  - "Key 在 Element 复用中起什么作用？"
+source:
+  url: https://docs.flutter.dev/resources/architectural-overview
+  title: "Flutter architectural overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

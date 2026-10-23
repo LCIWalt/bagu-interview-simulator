@@ -1,0 +1,27 @@
+id: mo-flutter-168
+title: "项目：键盘弹出后表单被遮挡，如何系统修复？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: project
+answer:
+  summary: "键盘弹出会改变 MediaQuery.viewInsets.bottom，Scaffold 在 resizeToAvoidBottomInset 为 true 时据此压缩 body，但 bottomBar、Positioned 与自绘布局不会自动避让。修复时应统一从 viewInsets 推导可用高度，让输入区域可滚动，并用 scrollPadding 或 ensureVisible 保证焦点控件可见。"
+  keyPoints:
+    - "键盘占用的高度来自 viewInsets.bottom，而不是 viewport 尺寸变化"
+    - "resizeToAvoidBottomInset 只作用于 Scaffold body，bottomNavigationBar 仍可能被遮挡"
+    - "TextField 的 scrollPadding 与 Scrollable.ensureVisible 可把焦点控件滚入可视区"
+    - "iOS 键盘高度带动画，缩小 MediaQuery 依赖范围可减少不必要的重建"
+  pitfalls:
+    - "用 MediaQuery.of(context).size 判断键盘是否弹出"
+    - "在 SafeArea 与 viewInsets 上重复叠加 padding，收起键盘后留下空白"
+followups:
+  - "键盘收起时布局抖动该如何消除？"
+  - "全屏视频或聊天页如何自定义键盘避让策略？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/MediaQuery/viewInsetsOf.html
+  title: "MediaQuery.viewInsetsOf method - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

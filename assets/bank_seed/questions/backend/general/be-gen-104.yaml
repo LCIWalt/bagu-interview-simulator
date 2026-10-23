@@ -1,0 +1,27 @@
+id: be-gen-104
+title: "什么是 Go 的逃逸分析？哪些写法会把变量赶到堆上？"
+topics: [go, memory, compiler]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "逃逸分析是编译器在编译期判断变量生命周期是否超出函数栈帧的过程，无法证明安全的变量会被分配到堆并由 GC 管理。它直接影响分配次数与 GC 压力，可以用 -gcflags=-m 查看具体决策。"
+  keyPoints:
+    - "返回局部变量的指针、被闭包捕获、赋值给 interface 通常会导致逃逸"
+    - "变量大小在编译期不确定，或过大超过栈对象限制时，也会被放到堆上"
+    - "go build -gcflags=-m 能输出 moved to heap 与逃逸原因，是定位分配的常用手段"
+    - "减少不必要的指针与 interface 装箱，能让更多对象留在栈上，降低 GC 频率"
+  pitfalls:
+    - "认为 new 一定在堆上、局部变量一定在栈上，实际由逃逸分析决定"
+    - "为了微优化到处传值，忽视大结构体拷贝的成本可能高于一次堆分配"
+followups:
+  - "为什么把值放进 interface 往往会发生逃逸？"
+  - "栈增长与逃逸之间是什么关系？"
+source:
+  url: https://go.dev/doc/faq
+  title: "Frequently Asked Questions (Go)"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

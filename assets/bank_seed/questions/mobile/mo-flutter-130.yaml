@@ -1,0 +1,27 @@
+id: mo-flutter-130
+title: "项目：如何优化 Flutter 应用的冷启动首帧时间？"
+topics: [flutter, performance, startup]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先用 trace-startup 或 Timeline 把启动拆成引擎初始化、Dart 入口、首帧构建与首帧光栅化，确认瓶颈在同步初始化、插件注册还是首屏 Widget 过重。常见手段是延迟非关键初始化、并行预热、减少首屏层级与图片解码，并用真机 profile 对比首帧时间。"
+  keyPoints:
+    - "用 trace-startup 与 Timeline 量化各阶段耗时"
+    - "main 中避免阻塞式磁盘、网络与插件初始化"
+    - "首屏减少重布局、大图解码与同步计算"
+    - "优化后在真机 profile 模式复测首帧"
+  pitfalls:
+    - "在 main 中 await 所有插件初始化，拖慢首帧"
+    - "只在模拟器或 debug 模式验证启动收益"
+followups:
+  - "首帧之后还有哪些启动阶段值得优化？"
+  - "deferred components 适合什么场景？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-android-002
+title: "Android Gradle plugin release notes"
+topics: [android, gradle, build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "先对齐 AGP 与 Gradle 的兼容矩阵，再检查 Kotlin 版本、compileSdk、JDK 与 Flutter 插件要求；插件冲突看 settings.gradle 的仓库与依赖解析，必要时用 dependencyInsight 定位传递依赖。"
+  keyPoints:
+    - "AGP 与 Gradle 有官方兼容矩阵"
+    - "JDK 版本要与 AGP/Gradle 匹配"
+    - "compileSdk 需满足依赖的 minCompileSdk"
+    - "用 ./gradlew dependencyInsight 查传递依赖"
+  pitfalls:
+    - "只升 AGP 不升 Gradle"
+    - "在多个 build.gradle 里硬编码不同 Kotlin 版本"
+followups:
+  - "R8 混淆导致插件反射失败如何定位？"
+source:
+  url: https://developer.android.com/build/releases/gradle-plugin
+  title: "Android Gradle plugin release notes"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

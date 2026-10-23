@@ -1,0 +1,27 @@
+id: mo-flutter-129
+title: "FutureBuilder 最常见的误用是什么？"
+topics: [flutter, async, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FutureBuilder 的 future 如果在 build 中创建，每次重建都会重新发起请求并回到 waiting；应在 initState 或状态层创建并复用同一个 Future。还要按 connectionState 与 hasError 分支处理，避免把 snapshot.data 直接当非空使用。"
+  keyPoints:
+    - "future 必须在 build 外创建并保持稳定"
+    - "connectionState 区分等待、完成与活跃状态"
+    - "hasError 时展示错误并允许重试"
+    - "需要取消或复杂重试时更适合状态管理"
+  pitfalls:
+    - "在 build 里直接调用异步方法作为 future"
+    - "忽略 waiting 状态，导致空白或闪烁"
+followups:
+  - "StreamBuilder 与 FutureBuilder 的分支处理有何不同？"
+  - "为什么 FutureBuilder 不适合承载页面级状态？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html
+  title: "FutureBuilder class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

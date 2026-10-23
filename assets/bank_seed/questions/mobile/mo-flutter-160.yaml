@@ -1,0 +1,27 @@
+id: mo-flutter-160
+title: "UI 线程与 Raster 线程分别做什么，掉帧该看哪一个？"
+topics: [flutter, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "UI 线程执行 Dart 代码、build/layout/paint 并产出 LayerTree，raster 线程把 LayerTree 光栅化为 GPU 指令；两者都由 vsync 驱动，任一超过帧预算（60Hz 约 16.6 毫秒）就会掉帧。UI 段超时说明 Dart 逻辑或布局太重，raster 段超时通常指向 saveLayer、模糊、超大图片或图层过多。"
+  keyPoints:
+    - "UI 线程负责 Dart 执行、build/layout/paint 与生成 LayerTree"
+    - "raster 线程负责图层合成与 GPU 提交，受 saveLayer、模糊与大图影响"
+    - "用 DevTools Performance 的 frame chart 区分 UI 与 raster 耗时"
+    - "平台线程被阻塞也会间接造成掉帧，需和 UI 段分开排查"
+  pitfalls:
+    - "只看 UI 段耗时，忽略 raster 超时"
+    - "在 UI 线程做 JSON 解析、图片解码等重活"
+followups:
+  - "如何判断掉帧来自着色器编译还是 saveLayer？"
+  - "PlatformView 为什么会同时影响两个线程？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/performance
+  title: "Using the Performance view"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

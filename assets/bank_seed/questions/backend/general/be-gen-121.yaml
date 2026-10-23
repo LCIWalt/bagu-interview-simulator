@@ -1,0 +1,27 @@
+id: be-gen-121
+title: "Linux 进程的常见状态有哪些？僵尸进程和孤儿进程有什么区别？"
+topics: [os, process, linux]
+role: backend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Linux 进程常见状态包括可运行 R、可中断睡眠 S、不可中断睡眠 D、停止 T 和僵尸 Z。僵尸进程是已退出但父进程尚未 wait 回收的进程，孤儿进程则是父进程先退出、被 init 或 subreaper 收养后继续运行的进程。"
+  keyPoints:
+    - "R 表示可运行或正在运行，S 表示等待事件可被信号唤醒，D 表示不可中断的内核等待"
+    - "子进程退出后内核保留退出码与统计信息，父进程 wait/waitpid 后才能彻底释放"
+    - "父进程不回收子进程会积累僵尸，长期运行的服务应处理 SIGCHLD 或使用 waitpid"
+    - "孤儿进程会被 init 或 subreaper 接管，不会造成资源泄漏，与僵尸有本质区别"
+  pitfalls:
+    - "试图用 kill -9 杀掉僵尸进程，僵尸已无执行实体，只能由父进程回收"
+    - "认为 D 状态可以随意杀死，处于不可中断 IO 的进程连 SIGKILL 也要等唤醒后才生效"
+followups:
+  - "容器里 PID 1 不回收子进程会带来什么问题？"
+  - "如何快速找出并清理僵尸进程？"
+source:
+  url: https://man7.org/linux/man-pages/man2/wait.2.html
+  title: "wait(2) — Linux manual page"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

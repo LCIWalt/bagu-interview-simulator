@@ -1,0 +1,27 @@
+id: mo-flutter-138
+title: "Widget 测试报 Timer is still pending 是什么原因？"
+topics: [flutter, testing, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "testWidgets 在 FakeAsync 区域内运行，时间只在调用 pump 时推进；测试结束时若仍有未完成的 Timer 或未释放的 AnimationController，框架会报 pending timer 错误以防止测试泄漏。修复方式是推进虚拟时间、取消定时器，或在 dispose 中释放动画与订阅，而不是放大超时时间。"
+  keyPoints:
+    - "testWidgets 使用 FakeAsync，真实等待不会推进虚拟时钟"
+    - "未 dispose 的 AnimationController、Timer.periodic 会阻止测试收尾"
+    - "pumpAndSettle 会反复推进直到无帧调度，遇无限动画会超时"
+    - "平台通道需用 TestDefaultBinaryMessenger 或 fake 拦截，避免真实调用"
+  pitfalls:
+    - "用 await Future.delayed 等待，FakeAsync 下时间不会前进"
+    - "直接调大 timeout 掩盖资源未释放的问题"
+followups:
+  - "如何在测试中 mock 一个 MethodChannel 的返回值？"
+  - "runAsync 适合在什么场景下使用？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/testWidgets.html
+  title: "testWidgets function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

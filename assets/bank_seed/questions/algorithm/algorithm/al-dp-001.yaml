@@ -1,0 +1,24 @@
+id: al-dp-001
+title: "动态规划和贪心有什么区别？"
+topics: [algorithm, dynamic-programming, greedy]
+role: algorithm
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "DP 保存子问题最优解，适用于有重叠子问题与最优子结构的问题；贪心每步取局部最优，需要交换论证等正确性证明，不一定全局最优。"
+  keyPoints:
+    - "DP 定义状态、转移、边界与遍历顺序"
+    - "重叠子问题 + 最优子结构是 DP 的前提"
+    - "贪心不回溯，正确性依赖贪心选择性质"
+    - "0/1 背包贪心不成立，分数背包成立"
+  pitfalls: ["看到最优就套贪心", "DP 状态定义遗漏维度"]
+followups:
+  - "如何用交换论证证明一个贪心策略？"
+source:
+  url: https://en.wikipedia.org/wiki/Dynamic_programming
+  title: "Dynamic programming - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-162
+title: "Layer 树与 Scene 在合成阶段各自承担什么？"
+topics: [flutter, rendering, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "paint 阶段 RenderObject 把绘制指令录制成 Picture，位于重绘边界上的 RenderObject 会生成独立 Layer，最终形成以 RenderView 为根的 Layer 树。合成时每层通过 buildScene 把 Picture、变换与裁剪写入 SceneBuilder，构建出 Scene 交给引擎；未失效的图层可以跨帧复用，避免重复录制与重绘。"
+  keyPoints:
+    - "Picture 是录制好的绘制指令，Layer 在其上附加偏移、变换与裁剪等合成信息"
+    - "isRepaintBoundary 为 true 的 RenderObject 拥有独立 Layer，重绘不会波及父级"
+    - "RenderView.compositeFrame 用 SceneBuilder 遍历 Layer 树并 build 出 Scene"
+    - "Opacity、ShaderMask 与非矩形 clip 常触发 saveLayer，需要额外离屏缓冲"
+  pitfalls:
+    - "以为图层越多越快，忽略每层带来的合成、显存与遍历开销"
+    - "把 RepaintBoundary 当万能修复手段，却从不看 DevTools 里的图层统计"
+followups:
+  - "debugDumpLayerTree 能帮你发现哪些问题？"
+  - "OffsetLayer.toImage 适合用在什么场景？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/Layer-class.html
+  title: "Layer class - rendering library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

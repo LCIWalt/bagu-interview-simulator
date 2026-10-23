@@ -1,0 +1,26 @@
+id: mo-dart-002
+title: "Dart: Using streams"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Future 表示一次异步结果，Stream 表示一段时间内可多次推送的事件序列。普通 Stream 是单订阅，只能被一个监听者消费；broadcast Stream 可多订阅，但订阅前的事件不会补发，且需要自行管理订阅生命周期。"
+  keyPoints:
+    - "Future 单值，Stream 多值"
+    - "单订阅 Stream 只能 listen 一次"
+    - "broadcast 不缓存历史事件，后订阅者收不到之前的数据"
+    - "StreamSubscription 要在 dispose 时 cancel"
+  pitfalls:
+    - "对单订阅 Stream 重复 listen"
+    - "认为 broadcast 会自动重放最新值"
+followups:
+  - "StreamBuilder 在 Stream 重建时会发生什么？"
+source:
+  url: https://dart.dev/libraries/async/using-streams
+  title: "Dart: Using streams"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

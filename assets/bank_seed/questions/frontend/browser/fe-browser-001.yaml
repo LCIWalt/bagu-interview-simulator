@@ -1,0 +1,24 @@
+id: fe-browser-001
+title: "从输入 URL 到页面渲染，关键路径上有哪些步骤？"
+topics: [browser, performance, network]
+role: frontend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "导航与缓存、DNS/TCP/TLS、HTTP 响应、HTML 解析建 DOM、CSS 建 CSSOM、布局、绘制、合成；阻塞资源与 JS 执行决定首屏时间。"
+  keyPoints:
+    - "DNS、TCP、TLS 与 HTTP 缓存命中决定导航耗时"
+    - "HTML 解析构建 DOM，CSS 构建 CSSOM，两者合成渲染树"
+    - "布局计算几何、绘制生成指令、合成层交给 GPU"
+    - "JS/CSS 阻塞解析，preload/preconnect 可优化关键路径"
+  pitfalls: ["把 DOMContentLoaded 与 load 混为一谈", "认为所有 CSS 都阻塞渲染"]
+followups:
+  - "为什么把 CSS 放在 head、JS 放在 body 末尾？"
+source:
+  url: https://en.wikipedia.org/wiki/Critical_rendering_path
+  title: "Critical rendering path - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

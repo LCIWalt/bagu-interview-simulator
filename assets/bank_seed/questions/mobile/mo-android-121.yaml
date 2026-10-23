@@ -1,0 +1,26 @@
+id: mo-android-121
+title: "Android: ANR 成因与排查"
+topics: [android, anr, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ANR 通常由主线程超过 5 秒无法响应输入、BroadcastReceiver 超时或前台服务启动超时触发。排查看 traces.txt 中的主线程堆栈、锁竞争和 Binder 阻塞，修复方向是把 IO 和同步等待移出主线程并增加超时。"
+  keyPoints:
+    - "输入分发约 5 秒、前台 Broadcast 约 10 秒是常见 ANR 阈值"
+    - "traces.txt 中主线程状态、锁等待和 Binder 调用是关键证据"
+    - "StrictMode 可以提前发现主线程磁盘和网络访问"
+    - "Binder 调用、运行锁和频繁 GC 都可能让主线程卡住"
+  pitfalls:
+    - "只记录 ANR 发生时间，却不分析主线程堆栈"
+    - "用 try/catch 包住耗时逻辑，阻塞问题仍然存在"
+followups:
+  - "如何用 Perfetto 定位主线程被谁阻塞？"
+source:
+  url: https://developer.android.com/topic/performance/vitals/anr
+  title: "ANRs"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

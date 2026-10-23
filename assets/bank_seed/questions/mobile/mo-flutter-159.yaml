@@ -1,0 +1,27 @@
+id: mo-flutter-159
+title: "debug、profile、release 三种构建模式的本质区别是什么？"
+topics: [flutter, build-modes, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "debug 使用 JIT、开启断言并加载调试服务，支持热重载但帧耗时远高于线上；profile 采用 AOT、关闭大部分断言但保留 timeline 与 DevTools，是性能测量的基准；release 同样 AOT 并做 tree-shaking，关闭调试能力，用于发布。性能与包体结论必须来自 profile 或 release，debug 数据没有参考价值。"
+  keyPoints:
+    - "debug：JIT 加断言与服务扩展，可热重载，性能不代表线上"
+    - "profile：AOT 加断言关闭，保留可观测能力，用于性能分析"
+    - "release：AOT 加 tree-shaking，可选混淆，无调试服务"
+    - "插件与日志在 profile/release 下的行为可能与 debug 不同"
+  pitfalls:
+    - "用 debug 的帧率判断线上是否卡顿"
+    - "在 release 中依赖 assert 做参数校验，导致校验被移除"
+followups:
+  - "为什么 release 下某些调试日志消失了？"
+  - "如何在 profile 模式下抓取 Timeline？"
+source:
+  url: https://docs.flutter.dev/testing/build-modes
+  title: "Flutter's build modes"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

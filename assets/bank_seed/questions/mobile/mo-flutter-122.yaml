@@ -1,0 +1,27 @@
+id: mo-flutter-122
+title: "Flutter 中如何做自适应布局而不是写死屏幕尺寸？"
+topics: [flutter, layout, responsive]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "用 LayoutBuilder 按父级可用约束选择布局，用 MediaQuery 获取尺寸、方向与文字缩放，配合 SafeArea 处理刘海与手势区；断点应基于可用宽度而不是设备型号。平板或桌面可切换双栏，并用 const 与懒加载控制重建成本。"
+  keyPoints:
+    - "LayoutBuilder 依据父级约束做断点决策"
+    - "MediaQuery 提供尺寸、方向与 textScaler"
+    - "SafeArea 处理安全区域，避免内容被遮挡"
+    - "断点按可用宽度设计，不按设备型号"
+  pitfalls:
+    - "在局部布局中调用 MediaQuery.of，导致整页随尺寸变化重建"
+    - "忽略系统字体缩放，导致文案溢出"
+followups:
+  - "MediaQuery.sizeOf 与 MediaQuery.of(context).size 有何差别？"
+  - "如何在手机与平板间共享同一套页面结构？"
+source:
+  url: https://docs.flutter.dev/ui/adaptive-responsive
+  title: "Adaptive and responsive design in Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

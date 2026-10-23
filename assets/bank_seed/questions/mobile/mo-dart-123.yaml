@@ -1,0 +1,26 @@
+id: mo-dart-123
+title: "Error 与 Exception：异步错误的处理边界"
+topics: [dart, exceptions, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Exception 表示可预期的失败，调用方应捕获并恢复；Error 表示程序缺陷，如 StateError、TypeError，通常不应被业务代码吞掉。异步代码中的错误会封装进 Future，未被 await 的 Future 错误可能变成未捕获异常。"
+  keyPoints:
+    - "on FormatException catch (e) 精确捕获，catch (e) 兜底"
+    - "Error 与 Exception 都实现 Throwable，但语义不同"
+    - "async 函数中 throw 会返回一个失败的 Future"
+    - "未 await 的 Future 错误会走 Zone 的未捕获错误处理"
+  pitfalls:
+    - "catch (e) 吞掉所有错误导致状态不一致"
+    - "在 finally 中 return 覆盖掉异常"
+followups:
+  - "如何设计自定义异常层级并保留 cause？"
+source:
+  url: https://dart.dev/language/error-handling
+  title: "Dart: Error handling"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

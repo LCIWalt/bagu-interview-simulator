@@ -1,0 +1,27 @@
+id: mo-flutter-171
+title: "AppLifecycleState 各状态的区别与常见误用是什么？"
+topics: [flutter, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 的生命周期从 resumed 经 inactive、hidden 到 paused，detached 表示引擎仍存在但已与视图脱离；inactive 是可见但失焦，hidden 在桌面与多窗口场景更常见。保存进度、暂停动画应放在 hidden 或 paused，回前台时重新校验数据，而不能假设回调一定按固定顺序到达。"
+  keyPoints:
+    - "resumed 可交互，inactive 可见但失焦（如通知栏、分屏），hidden 不可见"
+    - "paused 在移动端通常表示进入后台，detached 表示已脱离宿主视图"
+    - "AppLifecycleListener 提供 onHide/onShow/onPause 等细分回调，比只重写 didChangeAppLifecycleState 更清晰"
+    - "回到前台时状态可能已过期，需要重新校验登录态与数据新鲜度"
+  pitfalls:
+    - "把 inactive 当后台直接暂停播放或断开连接，下拉通知栏就中断"
+    - "只在 paused 保存状态，进程被系统杀死时来不及写入"
+followups:
+  - "如何区分用户主动退出与系统回收？"
+  - "多窗口应用的生命周期与单窗口有何不同？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AppLifecycleListener-class.html
+  title: "AppLifecycleListener class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

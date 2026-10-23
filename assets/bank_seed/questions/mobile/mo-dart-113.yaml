@@ -1,0 +1,26 @@
+id: mo-dart-113
+title: "空安全类型提升为什么对字段失效"
+topics: [dart, null-safety, oop]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "空安全通过静态流分析在判空后提升变量类型，但只对局部变量、参数等可证明不被并发修改的目标生效。实例字段可能被 getter 或外部修改，通常不会被提升，需要先赋给局部变量。"
+  keyPoints:
+    - "if (x != null) 之后 x 在作用域内提升为非空类型"
+    - "final 局部变量与参数更容易被提升"
+    - "实例字段默认不提升，可先 final local = field"
+    - "显式 ! 会绕过检查，null 时抛 TypeError"
+  pitfalls:
+    - "在字段上反复用 ! 而不做局部缓存"
+    - "认为 late 变量自动获得非空保证"
+followups:
+  - "为什么可变字段无法被类型提升？"
+source:
+  url: https://dart.dev/null-safety/understanding-null-safety
+  title: "Dart: Understanding null safety"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

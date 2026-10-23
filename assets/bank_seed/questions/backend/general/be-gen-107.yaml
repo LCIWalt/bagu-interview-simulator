@@ -1,0 +1,27 @@
+id: be-gen-107
+title: "InnoDB 的间隙锁和 next-key lock 解决什么问题？什么时候会退化？"
+topics: [mysql, lock, transaction]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "在可重复读隔离级别下，InnoDB 用间隙锁锁住索引记录之间的空隙，配合记录锁组成 next-key lock，阻止其他事务在范围内插入，从而避免幻读。唯一索引上的等值命中会退化为记录锁，不存在的等值查询则可能锁住相邻间隙。"
+  keyPoints:
+    - "记录锁锁索引记录，间隙锁锁开区间，next-key lock 是两者组合的左开右闭区间"
+    - "间隙锁之间可以共存，目的是阻止插入，而不是互斥读取"
+    - "唯一索引等值且记录存在时只加记录锁；等值不存在时会加间隙锁"
+    - "非唯一索引或范围查询会扩大锁定范围，缺少合适索引时可能锁住大量行与间隙"
+  pitfalls:
+    - "认为间隙锁只在可重复读下存在，忽视不同隔离级别与语句类型的差异"
+    - "在事务中做无索引更新，导致锁范围蔓延并引发大面积阻塞"
+followups:
+  - "RC 隔离级别下为什么基本不需要间隙锁？"
+  - "insert intention lock 与间隙锁如何交互？"
+source:
+  url: https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html
+  title: "MySQL 8.4 Reference Manual: InnoDB Locking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

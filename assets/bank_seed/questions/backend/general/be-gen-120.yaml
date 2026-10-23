@@ -1,0 +1,27 @@
+id: be-gen-120
+title: "零拷贝是什么？sendfile 省掉了哪些拷贝？"
+topics: [os, linux, io]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "传统文件发送要经历磁盘到页缓存、页缓存到用户缓冲、用户缓冲到 socket 缓冲、再到网卡的多轮拷贝与两次上下文切换。sendfile 让内核直接把页缓存数据送到 socket，省掉用户态参与，实现零拷贝语义。"
+  keyPoints:
+    - "传统 read/write 有四次拷贝与两次系统调用切换，用户缓冲区完全不必要"
+    - "sendfile 在内核内完成页缓存到 socket 的传输，减少拷贝与上下文切换"
+    - "配合 DMA scatter-gather 与网卡校验和卸载，可进一步避免 CPU 参与数据搬运"
+    - "TLS 加密、需要对内容做变换或用户态处理的场景无法直接使用纯零拷贝"
+  pitfalls:
+    - "把零拷贝理解为一个字节都不拷贝，实际仍需要内核缓冲区间传递"
+    - "在需要加密或压缩的链路上强行使用 sendfile，反而增加复杂度"
+followups:
+  - "mmap 加 write 与 sendfile 在适用场景上有什么区别？"
+  - "Kafka 是如何利用零拷贝提升吞吐的？"
+source:
+  url: https://man7.org/linux/man-pages/man2/sendfile.2.html
+  title: "sendfile(2) — Linux manual page"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

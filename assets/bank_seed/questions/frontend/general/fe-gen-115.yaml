@@ -1,0 +1,25 @@
+id: fe-gen-115
+title: "XSS 有哪几种类型，前端应如何防御？"
+topics: [security, browser, javascript]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "XSS 是攻击者把可执行脚本注入页面，分为存储型、反射型和 DOM 型，本质是让不可信数据进入了 HTML 或 JS 执行上下文。防御核心是按上下文输出编码、避免危险的 DOM API，并配合 CSP 与安全框架做纵深防御。"
+  keyPoints:
+    - "按信任边界对 HTML、属性、URL、JS、CSS 等不同上下文分别编码"
+    - "优先使用 textContent，避免用 innerHTML 或 eval 拼接不可信数据"
+    - "富文本必须经服务端白名单净化，不能只做简单转义"
+    - "CSP、HttpOnly Cookie 与框架自动转义共同构成纵深防御"
+  pitfalls: ["只在前端转义而忽略服务端存储型 XSS", "认为 dangerouslySetInnerHTML 会自动净化内容"]
+followups:
+  - "为什么 URL 中的 javascript: 协议仍可能触发 XSS？"
+  - "CSP 的 nonce 与 hash 方式应如何选择？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS
+  title: "MDN: Cross-site scripting (XSS)"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

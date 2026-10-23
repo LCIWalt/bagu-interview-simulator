@@ -1,0 +1,26 @@
+id: mo-android-123
+title: "Android: Doze、App Standby 与后台限制"
+topics: [android, background, battery]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Doze 在设备静止且未充电时推迟网络、Job 和闹钟，App Standby 按使用频率限制后台任务；Android 8 起还限制后台 Service 和隐式广播。需要可靠延后执行的任务应使用 WorkManager，需要持续运行的任务则使用类型正确的前台服务。"
+  keyPoints:
+    - "Doze 维护窗口会批量放行网络与 Job，不能假设任务立即执行"
+    - "高优先级 FCM 可以短暂唤醒应用，但滥用会被系统限制"
+    - "后台启动 Service 受限制，前台服务必须声明 foregroundServiceType"
+    - "精确闹钟需要 SCHEDULE_EXACT_ALARM 或 USE_EXACT_ALARM 权限"
+  pitfalls:
+    - "用 AlarmManager 轮询代替 WorkManager，造成耗电和延迟"
+    - "无声明地启动前台服务，Android 14 及以上会抛异常"
+followups:
+  - "Android 15 对前台服务类型增加了哪些限制？"
+source:
+  url: https://developer.android.com/training/monitoring-device-state/doze-standby
+  title: "Optimize for Doze and App Standby"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

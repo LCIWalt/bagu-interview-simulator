@@ -1,0 +1,26 @@
+id: mo-flutter-002
+title: "Flutter: State management"
+topics: [flutter, async, lifecycle]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "await 期间 Widget 可能被卸载，原 BuildContext 已失效，继续使用会抛异常。应在 await 后检查 mounted（State）或 context.mounted，再访问 Navigator、Theme、ScaffoldMessenger 等。"
+  keyPoints:
+    - "async gap 后 BuildContext 可能失效"
+    - "State.mounted 表示 Element 仍挂载"
+    - "Flutter 3.7+ 可用 context.mounted"
+    - "提前捕获 Navigator/ScaffoldMessenger 也是常用做法"
+  pitfalls:
+    - "await 后直接 Navigator.pop"
+    - "在已 dispose 的 State 上 setState"
+followups:
+  - "如何避免 async 回调里的 setState after dispose？"
+source:
+  url: https://docs.flutter.dev/get-started/fundamentals/state-management
+  title: "Flutter: State management"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

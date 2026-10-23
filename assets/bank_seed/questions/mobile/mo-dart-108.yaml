@@ -1,0 +1,26 @@
+id: mo-dart-108
+title: "Isolate.run 与 compute：如何选择"
+topics: [dart, isolate, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Isolate.run 提供一次性 isolate，自动把返回值或异常传回并关闭 isolate；compute 是 Flutter 对同类需求的封装。两者都适合 CPU 密集的纯函数任务，不适合频繁小任务或需要共享状态的场景。"
+  keyPoints:
+    - "Isolate.run 支持可发送的返回值，异常会原样重抛"
+    - "compute 要求顶层或静态函数，参数与返回值都必须可发送"
+    - "创建 isolate 有毫秒级成本，任务太小反而更慢"
+    - "需要长期复用或双向通信时应自建 Isolate.spawn + SendPort"
+  pitfalls:
+    - "把闭包捕获的大量不可发送对象传给 compute"
+    - "在 isolate 里访问 UI、BuildContext 或平台通道"
+followups:
+  - "如何用 Isolate.spawn 建立可复用的 worker 池？"
+source:
+  url: https://api.dart.dev/stable/dart-isolate/Isolate/run.html
+  title: "Isolate.run static method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

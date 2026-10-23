@@ -1,0 +1,26 @@
+id: mo-dart-114
+title: "late 的延迟初始化与运行时风险"
+topics: [dart, null-safety, memory]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "late 表示延迟初始化，变量在首次读取时求值，late final 只能赋值一次。它把初始化检查推迟到运行时，未赋值就读取会抛 LateInitializationError，也常用于绕开字段初始化顺序限制。"
+  keyPoints:
+    - "late 变量首次读取时才执行初始化表达式"
+    - "late final 无初始化器时可在构造体内赋值一次"
+    - "未初始化读取抛 LateInitializationError，不是编译错误"
+    - "late 可让实例字段引用 this，但滥用会掩盖初始化顺序问题"
+  pitfalls:
+    - "用 late 消除编译错误却留下运行时崩溃"
+    - "在循环或多次调用中给 late final 重复赋值"
+followups:
+  - "late 与 nullable 字段加 ! 的取舍是什么？"
+source:
+  url: https://dart.dev/language/variables
+  title: "Dart: Variables"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

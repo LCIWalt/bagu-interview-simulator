@@ -1,0 +1,26 @@
+id: mo-dart-107
+title: "Zone：异步错误捕获与上下文传递"
+topics: [dart, zone, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Zone 为异步代码提供上下文，可以捕获未处理错误、拦截定时器与 microtask 的创建、携带 zoneValues。runZonedGuarded 常用于把框架外的异步异常汇总到日志或崩溃上报，但它无法捕获其他 isolate 的异常。"
+  keyPoints:
+    - "Zone.current 在异步边界上保持不变，相当于隐式上下文传递"
+    - "runZonedGuarded 捕获该 zone 内未处理的异步错误"
+    - "zoneValues 可做轻量依赖传递，但不应替代显式依赖注入"
+    - "fork 子 zone 可定制 scheduleMicrotask、createTimer 等 hook"
+  pitfalls:
+    - "以为 Zone 能捕获其他 isolate 的异常"
+    - "在 zone 里吞掉错误导致 FlutterError.onError 不再触发"
+followups:
+  - "Flutter 的 runApp 与 runZonedGuarded 应该怎样组合？"
+source:
+  url: https://api.dart.dev/stable/dart-async/Zone-class.html
+  title: "Zone class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

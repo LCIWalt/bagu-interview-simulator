@@ -1,0 +1,25 @@
+id: fe-gen-108
+title: "React 项目该如何在本地状态、Context 与外部状态库之间做选择？"
+topics: [react, state-management]
+role: frontend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "先按状态的作用域与更新频率分层：组件内交互用 useState/useReducer，跨层但低频的配置用 Context，高频且复杂的共享状态再引入外部库。关键不在库本身，而在单一数据源和清晰的更新边界。"
+  keyPoints:
+    - "本地状态优先，避免过早把状态全局化"
+    - "Context 适合主题、当前用户、国际化等低频值，变化会影响所有消费者"
+    - "外部状态库适合复杂更新、时间旅行与跨组件高频订阅"
+    - "服务端数据缓存与客户端 UI 状态应分开管理"
+  pitfalls: ["把所有状态塞进一个全局 store", "用 Context 承载高频变化的值导致整棵子树重渲染"]
+followups:
+  - "为什么服务端数据缓存更适合交给专门的数据请求库？"
+  - "useReducer 相比多个 useState 的优势是什么？"
+source:
+  url: https://react.dev/learn/managing-state
+  title: "React: Managing State"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

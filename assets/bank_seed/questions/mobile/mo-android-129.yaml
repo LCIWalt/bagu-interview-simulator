@@ -1,0 +1,27 @@
+id: mo-android-129
+title: "Android: 设计离线优先的资讯客户端"
+topics: [android, architecture, offline-first]
+role: mobile
+level: senior
+difficulty: 4
+type: system-design
+answer:
+  summary: "离线优先的核心是单一可信数据源：Room 作为本地缓存，Repository 先返回本地数据再触发网络同步，UI 只观察数据库 Flow。同步层要处理分页、去重、冲突、失败重试和网络恢复，图片与正文按需缓存并设置容量与淘汰策略。"
+  keyPoints:
+    - "Room 作为单一可信数据源，网络结果写入后再由 Flow 驱动 UI"
+    - "增量同步使用游标或时间戳，本地分页与远端分页统一建模"
+    - "冲突按业务选择 last-write-wins 或服务端版本号，不能静默覆盖"
+    - "同步任务用 WorkManager，失败指数退避并区分可重试错误"
+  pitfalls:
+    - "UI 同时订阅网络和数据库，导致状态源不一致"
+    - "无上限缓存正文和图片，造成磁盘膨胀"
+followups:
+  - "如何设计离线状态下的已读和收藏同步？"
+  - "Paging 3 如何与 Room 和 RemoteMediator 配合？"
+source:
+  url: https://developer.android.com/topic/architecture/data-layer/offline-first
+  title: "Build an offline-first app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

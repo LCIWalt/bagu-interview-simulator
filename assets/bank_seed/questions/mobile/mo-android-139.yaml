@@ -1,0 +1,27 @@
+id: mo-android-139
+title: "Android: App Links 验证与深链路由"
+topics: [android, deeplink, app-links]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "App Links 通过 `android:autoVerify=\"true\"` 加 HTTPS intent-filter，让系统在安装时抓取域名下的 `/.well-known/assetlinks.json`，校验包名与签名证书指纹，通过后链接直接进入应用。验证失败或未部署该文件时，链接会退回浏览器或选择器。路由侧还要处理未登录、参数缺失、已启动实例与版本兼容。"
+  keyPoints:
+    - "intent-filter 使用 https scheme、autoVerify=true，并声明精确 host"
+    - "域名根目录部署 assetlinks.json，包含 package_name 与 SHA-256 证书指纹"
+    - "用 pm get-app-links 与 pm verify-app-links 检查验证状态和失败原因"
+    - "已启动实例用 singleTask 加 onNewIntent 或 Navigation deepLink 处理跳转"
+  pitfalls:
+    - "只配置 intent-filter 未部署 assetlinks.json，链接仍然走浏览器"
+    - "用 debug 签名指纹生成 assetlinks.json，正式包验证必然失败"
+followups:
+  - "assetlinks.json 已部署但验证仍失败，排查顺序是什么？"
+  - "App Links 相比自定义 scheme 在安全性和体验上有什么优势？"
+source:
+  url: https://developer.android.com/training/app-links/verify-android-applinks
+  title: "Verify Android App Links"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

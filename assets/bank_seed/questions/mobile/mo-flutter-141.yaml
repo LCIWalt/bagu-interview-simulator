@@ -1,0 +1,27 @@
+id: mo-flutter-141
+title: "ColorScheme.fromSeed 生成的配色在生产中要注意什么？"
+topics: [flutter, material, theming]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "fromSeed 在 HCT 色彩空间里由单一 seed 推导出整套 Material 3 角色色，色调与明度关系一致，但它给出的是协调的角色色，不是设计稿上的精确品牌值。生产上通常在其结果上用 copyWith 覆盖品牌主色，并分别校验亮色与暗色主题下文字、图标与 surfaceTint 叠加后的对比度。"
+  keyPoints:
+    - "seed 只决定色相与色调映射，输出的是角色色而非精确品牌色"
+    - "Material 3 的 surfaceTint 会随 elevation 给表面着色，需检查叠加后对比度"
+    - "亮暗主题应各自 fromSeed(brightness:)，而不是把亮色方案简单反色"
+    - "Android 12+ 可用 dynamic_color 取系统配色，同时保留 seed 作为回退"
+  pitfalls:
+    - "直接把生成的 primary 当作设计稿色值交付"
+    - "只验证亮色主题，暗色下正文对比度不足"
+followups:
+  - "如何在覆盖品牌主色的同时保持 M3 角色色的协调？"
+  - "动态取色开启后如何保证品牌识别度？"
+source:
+  url: https://api.flutter.dev/flutter/material/ColorScheme/ColorScheme.fromSeed.html
+  title: "ColorScheme.fromSeed constructor"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

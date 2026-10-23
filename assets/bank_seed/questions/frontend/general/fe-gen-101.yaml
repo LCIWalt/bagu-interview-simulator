@@ -1,0 +1,25 @@
+id: fe-gen-101
+title: "重排（Reflow）与重绘（Repaint）有什么区别，如何减少开销？"
+topics: [browser, performance, css]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "重排是浏览器重新计算元素几何位置与尺寸，重绘是重新生成像素；几何属性变化会先触发重排，而颜色等绘制属性变化只触发重绘。重排代价更高且可能波及祖先与兄弟节点，应通过批量读写、合成层动画和限制布局影响范围来降低开销。"
+  keyPoints:
+    - "几何属性变化触发布局（重排），并通常伴随重绘；仅颜色、背景等变化只重绘"
+    - "重排会波及祖先、兄弟与后续文档流，代价高于重绘"
+    - "批量读写 DOM，避免读 offsetHeight 后立刻写样式造成布局抖动"
+    - "transform/opacity 动画可走合成层，contain 与 content-visibility 可限制布局范围"
+  pitfalls: ["认为修改 class 一定只触发重绘", "在循环中交替读布局属性与写样式导致强制同步布局"]
+followups:
+  - "requestAnimationFrame 如何帮助避免布局抖动？"
+  - "will-change 使用不当会带来什么副作用？"
+source:
+  url: https://web.dev/articles/rendering-performance
+  title: "web.dev: Rendering performance"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

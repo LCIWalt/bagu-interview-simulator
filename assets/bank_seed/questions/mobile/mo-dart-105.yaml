@@ -1,0 +1,26 @@
+id: mo-dart-105
+title: "Future.wait：并发等待、错误聚合与取消"
+topics: [dart, async, concurrency]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Future.wait 并发等待多个 Future，默认等全部完成后按传入顺序返回结果；任一失败时默认仍等待其余完成再抛错，eagerError: true 可改为立即失败。它不会取消其他任务，超时与取消仍需调用方自己处理。"
+  keyPoints:
+    - "结果顺序与传入顺序一致，与完成顺序无关"
+    - "eagerError 控制首个错误是否立即返回"
+    - "默认只抛出第一个错误，其余错误会被丢弃"
+    - "wait 不提供取消，需配合 timeout 或 CancelToken"
+  pitfalls:
+    - "以为其中一个失败会取消其他 Future"
+    - "需要全部成功时却忽略部分失败后的状态回滚"
+followups:
+  - "Future.any 适合什么场景，落败的 Future 如何处理？"
+source:
+  url: https://api.dart.dev/stable/dart-async/Future/wait.html
+  title: "Future.wait static method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

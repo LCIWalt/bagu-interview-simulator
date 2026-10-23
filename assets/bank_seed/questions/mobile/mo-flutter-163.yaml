@@ -1,0 +1,27 @@
+id: mo-flutter-163
+title: "项目：自绘图表卡顿，如何优化 CustomPainter？"
+topics: [flutter, rendering, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "CustomPainter 的开销主要来自每秒重新录制 Picture、在 paint 里分配对象以及过大的重绘区域。先确认 shouldRepaint 的返回值与 repaint 通知是否精确，再复用 Paint 与 Path、把静态内容预录成 Picture，并用 RepaintBoundary 把画布与滚动容器隔离。"
+  keyPoints:
+    - "shouldRepaint 返回 false 时不会重新 paint，但父级尺寸变化仍可能触发重绘"
+    - "通过 repaint 传入 Listenable 驱动重绘，避免用 setState 重建整个页面"
+    - "Paint、Path、TextPainter 在构造阶段创建并复用，不要在 paint 内反复分配"
+    - "静态内容可用 PictureRecorder 预录，再用 canvas.drawPicture 复用"
+  pitfalls:
+    - "shouldRepaint 永远返回 true，或在其中做深比较等昂贵计算"
+    - "每次 paint 都新建并 layout TextPainter，造成重复排版"
+followups:
+  - "CustomPaint 的 isComplex 与 willChange 影响什么？"
+  - "如何判断卡顿来自录制、布局还是光栅化？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/CustomPainter-class.html
+  title: "CustomPainter class - rendering library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-116
+title: "HTTP/1.1 的 keep-alive 解决了什么？为什么还需要连接池？"
+topics: [network, http, performance]
+role: backend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "HTTP/1.1 默认开启持久连接，同一个 TCP 连接可以串行处理多个请求，避免每次请求都重新握手。但请求仍是串行应答，前一个响应慢会阻塞后续请求，因此客户端还需要连接池控制并发连接数并复用连接。"
+  keyPoints:
+    - "Connection: keep-alive 在 HTTP/1.1 中默认生效，通过复用 TCP 省去握手与慢启动成本"
+    - "HTTP/1.1 的 pipelining 虽可连续发送请求，但响应必须按序返回，仍存在队头阻塞"
+    - "连接池限制每台主机的最大连接数，配合空闲超时与健康检查避免复用失效连接"
+    - "服务端和中间代理的 idle timeout 必须与客户端池配置匹配，否则会复用到已被关闭的连接"
+  pitfalls:
+    - "认为 keep-alive 能解决 HTTP/1.1 的队头阻塞，实际并发仍依赖多连接"
+    - "客户端空闲超时设置长于服务端，导致请求打在已关闭连接上频繁失败重试"
+followups:
+  - "HTTP/2 的多路复用与 keep-alive 是什么关系？"
+  - "连接池该按延迟还是按吞吐确定大小？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Keep-Alive
+  title: "Keep-Alive header - HTTP | MDN"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

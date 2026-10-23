@@ -1,0 +1,25 @@
+id: fe-gen-106
+title: "useEffect 的依赖数组、清理函数与执行时机如何理解？"
+topics: [react, hooks]
+role: frontend
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "useEffect 在提交并完成绘制后异步执行；依赖变化时先运行上一次的清理函数，再执行新的 effect，空数组只在挂载后执行一次并在卸载时清理。依赖应包含 effect 读取的所有响应式值，否则会捕获过期闭包。"
+  keyPoints:
+    - "useEffect 在浏览器绘制后执行，useLayoutEffect 则在绘制前同步执行"
+    - "清理函数在下一次 effect 前与组件卸载时执行，用于取消订阅和定时器"
+    - "依赖数组按浅比较判断，漏写依赖会读到旧值"
+    - "开发环境 StrictMode 会额外执行一次挂载与卸载，用于暴露副作用问题"
+  pitfalls: ["把每次渲染新建的对象或函数放进依赖导致 effect 反复执行", "在 effect 中漏掉请求取消逻辑引发竞态与内存泄漏"]
+followups:
+  - "为什么在 effect 中同步调用 setState 可能引发额外渲染？"
+  - "如何用 ref 保存最新值而避免重新执行 effect？"
+source:
+  url: https://react.dev/reference/react/useEffect
+  title: "React: useEffect"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-dart-112
+title: "extension 的静态分派与冲突消解"
+topics: [dart, oop, extension]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "extension 为已有类型添加成员，调用在编译期按静态类型解析，不参与虚方法表，也不能被 override。多个 extension 提供同名成员时，如果静态类型同时匹配会产生歧义，需要显式指定 extension 名。"
+  keyPoints:
+    - "extension 成员是静态解析，运行时类型不影响选择"
+    - "可对 nullable 类型扩展，如 extension on String?"
+    - "extension type 是零成本包装，与 extension method 不同"
+    - "库之间同名扩展冲突时用 ExtensionName(obj).member 消歧"
+  pitfalls:
+    - "期望子类覆盖 extension 方法"
+    - "对 dynamic 调用扩展成员，运行时报 NoSuchMethodError"
+followups:
+  - "extension 能访问同类库中的私有成员吗？"
+source:
+  url: https://dart.dev/language/extension-methods
+  title: "Dart: Extension methods"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

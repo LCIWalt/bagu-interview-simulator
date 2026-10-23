@@ -1,0 +1,26 @@
+id: mo-android-107
+title: "Android: Context 类型与使用场景"
+topics: [android, context, memory]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Activity、Service 和 Application 都是 Context，但生命周期和用途不同：Activity Context 绑定窗口与主题，Application Context 与进程同寿命。长生命周期对象持有 Activity Context 会阻止页面回收，单例、缓存和线程池应只持有 ApplicationContext。"
+  keyPoints:
+    - "ApplicationContext 生命周期与进程一致，不能直接启动需要窗口的 Dialog"
+    - "Activity Context 适合加载主题资源、inflate 布局和启动 Activity"
+    - "Service Context 接近 Application，但同样不应持有 Activity 引用"
+    - "单例、缓存、线程池只应保存 ApplicationContext"
+  pitfalls:
+    - "在静态单例中保存 Activity 或 View，造成页面泄漏"
+    - "用 ApplicationContext inflate 带主题的布局，导致样式丢失"
+followups:
+  - "ContextWrapper 与 ContextImpl 之间是什么关系？"
+source:
+  url: https://developer.android.com/reference/android/content/Context
+  title: "Context"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

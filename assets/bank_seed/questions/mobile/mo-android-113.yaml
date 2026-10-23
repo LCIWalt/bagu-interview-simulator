@@ -1,0 +1,26 @@
+id: mo-android-113
+title: "Android: Flow 冷流与 StateFlow/SharedFlow"
+topics: [android, kotlin, flow]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "flow builder 生成的是冷流，每次 collect 都会重新执行；StateFlow 是带初始值的热流，只保留最新值并去重，SharedFlow 可以配置重放和缓冲。UI 层应在 repeatOnLifecycle(STARTED) 中收集，避免页面进入后台后仍持续订阅。"
+  keyPoints:
+    - "冷流按收集者独立执行，适合数据库和网络数据管道"
+    - "StateFlow 必须有初始值，相同值不会重复发射"
+    - "SharedFlow 适合事件广播，replay=0 时新订阅者收不到旧事件"
+    - "repeatOnLifecycle 在 STOPPED 时取消收集，回到 STARTED 时重启"
+  pitfalls:
+    - "用 StateFlow 发送一次性事件，旋转屏幕后可能重复消费"
+    - "在 lifecycleScope 中直接 collect，页面后台仍消耗资源"
+followups:
+  - "SharedFlow 的 replay 与 extraBufferCapacity 如何影响事件丢失？"
+source:
+  url: https://developer.android.com/kotlin/flow
+  title: "Kotlin flows on Android"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

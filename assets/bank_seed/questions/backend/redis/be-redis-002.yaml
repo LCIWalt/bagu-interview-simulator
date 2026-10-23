@@ -1,0 +1,24 @@
+id: be-redis-002
+title: "Redis 的 RDB 与 AOF 持久化有什么区别？"
+topics: [redis, persistence]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "RDB 是某一时刻的快照，文件紧凑、恢复快但可能丢更多数据；AOF 记录写命令，可配置 fsync，恢复更完整但文件更大；生产常用混合持久化。"
+  keyPoints:
+    - "RDB 由 fork 子进程生成，依赖写时复制"
+    - "AOF 追加写命令，always/everysec/no 决定丢失窗口"
+    - "AOF 重写可压缩体积，避免无限增长"
+    - "Redis 4.0+ 混合持久化：RDB 头 + AOF 增量"
+  pitfalls: ["认为 RDB 不会丢数据", "忽略 fork 的延迟与内存开销"]
+followups:
+  - "fork 时为什么可能阻塞 Redis？"
+source:
+  url: https://en.wikipedia.org/wiki/Redis
+  title: "Redis - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-dart-110
+title: "Dart 泛型的协变与 covariant 关键字"
+topics: [dart, generics, oop]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 泛型在声明处默认协变，List<Dog> 可以赋给 List<Animal>，但写入会破坏类型安全，因此不兼容写入会在运行时抛错。方法参数可用 covariant 放宽重写检查，代价是把部分检查推迟到运行时。"
+  keyPoints:
+    - "Dart 泛型协变，List<int> 可赋给 List<num>"
+    - "协变容器写入不兼容元素会在运行时抛 TypeError"
+    - "covariant 允许子类收窄参数类型，但可能触发运行时检查失败"
+    - "既读又写时优先用泛型方法或只读接口（如 Iterable）"
+  pitfalls:
+    - "把 List<Dog> 当 List<Animal> 后 add 一个 Cat"
+    - "滥用 covariant 绕过编译期检查"
+followups:
+  - "声明处协变与 Java 通配符相比有什么取舍？"
+source:
+  url: https://dart.dev/language/generics
+  title: "Dart: Generics"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

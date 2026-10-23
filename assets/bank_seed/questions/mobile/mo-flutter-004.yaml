@@ -1,0 +1,26 @@
+id: mo-flutter-004
+title: "Flutter: State class"
+topics: [flutter, lifecycle, state]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "initState 只执行一次，适合初始化 controller、订阅；didChangeDependencies 在依赖的 InheritedWidget 变化时调用，适合读取 Theme/MediaQuery 并做依赖初始化；dispose 负责取消订阅、释放 controller。"
+  keyPoints:
+    - "initState 不能访问依赖的 InheritedWidget"
+    - "didChangeDependencies 可能多次调用"
+    - "dispose 必须成对释放 controller/subscription"
+    - "build 中不要产生副作用"
+  pitfalls:
+    - "在 initState 里用 Theme.of"
+    - "忘记 dispose AnimationController"
+followups:
+  - "didUpdateWidget 适合处理什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State-class.html
+  title: "Flutter: State class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

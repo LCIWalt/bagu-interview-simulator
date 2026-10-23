@@ -1,0 +1,26 @@
+id: mo-dart-103
+title: "StreamController 的生命周期与资源释放"
+topics: [dart, stream, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "StreamController 是手动向 Stream 推送事件的入口，分为单订阅与 broadcast 两种；close() 会发送 done 并释放资源，但不会自动取消下游订阅。需要在 onListen、onCancel 等回调里联动上游资源，并在 dispose 时确保 close。"
+  keyPoints:
+    - "单订阅 controller 只允许一个 listener，broadcast 允许多个"
+    - "close 后不能再 add，add 会抛 StateError，可用 isClosed 判断"
+    - "onListen/onPause/onResume/onCancel 用于联动上游（如暂停 socket）"
+    - "sync: true 会同步派发事件，容易造成重入，默认异步更安全"
+  pitfalls:
+    - "只取消下游订阅却不 close controller，导致上游和闭包泄漏"
+    - "对已关闭的 controller 继续 add 事件"
+followups:
+  - "StreamController.broadcast 的 onListen 在什么时候触发？"
+source:
+  url: https://api.dart.dev/stable/dart-async/StreamController-class.html
+  title: "StreamController class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-146
+title: "热重载为什么能保留状态，哪些改动无法生效？"
+topics: [flutter, hot-reload, tooling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "热重载把增量编译后的 Kernel 注入正在运行的 Dart isolate，并重建 widget 树，但会保留 State 对象与全局变量，所以字段值不丢。它不重启引擎也不重新执行 main，因此修改 initState、全局初始化逻辑、枚举或类结构、原生代码与插件时都需要热重启或完整重新构建。"
+  keyPoints:
+    - "增量编译加 isolate 注入，保留 State 实例与全局变量"
+    - "热重启（R）重新执行 main 并清空状态，但仍复用同一进程"
+    - "initState 不会因热重载重新执行，相关改动要用热重启验证"
+    - "原生代码、插件、AndroidManifest 与 Info.plist、资源改动必须重新构建"
+  pitfalls:
+    - "改了 initState 却期待热重载后生效"
+    - "依赖热重载后残留的旧全局状态，误判修复结果"
+followups:
+  - "为什么 release 包不支持热重载？"
+  - "热重载后代码体积与内存会持续增长吗？"
+source:
+  url: https://docs.flutter.dev/tools/hot-reload
+  title: "Hot reload"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

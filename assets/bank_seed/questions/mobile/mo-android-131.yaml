@@ -1,0 +1,27 @@
+id: mo-android-131
+title: "Android: ART 字节码与 JIT/AOT 编译"
+topics: [android, art, runtime]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Kotlin/Java 源码经 D8/R8 编译成 dex 字节码，ART 执行的是 dex 而非机器码。Android 7.0 起 ART 采用解释器、JIT 与 AOT 的混合模式：热点方法由 JIT 编译并写入 profile，设备空闲维护时再由 dex2oat 按 profile 做 AOT。理解这条链路才能解释首启偏慢、装后越用越快以及 profile 类优化的收益。"
+  keyPoints:
+    - "源码先编译为 class，再由 D8/R8 转为 dex，ART 加载并执行 dex 字节码"
+    - "ART 以解释执行启动，热点方法由 JIT 编译，profile 记录热点与内联信息"
+    - "设备充电空闲时 dex2oat 按 profile 做 AOT，生成 oat 文件加速后续启动"
+    - "profile 可随包分发为 baseline profile，或由 ProfileInstaller 在首次运行后写入"
+  pitfalls:
+    - "认为 dex 就是机器码，忽略 ART 的解释与 JIT 预热阶段"
+    - "用 debug 包或未携带 profile 的包评估启动性能，测不到 AOT 收益"
+followups:
+  - "JIT 编译的代码与 AOT 生成的 oat 在方法调用时如何切换？"
+  - "baseline profile 与 startup profile 分别覆盖什么路径？"
+source:
+  url: https://source.android.com/docs/core/runtime
+  title: "ART and Dalvik"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

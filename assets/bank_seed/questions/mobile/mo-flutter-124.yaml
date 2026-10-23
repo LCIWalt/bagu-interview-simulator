@@ -1,0 +1,27 @@
+id: mo-flutter-124
+title: "ScrollController 在什么时机才能安全读取 offset？"
+topics: [flutter, widgets, scrolling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ScrollController 在 attach 之后才有 position，首帧 build 时直接读 offset 会抛错，应在 addPostFrameCallback 或监听器中读取。一个 controller 同时绑定多个可滚动组件时 position 不唯一，jumpTo 与 animateTo 会断言失败，需要为每个列表使用独立 controller。"
+  keyPoints:
+    - "controller.position 只有在 attach 之后可用"
+    - "监听滚动事件可做触底加载等逻辑"
+    - "多列表共用一个 controller 会导致 position 不唯一"
+    - "dispose 时移除监听并释放 controller"
+  pitfalls:
+    - "在 initState 中立即读取 controller.offset"
+    - "多个 ListView 共享 controller 后调用 jumpTo"
+followups:
+  - "ScrollNotification 与 ScrollController 监听如何取舍？"
+  - "如何安全地实现滚动到指定 item？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ScrollController-class.html
+  title: "ScrollController class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

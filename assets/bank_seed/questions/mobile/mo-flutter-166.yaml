@@ -1,0 +1,27 @@
+id: mo-flutter-166
+title: "Flutter 如何与平台输入法（IME）交换编辑状态？"
+topics: [flutter, text-input, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "EditableText 通过 TextInput.setClient 建立 TextInputConnection，并把自身作为 TextInputClient 注册给框架；平台侧把文本、选区与 composing 区间通过 updateEditingValue 回传。自定义输入控件需要实现 TextInputClient，并在状态变化时调用 setEditingState，否则光标与候选词区间会错位。"
+  keyPoints:
+    - "TextInputConnection 表示一次输入会话，随 EditableText 的生命周期建立与关闭"
+    - "TextEditingValue 同时携带 text、selection 与 composing，composing 对应候选词区间"
+    - "框架用 setEditingState 把最新值推给平台，避免平台与 controller 状态分叉"
+    - "键盘类型、回车键行为与是否多行由 TextInputConfiguration 决定"
+  pitfalls:
+    - "在 onChanged 里无条件改写 controller 文本，导致光标跳到末尾甚至输入循环"
+    - "忽略 composing 区间，在中文或日文候选阶段直接替换整段文本"
+followups:
+  - "如何实现带高亮的 @提及 输入框？"
+  - "为什么中文输入时 onChanged 可能连续触发多次？"
+source:
+  url: https://api.flutter.dev/flutter/services/TextInputConnection-class.html
+  title: "TextInputConnection class - services library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

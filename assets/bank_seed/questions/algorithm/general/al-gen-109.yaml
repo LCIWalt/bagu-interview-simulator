@@ -1,0 +1,28 @@
+id: al-gen-109
+title: "实现 strStr（KMP 前缀函数）"
+body: "给定主串 haystack 和模式串 needle，返回 needle 在 haystack 中第一次出现的下标，不存在则返回 -1；needle 为空串时返回 0。要求不使用语言内置的字符串查找函数，时间复杂度 O(n + m)。"
+topics: [algorithm, string, kmp]
+role: algorithm
+level: senior
+difficulty: 4
+type: coding
+answer:
+  summary: "先对模式串求前缀函数 pi，pi[i] 表示 needle[0..i] 的最长相等真前缀与真后缀长度；再扫描主串，失配时按 pi 回退模式串指针而不是回到起点。预处理 O(m)，匹配 O(n)，总时间 O(n + m)，空间 O(m)。"
+  keyPoints:
+    - "前缀函数 pi[i] 表示最长 border 长度，失配时用 j = pi[j - 1] 回退"
+    - "匹配阶段主串指针只前进不回退，靠 pi 跳转避免重复比较"
+    - "时间 O(n + m)，空间 O(m)；朴素匹配最坏为 O(n·m)"
+    - "边界：needle 为空返回 0；needle 比 haystack 长返回 -1；完全无匹配返回 -1"
+  pitfalls:
+    - "失配时把模式串指针直接重置为 0，退化成朴素匹配，复杂度变成 O(n·m)"
+    - "求 pi 时 while 回退后忘记更新 pi[i] 与自增 i，导致前缀函数错误并引发越界"
+followups:
+  - "如果要在主串中找出模式串的所有出现位置（允许重叠），代码只需改动哪里？"
+  - "KMP、Rabin-Karp 与 Sunday 算法分别适合什么场景？"
+source:
+  url: https://cp-algorithms.com/string/prefix-function.html
+  title: "Prefix function - Knuth-Morris-Pratt - CP-Algorithms"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

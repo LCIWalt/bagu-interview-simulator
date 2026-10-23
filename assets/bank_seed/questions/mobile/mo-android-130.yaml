@@ -1,0 +1,26 @@
+id: mo-android-130
+title: "Android: 启动优化项目复盘"
+topics: [android, performance, startup]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "回答启动优化项目要按目标、测量、归因、改造、验证组织：先用 Macrobenchmark 和 Perfetto 建立冷启动基线，再定位 Application、ContentProvider 和首屏依赖的耗时，分阶段删除、延迟或并发初始化。最后给出 TTID、TTFD、崩溃率和包体的前后对比，并说明取舍与回归风险。"
+  keyPoints:
+    - "明确指标：TTID、TTFD、首帧耗时与测试设备样本"
+    - "用 trace 归因到具体初始化、锁和 IO，而不是凭经验异步化"
+    - "改造按风险分级：删除、延迟、并发、预编译"
+    - "用前后版本或 A/B 对比验证，并监控线上回归"
+  pitfalls:
+    - "只报总时长下降，不说明测量方法和样本"
+    - "把初始化随意丢到线程池，掩盖主线程锁竞争"
+followups:
+  - "如果启动优化导致首屏数据变慢，如何权衡？"
+source:
+  url: https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview
+  title: "Write a Macrobenchmark"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

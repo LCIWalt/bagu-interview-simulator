@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "bankVersion": "2026.10.2",
+  "minAppVersion": "0.5.0",
+  "generatedAt": "2026-10-22T08:23:09.037327Z",
+  "gitCommit": "local",
+  "counts": {
+    "questions": 16,
+    "experiences": 0
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "a72796cb01abf330737a107c9ab6f2eaa6e44ace215b337c6b7feaa3dc29daca",
+      "bytes": 191
+    },
+    {
+      "path": "questions/algorithm/algorithm/al-dp-001.yaml",
+      "sha256": "8ac0b5f07cff6f2ba32e115e496af0ebadf9acf98e3acb072abe2c1dcb63fd77",
+      "bytes": 953
+    },
+    {
+      "path": "questions/algorithm/algorithm/al-hash-001.yaml",
+      "sha256": "3904e80e754c20e0661ecfe7ebe6883658f3e49d3264a72250681953c0c95cdf",
+      "bytes": 925
+    },
+    {
+      "path": "questions/algorithm/algorithm/al-sort-001.yaml",
+      "sha256": "102b465c57dee81f739553dba11e7032efdacf9abb668bbe85ee5928260c256b",
+      "bytes": 952
+    },
+    {
+      "path": "questions/backend/go/be-go-001.yaml",
+      "sha256": "118a2b88d18b6ae53fa09633d9cd2522f7d2c3de1aecdddb3326021ca1b7c73d",
+      "bytes": 969
+    },
+    {
+      "path": "questions/backend/go/be-go-002.yaml",
+      "sha256": "0396b798cfe9c651829c096156d4f7feffaac3b14e47d10d8c66b108a80d2f5f",
+      "bytes": 950
+    },
+    {
+      "path": "questions/backend/mysql/be-mysql-001.yaml",
+      "sha256": "27eec9e04de2c95e12e20ebd74bf351e9351006de2f9dd74e4b8e0e9cdfa50dd",
+      "bytes": 953
+    },
+    {
+      "path": "questions/backend/mysql/be-mysql-002.yaml",
+      "sha256": "18d5ab322418c881a8fea98ef66e0f706803e824ae940f1b84cfb4d3af0b45b0",
+      "bytes": 966
+    },
+    {
+      "path": "questions/backend/network/be-network-001.yaml",
+      "sha256": "8ccee14f94b21a1a8be833d7f2c010aa364824296114118209f4b36ce4765106",
+      "bytes": 954
+    },
+    {
+      "path": "questions/backend/network/be-network-002.yaml",
+      "sha256": "3003246d456b9d632277eeee5739e7501284d8ef6fb9b8461288cb3bbbd7ad65",
+      "bytes": 937
+    },
+    {
+      "path": "questions/backend/os/be-os-001.yaml",
+      "sha256": "d739350c122302d5d2668575f7e389b2829ad60990a2cc58e7d35f3a59feadf5",
+      "bytes": 894
+    },
+    {
+      "path": "questions/backend/redis/be-redis-001.yaml",
+      "sha256": "319f7399408898d5e237047b7080866f0b836be80541f31af4f2e99908d8bf44",
+      "bytes": 1034
+    },
+    {
+      "path": "questions/backend/redis/be-redis-002.yaml",
+      "sha256": "5501cc981623ea255d347758e1344d955df7c2591e8506aaf759997c87222fb2",
+      "bytes": 931
+    },
+    {
+      "path": "questions/frontend/browser/fe-browser-001.yaml",
+      "sha256": "e137b5ebcb6ca6863e43d45a4dccf7ebea807fdaa1fc47989fdfaa9408818c77",
+      "bytes": 1036
+    },
+    {
+      "path": "questions/frontend/javascript/fe-js-001.yaml",
+      "sha256": "be927ebc051a1c771fdbd59a98c2c8ec1f63b9ecdaad565650ec6c6624d11d55",
+      "bytes": 997
+    },
+    {
+      "path": "questions/frontend/javascript/fe-js-002.yaml",
+      "sha256": "27422eb7fc838c4b90357a20c837492848d90640097aaa60e004b9a3704dcdde",
+      "bytes": 981
+    },
+    {
+      "path": "questions/frontend/react/fe-react-001.yaml",
+      "sha256": "a4e145d41c2ec04a300342ec2fbfb3b45a9138862ea6740f950e4c58ea8685dc",
+      "bytes": 953
+    }
+  ],
+  "assets": [
+    {
+      "name": "bank-2026.10.2.tar.zst",
+      "sha256": "a4f5aea45f8e10817a66ad32a994891fd08e28e9be20a0e237d3363801a8aa0d",
+      "bytes": 6552
+    }
+  ],
+  "signature": "ed25519:Zt5/gTzL4qUJXX8WbFBd4qQBgii9SkJeWtpeSkW/8Ju/v/Jlso0hIqMIY1o2u3E//nvsLGe3OCgorjERdcDwAQ=="
+}

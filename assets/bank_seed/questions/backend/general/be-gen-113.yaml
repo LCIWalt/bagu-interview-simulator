@@ -1,0 +1,27 @@
+id: be-gen-113
+title: "什么是 Redis 大 key 和热 key？分别怎么治理？"
+topics: [redis, performance, architecture]
+role: backend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "大 key 是 value 体积或元素数量过大的键，读写与删除都会长时间占用主线程并放大网络与内存压力；热 key 是访问量高度集中的键，容易打满单个分片或连接。治理大 key 靠拆分、压缩与异步删除，治理热 key 靠多级缓存、副本分散与限流。"
+  keyPoints:
+    - "用 redis-cli --bigkeys、MEMORY USAGE 与 slowlog 定位大 key，避免用 KEYS 全量扫描"
+    - "大 key 按业务维度拆成多个小 key，用 hash 分桶或分页读取，删除时用 UNLINK 渐进释放"
+    - "热 key 可加本地缓存、把读分散到多个副本，或对同一 key 做逻辑分片"
+    - "从业务侧限流与降级，防止热点事件把单分片打满并引发雪崩"
+  pitfalls:
+    - "直接用 DEL 删除超大集合，阻塞主线程造成延迟毛刺"
+    - "只扩容分片数量，不解决单 key 落在单一 slot 的天然热点"
+followups:
+  - "如何在不阻塞主线程的前提下迁移或删除大 key？"
+  - "本地缓存热 key 会带来什么一致性代价？"
+source:
+  url: https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/latency/
+  title: "Diagnosing latency issues"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

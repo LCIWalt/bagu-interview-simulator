@@ -1,0 +1,26 @@
+id: mo-dart-129
+title: "Iterable 的惰性求值与 sync* 生成器"
+topics: [dart, collections, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Iterable 的 map/where 等操作是惰性的，只有被迭代时才执行，且可能每次迭代都重新计算；List 则是具体集合。sync* 生成器返回惰性 Iterable，适合大数据流式处理，但要警惕重复遍历与副作用。"
+  keyPoints:
+    - "map/where 返回 lazy Iterable，不产生中间集合"
+    - "多次遍历同一个 lazy Iterable 会重复执行计算"
+    - "需要复用结果时用 toList(growable: false)"
+    - "sync* 用 yield 逐个产出，yield* 转发子 Iterable"
+  pitfalls:
+    - "对惰性 Iterable 重复遍历导致 O(n^2) 或重复副作用"
+    - "以为 where 会就地过滤原集合"
+followups:
+  - "firstWhere 与 where().first 在异常行为上有何区别？"
+source:
+  url: https://api.dart.dev/stable/dart-core/Iterable-class.html
+  title: "Iterable class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

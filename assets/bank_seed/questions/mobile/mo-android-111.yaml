@@ -1,0 +1,26 @@
+id: mo-android-111
+title: "Android: 协程结构化并发与取消"
+topics: [android, kotlin, coroutines]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "协程在 CoroutineScope 中形成父子层级，父协程取消会向下传播，普通 Job 中一个子协程失败也会取消父级和兄弟协程。viewModelScope 和 lifecycleScope 提供生命周期边界；需要子任务互不影响时使用 supervisorScope 或 SupervisorJob。"
+  keyPoints:
+    - "父协程会等待所有子协程结束，取消会递归向下传播"
+    - "普通 Job 中子协程失败会取消父级和兄弟协程"
+    - "supervisorScope 隔离子协程失败，适合可独立失败的并行请求"
+    - "协程必须响应取消，阻塞调用应替换为可取消的挂起函数"
+  pitfalls:
+    - "用 GlobalScope 启动任务，导致任务无法随页面取消"
+    - "捕获 CancellationException 后继续执行，破坏取消语义"
+followups:
+  - "withTimeout 取消后会抛出什么异常，应该如何捕获？"
+source:
+  url: https://kotlinlang.org/docs/coroutines-basics.html
+  title: "Coroutines basics"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-android-122
+title: "Android: 冷启动优化"
+topics: [android, performance, startup]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "冷启动依次经历进程创建、Application 初始化、Activity 创建和首帧绘制，优化前要先用 Macrobenchmark 或 Perfetto 量化各阶段。常见手段包括延迟非关键初始化、减少 ContentProvider 启动工作、使用 Baseline Profiles 和启动主题。"
+  keyPoints:
+    - "先测量 Time to Initial Display 与 Time to Full Display"
+    - "Application 和 ContentProvider 中的重初始化是常见瓶颈"
+    - "Baseline Profiles 提前编译热点代码，减少解释执行"
+    - "启动主题改善感知速度，但不减少真实初始化成本"
+  pitfalls:
+    - "把所有初始化都丢到线程池，造成主线程锁竞争"
+    - "只看冷启动总时长，不区分首帧和完全可交互"
+followups:
+  - "StartupTimingMetric 与 TraceSectionMetric 分别适合测什么？"
+source:
+  url: https://developer.android.com/topic/performance/vitals/launch-time
+  title: "App startup time"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

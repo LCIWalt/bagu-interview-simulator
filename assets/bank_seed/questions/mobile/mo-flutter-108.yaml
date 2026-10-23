@@ -1,0 +1,27 @@
+id: mo-flutter-108
+title: "ListView.builder 为什么比直接传 children 更省内存？"
+topics: [flutter, widgets, performance]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "ListView.builder 通过 itemBuilder 按需构建可见区域及 cacheExtent 内的条目，离屏条目会被回收；直接传 children 会一次性构建并持有所有子 Widget。不过离屏 Element 默认仍会被销毁，除非启用 keepAlive，因此滚动区域外的表单状态需要显式保存。"
+  keyPoints:
+    - "builder 惰性构建可见项与 cacheExtent 范围"
+    - "children 列表会一次性创建全部 Widget"
+    - "离屏 Element 默认被回收，State 不会保留"
+    - "itemExtent 或 prototypeItem 可减少滚动测量开销"
+  pitfalls:
+    - "把 ListView 直接放进 Column，导致无界高度异常"
+    - "在 itemBuilder 中用 index 作 key，重排后状态错位"
+followups:
+  - "cacheExtent 调大有什么收益与代价？"
+  - "AutomaticKeepAliveClientMixin 的使用代价是什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ListView-class.html
+  title: "ListView class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-101
+title: "Flutter 的布局约束是如何从父级传到子级的？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 布局遵循「约束向下、尺寸向上、父级决定位置」：父组件把 BoxConstraints 传给子组件，子组件在约束范围内决定自身尺寸，父组件再决定摆放位置。约束是硬边界，子组件不能返回超出 min/max 的尺寸，无界约束会让依赖有限空间的组件失败。"
+  keyPoints:
+    - "父级向下传 BoxConstraints，子级向上返回 Size"
+    - "子级尺寸必须落在 min/max 约束内，父级负责最终定位"
+    - "Row/Column 主轴默认无界，需用 Expanded/Flexible 或定宽"
+    - "SizedBox 等紧约束会强制子组件采用指定尺寸"
+  pitfalls:
+    - "认为子组件可以不受父级约束任意设置尺寸"
+    - "在无界约束中使用 Expanded，触发 RenderFlex 异常"
+followups:
+  - "IntrinsicWidth/IntrinsicHeight 为什么开销较大？"
+  - "UnconstrainedBox 在什么场景下使用？"
+source:
+  url: https://docs.flutter.dev/ui/layout/constraints
+  title: "Understanding constraints"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

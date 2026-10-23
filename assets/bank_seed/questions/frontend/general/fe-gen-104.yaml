@@ -1,0 +1,25 @@
+id: fe-gen-104
+title: "CORS 预检请求在什么情况下触发，为什么简单请求不预检？"
+topics: [browser, http, security]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "跨源请求若使用非简单方法、非简单请求头或特定 Content-Type，浏览器会先发送 OPTIONS 预检，确认服务器允许后才发送真实请求。简单请求可直接发出，但响应仍受 Access-Control-Allow-Origin 等响应头约束。"
+  keyPoints:
+    - "简单请求仅限 GET/HEAD/POST、少数安全头与三种 Content-Type"
+    - "预检携带 Origin、Access-Control-Request-Method 与 Access-Control-Request-Headers"
+    - "带凭证的请求要求具体 Origin、Allow-Credentials，且 Allow-Headers 不能为通配符"
+    - "CORS 是浏览器执行同源策略的机制，并不能阻止非浏览器客户端直接调用接口"
+  pitfalls: ["认为服务端配置 CORS 就能阻止爬虫或脚本直接请求接口", "预检响应未设置缓存导致每次请求都多一次 OPTIONS"]
+followups:
+  - "为什么 Access-Control-Allow-Origin 不能为星号时还要携带 credentials？"
+  - "预检结果是如何被浏览器缓存的？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
+  title: "MDN: Cross-Origin Resource Sharing (CORS)"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-android-126
+title: "Android: WebView 安全与 JS Bridge"
+topics: [android, webview, security]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "WebView 加载不可信内容时要关闭不必要的文件访问，限制 JavaScript Bridge，并避免用 addJavascriptInterface 暴露敏感能力。Bridge 方法可被页面脚本直接调用，必须校验来源、参数和调用权限，敏感操作应二次确认。"
+  keyPoints:
+    - "只加载 HTTPS 且校验 URL 白名单，避免开放重定向"
+    - "addJavascriptInterface 暴露的方法对页面 JS 可见，应最小化"
+    - "@JavascriptInterface 方法运行在 WebView 的 JavaBridge 线程，不是主线程"
+    - "关闭不必要的 setAllowFileAccess 等文件访问能力"
+  pitfalls:
+    - "把设备信息、token 或文件读写能力直接暴露给 JS"
+    - "信任 WebView 传入的 URL 并直接加载，导致钓鱼或越权"
+followups:
+  - "WebViewClient.shouldOverrideUrlLoading 如何实现导航白名单？"
+source:
+  url: https://developer.android.com/develop/ui/views/layout/webapps/webview
+  title: "Build web apps in WebView"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-173
+title: "项目：如何为平台通道补上可靠的测试？"
+topics: [flutter, testing, platform-channel]
+role: mobile
+level: mid
+difficulty: 3
+type: project
+answer:
+  summary: "Widget 测试里没有真实平台实现，用 TestDefaultBinaryMessenger 拦截发往平台的 MethodCall，按 method 与 arguments 返回结果或抛 PlatformException。测试应覆盖成功、错误与未实现三条路径，平台主动回调可用 handlePlatformMessage 模拟，真实通道行为再交给 integration_test 验证。"
+  keyPoints:
+    - "通过 TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger 注册 mock handler"
+    - "handler 内检查 MethodCall.method 与 arguments，返回可被 codec 编码的值"
+    - "抛 PlatformException 可模拟平台错误，未注册 handler 的调用会以 MissingPluginException 失败"
+    - "平台到 Dart 的消息用 handlePlatformMessage 注入，可用 platformMessagesFinished 等待完成"
+  pitfalls:
+    - "在 FakeAsync 的 testWidgets 里让 handler await 真实异步，测试直接挂起"
+    - "只测成功路径，错误码与参数校验直到真机才暴露"
+followups:
+  - "EventChannel 的流式事件该如何模拟？"
+  - "哪些通道行为必须放到 integration_test 里验证？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/TestDefaultBinaryMessenger-class.html
+  title: "TestDefaultBinaryMessenger class - flutter_test library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

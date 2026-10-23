@@ -1,0 +1,27 @@
+id: mo-flutter-155
+title: "SliverPersistentHeader 与 NestedScrollView 分别解决什么滚动问题？"
+topics: [flutter, sliver, layout]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "SliverPersistentHeader 让头部在滚动中保持钉住（pinned）或随方向出现（floating），需要实现 SliverPersistentHeaderDelegate 的 build、maxExtent、minExtent 与 shouldRebuild。NestedScrollView 用于外层头部加内层 Tab 列表的嵌套滚动，通过 SliverOverlapAbsorber 吸收头部高度、SliverOverlapInjector 注入内层，但内外 physics 协调不当会出现滚动争抢。"
+  keyPoints:
+    - "maxExtent 与 minExtent 必须稳定，否则滚动位置会跳动"
+    - "pinned 常驻顶部，floating 依赖滚动方向出现，两者可组合"
+    - "NestedScrollView 用 SliverOverlapAbsorber 与 SliverOverlapInjector 处理重叠高度"
+    - "内层列表通过 primary 与 NestedScrollView 共享滚动控制器"
+  pitfalls:
+    - "shouldRebuild 恒返回 true，导致头部每帧重建"
+    - "内外层都设置 AlwaysScrollableScrollPhysics，出现滚动争抢"
+followups:
+  - "如何实现折叠时标题渐变的 SliverAppBar？"
+  - "SliverPersistentHeader 的高度变化如何触发重新布局？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/SliverPersistentHeader-class.html
+  title: "SliverPersistentHeader class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-dart-003
+title: "Dart: Isolates"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Isolate 有独立内存与事件循环，适合 CPU 密集或需要隔离的任务，避免阻塞 UI isolate。isolate 之间不能共享可变对象，只能通过 SendPort/ReceivePort 传消息；compute 是简化的一次性 isolate 封装。"
+  keyPoints:
+    - "每个 isolate 有独立堆和事件循环"
+    - "消息传递会复制或转移对象，不是共享内存"
+    - "compute 适合一次性纯函数任务"
+    - "大量小任务复用 isolate 比反复创建更划算"
+  pitfalls:
+    - "在 isolate 间传不可发送的对象"
+    - "用 isolate 解决 IO 阻塞而不评估收益"
+followups:
+  - "TransferableTypedData 解决什么问题？"
+source:
+  url: https://dart.dev/language/isolates
+  title: "Dart: Isolates"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

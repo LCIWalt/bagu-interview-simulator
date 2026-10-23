@@ -1,0 +1,26 @@
+id: mo-dart-121
+title: "Dart 中的内存泄漏来源与排查"
+topics: [dart, memory, stream]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 有 GC 仍会泄漏，本质是长生命周期对象持有短生命周期对象的引用。常见来源是未取消的 StreamSubscription、未移除的 listener、闭包捕获 BuildContext、全局缓存与 static 集合。"
+  keyPoints:
+    - "订阅、动画、Timer 都必须在 dispose 中释放"
+    - "闭包会捕获其引用的变量，间接延长对象生命周期"
+    - "全局 Map 缓存需要容量上限或弱引用"
+    - "BuildContext 被异步回调长期持有会延长整棵元素树的生命"
+  pitfalls:
+    - "只取消部分订阅，遗漏 addListener 对应的 removeListener"
+    - "用 static 集合做缓存却从不清理"
+followups:
+  - "如何用 DevTools 判断对象是否仍被引用？"
+source:
+  url: https://api.dart.dev/stable/dart-async/StreamSubscription-class.html
+  title: "StreamSubscription class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

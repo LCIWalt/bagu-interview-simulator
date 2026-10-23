@@ -1,0 +1,27 @@
+id: mo-android-141
+title: "Android: 协程异常传播与处理"
+topics: [android, coroutines, exception]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "launch 中未捕获的异常会立即传给父 Job，取消整个协程作用域，再交给 CoroutineExceptionHandler 或线程默认处理器；async 则把异常存进 Deferred，在 await 时才抛出。supervisorScope 或 SupervisorJob 能阻断子协程失败向上传播，适合页面内相互独立的请求。CancellationException 表示正常取消，不应被当作业务错误吞掉。"
+  keyPoints:
+    - "launch 异常向上传播并取消父作用域，async 异常延迟到 await 暴露"
+    - "CoroutineExceptionHandler 只处理未捕获的根协程异常，无法恢复已取消的作用域"
+    - "supervisorScope/SupervisorJob 让子任务失败互不影响，需要逐个 try/catch"
+    - "CancellationException 是协作取消信号，不应记录为崩溃或包装成业务异常"
+  pitfalls:
+    - "在 launch 外层 try/catch 期待捕获内部异常，实际异常在协程内抛出"
+    - "用了 SupervisorJob 却忘记处理失败子任务，错误被静默丢失"
+followups:
+  - "runCatching 捕获 CancellationException 会带来什么问题？"
+  - "viewModelScope 中一个请求失败为什么会取消其他请求？"
+source:
+  url: https://kotlinlang.org/docs/exception-handling.html
+  title: "Coroutine exceptions handling"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

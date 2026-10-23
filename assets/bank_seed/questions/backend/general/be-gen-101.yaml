@@ -1,0 +1,27 @@
+id: be-gen-101
+title: "Go 的 channel 底层是怎样实现的？发送和接收分别发生了什么？"
+topics: [go, concurrency, runtime]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "channel 由 runtime.hchan 表示，内部有环形缓冲区、发送与接收的等待队列以及一把互斥锁。缓冲区未满或非空时收发只操作环形队列，否则当前 goroutine 被包装成 sudog 挂起到等待队列并让出 CPU。"
+  keyPoints:
+    - "hchan 包含 buf 环形数组、sendx/recvx 下标、dataqsiz 容量，以及 sendq/recvq 两个 sudog 等待队列"
+    - "缓冲区满且没有等待接收者时，发送方入 sendq 并 gopark；接收方耗尽缓冲后同样挂起"
+    - "接收方可以直接从发送方的栈上拷贝数据，缓冲只是中转，省掉一次多余拷贝"
+    - "关闭 channel 会唤醒全部等待者并置 closed 标志，向已关闭 channel 发送会直接 panic"
+  pitfalls:
+    - "把 channel 当成无锁队列，忽略 hchan 上的互斥锁与竞争开销"
+    - "多个发送者场景下随意 close，导致其他发送方 panic"
+followups:
+  - "select 有多个就绪 case 时如何选择？"
+  - "无缓冲 channel 的一次发送会经历哪些调度步骤？"
+source:
+  url: https://go.dev/ref/spec#Channel_types
+  title: "The Go Programming Language Specification: Channel types"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

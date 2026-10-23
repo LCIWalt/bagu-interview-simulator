@@ -1,0 +1,27 @@
+id: mo-flutter-167
+title: "桌面端的鼠标悬停与光标该如何处理？"
+topics: [flutter, desktop, input]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "鼠标移动产生 PointerHoverEvent，不经过 down/up 序列，MouseRegion 据此触发 onEnter、onHover 与 onExit；光标样式由离指针最近且不透明的 MouseRegion 决定。列表项等可复用组件要在 onExit 清理悬停态，避免滚动复用后残留高亮。"
+  keyPoints:
+    - "MouseRegion 的 onEnter/onExit 对应指针进入与离开命中区域，onHover 持续上报位置"
+    - "cursor 使用 SystemMouseCursors，嵌套时由最内层 MouseRegion 生效"
+    - "opaque 为 false 时鼠标可继续命中下层，适合叠加的装饰层"
+    - "触控、鼠标与触控笔通过 PointerDeviceKind 区分，交互逻辑应按设备类型分支"
+  pitfalls:
+    - "onExit 不重置 hover 状态，列表滚动复用后出现常亮行"
+    - "用 GestureDetector.onTap 代替悬停监听，桌面端完全没有 hover 反馈"
+followups:
+  - "桌面端右键上下文菜单该如何实现？"
+  - "鼠标拖拽与触摸拖拽在事件序列上有哪些差异？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/MouseRegion-class.html
+  title: "MouseRegion class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

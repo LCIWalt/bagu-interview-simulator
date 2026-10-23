@@ -1,0 +1,27 @@
+id: mo-android-132
+title: "Android: Binder 与跨进程调用"
+topics: [android, ipc, binder]
+role: mobile
+level: mid
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Binder 是 Android 的进程间通信机制：客户端通过 BinderProxy 把参数写入 Parcel，经 ioctl 进入 binder 驱动，驱动定位目标进程的 Binder 节点并把事务投递到它的 binder 线程。同步调用会阻塞调用线程直到 reply 返回，oneway 调用只入队不等待。AIDL 只是为这套代理/桩机制生成样板代码。"
+  keyPoints:
+    - "Binder 驱动在内核维护跨进程对象引用，并用 mmap 缓冲区传递事务数据"
+    - "客户端持有 BinderProxy，服务端是 Binder 本地对象，AIDL 生成 Stub 与 Proxy"
+    - "同步事务阻塞调用线程直到收到 reply，oneway 只投递不等待结果"
+    - "每个进程的 binder 线程池有限，事务处理耗时过长会耗尽线程并阻塞对端"
+  pitfalls:
+    - "在 Binder 事务中做磁盘 IO 或持锁回调客户端，导致线程池耗尽或死锁"
+    - "认为 oneway 保证送达；事务失败时调用方可能完全无感知"
+followups:
+  - "AIDL 中的 in/out/inout 对数据拷贝和性能有什么影响？"
+  - "为什么 Binder 事务缓冲区有大小上限，超限会怎样？"
+source:
+  url: https://source.android.com/docs/core/architecture/ipc/binder-overview
+  title: "Binder overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

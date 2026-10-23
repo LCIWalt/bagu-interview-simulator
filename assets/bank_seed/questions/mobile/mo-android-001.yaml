@@ -1,0 +1,26 @@
+id: mo-android-001
+title: "Android: Activity lifecycle"
+topics: [android, lifecycle, flutter]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "配置变更可通过 configChanges 避免 Activity 重建，但进程被系统杀死无法避免。Flutter 内存状态会丢失，应把关键状态持久化到磁盘/数据库，或用 RestorationManager 恢复；不要只依赖 onSaveInstanceState 保存大对象。"
+  keyPoints:
+    - "进程死亡后 Dart 堆不会恢复"
+    - "onSaveInstanceState 有大小限制，只存轻量标识"
+    - "关键数据落盘或走 Restoration"
+    - "configChanges 只能规避部分重建，不能解决进程死亡"
+  pitfalls:
+    - "认为 Flutter engine 常驻就不会丢状态"
+    - "把大 JSON 塞进 Bundle"
+followups:
+  - "Flutter 的 RestorationManager 如何工作？"
+source:
+  url: https://developer.android.com/guide/components/activities/activity-lifecycle
+  title: "Android: Activity lifecycle"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

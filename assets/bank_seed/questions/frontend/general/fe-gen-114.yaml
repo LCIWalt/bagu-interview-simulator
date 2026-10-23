@@ -1,0 +1,25 @@
+id: fe-gen-114
+title: "preload、prefetch、preconnect 与 dns-prefetch 有什么区别？"
+topics: [performance, browser, http]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "preload 以较高优先级提前加载当前页面确定需要的资源，prefetch 在空闲时预取未来可能用到的资源，preconnect 与 dns-prefetch 则提前建立连接或解析 DNS。它们优化的是不同阶段，滥用会抢占带宽并拖慢关键资源。"
+  keyPoints:
+    - "preload 需正确设置 as/type，否则可能重复下载或无法复用"
+    - "prefetch 优先级低，适合下一路由资源，但不保证一定被使用"
+    - "preconnect 完成 DNS、TCP 与 TLS，dns-prefetch 只做 DNS 解析"
+    - "关键字体与首屏图适合 preload，跨域资源需配合 crossorigin"
+  pitfalls: ["给所有资源加 preload 导致关键请求排队", "用 prefetch 加载当前页必需的资源"]
+followups:
+  - "preload 与 fetchpriority 属性如何配合？"
+  - "预加载的资源未被使用会触发什么告警？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload
+  title: "MDN: rel=preload"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

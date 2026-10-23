@@ -1,0 +1,27 @@
+id: mo-android-142
+title: "Android: callbackFlow 与 channelFlow 的资源管理"
+topics: [android, flow, callback]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "callbackFlow 与 channelFlow 把回调式或并发式 API 包装成冷流：前者用 awaitClose 在收集结束时反注册监听器，后者允许多个协程并发 emit。二者内部都带缓冲，默认容量 64，消费者过慢时 send 会挂起，需要 buffer、conflate 或 collectLatest 明确背压策略。忘记 awaitClose 是这类代码最常见的泄漏来源。"
+  keyPoints:
+    - "callbackFlow 中用 trySend 发送回调数据，在 awaitClose 中反注册监听器"
+    - "awaitClose 必须调用，否则流结束时抛 IllegalStateException 且监听器泄漏"
+    - "channelFlow 允许在多个协程中并发 emit，适合并行请求后合并结果"
+    - "默认缓冲 64，消费者慢时 send 挂起，需选择 buffer、conflate 或 collectLatest"
+  pitfalls:
+    - "忘记实现 awaitClose，监听器泄漏或收集端永远不结束"
+    - "在 channel 已关闭后继续 emit，抛出异常并中断上游"
+followups:
+  - "callbackFlow 与 flow 加 channelFlow 的本质区别是什么？"
+  - "如何把多个 callbackFlow 合并成一个 UI 状态流？"
+source:
+  url: https://developer.android.com/kotlin/flow
+  title: "Kotlin flows on Android"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

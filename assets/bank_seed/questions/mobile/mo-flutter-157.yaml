@@ -1,0 +1,27 @@
+id: mo-flutter-157
+title: "长列表滚动不流畅，除了 ListView.builder 还能做什么？"
+topics: [flutter, performance, scrolling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "builder 只解决了懒构建，滚动成本还取决于每项高度是否可预测以及每帧布局与重绘量。给列表设置 itemExtent 或 prototypeItem 可以跳过逐项测量，固定高度时用 SliverFixedExtentList 直接计算偏移，addRepaintBoundaries 默认开启以隔离 item 重绘，图片则按显示尺寸解码避免缩放开销。"
+  keyPoints:
+    - "itemExtent 与 prototypeItem 让滚动偏移可计算，减少布局开销"
+    - "addRepaintBoundaries 默认开启，可在特定场景关闭以减少图层"
+    - "固定高度用 SliverFixedExtentList，避免 RenderSliverList 逐项 layout"
+    - "图片用 cacheWidth/cacheHeight 按显示尺寸解码，避免大图缩放"
+  pitfalls:
+    - "声明了 itemExtent 却放入高度不一的子项，造成溢出或错位"
+    - "为了省内存关闭 keepAlive，却依赖其保存滚动中的状态"
+followups:
+  - "为什么给每个列表项加 RepaintBoundary 有时反而更慢？"
+  - "如何定位列表滚动时是布局还是光栅化超时？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ListView/ListView.builder.html
+  title: "ListView.builder constructor"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

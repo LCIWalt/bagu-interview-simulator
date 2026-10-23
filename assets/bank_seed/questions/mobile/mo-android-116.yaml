@@ -1,0 +1,26 @@
+id: mo-android-116
+title: "Android: Compose remember 与 rememberSaveable"
+topics: [android, compose, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "remember 只在组合存活期间保存状态，配置变更或进程重建后会丢失；rememberSaveable 把可保存值写入 saved state，适合输入框内容和选中项。复杂对象需要自定义 Saver，大对象仍应放到 ViewModel 或数据库。"
+  keyPoints:
+    - "remember 随组合离开而释放，不跨配置变更"
+    - "rememberSaveable 可以跨 Activity 重建和进程恢复"
+    - "只支持 Bundle 可保存类型，其他类型需要提供 Saver"
+    - "需要跨页面共享状态时提升到 ViewModel，并用 collectAsStateWithLifecycle 驱动 UI"
+  pitfalls:
+    - "把大列表或 Bitmap 放进 rememberSaveable，造成事务过大"
+    - "在 remember 中捕获会变化的参数却不提供 key"
+followups:
+  - "remember(key) 在什么场景必须使用？"
+source:
+  url: https://developer.android.com/develop/ui/compose/state-saving
+  title: "Save UI state in Compose"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

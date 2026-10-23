@@ -1,0 +1,26 @@
+id: mo-android-109
+title: "Android: Looper、MessageQueue 与 IdleHandler"
+topics: [android, handler, threading]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "主线程内置 Looper，loop() 持续从 MessageQueue 取出 Message 并分发；队列没有消息时阻塞，有消息时按 when 排序执行。IdleHandler 在队列暂时空闲时回调，适合低优先级延迟初始化，但回调必须很短，否则会拖慢下一条消息。"
+  keyPoints:
+    - "一个线程最多绑定一个 Looper，主线程 Looper 由系统创建"
+    - "Message 按 when 排序，同一时刻按入队顺序处理"
+    - "同步屏障优先放行异步消息，用于渲染和输入等高优先级任务"
+    - "IdleHandler 返回 false 表示只执行一次，回调中不能做重活"
+  pitfalls:
+    - "在 IdleHandler 中执行磁盘 IO 或大规模初始化，导致卡顿"
+    - "在子线程直接更新 UI，却没有切回主线程"
+followups:
+  - "Choreographer 如何利用 vsync 与 MessageQueue 协作？"
+source:
+  url: https://developer.android.com/reference/android/os/Looper
+  title: "Looper"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

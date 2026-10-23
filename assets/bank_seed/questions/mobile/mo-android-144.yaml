@@ -1,0 +1,27 @@
+id: mo-android-144
+title: "Android: Paging 3 的分页与 RemoteMediator"
+topics: [android, paging, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Paging 3 用 PagingSource 描述单一数据源如何按 key 加载，RemoteMediator 负责网络页与本地数据库的同步；PagingData 是消耗型流，重复 collect 会重复触发加载。加载状态由 LoadState 暴露，UI 侧用 LoadStateAdapter 展示重试与占位。网络优先还是数据库优先，决定了 RemoteMediator 与 PagingSource 的职责边界。"
+  keyPoints:
+    - "PagingSource.load 返回 LoadResult.Page 或 Error，用 nextKey/prevKey 控制边界"
+    - "RemoteMediator 按 REFRESH/APPEND/PREPEND 拉取网络并写入 Room，PagingSource 只读库"
+    - "PagingData 每次 collect 都会重新加载，配置变化时用 cachedIn(viewModelScope)"
+    - "用 LoadState 与 RemoteMediator 的 initialize 结果处理空页、末端与重试"
+  pitfalls:
+    - "在 Compose 中多次 collect 同一个 PagingData，触发重复网络请求"
+    - "RemoteMediator 与 PagingSource 同时请求网络，造成重复分页与竞态"
+followups:
+  - "Paging 3 如何避免刷新后列表滚动位置跳回顶部？"
+  - "网络优先与数据库优先两种分页策略分别适合什么场景？"
+source:
+  url: https://developer.android.com/topic/libraries/architecture/paging/v3-overview
+  title: "Paging 3 library overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

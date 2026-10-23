@@ -1,0 +1,26 @@
+id: mo-dart-127
+title: "Dart 热路径性能：分配、dynamic 与 const"
+topics: [dart, performance, collections]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 性能优化优先看分配与调度：热路径中的临时对象、字符串拼接、dynamic 调用与频繁 Future 创建都会放大开销。应使用 const、StringBuffer、具体类型集合，并用 DevTools 火焰图定位，而不是凭感觉加缓存。"
+  keyPoints:
+    - "dynamic 调用走运行时查找，热路径优先用具体类型或泛型"
+    - "循环内字符串 + 会创建大量中间对象，改用 StringBuffer"
+    - "const 构造与 const 集合可复用实例、减少分配"
+    - "避免在 build 中做排序、解析等重计算，必要时缓存结果"
+  pitfalls:
+    - "用 final 代替 const 却期待性能提升"
+    - "未在 profile 模式下测量就过早优化"
+followups:
+  - "debug 与 profile 模式下性能差异的原因？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Flutter: Performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-110
+title: "AnimationController 的正确创建与释放方式是什么？"
+topics: [flutter, animation, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AnimationController 需要 TickerProvider 提供 vsync，单个控制器用 SingleTickerProviderStateMixin，多个用 TickerProviderStateMixin；应在 initState 创建、dispose 中释放，否则 Ticker 会泄漏。控制器输出 0 到 1 的值，通常配合 Tween.animate 映射到业务区间，页面不可见时 Ticker 会被 TickerMode 静音。"
+  keyPoints:
+    - "vsync 由 TickerProvider mixin 提供"
+    - "initState 创建，dispose 必须调用 controller.dispose"
+    - "controller 值是 0 到 1，用 Tween 映射到业务区间"
+    - "TickerMode 会在路由不可见时暂停 Ticker"
+  pitfalls:
+    - "忘记 dispose，导致 Ticker 泄漏与 setState after dispose"
+    - "在 build 中创建 AnimationController"
+followups:
+  - "forward 与 animateTo 有什么区别？"
+  - "如何用 CurvedAnimation 控制动画曲线？"
+source:
+  url: https://api.flutter.dev/flutter/animation/AnimationController-class.html
+  title: "AnimationController class - animation library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

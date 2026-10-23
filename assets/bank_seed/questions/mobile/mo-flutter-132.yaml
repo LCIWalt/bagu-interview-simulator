@@ -1,0 +1,26 @@
+id: mo-flutter-132
+title: "MethodChannel 的调用在哪个线程执行，如何避免阻塞原生 UI？"
+topics: [flutter, platform-view, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 侧 invokeMethod 经 BinaryMessenger 发出后，Android 默认在平台主线程执行 handler，iOS 在 main queue 执行，因此原生侧的耗时工作会直接卡住宿主 UI 甚至触发 ANR。Flutter 提供后台任务队列（Android 的 makeBackgroundTaskQueue 配合 MethodChannel 的 taskQueue 参数），可让消息在后台线程处理；结果回调仍只能回传一次。"
+  keyPoints:
+    - "默认 handler 运行在 Android 主线程或 iOS main queue，长耗时会阻塞宿主"
+    - "Android 可用 makeBackgroundTaskQueue 构造后台 TaskQueue 并传给 MethodChannel"
+    - "result 必须且只能调用一次 success/error/notImplemented 之一"
+    - "大 payload 会被 StandardMessageCodec 复制，建议分片或改用共享内存与 FFI"
+  pitfalls:
+    - "在 handler 里同步做磁盘 IO 或大 JSON 解析"
+    - "重复回调 result，导致平台侧抛异常或数据错乱"
+followups:
+  - "BasicMessageChannel 与 MethodChannel 在使用场景上有什么差别？"
+source:
+  url: https://docs.flutter.dev/platform-integration/platform-channels
+  title: "Writing custom platform-specific code"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-143
+title: "把移动端 Flutter 应用适配到桌面端需要关注哪些差异？"
+topics: [flutter, desktop, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "桌面端窗口可任意缩放甚至多窗口，MediaQuery.size 不再是固定屏幕，布局必须靠宽度断点而不是设备类型判断。输入模型多了鼠标悬停、右键、滚轮与键盘快捷键，生命周期里出现 hidden/inactive，部分移动插件也没有桌面实现，需要检查平台支持或提供替代实现。"
+  keyPoints:
+    - "窗口尺寸可变，应设最小窗口尺寸并用断点驱动布局"
+    - "支持 hover、右键菜单、Tab 焦点与 Shortcuts/Actions 快捷键"
+    - "桌面生命周期包含 hidden/inactive，后台行为与移动不同"
+    - "插件需确认桌面支持情况，必要时按平台分支或替换实现"
+  pitfalls:
+    - "用 Platform.isAndroid 之类判断布局，而不是用可用宽度"
+    - "假设所有移动插件在桌面端行为一致"
+followups:
+  - "桌面端如何设置最小窗口尺寸与自定义标题栏？"
+  - "鼠标悬停态应该如何与触摸态统一设计？"
+source:
+  url: https://docs.flutter.dev/platform-integration/desktop
+  title: "Desktop support for Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

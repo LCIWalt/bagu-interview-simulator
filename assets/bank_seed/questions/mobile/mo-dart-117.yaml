@@ -1,0 +1,26 @@
+id: mo-dart-117
+title: "Record：结构相等与多返回值"
+topics: [dart, records, oop]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Record 是不可变的结构化字段聚合，相等性按字段逐个比较，适合临时返回多个值或作为模式匹配的轻量载体。它没有方法和名称，需要行为或文档语义时应使用普通类。"
+  keyPoints:
+    - "位置字段用 (int, String)，命名字段用 ({int id, String name})"
+    - "== 与 hashCode 由字段结构决定，可安全用于集合"
+    - "字段是 final，record 本身不可变"
+    - "适合多返回值与解构，不适合承载领域行为"
+  pitfalls:
+    - "用 record 替代有不变式校验的领域对象"
+    - "在公共 API 中返回含义不明的位置字段"
+followups:
+  - "record 与 freezed 生成的类有何差异？"
+source:
+  url: https://dart.dev/language/records
+  title: "Dart: Records"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

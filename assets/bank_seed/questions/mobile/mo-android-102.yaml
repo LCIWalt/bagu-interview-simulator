@@ -1,0 +1,26 @@
+id: mo-android-102
+title: "Android: Fragment 事务与状态丢失"
+topics: [android, fragment, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "当 Activity 已经保存状态后再 commit，FragmentManager 会抛出 IllegalStateException；commitAllowingStateLoss 只是跳过检查，进程恢复时该事务可能丢失。根因通常是后台回调在页面不可见后仍触发事务，应把导航和事务限定在 STARTED 等可见生命周期内。"
+  keyPoints:
+    - "onSaveInstanceState 之后调用 commit 会抛 IllegalStateException"
+    - "commitAllowingStateLoss 会静默丢失事务，并没有修复时序问题"
+    - "commit 异步排队执行，commitNow 同步执行且不能加入回退栈"
+    - "在 repeatOnLifecycle(STARTED) 中触发导航或 Fragment 事务"
+  pitfalls:
+    - "把所有崩溃都换成 commitAllowingStateLoss，掩盖了生命周期错误"
+    - "在协程或网络回调中不检查生命周期就直接 commit"
+followups:
+  - "Fragment 事务加入回退栈后，对 Fragment 生命周期有什么影响？"
+source:
+  url: https://developer.android.com/guide/fragments/transactions
+  title: "Fragment transactions"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

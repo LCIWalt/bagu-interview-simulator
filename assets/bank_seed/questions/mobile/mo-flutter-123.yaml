@@ -1,0 +1,27 @@
+id: mo-flutter-123
+title: "Flutter 加载网络图片时如何控制内存与体验？"
+topics: [flutter, performance, images]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Image.network 默认按原始分辨率解码并进入内存 ImageCache，大图容易占满内存；用 cacheWidth 与 cacheHeight 按显示尺寸解码可显著降低占用。滚动列表可配合 gaplessPlayback 避免换图闪烁，用 precacheImage 预加载关键图片，用 errorBuilder 与 loadingBuilder 处理异常与占位。"
+  keyPoints:
+    - "ImageCache 以解码后的图片为缓存单位，且只在内存中"
+    - "cacheWidth 与 cacheHeight 降低解码分辨率"
+    - "gaplessPlayback 在换图时保留上一帧"
+    - "precacheImage 可提前解码关键图片"
+  pitfalls:
+    - "直接加载超大原图，导致内存暴涨甚至 OOM"
+    - "把 ImageCache 当成磁盘缓存，重启后仍期望命中"
+followups:
+  - "如何限制 ImageCache 的总内存占用？"
+  - "cached_network_image 补足了哪些能力？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Image-class.html
+  title: "Image class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,25 @@
+id: fe-gen-117
+title: "如何用语义化 HTML 与 ARIA 提升页面的可访问性？"
+topics: [accessibility, browser, css]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "可访问性首先依赖正确的语义化标签与键盘可达性，ARIA 只在原生语义不足时作为补充。可访问名称、焦点管理与颜色对比度决定屏幕阅读器和键盘用户能否顺利完成任务。"
+  keyPoints:
+    - "优先使用 button、a、label 等原生元素，避免用 div 模拟交互"
+    - "ARIA 只改变语义不改变行为，需自行补齐键盘与焦点逻辑"
+    - "图标按钮必须有可访问名称，表单控件需关联 label"
+    - "保持焦点可见与顺序合理，颜色对比度满足 WCAG 要求"
+  pitfalls: ["给元素加满 role 与 aria-label 却无法用键盘操作", "用 display: none 隐藏仍希望读屏获取的内容"]
+followups:
+  - "如何用 :focus-visible 保留键盘焦点样式？"
+  - "模态框为什么需要焦点陷阱与 aria-modal？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility
+  title: "MDN: Accessibility"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

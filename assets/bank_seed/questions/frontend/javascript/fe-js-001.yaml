@@ -1,0 +1,24 @@
+id: fe-js-001
+title: "JavaScript 事件循环中宏任务与微任务的执行顺序？"
+topics: [javascript, event-loop, async]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "先执行同步代码，调用栈清空后清空微任务队列，再取一个宏任务；每轮宏任务结束后都会重新清空微任务，渲染通常发生在宏任务之间。"
+  keyPoints:
+    - "同步代码优先，调用栈清空后执行微任务"
+    - "Promise.then、queueMicrotask、MutationObserver 属微任务"
+    - "setTimeout、setInterval、IO 回调属宏任务"
+    - "微任务无限嵌套会饿死渲染与宏任务"
+  pitfalls: ["认为 Promise 回调是宏任务", "忽略微任务在本轮清空"]
+followups:
+  - "requestAnimationFrame 在哪个阶段执行？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop
+  title: "MDN: Event loop"
+  license: CC-BY-SA-2.5
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-119
+title: "Widget 测试中 pump 与 pumpAndSettle 有什么区别？"
+topics: [flutter, testing, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "pump 触发一帧并可选指定时长，适合精确推进动画或异步；pumpAndSettle 反复 pump 直到没有待处理帧，遇到无限动画会超时。测试中通过 find.byType 或 find.byKey 定位，用 expect 断言，异步逻辑要配合 pump 推进，避免依赖真实网络与计时。"
+  keyPoints:
+    - "pump 推进一帧，可传 Duration 控制时间"
+    - "pumpAndSettle 循环到无调度帧，可能因无限动画超时"
+    - "用 Finder 与 expect 断言 Widget 树"
+    - "异步请求应注入 fake，避免真实 IO"
+  pitfalls:
+    - "对循环动画调用 pumpAndSettle，导致超时失败"
+    - "在测试里等待真实时间，而不是用 pump 推进"
+followups:
+  - "WidgetTester.runAsync 适合解决什么问题？"
+  - "如何为 Widget 测试注入假依赖？"
+source:
+  url: https://docs.flutter.dev/testing/overview
+  title: "Testing Flutter apps"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

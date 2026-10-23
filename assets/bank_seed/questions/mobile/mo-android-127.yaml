@@ -1,0 +1,26 @@
+id: mo-android-127
+title: "Android: Flutter add-to-app 引擎生命周期"
+topics: [android, flutter, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "混合开发可以复用缓存的 FlutterEngine 启动 FlutterActivity 或 FlutterFragment，以减少引擎初始化开销；缓存引擎应与进程生命周期一致，页面销毁时不能误销毁共享引擎。路由通过 initialRoute 或 MethodChannel 协调，返回栈需要原生和 Flutter 两侧共同管理。"
+  keyPoints:
+    - "FlutterEngine 可以预热并缓存，供多个 Flutter 页面共享"
+    - "FlutterActivity 默认创建并销毁自己的引擎，需要按场景配置"
+    - "initialRoute 与 FlutterFragment 参数要避免重复入栈"
+    - "引擎销毁后 Dart isolate 状态丢失，关键状态必须持久化"
+  pitfalls:
+    - "每个 Flutter 页面都新建引擎，导致内存和启动开销翻倍"
+    - "在共享引擎场景仍使用默认销毁逻辑，后续页面无法复用"
+followups:
+  - "FlutterEngineGroup 适合什么规模的混合页面？"
+source:
+  url: https://docs.flutter.dev/add-to-app/android/add-flutter-screen
+  title: "Add a Flutter screen to an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

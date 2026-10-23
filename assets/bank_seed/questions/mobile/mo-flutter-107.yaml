@@ -1,0 +1,27 @@
+id: mo-flutter-107
+title: "Bloc 的事件与状态单向流是如何运作的？"
+topics: [flutter, bloc, state-management]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Bloc 接收 Event，经 on<Event> 注册的处理函数执行业务逻辑，再通过 emit 输出新 State；UI 用 BlocBuilder 订阅状态、BlocListener 处理一次性副作用。事件在内部串行处理以保证顺序，状态应不可变且可比较，相同状态默认不会重复通知。"
+  keyPoints:
+    - "Event 输入、State 输出，处理函数用 on<Event> 注册"
+    - "事件串行处理，避免并发修改同一份状态"
+    - "BlocBuilder 重建 UI，BlocListener 处理导航与提示"
+    - "状态不可变并实现相等性，避免无效通知"
+  pitfalls:
+    - "在 Bloc 中持有 BuildContext 或直接调用 UI"
+    - "把一次性副作用写进 build，导致重复触发"
+followups:
+  - "Cubit 与 Bloc 应该如何选择？"
+  - "bloc_test 如何验证状态序列？"
+source:
+  url: https://bloclibrary.dev/architecture/
+  title: "Architecture | Bloc"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-170
+title: "自定义字体加载失败或中文缺字，应该怎么排查？"
+topics: [flutter, fonts, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "字体在 pubspec 中按 family 声明，运行时也可用 FontLoader 动态加载字节；当 family 不存在时 Flutter 不会抛错，而是静默回退到平台字体。中文缺字通常要配置 fontFamilyFallback 或换用覆盖更全的字体，测试与 golden 环境还需显式加载字体，否则渲染结果不可比。"
+  keyPoints:
+    - "pubspec 的 fonts 段按 family 注册字体，不同 weight 与 style 需分别列出文件"
+    - "FontLoader.addFont 接收 ByteData，load 完成后该 family 才可用"
+    - "fontFamilyFallback 按顺序回退，当前字体缺字时逐级查找后备字体"
+    - "golden 测试需加载与生产一致的字体，否则不同机器上渲染结果不同"
+  pitfalls:
+    - "以为字体文件缺失会抛异常，实际是静默回退，样式与预期不符"
+    - "只声明 regular 字重却在代码里使用 w700，触发合成加粗或回退，字重表现不可控"
+followups:
+  - "如何在运行时按需下载并注册字体？"
+  - "用 TextPainter 手动排版时有哪些必填参数？"
+source:
+  url: https://api.flutter.dev/flutter/services/FontLoader-class.html
+  title: "FontLoader class - services library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

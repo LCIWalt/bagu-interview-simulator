@@ -1,0 +1,27 @@
+id: be-gen-123
+title: "Kafka 如何保证消息顺序？真能做到端到端 exactly-once 吗？"
+topics: [system-design, message-queue, kafka]
+role: backend
+level: senior
+difficulty: 4
+type: system-design
+answer:
+  summary: "Kafka 只保证同一分区内消息有序，生产端按业务 key 分区可让同一实体的消息落到同一分区。端到端 exactly-once 需要幂等生产者、事务以及消费端幂等或事务性提交配合，任何一环缺失都只能做到至少一次。"
+  keyPoints:
+    - "分区内追加写与按 offset 消费天然有序，跨分区不保证全局顺序"
+    - "用业务主键作为 key 并保证分区数稳定，可让同一订单或用户的消息保持顺序"
+    - "幂等生产者用 PID 与序列号去重，事务把多个分区写入与 offset 提交原子化"
+    - "消费端仍需按业务唯一键做幂等，因为重平衡、重复投递与外部副作用无法被事务完全覆盖"
+  pitfalls:
+    - "为追求全局有序把分区数设为 1，牺牲吞吐与并行度"
+    - "开启幂等生产者就认为端到端 exactly-once，忽视消费侧重复处理"
+followups:
+  - "增加分区数为什么会破坏既有 key 的顺序假设？"
+  - "消费端幂等表该如何设计和清理？"
+source:
+  url: https://kafka.apache.org/documentation/#semantics
+  title: "Apache Kafka Documentation: Message Delivery Semantics"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

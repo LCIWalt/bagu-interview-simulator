@@ -1,0 +1,27 @@
+id: mo-flutter-127
+title: "Theme.of(context) 为什么会触发重建，如何自定义主题扩展？"
+topics: [flutter, widgets, theming]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Theme.of 通过 InheritedWidget 建立依赖，ThemeData 变化时依赖它的组件会重建；应尽量在靠近使用处读取，避免整页无谓刷新。业务色板可用 ThemeExtension 注册进 ThemeData，随亮暗主题切换并获得类型安全访问。"
+  keyPoints:
+    - "Theme.of 建立 InheritedWidget 依赖"
+    - "MaterialApp 的 theme、darkTheme、themeMode 决定生效主题"
+    - "ThemeExtension 可扩展自定义设计 token"
+    - "用 copyWith 局部覆盖，而不是重建整棵主题"
+  pitfalls:
+    - "在 build 中反复调用 ThemeData() 创建新主题"
+    - "把颜色硬编码在组件里，导致暗色模式失效"
+followups:
+  - "ThemeExtension 的 lerp 方法负责什么？"
+  - "如何让局部子树使用不同主题？"
+source:
+  url: https://api.flutter.dev/flutter/material/Theme-class.html
+  title: "Theme class - material library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

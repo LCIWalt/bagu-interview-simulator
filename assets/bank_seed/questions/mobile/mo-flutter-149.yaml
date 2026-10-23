@@ -1,0 +1,27 @@
+id: mo-flutter-149
+title: "项目：如何从零搭一条可靠的 Flutter CI 流水线？"
+topics: [flutter, ci, testing]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "流水线先固定 Flutter 与 Dart 版本并缓存 pub、Gradle、CocoaPods，再按 analyze、单元与 widget 测试、体积检查、平台构建、集成测试的顺序分层执行，失败尽早暴露。签名与密钥放 CI secret，iOS 构建可用 --no-codesign 做编译校验，集成测试单独跑在模拟器任务上，避免拖慢主流程。"
+  keyPoints:
+    - "固定 SDK 版本并用 pubspec.lock，避免本地能过而 CI 挂"
+    - "缓存 ~/.pub-cache、Gradle 与 Pods，缓存 key 要包含 lockfile 哈希"
+    - "分阶段执行 analyze、test、build、integration_test，快速失败"
+    - "签名材料走 secret，构建产物与符号表归档以便还原崩溃"
+  pitfalls:
+    - "在无设备的环境跑集成测试，或让测试依赖真实网络"
+    - "缓存 key 不含依赖锁文件，命中过期依赖导致玄学失败"
+followups:
+  - "如何在 CI 中做包体与启动耗时的回归门禁？"
+  - "golden 测试应该放在哪一层流水线？"
+source:
+  url: https://docs.flutter.dev/deployment/cd
+  title: "Continuous delivery with Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

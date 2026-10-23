@@ -1,0 +1,25 @@
+id: fe-gen-107
+title: "useMemo 与 useCallback 一定能提升性能吗，何时才值得使用？"
+topics: [react, performance, hooks]
+role: frontend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "useMemo 缓存计算结果，useCallback 缓存函数引用，二者只在依赖不变时复用，本身也有依赖比较与内存占用的成本。它们主要用于满足引用相等性，例如配合 memo 子组件或稳定 effect 依赖，而不是替代算法与数据规模上的优化。"
+  keyPoints:
+    - "依赖按浅比较判断，依赖频繁变化时缓存几乎失效"
+    - "只有配合 React.memo 或作为 effect 依赖时，稳定引用才有明显收益"
+    - "昂贵计算应优先优化算法与数据量，再考虑使用 memo"
+    - "缓存会保留闭包与结果引用，滥用会增加内存和维护成本"
+  pitfalls: ["给每个函数无脑套 useCallback", "在 useMemo 中执行有副作用的操作"]
+followups:
+  - "React Compiler 会如何改变手写 memo 的必要性？"
+  - "useMemo 的缓存是否可能被 React 丢弃？"
+source:
+  url: https://react.dev/reference/react/useMemo
+  title: "React: useMemo"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

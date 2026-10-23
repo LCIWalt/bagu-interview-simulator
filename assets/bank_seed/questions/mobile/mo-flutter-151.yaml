@@ -1,0 +1,27 @@
+id: mo-flutter-151
+title: "flutter_secure_storage 的 Keychain 与 Keystore 行为有哪些坑？"
+topics: [flutter, secure-storage, security]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "该插件在 iOS 用 Keychain、在 Android 用 Keystore 派生的密钥加密后落盘，但两端的生命周期差异很大：iOS 的 Keychain 条目可能在卸载重装后仍然存在，Android 的 Keystore 密钥不进入 Auto Backup，恢复备份或清除数据后旧密文无法解密。读取失败应当作无凭据处理并引导重新登录，而不是直接崩溃。"
+  keyPoints:
+    - "iOS Keychain 可跨重装保留，需在登出或首启时显式清理旧条目"
+    - "Android Keystore 密钥不随备份迁移，恢复后旧密文解密失败"
+    - "通过 IOSOptions 的 accessibility 控制锁屏状态下能否读取"
+    - "只存 token 等小数据，大对象应放加密数据库或文件"
+  pitfalls:
+    - "捕获不到解密异常，恢复备份的用户启动即崩溃"
+    - "把 secure storage 当普通 KV 存大段 JSON，容量与性能都受限"
+followups:
+  - "Android 备份恢复导致解密失败时如何平滑迁移？"
+  - "生物识别保护的密钥应该如何降级处理？"
+source:
+  url: https://docs.flutter.dev/security
+  title: "Security"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

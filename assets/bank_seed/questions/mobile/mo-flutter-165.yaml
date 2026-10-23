@@ -1,0 +1,27 @@
+id: mo-flutter-165
+title: "手势竞技场如何决定哪个 recognizer 获胜？"
+topics: [flutter, gestures, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "指针按下后，命中测试路径上的每个 recognizer 都会加入同一个手势竞技场，谁先 accept 谁获胜，其余被 reject；指针抬起时若仍无人获胜，arena 会 sweep 给第一个成员。父子组件同时监听同一手势时通常只有一方生效，需要 GestureArenaTeam 或自定义 recognizer 才能共享胜利。"
+  keyPoints:
+    - "GestureBinding 根据命中测试把 pointer 分发给各 recognizer 并加入 arena"
+    - "accept 即获胜并触发 onTap、onPan 等回调，被 reject 或 sweep 失败则不触发"
+    - "GestureArenaTeam 能让多个 recognizer 共享胜利，用于单击与双击共存等场景"
+    - "打开 debugPrintGestureArenaDiagnostics 可以看到 add、accept、reject 的全过程"
+  pitfalls:
+    - "在父子各放一个 GestureDetector，期待两个回调都能执行"
+    - "以为 Listener 也参与竞技场，其实它直接接收原始指针事件、不做竞争"
+followups:
+  - "为什么同时注册 onTap 与 onDoubleTap 后单击会延迟？"
+  - "平台视图把手势吞掉时，可以怎样处理？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/GestureArenaManager-class.html
+  title: "GestureArenaManager class - gestures library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

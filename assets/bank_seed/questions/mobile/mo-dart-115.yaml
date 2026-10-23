@@ -1,0 +1,26 @@
+id: mo-dart-115
+title: "const 规范化与 final 的区别"
+topics: [dart, oop, performance]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "const 构造在编译期求值，相同参数的 const 对象会被规范化成同一个实例，final 只保证引用运行期不可变。const 还能让集合与表达式进入常量池，减少运行时分配，但要求所有组成部分都是编译期常量。"
+  keyPoints:
+    - "const 对象在同一库的编译单元内可被规范化复用"
+    - "final 是运行期一次赋值，const 是编译期常量"
+    - "const 集合不可修改，且元素必须是常量"
+    - "const 构造要求所有字段都是 final"
+  pitfalls:
+    - "认为 final 对象的内容不可变"
+    - "在 const 上下文里使用运行时才能确定的值"
+followups:
+  - "const 规范化对 == 与 identical 有什么影响？"
+source:
+  url: https://dart.dev/tools/linter-rules/prefer_const_constructors
+  title: "prefer_const_constructors lint rule"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

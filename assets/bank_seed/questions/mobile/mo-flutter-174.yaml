@@ -1,0 +1,27 @@
+id: mo-flutter-174
+title: "const 构造与 Widget 相等性如何影响重建？"
+topics: [flutter, widgets, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "const 构造在编译期做规范化，相同参数的实例是同一个对象；Element.updateChild 在新旧 widget 相等时只更新 slot，不触发 rebuild。因此 const 能省掉整棵子树的重复构建，但只在这棵子树确实不依赖运行时状态时成立，也不能替代精确的状态拆分。"
+  keyPoints:
+    - "相同参数的 const 表达式指向同一实例，可用 identical 验证"
+    - "updateChild 比较新旧 widget，相等则复用 Element 且不重建"
+    - "canUpdate 只比较 runtimeType 与 key，类型或 key 变化会销毁并重建 Element"
+    - "const 要求整棵子树都能在编译期求值，运行时数据无法参与 const 构造"
+  pitfalls:
+    - "为了让子树 const，把本应随状态变化的值写成常量，导致 UI 不更新"
+    - "以为给 Widget 加 const 就能屏蔽父级 layout 与 paint 带来的开销"
+followups:
+  - "Key 在列表重排时如何影响 Element 复用？"
+  - "const 构造函数对包体积与启动有什么影响？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Element/updateChild.html
+  title: "updateChild method - Element class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

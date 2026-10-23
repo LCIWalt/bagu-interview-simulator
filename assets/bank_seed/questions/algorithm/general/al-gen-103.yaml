@@ -1,0 +1,28 @@
+id: al-gen-103
+title: "前 K 个高频元素（小顶堆）"
+body: "给定整数数组 nums 和整数 k，返回出现频率最高的 k 个元素，顺序不限。例如 nums = [1,1,1,2,2,3]、k = 2 时返回 [1,2]。要求时间复杂度优于对整个数组按频次排序的 O(n log n)。"
+topics: [algorithm, heap, hash-table]
+role: algorithm
+level: mid
+difficulty: 3
+type: coding
+answer:
+  summary: "先用哈希表统计每个元素的频次，再维护一个大小为 k 的小顶堆，堆顶是当前 k 个候选里频次最低的元素；新元素频次更高时弹出堆顶并压入。时间 O(n log k)，空间 O(n)。"
+  keyPoints:
+    - "哈希表计数 O(n)，堆中只保留 k 个候选，避免全量排序"
+    - "必须用小顶堆而非大顶堆，堆顶是淘汰候选，便于 O(log k) 替换"
+    - "时间 O(n log k)，空间 O(n + k)；k 接近不同元素个数时退化为 O(n log n)"
+    - "边界：k = 1、k 等于不同元素个数、频次相同的元素之间顺序不做保证"
+  pitfalls:
+    - "用大顶堆存全部元素再取前 k，复杂度退化为 O(n log n)，没有利用 k 很小这一条件"
+    - "先把元素压入再判断堆大小，导致堆内超过 k 个元素、最终结果多取"
+followups:
+  - "如果数据是流式到达且 k 很大，如何用桶排序把复杂度降到 O(n)？"
+  - "频次相同时若要求按元素值升序输出，堆的比较器要怎么改？"
+source:
+  url: https://leetcode.cn/problems/top-k-frequent-elements/solution/
+  title: "347. 前 K 个高频元素 - 力扣官方题解"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

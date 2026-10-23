@@ -1,0 +1,26 @@
+id: mo-dart-122
+title: "WeakReference、Finalizer 与 Expando"
+topics: [dart, memory, oop]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "WeakReference 允许在不阻止 GC 的前提下观察对象，Finalizer 可在对象被回收后执行清理回调，Expando 则给对象附加不参与序列化的动态属性。三者都适合缓存与资源关联等旁路能力，但要接受回收时机不确定。"
+  keyPoints:
+    - "WeakReference.target 在对象被回收后变为 null"
+    - "Finalizer 回调执行时机不确定，不能依赖它及时释放关键资源"
+    - "Expando 的键必须是对象，属性不参与 == 与序列化"
+    - "弱引用缓存需要自行处理 miss 与重建"
+  pitfalls:
+    - "用 Finalizer 替代显式 close/dispose"
+    - "把 Expando 当正式字段使用，忽略可测试性"
+followups:
+  - "弱引用缓存在 Flutter 图片缓存中如何体现？"
+source:
+  url: https://api.dart.dev/stable/dart-core/WeakReference-class.html
+  title: "WeakReference class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

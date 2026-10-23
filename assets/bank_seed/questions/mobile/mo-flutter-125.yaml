@@ -1,0 +1,27 @@
+id: mo-flutter-125
+title: "GestureDetector 与 InkWell 都能响应点击，该如何选择？"
+topics: [flutter, gestures, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "GestureDetector 只处理手势识别，不提供水波纹与语义；InkWell 属于 Material，提供点击反馈、焦点与无障碍语义，适合 Material 界面中的可点击区域。两者都参与手势竞技场，嵌套时需注意命中测试与父子竞争，必要时用 behavior 或 IgnorePointer 调整。"
+  keyPoints:
+    - "GestureDetector 负责识别手势，不负责视觉反馈"
+    - "InkWell 提供水波纹、焦点与语义"
+    - "手势竞技场决定多个识别器中谁获胜"
+    - "HitTestBehavior 控制透明区域是否参与命中"
+  pitfalls:
+    - "用 GestureDetector 替代按钮，导致无点击反馈与语义"
+    - "在可滚动列表中用 onPanUpdate 抢走滚动手势"
+followups:
+  - "RawGestureDetector 适合什么场景？"
+  - "如何让一个区域同时响应点击与长按？"
+source:
+  url: https://docs.flutter.dev/ui/interactivity/gestures
+  title: "Taps, drags, and other gestures"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

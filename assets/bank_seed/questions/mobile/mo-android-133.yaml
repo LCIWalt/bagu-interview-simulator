@@ -1,0 +1,27 @@
+id: mo-android-133
+title: "Android: PackageManager 查询与包可见性"
+topics: [android, packagemanager, privacy]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 11 起应用默认只能看到自己、系统组件以及通过 `<queries>` 声明的包，queryIntentActivities、getPackageInfo 等查询会对不可见包做过滤。需要按真实用途声明包名、intent 签名或 provider authority，而不是申请 QUERY_ALL_PACKAGES。能隐式启动的目标不必先查询，但要用 try/catch 处理 ActivityNotFoundException。"
+  keyPoints:
+    - "Android 11（API 30）起包可见性受限，未声明的包不会出现在查询结果中"
+    - "在 manifest 的 `<queries>` 中声明包名、intent 或 provider authority"
+    - "getPackageInfo 对不可见包抛 NameNotFoundException，查询列表也会被裁剪"
+    - "隐式 Intent 仍可启动可见性之外的目标，失败时抛 ActivityNotFoundException"
+  pitfalls:
+    - "用 queryIntentActivities 判断浏览器或相机是否存在，忽略可见性导致误判"
+    - "为省事申请 QUERY_ALL_PACKAGES，违反 Play 政策且让查询变慢"
+followups:
+  - "如何可靠判断某个 URL 是否有浏览器可以打开？"
+  - "`<queries>` 与 QUERY_ALL_PACKAGES 的适用边界是什么？"
+source:
+  url: https://developer.android.com/training/package-visibility
+  title: "Package visibility filtering on Android"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

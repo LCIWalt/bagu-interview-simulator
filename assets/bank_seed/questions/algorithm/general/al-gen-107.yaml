@@ -1,0 +1,28 @@
+id: al-gen-107
+title: "零钱兑换（完全背包 DP）"
+body: "给定不同面额的硬币 coins 和总金额 amount，每种硬币的数量无限。求凑成总金额所需的最少硬币个数；如果无法凑成，返回 -1。"
+topics: [algorithm, dynamic-programming, array]
+role: algorithm
+level: mid
+difficulty: 3
+type: coding
+answer:
+  summary: "定义 dp[i] 为凑出金额 i 的最少硬币数，dp[0] = 0，其余初始化为一个大于任何可行解的哨兵值；对每个金额枚举最后一枚硬币，做 dp[i] = min(dp[i], dp[i - c] + 1)。时间 O(amount × 硬币种数)，空间 O(amount)。"
+  keyPoints:
+    - "状态 dp[i] 表示金额 i 的最少硬币数，转移枚举最后一枚使用的硬币"
+    - "dp[0] = 0，其余初始化为 amount + 1 作为不可达哨兵，最后据此判断 -1"
+    - "时间 O(amount × n)，空间 O(amount)；完全背包金额正序遍历，0/1 背包才倒序"
+    - "边界：amount = 0 返回 0；无解返回 -1；面额为 0 的硬币需先过滤"
+  pitfalls:
+    - "用 Integer.MAX_VALUE 当哨兵再执行 +1，整数溢出变成负数，被误判为可行解"
+    - "把完全背包写成金额倒序遍历，退化成每种硬币只能用一次，答案偏大或误判无解"
+followups:
+  - "如果要输出任意一种最优硬币组合，需要额外维护什么信息？"
+  - "零钱兑换 II 求组合数时，两层循环的嵌套顺序为什么不能随意交换？"
+source:
+  url: https://cp-algorithms.com/dynamic_programming/knapsack.html
+  title: "Knapsack Problem - CP-Algorithms"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

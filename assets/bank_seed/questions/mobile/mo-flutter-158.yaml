@@ -1,0 +1,27 @@
+id: mo-flutter-158
+title: "系统字体放大后布局溢出，如何正确适配？"
+topics: [flutter, accessibility, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 通过 MediaQuery.textScaler 获取系统字体缩放（旧版本为 textScaleFactor），文本按比例放大后，固定高度的容器极易溢出。正确做法是让高度由内容撑开、对关键文本设置行数上限与省略、必要时用 TextScaler.clamp 限制区间，而不是全局禁用缩放，因为那会直接破坏无障碍体验。"
+  keyPoints:
+    - "用 MediaQuery.textScalerOf(context) 读取缩放，textScaleFactor 已废弃"
+    - "容器高度避免写死，交给内容撑开或使用 IntrinsicHeight"
+    - "需要限制时用 TextScaler.clamp 设置上下界，而不是降级为 1.0"
+    - "在 1.3、2.0 等关键档位检查按钮、导航栏与表单的溢出"
+  pitfalls:
+    - "通过覆盖 MediaQuery 全局禁用字体缩放"
+    - "只测默认字号，忽略大字号下的 RenderFlex 溢出"
+followups:
+  - "textScaler 变化会触发哪些层级的重建？"
+  - "如何为图标与自定义绘制内容同步缩放？"
+source:
+  url: https://api.flutter.dev/flutter/painting/TextScaler-class.html
+  title: "TextScaler class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-android-115
+title: "Android: Compose 重组与可跳过性"
+topics: [android, compose, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Compose 通过组合函数描述 UI，状态变化只触发读取该状态的最小作用域重组；参数稳定且未变化的 composable 可以跳过重组。把不稳定对象、临时 lambda 或可变集合传入列表项，会增加不必要的重组。"
+  keyPoints:
+    - "重组从读取状态的最小作用域开始，而不是整棵 UI 树"
+    - "参数类型稳定且 equals 未变时，composable 才有机会被跳过"
+    - "在组合过程中创建的新 lambda 或对象可能破坏稳定性判断"
+    - "用 derivedStateOf 收敛派生状态，减少无效重组"
+  pitfalls:
+    - "在 composable 函数体中直接做网络或磁盘请求"
+    - "为了减少重组，把所有状态都 remember 成可变对象"
+followups:
+  - "Strong Skipping 模式对 lambda 的稳定性有什么影响？"
+source:
+  url: https://developer.android.com/develop/ui/compose/performance/stability
+  title: "Stability in Compose"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

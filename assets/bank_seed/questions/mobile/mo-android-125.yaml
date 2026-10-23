@@ -1,0 +1,26 @@
+id: mo-android-125
+title: "Android: 网络安全配置与证书信任"
+topics: [android, network, security]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "targetSdk 24 起默认不信任用户安装的 CA，targetSdk 28 起默认禁止明文 HTTP；可以用 network_security_config 按域名控制信任锚、明文策略和证书 pinning。不要把 cleartextTrafficPermitted 全局打开，证书 pin 也要设计备份证书与轮换方案。"
+  keyPoints:
+    - "android:networkSecurityConfig 支持按域名配置信任锚和明文策略"
+    - "证书 pinning 能降低中间人风险，但必须准备备份证书"
+    - "debug 构建可以单独允许用户 CA，release 保持严格"
+    - "WebView 与 OkHttp 等组件的网络配置需要分别验证"
+  pitfalls:
+    - "为兼容旧接口全局允许明文流量"
+    - "只 pin 一张证书且没有备份，证书轮换后全量请求失败"
+followups:
+  - "CertificatePinner 与 network security config 的 pin 有什么区别？"
+source:
+  url: https://developer.android.com/privacy-and-security/security-config
+  title: "Network security configuration"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,25 @@
+id: fe-gen-112
+title: "z-index 为什么有时不生效，层叠上下文如何决定显示顺序？"
+topics: [css, layout, browser]
+role: frontend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "z-index 只在同一层叠上下文中比较，祖先创建了新的层叠上下文后，子元素的 z-index 无法跨越该上下文。position 非 static 配合 z-index、opacity 小于 1、transform、filter 等都会创建层叠上下文。"
+  keyPoints:
+    - "层叠上下文按树形嵌套，子元素只能在父上下文内部排序"
+    - "z-index 仅对定位元素或 flex/grid item 等特定元素生效"
+    - "opacity、transform、filter、will-change 等属性会隐式创建上下文"
+    - "排查时逐级检查祖先是否创建了新的层叠上下文或裁剪区域"
+  pitfalls: ["盲目把 z-index 加到 9999", "忽略父级 overflow 裁剪与 transform 对定位的影响"]
+followups:
+  - "如何用 isolation: isolate 主动创建层叠上下文？"
+  - "为什么 position: fixed 会被带 transform 的祖先影响？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context
+  title: "MDN: Stacking context"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-android-117
+title: "Android: LazyColumn 性能与 key"
+topics: [android, compose, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "LazyColumn 只组合当前可见的 item，必须为动态列表提供稳定 key，才能在插入、删除和滚动时复用正确的 item 状态。contentType 帮助区分不同布局，item 内应避免耗时计算、同步 IO 和高度无界的嵌套滚动。"
+  keyPoints:
+    - "稳定 key 让 Compose 在数据移动时复用正确的 item 状态"
+    - "contentType 区分不同 item 布局，提高复用效率"
+    - "耗时计算放到 ViewModel 或 remember 中，避免每次重组重算"
+    - "不要给 LazyColumn 外层套高度无界的可滚动容器"
+  pitfalls:
+    - "用列表下标作为 key，插入数据后 item 状态错位"
+    - "在 item 内创建大量临时对象或读取全局可变状态"
+followups:
+  - "LazyColumn 的预取和嵌套滚动如何影响帧率？"
+source:
+  url: https://developer.android.com/develop/ui/compose/performance
+  title: "Jetpack Compose Performance"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

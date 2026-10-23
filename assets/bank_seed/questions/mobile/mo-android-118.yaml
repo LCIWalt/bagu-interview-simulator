@@ -1,0 +1,26 @@
+id: mo-android-118
+title: "Android: RecyclerView 缓存与 ViewHolder 复用"
+topics: [android, recyclerview, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "RecyclerView 通过 ViewHolder 复用 item 视图，并借助 scrap/cache 和 RecycledViewPool 减少 inflate 与绑定成本。ViewHolder 只应保存视图引用和轻量状态，不能假设 position 固定，也不能持有 Activity 或大对象。"
+  keyPoints:
+    - "ViewHolder 必须按当前位置重新绑定数据，不能缓存旧 position 的业务含义"
+    - "RecycledViewPool 可以跨 RecyclerView 共享，但 ViewType 必须匹配"
+    - "setHasStableIds 有助于动画和状态保持，前提是 id 稳定且唯一"
+    - "onBindViewHolder 只做轻量绑定，图片加载要取消旧请求"
+  pitfalls:
+    - "在 ViewHolder 中保存 Activity 或大 Bitmap，造成内存泄漏"
+    - "在 onBindViewHolder 中创建点击监听器或执行耗时计算"
+followups:
+  - "RecyclerView 的 cache 与 RecycledViewPool 分别在什么时机使用？"
+source:
+  url: https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView
+  title: "RecyclerView"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-android-143
+title: "Android: Room 迁移与 schema 校验"
+topics: [android, room, database]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Room 在编译期把实体导出为 schema JSON，运行时用版本号与 identity hash 校验数据库是否匹配；版本升级必须提供 Migration 或 AutoMigration，否则抛 IllegalStateException。迁移要像代码一样测试：用 MigrationTestHelper 从每个旧版本库跑到新版本，验证数据保留、索引与默认值。"
+  keyPoints:
+    - "开启 exportSchema，把 schema JSON 纳入版本库作为迁移依据"
+    - "addMigrations 注册 Migration，简单变更可用 @AutoMigration 减少样板代码"
+    - "迁移按新增表、拷贝数据、重建表的顺序进行，避免直接丢列丢数据"
+    - "用 MigrationTestHelper 覆盖所有历史版本到最新版本的升级路径"
+  pitfalls:
+    - "直接 fallbackToDestructiveMigration，线上升级清空用户数据"
+    - "改了实体却忘记提升 version，运行时 identity hash 不匹配崩溃"
+followups:
+  - "AutoMigration 无法处理哪些 schema 变更？"
+  - "跨多个版本升级时 Room 如何选择迁移路径？"
+source:
+  url: https://developer.android.com/training/data-storage/room/migrating-db-versions
+  title: "Migrate your Room database"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

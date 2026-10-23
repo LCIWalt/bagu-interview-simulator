@@ -1,0 +1,26 @@
+id: mo-android-103
+title: "Android: SavedStateHandle 与进程恢复"
+topics: [android, lifecycle, viewmodel]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ViewModel 只保证配置变更时存活，进程被系统杀死后内存状态仍会丢失；SavedStateHandle 将可序列化的轻量状态写入 saved state，重建时由框架恢复。它适合页面 ID、筛选条件和表单草稿索引，不适合大对象或敏感数据。"
+  keyPoints:
+    - "ViewModel 不跨进程死亡存活，SavedStateHandle 可以恢复状态"
+    - "存入的值最终要能放进 Bundle，避免 Bitmap、大 JSON 等对象"
+    - "在 ViewModel 构造中注入 SavedStateHandle，用 getStateFlow 观察变化"
+    - "恢复后仍要以数据库或磁盘数据为准，校验状态是否过期"
+  pitfalls:
+    - "把大对象塞进 SavedStateHandle，引发 TransactionTooLargeException"
+    - "认为 ViewModel 中的列表缓存一定能在进程重建后恢复"
+followups:
+  - "SavedStateHandle 与 onSaveInstanceState 的职责如何划分？"
+source:
+  url: https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-savedstate
+  title: "Saved State module for ViewModel"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

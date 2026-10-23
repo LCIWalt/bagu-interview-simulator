@@ -1,0 +1,27 @@
+id: be-gen-103
+title: "Go 的 map 为什么并发读写会直接崩溃？sync.Map 适合什么场景？"
+topics: [go, concurrency, memory]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Go 的 map 不是并发安全结构，运行时用 hashWriting 标志检测并发写，一旦发现就抛出 fatal error 而不是数据竞争警告。sync.Map 通过 read-only map 与 dirty map 分离，让读多写少、key 相对稳定的场景免锁读取。"
+  keyPoints:
+    - "并发写会置位 hashWriting，其他写操作检测到后触发 fatal error，进程无法 recover"
+    - "并发读写即使侥幸没崩也可能读到撕裂数据，必须用 mutex 或分片锁保护"
+    - "sync.Map 的 read 是原子快照，未命中才加锁访问 dirty，适合读远多于写的缓存"
+    - "写多、key 频繁增删的场景 sync.Map 反而更慢，普通 map 加 RWMutex 或分片更合适"
+  pitfalls:
+    - "用 recover 捕获 concurrent map writes，实际是 fatal error 捕不到"
+    - "把 sync.Map 当通用并发 map，忽视其 misses 提升与删除成本"
+followups:
+  - "分片锁 map 如何决定分片数量？"
+  - "sync.Map 的 Range 为什么只是一致性较弱的快照？"
+source:
+  url: https://go.dev/blog/maps
+  title: "Go maps in action"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

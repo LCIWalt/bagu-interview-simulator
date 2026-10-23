@@ -1,0 +1,24 @@
+id: be-redis-001
+title: "缓存穿透、击穿、雪崩分别是什么，怎么处理？"
+topics: [redis, cache, availability]
+role: backend
+level: mid
+difficulty: 4
+type: knowledge
+answer:
+  summary: "穿透查的是不存在的数据；击穿是单个热点 key 失效；雪崩是大量 key 同时失效。分别用布隆过滤器/空值缓存、互斥重建、TTL 打散与降级。"
+  keyPoints:
+    - "穿透：布隆过滤器拦截或缓存空值并设短 TTL"
+    - "击穿：热点 key 互斥重建或逻辑过期，避免并发打库"
+    - "雪崩：过期时间加随机、预热、限流熔断与多级缓存"
+    - "三者根因不同，不能只靠同一种方案"
+  pitfalls: ["把穿透与击穿混为一谈", "缓存空值不设 TTL 导致内存膨胀"]
+followups:
+  - "布隆过滤器为什么会误判，能删除元素吗？"
+source:
+  url: https://en.wikipedia.org/wiki/Cache_stampede
+  title: "Cache stampede - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

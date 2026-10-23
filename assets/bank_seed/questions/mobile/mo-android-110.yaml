@@ -1,0 +1,26 @@
+id: mo-android-110
+title: "Android: Handler 延迟任务的生命周期管理"
+topics: [android, handler, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "postDelayed 提交的 Message 会持有 Runnable，而 Runnable 往往隐式持有 Activity；页面销毁后消息仍可能执行并更新已销毁的 UI。应在 onDestroy 或 onStop 清理待处理消息，或改用与生命周期绑定的协程和 Flow。"
+  keyPoints:
+    - "removeCallbacksAndMessages(null) 清空该 Handler 的全部待处理消息"
+    - "匿名 Runnable 或非静态内部类会隐式持有外部 Activity"
+    - "静态 Handler 加 WeakReference 能降低泄漏风险，但仍要清理消息"
+    - "需要生命周期感知时优先使用 lifecycleScope 或 repeatOnLifecycle"
+  pitfalls:
+    - "只移除某一个 Runnable，漏掉其他延迟消息"
+    - "在 Activity 销毁后仍执行 UI 更新，导致崩溃或泄漏"
+followups:
+  - "sendMessageAtTime 与 postDelayed 在底层有什么关系？"
+source:
+  url: https://developer.android.com/reference/android/os/Handler
+  title: "Handler"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

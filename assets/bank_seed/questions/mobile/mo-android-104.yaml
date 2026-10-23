@@ -1,0 +1,26 @@
+id: mo-android-104
+title: "Android: configChanges 的正确使用边界"
+topics: [android, lifecycle, configuration]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "在 manifest 中声明 configChanges 可以让 Activity 不因指定配置变化而重建，但应用必须自己处理资源重载、布局切换和状态更新。多数页面应允许重建并用 ViewModel/SavedState 恢复，只有游戏、相机预览等重建代价高且能正确处理回调的场景才值得拦截。"
+  keyPoints:
+    - "声明 orientation|screenSize 等后，系统改为回调 onConfigurationChanged"
+    - "不重建意味着限定符资源不会自动重新加载，需要手动刷新"
+    - "locale、fontScale、density 等变化处理复杂，通常不应拦截"
+    - "configChanges 不能阻止进程死亡，也不是状态保存方案"
+  pitfalls:
+    - "只声明 orientation 而漏掉 screenSize，旋转时仍然重建"
+    - "拦截所有配置变化，却没有更新资源、布局或主题"
+followups:
+  - "多窗口和折叠屏为什么会触发 screenSize 配置变化？"
+source:
+  url: https://developer.android.com/guide/topics/resources/runtime-changes
+  title: "Handle configuration changes"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

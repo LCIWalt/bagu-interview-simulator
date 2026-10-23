@@ -1,0 +1,26 @@
+id: mo-android-108
+title: "Android: ViewModel 与 ViewBinding 的泄漏边界"
+topics: [android, memory, viewmodel]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ViewModel 的设计寿命长于 Activity 或 Fragment 的 view，因此不能持有 View、ViewBinding 或 Activity 引用。ViewBinding 应在 onDestroyView 中置空，Flow 收集放在 viewLifecycleOwner 或 repeatOnLifecycle 内，确保 view 销毁后停止更新。"
+  keyPoints:
+    - "ViewModel 不持有 View、ViewBinding、Activity 或 Fragment"
+    - "ViewBinding 在 onDestroyView 中置空，避免 Fragment 实例持有旧 view"
+    - "用 repeatOnLifecycle(STARTED) 收集 UI 状态，页面不可见时停止"
+    - "用 LeakCanary 检查已销毁的 Activity/Fragment 是否仍可达"
+  pitfalls:
+    - "把 ViewBinding 作为 ViewModel 的构造参数"
+    - "在 lifecycleScope 中直接更新 view，忽略 view 可能已销毁"
+followups:
+  - "为什么 Fragment 的 view 会重建，而 Fragment 实例通常不会？"
+source:
+  url: https://developer.android.com/topic/libraries/architecture/viewmodel
+  title: "ViewModel overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

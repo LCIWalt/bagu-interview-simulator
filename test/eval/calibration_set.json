@@ -1,0 +1,106 @@
+[
+  {
+    "id": "cal-01",
+    "role": "backend",
+    "level": "mid",
+    "question": {
+      "title": "Go 的 GMP 模型里，为什么需要 P？",
+      "keyPoints": ["M 持有 P 才能执行 G", "每个 P 有本地队列", "syscall 时 P 移交"],
+      "pitfalls": ["把 P 当成线程"]
+    },
+    "answer": "P 是执行上下文。M 必须拿到 P 才能跑 G；每个 P 有自己的本地队列，减少全局锁竞争；G 进 syscall 时 P 可以交给别的 M。",
+    "humanScore": 4.5,
+    "difficulty": 4
+  },
+  {
+    "id": "cal-02",
+    "role": "backend",
+    "level": "mid",
+    "question": {
+      "title": "MySQL 为什么用 B+ 树？",
+      "keyPoints": ["非叶子只存键，扇出大", "叶子链表支持范围查询", "树高低、IO 少"],
+      "pitfalls": ["只说更快不解释 IO"]
+    },
+    "answer": "B+ 树比 B 树好，因为性能更高，查询更快。",
+    "humanScore": 1.0,
+    "difficulty": 3
+  },
+  {
+    "id": "cal-03",
+    "role": "backend",
+    "level": "senior",
+    "question": {
+      "title": "TCP 为什么需要三次握手？",
+      "keyPoints": ["确认双方初始序列号", "防止历史重复连接", "两次无法确认客户端收到服务端序列号"],
+      "pitfalls": ["只背流程"]
+    },
+    "answer": "三次握手交换序列号并确认双方收发能力。两次的话，服务端无法确认客户端收到了自己的 SYN-ACK；也能避免旧连接里滞留的 SYN 建错连接。",
+    "humanScore": 4.0,
+    "difficulty": 3
+  },
+  {
+    "id": "cal-04",
+    "role": "frontend",
+    "level": "mid",
+    "question": {
+      "title": "事件循环中宏任务与微任务的区别？",
+      "keyPoints": ["同步代码后清空微任务", "Promise.then 属于微任务", "每轮宏任务后再清空微任务"],
+      "pitfalls": ["把 Promise 当宏任务"]
+    },
+    "answer": "先执行同步代码，然后清空微任务队列；Promise.then 是微任务，setTimeout 是宏任务。每轮宏任务之后会再次清空微任务。",
+    "humanScore": 4.5,
+    "difficulty": 3
+  },
+  {
+    "id": "cal-05",
+    "role": "frontend",
+    "level": "mid",
+    "question": {
+      "title": "React 列表 key 的作用？",
+      "keyPoints": ["同层 diff 识别节点身份", "稳定 key 复用状态", "index 在插入排序时错位"],
+      "pitfalls": ["认为 key 会传给组件"]
+    },
+    "answer": "key 是 React 用来做 diff 的。用 index 一般没问题，除非列表会变。",
+    "humanScore": 2.0,
+    "difficulty": 2
+  },
+  {
+    "id": "cal-06",
+    "role": "algorithm",
+    "level": "mid",
+    "question": {
+      "title": "快速排序的平均与最坏复杂度？",
+      "keyPoints": ["平均 O(n log n)", "最坏 O(n²)", "随机化 pivot 降低退化"],
+      "pitfalls": ["认为快排稳定"]
+    },
+    "answer": "平均 O(n log n)，最坏 O(n²)，比如已排序数组取端点作 pivot。随机化 pivot 或三数取中可以缓解，工程上常用 introsort。",
+    "humanScore": 4.5,
+    "difficulty": 3
+  },
+  {
+    "id": "cal-07",
+    "role": "algorithm",
+    "level": "mid",
+    "question": {
+      "title": "哈希表如何解决冲突？",
+      "keyPoints": ["链地址法", "开放寻址", "负载因子过高要扩容"],
+      "pitfalls": ["认为哈希表永远 O(1)"]
+    },
+    "answer": "哈希表不会冲突。",
+    "humanScore": 1.0,
+    "difficulty": 2
+  },
+  {
+    "id": "cal-08",
+    "role": "backend",
+    "level": "senior",
+    "question": {
+      "title": "Redis 缓存穿透、击穿、雪崩怎么处理？",
+      "keyPoints": ["穿透用布隆过滤器/空值缓存", "击穿用互斥重建", "雪崩用 TTL 打散与降级"],
+      "pitfalls": ["三者混为一谈"]
+    },
+    "answer": "穿透是查不存在的数据，可以用布隆过滤器或缓存空值；击穿是热点 key 失效，用互斥重建；雪崩是大量 key 同时过期，过期时间加随机、预热和熔断降级。三者根因不同。",
+    "humanScore": 4.5,
+    "difficulty": 4
+  }
+]

@@ -1,0 +1,26 @@
+id: mo-dart-101
+title: "Dart 事件循环：microtask 饥饿与渲染让出"
+topics: [dart, event-loop, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "microtask 队列一旦开始清空就必须执行到空，期间新产生的 microtask 也会插入本轮，event queue 与渲染只能继续等待。递归 scheduleMicrotask 或无限链式 Future 因此会饿死事件队列，表现为界面卡死但单核占满。"
+  keyPoints:
+    - "microtask 队列必须在下一个 event 之前完全清空，包括执行中新增的 microtask"
+    - "Future.then、await 续体和 scheduleMicrotask 都排入 microtask"
+    - "Timer、IO、平台通道回调排入 event queue，渲染也在 event 之后进行"
+    - "把长任务拆到多个 event（如 Timer.run 或 await Future.delayed(Duration.zero)）才能让出帧"
+  pitfalls:
+    - "用 microtask 做分批处理，误以为能让出渲染时机"
+    - "在 then 回调里无限链式调度，导致 event queue 被饿死"
+followups:
+  - "如何用 DevTools 判断卡顿来自 microtask 还是同步长任务？"
+source:
+  url: https://api.dart.dev/stable/dart-async/scheduleMicrotask.html
+  title: "scheduleMicrotask function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-105
+title: "BuildContext 到底是什么，为什么不能长期持有？"
+topics: [flutter, widgets, element]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "BuildContext 是 Element 实现的接口，代表 Widget 在 Element 树中的位置；Theme.of、Navigator.of 等操作本质上都是沿 Element 树向上查找。Element 被卸载后 context 失效，因此不能跨 async gap 使用或长期缓存，访问前应检查 mounted 或 context.mounted。"
+  keyPoints:
+    - "BuildContext 由 Element 实现，是树中位置的句柄"
+    - "查找祖先依赖时沿 Element 树向上遍历"
+    - "Element 卸载后 context 失效，继续使用会抛异常"
+    - "GlobalKey.currentContext 只在挂载期间有效"
+  pitfalls:
+    - "把 context 存进单例或全局变量跨页面复用"
+    - "await 后直接使用旧 context 做导航或弹窗"
+followups:
+  - "Element 的 mount 与 unmount 分别做了什么？"
+  - "为什么在 dispose 中不能访问 context 的依赖？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/BuildContext-class.html
+  title: "BuildContext class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

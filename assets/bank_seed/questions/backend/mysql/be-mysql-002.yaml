@@ -1,0 +1,24 @@
+id: be-mysql-002
+title: "MySQL 的四种事务隔离级别分别解决什么问题？"
+topics: [mysql, transaction, mvcc]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "读未提交、读已提交、可重复读、串行化，在脏读、不可重复读、幻读之间做取舍；InnoDB 默认 RR，用 MVCC 快照读与临键锁处理当前读。"
+  keyPoints:
+    - "RU 允许脏读，RC 消除脏读"
+    - "RR 通过一致性快照避免不可重复读"
+    - "串行化用锁让并发事务等价于串行执行"
+    - "InnoDB 在 RR 下用 next-key lock 处理当前读的幻读"
+  pitfalls: ["认为 RR 完全消灭幻读", "混淆快照读与当前读"]
+followups:
+  - "RR 下什么语句会读到最新数据？"
+source:
+  url: https://en.wikipedia.org/wiki/Isolation_(database_systems)
+  title: "Isolation (database systems) - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-105
+title: "Go 的三色标记法如何工作？为什么需要写屏障？"
+topics: [go, gc, memory]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Go 的并发 GC 把对象标成白、灰、黑三色，从根出发把灰色对象引用的对象染灰，直到没有灰色对象，剩下的白色对象即可回收。并发标记期间用户协程可能修改指针，写屏障通过记录或重扫描保证黑色对象不会漏掉新引用的白色对象。"
+  keyPoints:
+    - "白色是未访问、灰色是待扫描、黑色是已扫描且其引用已处理完"
+    - "混合写屏障结合 Dijkstra 插入屏障与 Yuasa 删除屏障，兼顾栈对象与并发修改"
+    - "写屏障在指针写入时把相关对象染灰或加入队列，避免对象被错误回收"
+    - "标记结束后仍有 STW 的标记终止阶段，用于关闭屏障并完成剩余工作"
+  pitfalls:
+    - "认为 Go GC 完全没有 STW，忽略标记终止与清扫阶段的短暂停顿"
+    - "把三色标记等同于引用计数，混淆可达性分析与即时回收"
+followups:
+  - "GOGC 与 GOMEMLIMIT 分别控制什么？"
+  - "为什么栈上的对象在并发标记时需要特殊处理？"
+source:
+  url: https://go.dev/doc/gc-guide
+  title: "A Guide to the Go Garbage Collector"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

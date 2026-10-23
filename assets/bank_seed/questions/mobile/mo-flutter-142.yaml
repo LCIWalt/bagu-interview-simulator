@@ -1,0 +1,27 @@
+id: mo-flutter-142
+title: "如何系统性减小 Flutter 应用的安装包体积？"
+topics: [flutter, app-size, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "包体大头是 Flutter 引擎、Dart AOT 快照、资源与插件携带的原生库，单纯删 Dart 代码收益有限。常见手段是 ABI 拆分或 Android App Bundle 让单设备只下载一份引擎、用 --split-debug-info 把符号表移出包体、开启 --obfuscate、把大型资源做成按需下载的 deferred components，并用 --analyze-size 先定位大头。"
+  keyPoints:
+    - "App Bundle 与 --split-per-abi 避免一个包携带全部 ABI 的引擎"
+    - "--split-debug-info 剥离符号，配合 --obfuscate 时务必保存 symbol 文件"
+    - "Android 的 deferred components 可把大型资源改为安装后按需下载"
+    - "flutter build --analyze-size 输出各模块体积分解，先测量再优化"
+  pitfalls:
+    - "以为精简 Dart 业务代码能显著减小体积，忽略引擎占比"
+    - "开启混淆后丢失符号表，线上崩溃栈无法还原"
+followups:
+  - "deferred components 为什么只在 Android 上可用？"
+  - "如何把包体检查加入 CI 做回归？"
+source:
+  url: https://docs.flutter.dev/perf/app-size
+  title: "Measuring your app's size"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-android-136
+title: "Android: 后台启动 Activity 的限制与豁免"
+topics: [android, background, activity]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 10 起应用处于后台时不能随意启动 Activity，系统通常直接丢弃启动请求并在日志中给出提示，而不是抛异常。是否允许取决于是否有可见窗口、是否由用户交互触发，以及 SYSTEM_ALERT_WINDOW、系统角色等豁免条件。需要提醒用户时优先发通知，由 PendingIntent 让系统代发启动。"
+  keyPoints:
+    - "Android 10（API 29）起后台启动 Activity 默认被阻断，失败时通常无异常"
+    - "豁免包括可见窗口、最近任务、SYSTEM_ALERT_WINDOW 及部分系统角色场景"
+    - "通知的 contentIntent/fullScreenIntent 由系统代发，可绕过普通后台启动限制"
+    - "Android 14 起 PendingIntent 发送方需显式选择是否允许后台 Activity 启动"
+  pitfalls:
+    - "用 try/catch 判断启动是否成功，实际系统静默丢弃且不抛异常"
+    - "假设厂商省电白名单或自启动权限一定豁免，忽略版本与定制 ROM 差异"
+followups:
+  - "哪些用户可见的交互可以合法地把应用带回前台？"
+  - "全屏 Intent 通知与普通通知在启动行为上有什么区别？"
+source:
+  url: https://developer.android.com/guide/components/activities/background-starts
+  title: "Restrictions on starting activities from the background"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

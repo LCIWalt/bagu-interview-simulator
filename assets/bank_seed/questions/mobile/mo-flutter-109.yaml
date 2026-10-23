@@ -1,0 +1,27 @@
+id: mo-flutter-109
+title: "CustomScrollView 与 Sliver 解决了什么问题？"
+topics: [flutter, slivers, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Sliver 是参与滚动布局的协议，RenderSliver 按剩余可滚动空间分段布局，只构建可见部分。CustomScrollView 把 SliverAppBar、SliverList、SliverGrid 等组合进同一个滚动视口，实现吸顶、折叠等效果，避免嵌套滚动容器带来的高度与手势冲突。"
+  keyPoints:
+    - "Sliver 按滚动视口分段布局，天然支持懒加载"
+    - "CustomScrollView 用 slivers 组合多个滚动区块"
+    - "SliverAppBar 支持 pinned、floating、snap 等行为"
+    - "普通 Widget 需用 SliverToBoxAdapter 包裹"
+  pitfalls:
+    - "在 Sliver 中再嵌套可滚动组件，造成滚动冲突"
+    - "误以为 SliverList 会保留所有子项的状态"
+followups:
+  - "SliverPersistentHeader 如何实现自定义吸顶？"
+  - "NestedScrollView 的已知限制有哪些？"
+source:
+  url: https://docs.flutter.dev/ui/layout/scrolling/slivers
+  title: "Using slivers to achieve fancy scrolling"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-android-137
+title: "Android: 前台服务类型与权限声明"
+topics: [android, foreground-service, permissions]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 14 起每个前台服务都必须在 manifest 声明 foregroundServiceType，并申请与该类型对应的权限，例如 camera、microphone、location、dataSync。startForeground 时传入的类型必须是 manifest 中声明的子集，且运行时的前置条件要满足，否则抛 MissingForegroundServiceTypeException 或 SecurityException。类型选择要与实际用途一致，否则会被商店审核拒绝。"
+  keyPoints:
+    - "在 `<service>` 上声明 android:foregroundServiceType，可用竖线组合多个类型"
+    - "按类型申请 FOREGROUND_SERVICE_CAMERA、MICROPHONE、LOCATION、DATA_SYNC 等权限"
+    - "startForeground 传入的类型必须是 manifest 子集，且运行时权限已授予"
+    - "Android 15 起 dataSync、mediaProcessing 等类型有累计超时，超时需停止或降级"
+  pitfalls:
+    - "只声明 FOREGROUND_SERVICE 而漏掉类型权限，启动即崩溃"
+    - "用 dataSync 承载长连接或定位，类型与用途不符会被审核拒绝"
+followups:
+  - "短时任务应该用 shortService 还是普通前台服务？"
+  - "用户从最近任务划掉应用后，前台服务还能继续运行吗？"
+source:
+  url: https://developer.android.com/develop/background-work/services/fgs/service-types
+  title: "Foreground service types are required"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

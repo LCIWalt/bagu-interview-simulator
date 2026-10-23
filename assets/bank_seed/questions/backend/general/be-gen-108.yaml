@@ -1,0 +1,27 @@
+id: be-gen-108
+title: "MySQL 的 redo log、undo log 和 binlog 各自负责什么？"
+topics: [mysql, transaction, persistence]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "redo log 是 InnoDB 的物理逻辑日志，用 WAL 保证已提交事务的持久性；undo log 记录旧版本，支撑回滚与 MVCC 一致性读；binlog 是 Server 层的逻辑日志，用于复制与按时间点恢复。三者职责不同，提交时通过两阶段提交保证 redo 与 binlog 一致。"
+  keyPoints:
+    - "redo log 循环写、按 checkpoint 推进，崩溃恢复时重放已提交但未刷脏页的修改"
+    - "undo log 保存行旧版本与回滚指针，既用于事务回滚，也用于构建 MVCC 版本链"
+    - "binlog 记录语句或行变更，格式由 binlog_format 决定，是主从复制的基础"
+    - "两阶段提交先写 redo prepare，再写 binlog，最后 redo commit，避免主从数据不一致"
+  pitfalls:
+    - "把 redo log 当成 binlog 的备份，混淆物理页修改与逻辑变更"
+    - "认为刷盘只由 redo 决定，忽视 innodb_flush_log_at_trx_commit 与 sync_binlog 的取舍"
+followups:
+  - "组提交（group commit）如何降低两阶段提交的 fsync 次数？"
+  - "崩溃恢复时如何判断 redo 与 binlog 是否都完整？"
+source:
+  url: https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html
+  title: "MySQL 8.4 Reference Manual: Redo Log"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

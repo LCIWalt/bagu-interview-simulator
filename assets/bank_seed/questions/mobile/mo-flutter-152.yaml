@@ -1,0 +1,27 @@
+id: mo-flutter-152
+title: "离线优先的同步策略应该如何设计？"
+topics: [flutter, offline-first, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "离线优先要求把本地数据库当作唯一读写入口，UI 只读本地，网络只负责后台同步；写操作先落本地并进入 outbox 队列，联网后按序重放，服务端用幂等键去重。冲突必须有显式策略（last-write-wins、字段级合并或版本向量），并且要把冲突与同步状态暴露到 UI，而不是静默覆盖数据。"
+  keyPoints:
+    - "本地存储是 source of truth，页面永远读本地并订阅变更"
+    - "outbox 队列加幂等键保证重放安全，失败可重试与退避"
+    - "冲突策略要显式选择，并记录版本或时间戳作为判定依据"
+    - "同步状态（pending/failed/conflict）需要在 UI 可见并可手动重试"
+  pitfalls:
+    - "在线写服务端、离线写本地，形成两套互不一致的逻辑"
+    - "缺少幂等键，重试产生重复订单或重复消息"
+followups:
+  - "outbox 的重试与退避应该如何设计？"
+  - "如何为离线删除设计墓碑（tombstone）？"
+source:
+  url: https://docs.flutter.dev/cookbook/persistence/sqlite
+  title: "Persist data with SQLite"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

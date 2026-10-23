@@ -1,0 +1,25 @@
+id: fe-gen-111
+title: "什么是 BFC，它能解决哪些布局问题？"
+topics: [css, layout, browser]
+role: frontend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "BFC（块级格式化上下文）是独立的布局区域，内部盒子的布局不会影响外部；浮动、绝对定位、overflow 非 visible、display: flow-root 等都能创建 BFC。它常用于包住浮动子元素、阻止外边距折叠以及隔离两栏布局。"
+  keyPoints:
+    - "BFC 内部浮动参与高度计算，因此可以包住浮动子元素"
+    - "相邻 BFC 之间不会发生外边距折叠"
+    - "float、position: absolute/fixed、overflow 非 visible、display: flow-root 可创建 BFC"
+    - "现代清除浮动优先用 flow-root 或 flex/grid，而不是 clearfix"
+  pitfalls: ["认为 overflow: hidden 只有裁剪作用", "把 BFC 与层叠上下文混为一谈"]
+followups:
+  - "为什么 BFC 能阻止相邻元素的外边距折叠？"
+  - "contain: layout 与 BFC 有什么关系？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_display/Block_formatting_context
+  title: "MDN: Block formatting context"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

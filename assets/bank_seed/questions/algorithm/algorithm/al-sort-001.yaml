@@ -1,0 +1,24 @@
+id: al-sort-001
+title: "快速排序的平均与最坏复杂度，如何避免最坏情况？"
+topics: [algorithm, sorting, quicksort]
+role: algorithm
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "快排选 pivot 分区后递归，平均 O(n log n)，最坏 O(n²)；随机化 pivot、三路分区或改用 introsort 可降低退化风险。"
+  keyPoints:
+    - "partition 后 pivot 就位，左右子问题递归"
+    - "平均 O(n log n)，最坏 O(n²)（如已排序且取端点）"
+    - "随机化 pivot 或三数取中降低退化概率"
+    - "三路分区处理大量重复元素；快排不稳定"
+  pitfalls: ["认为快排最坏也是 O(n log n)", "忽略递归栈深度"]
+followups:
+  - "为什么工程库常用 introsort 而不是纯快排？"
+source:
+  url: https://en.wikipedia.org/wiki/Quicksort
+  title: "Quicksort - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

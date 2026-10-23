@@ -1,0 +1,24 @@
+id: be-mysql-001
+title: "InnoDB 为什么用 B+ 树而不是 B 树做索引？"
+topics: [mysql, index, innodb]
+role: backend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "B+ 树把数据集中在叶子、非叶子只存键，扇出大使树更矮、磁盘 IO 更少；叶子链表让范围查询与排序更高效。"
+  keyPoints:
+    - "非叶子节点只存键与指针，单页扇出大、树高更低"
+    - "所有数据在叶子节点，查询路径长度稳定"
+    - "叶子节点用链表相连，范围扫描无需回到上层"
+    - "相比 B 树减少随机 IO 与回表次数"
+  pitfalls: ["只说 B+ 树更快而不解释磁盘 IO", "忽略聚簇索引与二级索引的区别"]
+followups:
+  - "二级索引查询为什么可能需要回表？"
+source:
+  url: https://en.wikipedia.org/wiki/B%2B_tree
+  title: "B+ tree - Wikipedia"
+  license: CC-BY-SA-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

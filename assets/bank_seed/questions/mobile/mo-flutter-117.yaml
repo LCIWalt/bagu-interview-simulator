@@ -1,0 +1,27 @@
+id: mo-flutter-117
+title: "Impeller 相比 Skia 解决了什么问题？"
+topics: [flutter, impeller, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Impeller 是 Flutter 的新渲染后端，在构建时预编译着色器，避免 Skia 运行时编译 shader 造成的首帧与动画卡顿；它面向 Metal、Vulkan 等现代图形 API 设计。iOS 已默认启用，Android 也在较新版本逐步默认，仍可通过编译开关回退 Skia 做兼容性对比。"
+  keyPoints:
+    - "预编译 shader，减少运行时编译导致的 jank"
+    - "面向 Metal、Vulkan 等现代图形 API 设计"
+    - "iOS 默认启用，Android 在较新版本逐步铺开"
+    - "可用 --no-enable-impeller 回退对比"
+  pitfalls:
+    - "认为启用 Impeller 后所有掉帧都会消失"
+    - "把旧设备或模拟器上的渲染差异当成业务 bug"
+followups:
+  - "如何判断一个掉帧问题是否与 shader 编译有关？"
+  - "回退 Skia 的排查流程应该怎么设计？"
+source:
+  url: https://docs.flutter.dev/perf/impeller
+  title: "Impeller rendering engine"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

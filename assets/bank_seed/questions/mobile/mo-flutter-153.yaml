@@ -1,0 +1,27 @@
+id: mo-flutter-153
+title: "如何降低动画引起的重绘开销？"
+topics: [flutter, performance, animation]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "动画每帧重建 widget 树，但真正昂贵的是 layout、paint 与图层合成；把重建限制在依赖动画的子树、用 RepaintBoundary 隔离重绘、优先动画 transform 与 opacity 之类不触发布局的属性，能显著降低每帧工作。避免在动画回调里 setState 整个页面或做昂贵计算。"
+  keyPoints:
+    - "AnimatedBuilder 的 child 参数可把静态子树排除在重建之外"
+    - "RepaintBoundary 隔离重绘，但图层过多会增加合成与内存成本"
+    - "transform 与 opacity 走合成阶段，尺寸与位置变化会触发布局"
+    - "用 DevTools Performance 区分 UI 与 raster 耗时及图层数量"
+  pitfalls:
+    - "在动画回调中 setState 整个页面"
+    - "给每个列表项都套 RepaintBoundary，反而增加图层开销"
+followups:
+  - "为什么 opacity 动画有时仍会触发 saveLayer？"
+  - "隐式动画与显式 AnimationController 该如何取舍？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Flutter performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

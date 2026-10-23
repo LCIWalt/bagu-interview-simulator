@@ -1,0 +1,27 @@
+id: be-gen-125
+title: "分布式 ID 有哪些方案？雪花算法为什么依赖时钟？"
+topics: [system-design, distributed-id, architecture]
+role: backend
+level: senior
+difficulty: 4
+type: system-design
+answer:
+  summary: "常见方案有数据库自增、号段模式、UUID 和雪花算法，选择取决于是否要求趋势递增、低延迟与全局唯一。雪花算法用时间戳、机器 ID 与序列号拼成 64 位整数，依赖时钟单调，发生回拨时可能生成重复 ID。"
+  keyPoints:
+    - "数据库自增简单但受单点与吞吐限制，号段模式一次取一批 ID 降低数据库压力"
+    - "UUID 本地生成无中心依赖，但无序且较长，作为 InnoDB 主键会造成页分裂"
+    - "雪花算法由符号位、41 位毫秒时间戳、10 位机器 ID、12 位序列号组成，趋势递增"
+    - "机器 ID 需通过配置中心或注册机制唯一分配，时钟回拨要等待、报警或切换备用位"
+  pitfalls:
+    - "直接用主机名哈希生成 workerId，扩容或改名后可能撞号"
+    - "忽视容器环境时钟漂移，回拨时仍继续发号导致 ID 重复"
+followups:
+  - "号段模式如何避免服务重启后号段浪费或重复？"
+  - "为什么说雪花 ID 只是趋势递增，而不是严格连续？"
+source:
+  url: https://redis.io/docs/latest/commands/incrby/
+  title: "INCRBY | Redis"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

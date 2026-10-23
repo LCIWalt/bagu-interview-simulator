@@ -1,0 +1,27 @@
+id: mo-flutter-128
+title: "Flutter 表单校验中 GlobalKey<FormState> 起什么作用？"
+topics: [flutter, widgets, forms]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "FormState 通过 GlobalKey 暴露 validate、save 与 reset，validate 会遍历所有 FormField 并触发 validator，全部通过才返回 true。TextFormField 的 controller 与 FocusNode 需要自行释放，autovalidateMode 可控制自动校验时机，提交前应再次 validate 防止状态过期。"
+  keyPoints:
+    - "GlobalKey<FormState> 用于访问表单状态"
+    - "validate 触发所有 validator 并返回整体结果"
+    - "autovalidateMode 控制自动校验时机"
+    - "TextEditingController 需要 dispose"
+  pitfalls:
+    - "不检查 validate 的返回值就直接提交"
+    - "在 validator 中做网络请求等副作用"
+followups:
+  - "FormField 与 TextFormField 的关系是什么？"
+  - "如何在多步表单中保持校验状态？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Form-class.html
+  title: "Form class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

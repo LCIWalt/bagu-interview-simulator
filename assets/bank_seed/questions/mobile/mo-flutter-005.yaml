@@ -1,0 +1,26 @@
+id: mo-flutter-005
+title: "Flutter performance best practices"
+topics: [flutter, performance, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "const Widget 可以在编译期复用，减少重建；RepaintBoundary 把重绘隔离在子树，适合频繁动画区域；build 应保持纯函数、轻量，避免在 build 里做 IO、排序大列表或创建昂贵对象。"
+  keyPoints:
+    - "const 构造减少 Widget 分配与重建"
+    - "RepaintBoundary 隔离重绘，不是越多越好"
+    - "build 中避免昂贵计算与副作用"
+    - "列表用 itemBuilder 懒加载并给稳定 key"
+  pitfalls:
+    - "给所有组件无脑套 RepaintBoundary"
+    - "在 build 里 new Controller"
+followups:
+  - "如何用 DevTools 判断是 build 还是 raster 瓶颈？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Flutter performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

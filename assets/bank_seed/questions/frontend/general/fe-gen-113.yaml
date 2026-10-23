@@ -1,0 +1,25 @@
+id: fe-gen-113
+title: "Core Web Vitals 的 LCP、INP、CLS 分别衡量什么，如何优化？"
+topics: [performance, browser]
+role: frontend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "LCP 衡量最大内容元素的加载速度，INP 衡量交互到下一帧呈现的响应延迟，CLS 衡量意外的布局偏移。三者分别对应加载、交互与视觉稳定性，应结合真实用户数据与实验室数据定位瓶颈。"
+  keyPoints:
+    - "LCP 关注首屏主图或大块文本，优化图片、字体与关键资源优先级"
+    - "INP 关注输入延迟、处理耗时与呈现延迟，需要拆分长任务"
+    - "CLS 常由无尺寸图片、动态插入内容与字体切换引起"
+    - "以 75 分位真实用户数据评估，避免只看实验室分数"
+  pitfalls: ["用 load 事件时间代替 LCP", "认为 CLS 只与图片尺寸有关"]
+followups:
+  - "SPA 的路由切换会如何影响 LCP 的统计？"
+  - "第三方脚本为什么会显著拖累 INP？"
+source:
+  url: https://web.dev/articles/vitals
+  title: "web.dev: Web Vitals"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

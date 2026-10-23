@@ -1,0 +1,26 @@
+id: mo-android-114
+title: "Android: Flow 背压与 collectLatest"
+topics: [android, kotlin, flow]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "上游发射速度超过下游处理能力时会形成积压：buffer 增加缓冲，conflate 只保留最新值，collectLatest 在新值到来时取消上一次处理。选型取决于业务语义，搜索建议适合 collectLatest，只关心最新状态时可用 conflate。"
+  keyPoints:
+    - "默认 flow 是顺序背压，下游处理慢会 suspend 上游"
+    - "buffer 允许上游超前，但会增加内存占用和端到端延迟"
+    - "conflate 丢弃中间值，只保证消费者处理最新值"
+    - "collectLatest 会取消旧 collector 的挂起逻辑，因此逻辑必须可取消"
+  pitfalls:
+    - "在 collectLatest 中执行不可取消的写操作，导致重复写入或数据错乱"
+    - "盲目加大 buffer 掩盖下游处理慢的问题"
+followups:
+  - "flatMapLatest 与 collectLatest 的区别是什么？"
+source:
+  url: https://kotlinlang.org/docs/flow.html
+  title: "Asynchronous Flow"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

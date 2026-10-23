@@ -1,0 +1,26 @@
+id: mo-android-124
+title: "Android: WorkManager 可靠后台任务"
+topics: [android, workmanager, background]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "WorkManager 适合需要保证最终执行、可以延后的后台任务，它把任务持久化到数据库，并在进程死亡或设备重启后恢复。它支持约束、重试、链式依赖和唯一工作，但不适合必须立即完成的操作或长时间前台任务。"
+  keyPoints:
+    - "WorkManager 保证最终执行，不保证准时执行"
+    - "用 Constraints 指定网络、充电和电量等运行条件"
+    - "用 ExistingWorkPolicy 或唯一工作防止重复入队"
+    - "长时间任务使用 CoroutineWorker 配合 setForeground，或改用前台服务"
+  pitfalls:
+    - "把需要立即完成的用户操作放进 WorkManager，导致交互延迟"
+    - "在 doWork 中无限制重试，造成耗电和后端压力"
+followups:
+  - "WorkManager、前台服务和 AlarmManager 的选型边界是什么？"
+source:
+  url: https://developer.android.com/topic/libraries/architecture/workmanager
+  title: "Task scheduling"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

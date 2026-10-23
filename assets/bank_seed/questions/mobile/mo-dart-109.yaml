@@ -1,0 +1,26 @@
+id: mo-dart-109
+title: "isolate 间大对象传输与 TransferableTypedData"
+topics: [dart, isolate, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "isolate 之间默认按值复制消息，大块二进制会产生额外拷贝与内存峰值。TransferableTypedData 允许把 ByteBuffer 的所有权转移给接收方，发送后原 isolate 不能再访问，从而做到零拷贝。"
+  keyPoints:
+    - "普通 TypedData 发送时会被复制，大 buffer 成本显著"
+    - "TransferableTypedData.fromList 创建，接收端 materialize 取回"
+    - "转移后发送端 buffer 失效，再次访问会抛错"
+    - "适合图像、音频、大文件分片等跨 isolate 传输"
+  pitfalls:
+    - "转移后仍在原 isolate 读取同一 buffer"
+    - "对很小的数据也用转移，忽略封装与调度开销"
+followups:
+  - "SendPort 发送对象时哪些类型可以直接传？"
+source:
+  url: https://api.dart.dev/stable/dart-isolate/TransferableTypedData-class.html
+  title: "TransferableTypedData class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

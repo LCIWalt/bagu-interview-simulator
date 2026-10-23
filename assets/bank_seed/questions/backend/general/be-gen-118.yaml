@@ -1,0 +1,27 @@
+id: be-gen-118
+title: "HTTP 强缓存和协商缓存分别怎么工作？Cache-Control 有哪些关键指令？"
+topics: [network, http, cache]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "强缓存由 Cache-Control 的 max-age 等指令控制，在有效期内浏览器直接使用本地副本而不发请求。协商缓存则在过期后带上 ETag 或 Last-Modified 发起条件请求，服务端返回 304 时复用缓存，否则返回新内容。"
+  keyPoints:
+    - "max-age 与 s-maxage 分别控制私有缓存和共享缓存的新鲜期，immutable 表示内容不再变化"
+    - "no-cache 允许缓存但每次使用前必须校验，no-store 则完全禁止存储"
+    - "ETag 配合 If-None-Match 做内容级校验，Last-Modified 配合 If-Modified-Since 精度只到秒"
+    - "Vary 让缓存按请求头区分副本，避免把压缩或语言版本串用"
+  pitfalls:
+    - "把 no-cache 当成不缓存，与 no-store 混为一谈"
+    - "静态资源 URL 不变却设置超长 max-age，导致发布后用户长期拿到旧版本"
+followups:
+  - "为什么静态资源常用内容哈希文件名配合长缓存？"
+  - "CDN 的缓存键通常由哪些部分组成？"
+source:
+  url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+  title: "Cache-Control header - HTTP | MDN"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

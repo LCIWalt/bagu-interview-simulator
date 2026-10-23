@@ -1,0 +1,27 @@
+id: mo-flutter-106
+title: "Riverpod 中 ref.watch 与 ref.read 有什么区别？"
+topics: [flutter, riverpod, state-management]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ref.watch 建立订阅，provider 变化时重建调用方；ref.read 只取当前值、不订阅，适合在事件回调中触发一次操作。build 中应使用 watch，在 onPressed 等回调里用 read，否则会漏掉更新或在 build 中产生副作用；ProviderScope 负责承载与覆盖 provider，便于测试。"
+  keyPoints:
+    - "watch 订阅变化并触发重建，read 只读取一次"
+    - "build 中用 watch，事件回调中用 read"
+    - "autoDispose 在无监听者时释放状态"
+    - "ProviderScope 的 overrides 可在测试中替换依赖"
+  pitfalls:
+    - "在 build 中用 read，导致 UI 不随状态更新"
+    - "把所有状态塞进一个巨大 provider，造成全量重建"
+followups:
+  - "ref.listen 适合处理什么场景？"
+  - "Provider 的 autoDispose 与 keepAlive 如何取舍？"
+source:
+  url: https://riverpod.dev/docs/concepts2/providers
+  title: "Riverpod documentation: Providers"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

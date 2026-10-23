@@ -1,0 +1,26 @@
+id: mo-android-003
+title: "Android: Manage your app's memory"
+topics: [android, memory, leakcanary]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "常见泄漏包括静态/单例持有 Activity Context、未注销的 Handler/Runnable、未取消的监听器、匿名内部类持有外部 Activity。LeakCanary 会给出引用链，重点看第一个持有 Activity 的强引用并改为 ApplicationContext 或及时注销。"
+  keyPoints:
+    - "长生命周期对象不要持有 Activity Context"
+    - "Handler 消息要在 onDestroy 移除"
+    - "监听器/回调要成对注册与反注册"
+    - "LeakCanary 引用链从 GC Root 找到泄漏持有者"
+  pitfalls:
+    - "用静态 Context 图省事"
+    - "在匿名 Runnable 中隐式持有 Activity"
+followups:
+  - "为什么 ApplicationContext 不能启动 Dialog？"
+source:
+  url: https://developer.android.com/topic/performance/memory
+  title: "Android: Manage your app's memory"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

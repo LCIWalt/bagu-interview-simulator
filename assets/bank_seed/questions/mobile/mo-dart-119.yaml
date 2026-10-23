@@ -1,0 +1,26 @@
+id: mo-dart-119
+title: "sealed class 与穷尽性检查"
+topics: [dart, oop, pattern-matching]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "sealed 类只能在同一个库中被继承或实现，配合 switch 可获得穷尽性检查，是实现代数数据类型（如 Result 或状态机）的常用手段。它限制的是继承范围而不是实例不可变，子类仍需自行设计不可变性。"
+  keyPoints:
+    - "sealed 限制子类型必须在同一 library 内声明"
+    - "switch 覆盖全部子类型时无需 default"
+    - "常与 final class 子类组合表达互斥状态"
+    - "新增子类型会让所有穷尽 switch 编译失败，形成安全的重构提示"
+  pitfalls:
+    - "以为 sealed 类不能被实例化或继承"
+    - "跨库继承 sealed 类导致编译错误"
+followups:
+  - "sealed 与 enum 在建模状态时如何选择？"
+source:
+  url: https://dart.dev/language/class-modifiers
+  title: "Dart: Class modifiers"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

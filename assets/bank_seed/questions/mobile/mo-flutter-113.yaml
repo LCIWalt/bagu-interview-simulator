@@ -1,0 +1,27 @@
+id: mo-flutter-113
+title: "Flutter 的 Router API 中三个核心组件分别负责什么？"
+topics: [flutter, navigation, router]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Router 由 RouterDelegate 管理路由栈与页面构建、RouteInformationParser 把平台 URL 解析为应用路由状态、RouteInformationProvider 向平台汇报当前 URL。三者配合实现声明式导航与深链，go_router 就是在 Router API 之上做的封装。"
+  keyPoints:
+    - "RouterDelegate 负责当前页面栈与 build"
+    - "RouteInformationParser 把 URL 解析成路由状态"
+    - "RouteInformationProvider 同步平台或浏览器地址"
+    - "MaterialApp.router 接收这些组件以启用声明式路由"
+  pitfalls:
+    - "在 RouterDelegate 的 build 中做网络请求等副作用"
+    - "setNewRoutePath 不处理非法路径，导致白屏"
+followups:
+  - "go_router 相比手写 RouterDelegate 省掉了哪些工作？"
+  - "如何用 Router API 实现 Android 返回键处理？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Router-class.html
+  title: "Router class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

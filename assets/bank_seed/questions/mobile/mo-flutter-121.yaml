@@ -1,0 +1,27 @@
+id: mo-flutter-121
+title: "如何让 Flutter 页面对视障用户更友好？"
+topics: [flutter, accessibility, semantics]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 通过 Semantics 树向平台无障碍服务暴露信息，语义化组件通常会自动生成节点。自定义绘制或纯图标按钮应补 semanticsLabel 或 tooltip，合并或排除冗余语义，并保证点击区域足够大、文字缩放后布局仍可用。"
+  keyPoints:
+    - "Semantics 节点是屏幕阅读器读取的内容"
+    - "图标按钮需要提供 label 或 tooltip"
+    - "MergeSemantics 与 ExcludeSemantics 可整理语义树"
+    - "需支持文字缩放与足够大的点击区域"
+  pitfalls:
+    - "只用颜色或图标表达状态，没有文字替代"
+    - "自定义手势区域缺少语义与焦点支持"
+followups:
+  - "SemanticsService.announce 适合什么场景？"
+  - "如何用测试验证语义标签是否存在？"
+source:
+  url: https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility
+  title: "Accessibility"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

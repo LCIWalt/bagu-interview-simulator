@@ -1,0 +1,27 @@
+id: mo-flutter-140
+title: "如何让布局在 RTL 语言下自动镜像？"
+topics: [flutter, internationalization, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 从 Localizations 推导 Directionality，阿拉伯语、希伯来语等 RTL locale 会把文本方向设为 rtl；使用 EdgeInsetsDirectional、AlignmentDirectional、PositionedDirectional 等 API 时，start/end 会自动映射到正确的物理方向。写死 left/right 的布局不会镜像，而自绘 Canvas 需要自己按方向做变换。"
+  keyPoints:
+    - "Directionality.of(context) 由 locale 决定，是镜像布局的根依据"
+    - "优先用 *Directional 系列 API，而不是 left/right 常量"
+    - "Image 与 Icon 的 matchTextDirection 控制图标是否随方向翻转"
+    - "CustomPaint 与手动坐标计算不会自动镜像，需显式处理"
+  pitfalls:
+    - "混用 left/right，RTL 下留白与箭头出现在错误一侧"
+    - "把所有图标都镜像，导致播放键等语义相反的控件出错"
+followups:
+  - "同一行混排阿拉伯语与英文时如何正确渲染？"
+  - "如何在不支持 RTL 的第三方组件外围做兜底？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Directionality-class.html
+  title: "Directionality class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

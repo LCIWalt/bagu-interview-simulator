@@ -1,0 +1,27 @@
+id: mo-flutter-120
+title: "integration_test 与普通 Widget 测试的边界在哪里？"
+topics: [flutter, testing, integration-test]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "integration_test 在真机或模拟器上运行完整 App，能覆盖真实插件、平台通道、导航与启动流程，速度慢且需要设备；Widget 测试在测试宿主中快速验证组件行为。关键路径用集成测试兜底，大量分支用 Widget 与单元测试覆盖，避免把所有用例都堆到设备上。"
+  keyPoints:
+    - "集成测试跑在设备上，覆盖真实引擎与插件"
+    - "Widget 测试更快，适合大量 UI 分支"
+    - "IntegrationTestWidgetsFlutterBinding 负责驱动测试"
+    - "用 flutter test integration_test 在设备上执行"
+  pitfalls:
+    - "把集成测试当单元测试频繁跑，拖慢 CI"
+    - "测试依赖真实账号或公网，导致结果不稳定"
+followups:
+  - "如何把 integration_test 接入 CI？"
+  - "Patrol 这类框架补足了 integration_test 的哪些能力？"
+source:
+  url: https://docs.flutter.dev/testing/integration-tests
+  title: "Check app functionality with an integration test"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

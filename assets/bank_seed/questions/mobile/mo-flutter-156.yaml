@@ -1,0 +1,27 @@
+id: mo-flutter-156
+title: "Android App Links 与 iOS Universal Links 校验失败如何排查？"
+topics: [flutter, deep-linking, platform]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "两端都依赖域名下托管的校验文件：Android 读取 /.well-known/assetlinks.json，要求包名与签名证书 SHA-256 匹配且 intent-filter 声明 autoVerify；iOS 读取 apple-app-site-association，要求 Associated Domains 能力与 TeamID.BundleID 及路径规则匹配。失败多因文件返回错误 Content-Type、经过重定向、用 debug 签名生成指纹，或清单与 entitlement 未声明对应 host。"
+  keyPoints:
+    - "Android 需 android:autoVerify 加 assetlinks.json 中的包名与签名指纹一致"
+    - "iOS 需开启 Associated Domains，AASA 的 appID 与路径规则要覆盖目标链接"
+    - "校验文件必须可公网访问、返回 200 与 application/json，且不经过重定向"
+    - "用 adb shell pm get-app-links 与设备日志确认验证状态与失败原因"
+  pitfalls:
+    - "用 debug keystore 的指纹配置 assetlinks，release 包校验失败"
+    - "AASA 被 CDN 缓存或返回 HTML 错误页，系统解析不到"
+followups:
+  - "深链冷启动时如何保证路由在首帧之后正确恢复？"
+  - "同一个域名迁移时如何做到旧链接不失效？"
+source:
+  url: https://docs.flutter.dev/ui/navigation/deep-linking
+  title: "Deep linking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

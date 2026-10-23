@@ -1,0 +1,26 @@
+id: mo-flutter-003
+title: "Flutter: State management options"
+topics: [flutter, state-management, riverpod]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "setState 适合单个 Widget 内的局部 UI 状态；跨页面共享、异步数据、缓存和依赖注入适合 Provider/Riverpod/Bloc 等。关键是缩小重建范围，避免把全局状态塞进一个大 State。"
+  keyPoints:
+    - "局部临时状态用 setState 足够"
+    - "跨 Widget/页面共享状态上提或用状态管理"
+    - "选择方案看团队与可测试性，不盲目追新"
+    - "用 select/ProviderScope 缩小重建范围"
+  pitfalls:
+    - "所有状态都放全局"
+    - "在 build 中创建新的 Notifier 导致状态丢失"
+followups:
+  - "Riverpod 的 autoDispose 解决什么问题？"
+source:
+  url: https://docs.flutter.dev/data-and-backend/state-mgmt/options
+  title: "Flutter: State management options"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

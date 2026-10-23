@@ -1,0 +1,28 @@
+id: al-gen-101
+title: "最长无重复字符子串（滑动窗口）"
+body: "给定字符串 s，返回不含重复字符的最长连续子串的长度。例如 s = abcabcbb 时答案为 3（子串 abc），s = bbbbb 时为 1，空串为 0。要求时间复杂度 O(n)。"
+topics: [algorithm, sliding-window, string]
+role: algorithm
+level: mid
+difficulty: 3
+type: coding
+answer:
+  summary: "用左右指针维护一个不含重复字符的窗口，右指针逐字符扩张，遇到重复字符时把左指针跳到该字符上次出现位置的下一位；窗口内始终无重复，最大宽度即答案。每个字符最多进出窗口一次，时间 O(n)。"
+  keyPoints:
+    - "哈希表记录字符最近一次出现的下标，左指针取 max(left, last[c] + 1)，防止窗口回退"
+    - "窗口 [left, right] 始终无重复，每轮扩张后更新最大长度"
+    - "时间 O(n)，空间 O(min(n, 字符集大小))；字符集固定时可用 128 长度数组替代哈希表"
+    - "边界：空串返回 0，单字符返回 1，全相同字符返回 1"
+  pitfalls:
+    - "左指针直接赋值为 last[c] + 1 而不取 max，遇到更早的重复字符时窗口会回退，区间非法"
+    - "忘记处理空串或全相同字符，导致返回错误长度甚至越界访问"
+followups:
+  - "如果要求返回具体子串而不只是长度，代码需要怎么改？"
+  - "若允许窗口内至多有 K 个不同字符，思路如何扩展？"
+source:
+  url: https://leetcode.cn/problems/longest-substring-without-repeating-characters/solution/
+  title: "3. 无重复字符的最长子串 - 力扣官方题解"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

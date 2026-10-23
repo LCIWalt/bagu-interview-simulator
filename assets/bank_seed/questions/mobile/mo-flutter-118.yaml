@@ -1,0 +1,27 @@
+id: mo-flutter-118
+title: "项目：线上出现周期性掉帧，你如何定位并修复？"
+topics: [flutter, performance, devtools]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先在真机 profile 模式复现并录制 DevTools Performance timeline，区分 UI 线程与 raster 线程的耗时；再判断是 build、layout、paint 过重，还是 shader 编译、图片解码导致。修复后用同一场景对比帧时间与 jank 比例，并补一条性能回归或线上监控。"
+  keyPoints:
+    - "只在 profile 模式与真机上复现，debug 数据不可用"
+    - "按 frame chart 区分 UI 线程与 raster 线程瓶颈"
+    - "逐帧展开定位 build、layout、paint 的热点"
+    - "用修复前后的帧时间与 jank 率验证收益"
+  pitfalls:
+    - "在 debug 模式测性能，得出错误结论"
+    - "只加 RepaintBoundary 而不定位真实热点"
+followups:
+  - "如何判断是 shader jank 还是布局抖动？"
+  - "为什么性能指标要看 99 分位而不只看平均值？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/performance
+  title: "Use the Performance view"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

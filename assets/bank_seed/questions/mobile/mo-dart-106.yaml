@@ -1,0 +1,26 @@
+id: mo-dart-106
+title: "FutureOr：同步与异步统一的返回类型"
+topics: [dart, async, generics]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FutureOr<T> 表示立刻可得的 T 或 Future<T>，用于让 API 同时接受同步与异步实现，await 一个 FutureOr 总能得到 T。它是类型层面的联合而非运行时包装，适合泛型 API，但会模糊同步抛错与异步失败的边界。"
+  keyPoints:
+    - "FutureOr<T> 是 T 与 Future<T> 的联合类型"
+    - "await 对 T 和 Future<T> 都成立，可直接统一处理"
+    - "常见于 Stream 事件处理、compute 回调等允许同步返回的接口"
+    - "同步抛错与返回 Future.error 对调用方的捕获时机不同"
+  pitfalls:
+    - "把 FutureOr 当 Future 直接调用 then"
+    - "在 async 函数里返回 FutureOr 造成多余的 Future 包裹"
+followups:
+  - "FutureOr 在类型提升（promotion）上有什么限制？"
+source:
+  url: https://api.dart.dev/stable/dart-async/FutureOr-class.html
+  title: "FutureOr class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

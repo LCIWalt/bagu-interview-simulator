@@ -1,0 +1,27 @@
+id: be-gen-115
+title: "TCP 的 TIME_WAIT 状态为什么必须存在？服务端端口耗尽怎么办？"
+topics: [network, tcp, os]
+role: backend
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "主动关闭方在发出最后一个 ACK 后进入 TIME_WAIT 并等待 2MSL，用于确保旧连接的迟到报文不会污染新连接，并在最后一个 ACK 丢失时能重传。大量短连接由服务端主动关闭时，会占用端口并堆积 TIME_WAIT，需要从连接复用与内核参数两方面治理。"
+  keyPoints:
+    - "2MSL 覆盖一个来回的报文寿命，让旧连接的重复报文在网络中自然消亡"
+    - "若最终 ACK 丢失，对端会重传 FIN，TIME_WAIT 让本端仍能重发 ACK"
+    - "TIME_WAIT 只出现在主动关闭方，服务端应尽量让客户端先关或使用长连接"
+    - "tcp_tw_reuse 可在安全条件下复用连接，SO_REUSEADDR 用于绑定，但不能缩短 2MSL 语义"
+  pitfalls:
+    - "开启 tcp_tw_recycle 解决 TIME_WAIT，在 NAT 环境下会造成连接异常"
+    - "把端口耗尽简单归因于 TIME_WAIT，忽视连接池缺失与短连接泛滥"
+followups:
+  - "为什么 TIME_WAIT 通常出现在客户端而不是服务端？"
+  - "HTTP 连接池如何减少 TIME_WAIT 的数量？"
+source:
+  url: https://man7.org/linux/man-pages/man7/tcp.7.html
+  title: "tcp(7) — Linux manual page"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

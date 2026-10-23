@@ -1,0 +1,27 @@
+id: mo-flutter-104
+title: "InheritedWidget 如何让后代在数据变化时重建？"
+topics: [flutter, widgets, state]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "后代通过 dependOnInheritedWidgetOfExactType 注册依赖，InheritedWidget 重建时由 updateShouldNotify 决定是否通知依赖者；返回 true 会把这些 Element 标脏。依赖只能在 build 或 didChangeDependencies 中建立，在 initState 中读取不会形成有效依赖；InheritedModel 还能按 aspect 做更细粒度通知。"
+  keyPoints:
+    - "依赖关系由 dependOnInheritedWidgetOfExactType 建立"
+    - "updateShouldNotify 决定是否触发依赖者重建"
+    - "读取应放在 build 或 didChangeDependencies，而非 initState"
+    - "InheritedModel 用 aspect 降低无关重建"
+  pitfalls:
+    - "在 initState 里读取 InheritedWidget 并期望随其更新"
+    - "updateShouldNotify 恒返回 true，导致大范围重建"
+followups:
+  - "InheritedNotifier 适合封装什么类型的状态？"
+  - "Provider 与 InheritedWidget 的关系是什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html
+  title: "InheritedWidget class - widgets library - Dart API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

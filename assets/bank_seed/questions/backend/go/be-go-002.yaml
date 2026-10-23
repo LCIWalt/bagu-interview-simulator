@@ -1,0 +1,24 @@
+id: be-go-002
+title: "Go 的 slice 扩容规则是什么？"
+topics: [go, slice, memory]
+role: backend
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "append 超过 cap 时分配新的底层数组并拷贝旧元素；小 slice 近似翻倍，较大后增长约 1.25 倍，最终按内存 size class 对齐。"
+  keyPoints:
+    - "len 是当前长度，cap 是底层数组可用容量"
+    - "扩容会分配新数组并拷贝，旧引用不会共享新数组"
+    - "Go 1.18+ 约 256 元素以下翻倍、以上按 1.25 倍增长，并按 size class 对齐"
+    - "已知规模时用 make([]T, 0, n) 预分配可减少拷贝"
+  pitfalls: ["以为扩容原地进行", "混淆 len 与 cap"]
+followups:
+  - "扩容后旧 slice 修改会影响新 slice 吗？"
+source:
+  url: https://go.dev/blog/slices-intro
+  title: "Go Slices: usage and internals"
+  license: BSD-3-Clause
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: be-gen-109
+title: "InnoDB 的 MVCC 如何实现？ReadView 在 RC 和 RR 下有什么不同？"
+topics: [mysql, mvcc, transaction]
+role: backend
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "InnoDB 在每行记录上维护事务 ID 与指向 undo 旧版本的 rollback 指针，一致性读时沿版本链找到对当前 ReadView 可见的版本。ReadView 记录活跃事务集合与上下界，RC 每条语句新建一次，RR 在事务首次快照读时创建并复用。"
+  keyPoints:
+    - "隐藏列 DB_TRX_ID 与 DB_ROLL_PTR 把行记录串成 undo 版本链"
+    - "ReadView 包含 m_ids、min_trx_id、max_trx_id、creator_trx_id，用于判断版本可见性"
+    - "RC 下每条快照读都生成新 ReadView，因此能看到其他事务新提交的数据"
+    - "RR 下事务内复用同一个 ReadView，从而保证可重复读，减少幻读"
+  pitfalls:
+    - "认为 MVCC 对所有读都生效，实际当前读（加锁读）仍走锁机制"
+    - "把 ReadView 的创建时机记反，导致无法解释 RC 与 RR 的可见性差异"
+followups:
+  - "长事务为什么会拖住 undo 清理并导致版本链过长？"
+  - "快照读与当前读分别对应哪些 SQL 写法？"
+source:
+  url: https://dev.mysql.com/doc/refman/8.4/en/innodb-consistent-read.html
+  title: "MySQL 8.4 Reference Manual: Consistent Nonlocking Reads"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

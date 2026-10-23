@@ -1,0 +1,27 @@
+id: mo-android-134
+title: "Android: 落地 Baseline Profile 的完整流程"
+topics: [android, performance, baseline-profile]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "我会按“选路径、采集、打包、验证、回归”推进：先用 Macrobenchmark 的 BaselineProfileRule 在 release 构建上覆盖冷启动与首屏关键交互，生成 baseline-prof 规则并随包分发。上线前用同一设备对比带/不带 profile 的启动耗时与帧指标，并监控包体增量和低端机收益。"
+  keyPoints:
+    - "明确采集路径：冷启动、首屏渲染、核心列表滚动，避免覆盖无关页面"
+    - "在 release 或 benchmark 变体上用 BaselineProfileRule 生成 profile，而非手写规则"
+    - "通过 AGP 的 baselineProfile 模块或 src/main/baseline-prof.txt 打入 APK/AAB"
+    - "用 Macrobenchmark 做前后对比，并检查 profile 未命中与包体增长"
+  pitfalls:
+    - "在 debug 包上采集或验证，JIT 与调试开销让收益不可见"
+    - "只采集启动不覆盖首屏数据加载，线上真实路径命中率很低"
+followups:
+  - "Baseline Profile 与 Startup Profile 在打包和生效时机上有什么不同？"
+  - "如果低端机收益明显但高端机没有，如何解释？"
+source:
+  url: https://developer.android.com/topic/performance/baselineprofiles/overview
+  title: "Baseline Profiles overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

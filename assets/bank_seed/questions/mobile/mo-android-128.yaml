@@ -1,0 +1,26 @@
+id: mo-android-128
+title: "Android: Gradle 构建变体与配置缓存"
+topics: [android, gradle, build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "buildTypes 与 productFlavors 组合成构建变体，flavorDimensions 决定多维组合规则，不同变体可以有独立依赖、manifest 占位符和签名。构建变慢时先启用 configuration cache 和 build cache，并减少 buildSrc、动态版本和脚本期 IO。"
+  keyPoints:
+    - "构建变体由 buildType 与 flavor 组合而成，flavorDimensions 控制组合维度"
+    - "用 missingDimensionStrategy 解决依赖库 flavor 不匹配"
+    - "BuildConfig 字段不要写入密钥，避免泄露到 APK"
+    - "configuration cache 对插件和构建脚本的兼容性有要求"
+  pitfalls:
+    - "在 build.gradle 中硬编码签名密码或 API key"
+    - "为每个变体复制整段配置，导致维护漂移"
+followups:
+  - "AGP 的 variant API 如何注册自定义构建任务？"
+source:
+  url: https://developer.android.com/build/build-variants
+  title: "Configure build variants"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

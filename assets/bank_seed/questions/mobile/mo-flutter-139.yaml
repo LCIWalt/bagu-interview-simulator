@@ -1,0 +1,27 @@
+id: mo-flutter-139
+title: "Flutter 官方推荐的国际化工作流是怎样的？"
+topics: [flutter, internationalization]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "官方流程是用 flutter_localizations 配合 gen_l10n：文案写在 ARB 文件里，l10n.yaml 指定模板与输出，构建时生成类型安全的 AppLocalizations，再在 MaterialApp 上配置 localizationsDelegates 与 supportedLocales。运行时 Localizations 组件按解析出的 locale 向下提供文案，ARB 支持 ICU 的 plural/select 语法，避免手写复数规则。"
+  keyPoints:
+    - "ARB 加 gen_l10n 生成类型安全访问器，缺 key 在编译期暴露"
+    - "supportedLocales 决定可选语言，localeResolutionCallback 可定制回退"
+    - "plural/select 走 ICU MessageFormat，不要按语言硬编码复数逻辑"
+    - "AppLocalizations.of(context) 依赖 Localizations，locale 变化会重建"
+  pitfalls:
+    - "用字符串拼接组装句子，导致语序与复数错误"
+    - "改了 ARB 却没重新生成，代码仍引用旧文案"
+followups:
+  - "运行中切换语言需要重建哪些部分？"
+  - "如何为第三方语言包做按需下载？"
+source:
+  url: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
+  title: "Internationalizing Flutter apps"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

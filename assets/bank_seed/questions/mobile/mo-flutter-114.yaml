@@ -1,0 +1,27 @@
+id: mo-flutter-114
+title: "Flutter 深链在 Android 与 iOS 上需要哪些配置？"
+topics: [flutter, navigation, deep-linking]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "深链需要平台侧声明 URL scheme 或 App Links、Universal Links，Flutter 侧启用 FlutterDeepLinkingEnabled 并由路由层解析路径。Android App Links 还需要 assetlinks.json 校验域名所有权，iOS Universal Links 需要 apple-app-site-association 与对应 entitlement。"
+  keyPoints:
+    - "Android 用 intent-filter 声明 scheme 或 App Links"
+    - "iOS 用 URL Types 或 Associated Domains"
+    - "FlutterDeepLinkingEnabled 控制引擎是否接管链接"
+    - "App Links 与 Universal Links 需要域名校验文件"
+  pitfalls:
+    - "只配置自定义 scheme，却期望 HTTPS 链接直接打开 App"
+    - "只在热启动路径处理链接，忽略冷启动初始链接"
+followups:
+  - "uni_links 与 Flutter 内置深链如何取舍？"
+  - "如何验证 Universal Links 配置是否生效？"
+source:
+  url: https://docs.flutter.dev/ui/navigation/deep-linking
+  title: "Deep linking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

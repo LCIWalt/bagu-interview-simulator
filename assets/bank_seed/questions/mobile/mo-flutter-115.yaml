@@ -1,0 +1,27 @@
+id: mo-flutter-115
+title: "Dart 的 Isolate 与线程有什么区别，compute 适合什么场景？"
+topics: [flutter, isolate, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Isolate 拥有独立堆与事件循环，不共享可变内存，只能通过消息传递通信，因此不需要锁；每个 isolate 仍可并发执行。compute 与 Isolate.run 适合一次性的 CPU 密集任务，频繁通信或需要传递大量数据时开销明显，可考虑 TransferableTypedData 或长驻 isolate。"
+  keyPoints:
+    - "Isolate 有独立堆，不共享可变状态"
+    - "用 SendPort 与 ReceivePort 传消息，数据会被复制或转移"
+    - "compute 与 Isolate.run 适合一次性重计算"
+    - "后台 isolate 使用平台通道需注册对应 messenger"
+  pitfalls:
+    - "以为 Isolate 能直接读写 UI isolate 的变量"
+    - "把大量小消息频繁跨 isolate 传递"
+followups:
+  - "什么时候应该使用长驻 isolate 而不是 compute？"
+  - "TransferableTypedData 解决了什么开销？"
+source:
+  url: https://docs.flutter.dev/perf/isolates
+  title: "Concurrency and isolates"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

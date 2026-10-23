@@ -1,0 +1,26 @@
+id: mo-android-105
+title: "Android: 运行时权限与拒绝处理"
+topics: [android, permissions, privacy]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 6.0 起危险权限需要运行时请求，用户可以拒绝，Android 11 起连续拒绝两次通常会被视为不再询问。请求前应通过 shouldShowRequestPermissionRationale 判断是否展示解释，结果处理要覆盖授权、普通拒绝和永久拒绝，并给出可操作的降级路径。"
+  keyPoints:
+    - "权限请求必须由前台 Activity 或 Fragment 发起，并处理配置变更后的重入"
+    - "Android 11 的多次拒绝会进入不再询问，具体表现还受系统版本影响"
+    - "后台定位、蓝牙、通知等权限有独立规则，不能只申请前台权限"
+    - "拒绝后降级功能，永久拒绝时引导用户到系统设置页修改"
+  pitfalls:
+    - "把权限拒绝当成异常直接崩溃，不提供降级体验"
+    - "假设 requestPermissions 的结果只可能是授予或拒绝两种"
+followups:
+  - "Android 12 的 approximate location 对定位类功能有什么影响？"
+source:
+  url: https://developer.android.com/training/permissions/requesting
+  title: "Request runtime permissions"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

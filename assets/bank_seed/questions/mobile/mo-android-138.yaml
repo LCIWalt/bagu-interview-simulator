@@ -1,0 +1,27 @@
+id: mo-android-138
+title: "Android: 通知渠道与重要性分级"
+topics: [android, notification, channel]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 8.0 起所有通知都必须归属某个渠道，渠道的重要性、声音、震动和免打扰行为在创建后由用户控制，应用只能修改名称与描述。渠道一旦创建就不能通过删除重建来恢复默认重要性，因此上线前要规划稳定、有语义的渠道 ID 和分级。Android 13 起还需要运行时 POST_NOTIFICATIONS 权限，否则通知不会展示。"
+  keyPoints:
+    - "创建 NotificationChannel 并设置 importance，IMPORTANCE_HIGH 才会以 Heads-up 展示"
+    - "渠道创建后应用只能改名称和描述，重要性与声音由用户掌握"
+    - "Android 13 起需请求 POST_NOTIFICATIONS，未授权时 notify 不展示"
+    - "渠道 ID 应稳定且有业务语义，删除重建不会重置用户已做的设置"
+  pitfalls:
+    - "把所有通知塞进一个渠道，用户关闭后关键提醒一并丢失"
+    - "为绕过用户设置频繁更换渠道 ID，属于骚扰行为且可能被商店处罚"
+followups:
+  - "如何引导用户重新开启被关闭的通知渠道？"
+  - "通知渠道组（channel group）解决什么问题？"
+source:
+  url: https://developer.android.com/develop/ui/views/notifications/channels
+  title: "Create and manage notification channels"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22
