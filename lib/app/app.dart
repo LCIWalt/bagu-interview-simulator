@@ -8,8 +8,8 @@ import '../l10n/generated/app_localizations.dart';
 import 'providers.dart';
 import 'router.dart';
 
-class MockMateApp extends ConsumerWidget {
-  const MockMateApp({super.key});
+class BaguInterviewApp extends ConsumerWidget {
+  const BaguInterviewApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

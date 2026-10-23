@@ -55,7 +55,7 @@ Future<void> main() async {
             loggerProvider.overrideWithValue(appLogger),
             secureStoreProvider.overrideWithValue(secureStore),
           ],
-          child: const MockMateApp(),
+          child: const BaguInterviewApp(),
         ),
       );
     },
@@ -132,7 +132,7 @@ class StartupErrorWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'MockMate 启动失败 / Failed to start',
+                  'Bagu Interview Simulator 启动失败 / Failed to start',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 const SizedBox(height: 8),

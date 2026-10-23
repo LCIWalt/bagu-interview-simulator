@@ -1,4 +1,4 @@
-# MockMate 任务卡（TASKS）
+# Bagu Interview Simulator 任务卡（TASKS）
 
 > 由 `docs/PROJECT_GUIDE.md`（v0.4）派生。**每张卡可独立验收**，一卡一 PR。
 > 状态：`[ ]` 待做 · `[~]` 进行中 · `[x]` 完成 · `[!]` 阻塞

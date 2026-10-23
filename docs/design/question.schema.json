@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mockmate.local/schema/question.json",
-  "title": "MockMate bank question",
+  "title": "Bagu Interview Simulator bank question",
   "type": "object",
   "additionalProperties": false,
   "required": [

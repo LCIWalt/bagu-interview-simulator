@@ -125,7 +125,7 @@ void main() {
       }
       final mockReport = await repo.finish(mock.id);
       expect(mockReport.turns, hasLength(12));
-      expect(mockReport.markdown, contains('# MockMate 面试报告'));
+      expect(mockReport.markdown, contains('# Bagu Interview Simulator 面试报告'));
       expect(mockReport.markdown, contains('## 逐题回顾'));
       expect(mockReport.sevenDayPlan, hasLength(7));
       expect(mockReport.interviewerView, isNotEmpty);

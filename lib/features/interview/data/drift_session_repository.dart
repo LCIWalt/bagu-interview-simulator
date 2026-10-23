@@ -228,7 +228,7 @@ class DriftSessionRepository implements SessionRepository {
 
   String _markdown(SessionReport report) {
     final buffer = StringBuffer()
-      ..writeln('# MockMate 面试报告')
+      ..writeln('# Bagu Interview Simulator 面试报告')
       ..writeln()
       ..writeln('- 会话：${report.sessionId}')
       ..writeln('- 结论：${redact(report.headline)}')

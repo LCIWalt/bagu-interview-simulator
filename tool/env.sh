@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# MockMate 开发环境（macOS arm64）— 本机实测可用
+# Bagu Interview Simulator 开发环境（macOS arm64）— 本机实测可用
 # 用法：source tool/env.sh
 # 详细参数、坑与复现步骤见 docs/ENVIRONMENT.md
 
@@ -51,7 +51,7 @@ if [ -x "${JIMSH}" ]; then
   export autosetup_tclsh="${JIMSH}"
 fi
 
-echo "MockMate env ready:"
+echo "Bagu Interview Simulator env ready:"
 echo "  flutter : $(command -v flutter || echo 'not found')"
 echo "  java    : ${JAVA_HOME}"
 echo "  android : ${ANDROID_HOME}"

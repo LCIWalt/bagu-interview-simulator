@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "MockMate",
-  "appTagline": "Technical interview practice partner",
+  "appTitle": "Bagu Interview Simulator",
+  "appTagline": "Bagu-style technical interview practice",
   "navPractice": "Practice",
   "navBank": "Bank",
   "navReview": "Review",

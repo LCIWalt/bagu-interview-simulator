@@ -112,7 +112,7 @@ class AppShell extends StatelessWidget {
     return PlatformMenuBar(
       menus: <PlatformMenu>[
         PlatformMenu(
-          label: 'MockMate',
+          label: l10n.appTitle,
           menus: <PlatformMenuItem>[
             PlatformMenuItem(
               label: l10n.navPractice,

@@ -10,10 +10,10 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'MockMate';
+  String get appTitle => '八股文面试模拟助手';
 
   @override
-  String get appTagline => '技术面试练习搭子';
+  String get appTagline => '八股文技术面试练习';
 
   @override
   String get navPractice => '练习';

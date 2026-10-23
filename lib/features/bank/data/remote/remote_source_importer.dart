@@ -256,7 +256,7 @@ class GitHubRemoteImporter {
 
   Map<String, String> get _headers => <String, String>{
     'Accept': 'application/vnd.github+json',
-    'User-Agent': 'MockMate/0.5',
+    'User-Agent': 'BaguInterviewSimulator/0.1',
     if (token != null && token!.isNotEmpty) 'Authorization': 'Bearer $token',
   };
 
@@ -287,7 +287,7 @@ class GitHubRemoteImporter {
   Future<String> _readText(Uri uri) async {
     final response = await transport.get(
       uri,
-      headers: <String, String>{'User-Agent': 'MockMate/0.5'},
+      headers: <String, String>{'User-Agent': 'BaguInterviewSimulator/0.1'},
     );
     _checkStatus(response.statusCode);
     return _read(response.body);

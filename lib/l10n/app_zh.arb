@@ -1,7 +1,7 @@
 {
   "@@locale": "zh",
-  "appTitle": "MockMate",
-  "appTagline": "技术面试练习搭子",
+  "appTitle": "八股文面试模拟助手",
+  "appTagline": "八股文技术面试练习",
   "navPractice": "练习",
   "navBank": "题库",
   "navReview": "复盘",

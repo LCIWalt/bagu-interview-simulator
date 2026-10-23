@@ -76,7 +76,7 @@ Future<void> main(List<String> args) async {
 
   final report = computeEvalReport(results);
   stdout
-    ..writeln('# MockMate 校准评测')
+    ..writeln('# Bagu Interview Simulator 校准评测')
     ..writeln()
     ..writeln(report.toMarkdown())
     ..writeln()

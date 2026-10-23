@@ -40,7 +40,8 @@ class PageFetcher {
       uri,
       headers: const <String, String>{
         'Accept': 'text/html,application/xhtml+xml,text/plain;q=0.9',
-        'User-Agent': 'MockMate/0.5 (self-use interview practice)',
+        'User-Agent':
+            'BaguInterviewSimulator/0.1 (self-use interview practice)',
       },
     );
     if (response.statusCode == 401 || response.statusCode == 403) {

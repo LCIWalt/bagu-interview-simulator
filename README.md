@@ -1,4 +1,4 @@
-# MockMate（面试搭子）
+# 八股文面试模拟助手（Bagu Interview Simulator）
 
 三端（macOS / iOS / Android）本地优先的 AI 技术面试练习工具。产品规格以
 `docs/PROJECT_GUIDE.md` 为唯一事实来源，任务队列见 `docs/TASKS.md`。

@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In zh, this message translates to:
-  /// **'MockMate'**
+  /// **'八股文面试模拟助手'**
   String get appTitle;
 
   /// No description provided for @appTagline.
   ///
   /// In zh, this message translates to:
-  /// **'技术面试练习搭子'**
+  /// **'八股文技术面试练习'**
   String get appTagline;
 
   /// No description provided for @navPractice.

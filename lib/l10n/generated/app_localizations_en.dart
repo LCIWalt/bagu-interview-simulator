@@ -10,10 +10,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'MockMate';
+  String get appTitle => 'Bagu Interview Simulator';
 
   @override
-  String get appTagline => 'Technical interview practice partner';
+  String get appTagline => 'Bagu-style technical interview practice';
 
   @override
   String get navPractice => 'Practice';

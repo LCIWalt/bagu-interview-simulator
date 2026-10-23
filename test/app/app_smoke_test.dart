@@ -21,7 +21,7 @@ void main() {
           loggerProvider.overrideWithValue(AppLogger()),
           secureStoreProvider.overrideWithValue(InMemorySecureStore()),
         ],
-        child: const MockMateApp(),
+        child: const BaguInterviewApp(),
       ),
     );
     await tester.pumpAndSettle();

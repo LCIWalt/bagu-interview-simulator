@@ -6,11 +6,11 @@
 
 ```bash
 flutter build macos --release
-bash tool/package_macos.sh          # 生成 dist/MockMate-<version>.dmg（ad-hoc 签名）
+bash tool/package_macos.sh          # 生成 dist/BaguInterviewSimulator-<version>.dmg（ad-hoc 签名）
 ```
 
 - 无 $99 账号：不做公证；首次打开需右键「打开」或
-  `xattr -d com.apple.quarantine /Applications/MockMate.app`。
+  `xattr -d com.apple.quarantine /Applications/BaguInterviewSimulator.app`。
 - entitlements：无 App Sandbox（ad-hoc 自用构建，见 ADR-0006），保留 `network.client`；不申请麦克风。
 - Sparkle 更新暂不接；手动替换 App。
 
@@ -69,14 +69,14 @@ git commit -m "chore: bump version to 0.1.0+1"
 git push
 
 # 2. 打 tag 并推送（会触发 Release workflow）
-git tag -a v0.1.0 -m "MockMate v0.1.0"
+git tag -a v0.1.0 -m "Bagu Interview Simulator v0.1.0"
 git push origin v0.1.0
 ```
 
 然后在 GitHub → Actions 看 `Release artifacts`；成功后 Releases 页面会出现
 `v0.1.0`，包含：
 
-- `MockMate-0.1.0.dmg`
+- `BaguInterviewSimulator-0.1.0.dmg`
 - `app-arm64-v8a-release.apk`
 - `app-armeabi-v7a-release.apk`
 - `app-x86_64-release.apk`

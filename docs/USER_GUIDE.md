@@ -1,4 +1,4 @@
-# MockMate 使用说明
+# Bagu Interview Simulator 使用说明
 
 ## 首页与练习入口
 
