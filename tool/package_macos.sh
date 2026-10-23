@@ -2,7 +2,9 @@
 # 构建 macOS release 并打包 ad-hoc DMG（T-072）
 set -euo pipefail
 cd "$(dirname "$0")/.."
-source tool/env.sh >/dev/null
+if [ "${CI:-}" != "true" ]; then
+  source tool/env.sh >/dev/null
+fi
 
 VERSION=$(awk '/^version:/ {print $2}' pubspec.yaml | cut -d+ -f1)
 APP="build/macos/Build/Products/Release/mockmate.app"
