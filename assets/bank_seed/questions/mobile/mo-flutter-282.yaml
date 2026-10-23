@@ -1,0 +1,27 @@
+id: mo-flutter-282
+title: "插件如何声明最低 Flutter/Dart 与平台版本，避免下游构建失败？"
+topics: [flutter, plugins, tooling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "插件的 environment.sdk 与 flutter 约束决定下游可解析的版本范围，Android 的 minSdk/compileSdk 与 iOS 的 deployment target 决定原生构建门槛。这些约束要在插件、example 和文档中保持一致；提高最低版本属于破坏性变更，需要 major 版本和迁移说明。"
+  keyPoints:
+    - "environment 中声明 Dart 与 Flutter 最低版本，不要使用过宽的范围"
+    - "Android 在 build.gradle 声明 minSdk/compileSdk，并考虑 manifest 合并规则"
+    - "iOS/macOS 在 podspec 声明 deployment target"
+    - "提高最低平台版本要发 major 版本并在 CHANGELOG 说明"
+  pitfalls:
+    - "插件用了高版本 API 却不提升约束，下游编译失败"
+    - "example 能跑但下游因 minSdk 冲突无法合并"
+followups:
+  - "Android manifest merger 如何处理 minSdk 冲突？"
+  - "如何验证插件在最低版本组合下仍可构建？"
+source:
+  url: "https://docs.flutter.dev/tools/pubspec"
+  title: "Flutter pubspec options"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

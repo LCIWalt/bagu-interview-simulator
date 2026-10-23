@@ -1,0 +1,26 @@
+id: mo-flutter-224
+title: "dispose 里应该按什么顺序清理资源？"
+topics: [flutter, lifecycle, dispose]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "dispose 是 State 被永久移除时的最后一次回调，应在这里取消订阅、停止动画、关闭控制器并移除监听。惯例是先释放自己创建的资源，最后调用 super.dispose()。dispose 之后 context 与 mounted 都不再可用，也不能再触发重建。"
+  keyPoints:
+    - "取消 StreamSubscription、移除 WidgetsBindingObserver、停止 Timer"
+    - "先释放自己创建的子资源，再调用 super.dispose"
+    - "不要在 dispose 里 setState，或用 context 查找 InheritedWidget"
+    - "关闭自己创建的 ChangeNotifier、AnimationController、TextEditingController"
+  pitfalls:
+    - "只取消部分订阅，页面反复进出后回调仍在执行"
+    - "在 dispose 中先 await 再 super.dispose，父类状态已被破坏"
+followups:
+  - "为什么在 dispose 里调用 Provider.of(context) 会抛异常？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/dispose.html
+  title: "State.dispose"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

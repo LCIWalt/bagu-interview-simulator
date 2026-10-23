@@ -1,0 +1,26 @@
+id: mo-flutter-373
+title: "把逻辑从 Widget 里抽出来后，单测该怎么写？"
+topics: [flutter, testing, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "抽出的 use case 只依赖抽象（repository、clock、id 生成器），测试中用手写 fake 注入固定返回值，断言输出与协作行为，无需启动 Flutter 绑定。测试命名描述行为而非实现，覆盖成功、失败与边界分支；时间、随机数与 uuid 都要可注入，否则测试不可重复。"
+  keyPoints:
+    - "依赖抽象并注入，测试无需真实网络、数据库与时钟"
+    - "优先手写 fake，mock 只用于验证交互"
+    - "按成功、失败、边界组织用例，断言行为而非内部调用顺序"
+    - "时间与随机源可注入，保证结果可重复"
+  pitfalls:
+    - "在单测里初始化 WidgetsFlutterBinding，拖慢且掩盖耦合"
+    - "过度断言调用次数，重构时测试大面积失败"
+followups:
+  - "如何为包含并发与重试的 use case 写确定性测试？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
+  title: "flutter_test library"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

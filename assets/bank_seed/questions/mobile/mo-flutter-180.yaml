@@ -1,0 +1,26 @@
+id: mo-flutter-180
+title: "UnconstrainedBox 会告警而 OverflowBox 不会，为什么？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "UnconstrainedBox 先用无界约束测量子节点，再把自己收缩到受自身约束限制的尺寸；子节点超出时 debug 下绘制黄黑溢出提示。OverflowBox 则直接给子节点换一组约束并允许它大于自身，因此框架不把它视为布局错误。"
+  keyPoints:
+    - "UnconstrainedBox 去掉父约束后测量子节点，但仍需在自身约束内确定 size"
+    - "子节点尺寸超出 UnconstrainedBox 时会触发 overflow 警告，便于暴露问题"
+    - "OverflowBox 通过 minWidth、maxWidth 等参数替换约束，允许子节点超出父级边界"
+    - "OverflowBox 默认不裁剪，超出部分会画到父级之外，需要时自行加 ClipRect"
+  pitfalls:
+    - "在有界空间滥用 UnconstrainedBox，导致文本不换行、横向溢出"
+    - "以为 OverflowBox 会裁剪溢出内容，实际默认不裁剪"
+followups:
+  - "OverflowBox 与 FittedBox 分别适合什么场景？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/UnconstrainedBox-class.html
+  title: "UnconstrainedBox class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-193
+title: "鼠标滚轮与触控板滚动走的是哪条事件路径？"
+topics: [flutter, gestures, desktop]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "滚轮与触控板滚动以 PointerSignalEvent 的形式派发，它不参与手势竞技场；命中路径上的 Listener 通过 onPointerSignal 收到事件。需要互斥处理时用 PointerSignalResolver 注册回调，同一事件只会执行一个注册者。"
+  keyPoints:
+    - "PointerScrollEvent 属于 PointerSignalEvent，与 down、move、up 是不同的事件族"
+    - "Listener 的 onPointerSignal 回调可读取 scrollDelta 与 pointer 位置"
+    - "PointerSignalResolver 保证同一事件只执行一个注册回调，先注册者优先"
+    - "Scrollable 内部用该解析器处理滚轮，自定义组件需要自行注册"
+  pitfalls:
+    - "用 onPointerDown 监听滚轮，结果什么也收不到"
+    - "在嵌套组件里都调用 register，误以为回调会依次执行"
+followups:
+  - "触控板的缩放与旋转手势分别对应哪些事件？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/PointerSignalEvent-class.html
+  title: "PointerSignalEvent class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

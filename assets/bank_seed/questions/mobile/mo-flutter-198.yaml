@@ -1,0 +1,26 @@
+id: mo-flutter-198
+title: "Semantics 的 merge 与 container 如何改变读屏焦点粒度？"
+topics: [flutter, semantics, accessibility]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Semantics 的 container 决定是否为该节点建立独立的语义节点，merge 则把后代的标签与动作合并进当前节点。读屏的焦点粒度由此改变：合并过度会让用户无法逐个操作子控件，拆得太细又会增加朗读负担。"
+  keyPoints:
+    - "container: true 会创建独立 SemanticsNode，形成语义边界"
+    - "mergeSemantics 或 MergeSemantics 会把子树语义合并为一个可聚焦节点"
+    - "显式合并后子节点动作仍在，但读屏不再单独聚焦它们"
+    - "可用 SemanticsDebugger 或 DevTools 的语义树检查实际结构"
+  pitfalls:
+    - "给整张卡片加 mergeSemantics，导致内部按钮无法单独聚焦"
+    - "给每个装饰性文本都建 container，读屏需要逐条朗读"
+followups:
+  - "explicitChildNodes 在什么场景下必须开启？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/MergeSemantics-class.html
+  title: "MergeSemantics class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

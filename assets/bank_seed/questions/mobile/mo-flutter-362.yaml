@@ -1,0 +1,26 @@
+id: mo-flutter-362
+title: "切换账号后，本地数据如何避免串号？"
+topics: [flutter, security, offline-first]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "账号切换必须切换存储命名空间：数据库按 userId 分库或加 tenant 列并在查询层强制过滤，缓存 key 前缀带用户标识，内存中的单例状态要重置。仅清理 token 不够，图片缓存、搜索结果、草稿都可能残留。退出登录应执行一次完整的会话清理，并取消所有进行中的请求与订阅。"
+  keyPoints:
+    - "存储按 userId 隔离：分库、分目录或强制 tenant 过滤"
+    - "退出登录清理内存单例、图片缓存与草稿"
+    - "取消进行中的请求与流订阅，避免旧响应写回新会话"
+    - "切换后重新拉取首屏数据，不复用上一个账号的快照"
+  pitfalls:
+    - "只清 token，列表页仍显示上一个账号的缓存"
+    - "旧账号请求在切换后返回，覆盖新账号数据"
+followups:
+  - "多账号同时在线时，推送与数据库该如何隔离？"
+source:
+  url: https://docs.flutter.dev/cookbook/persistence/sqlite
+  title: "Persist data with SQLite"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

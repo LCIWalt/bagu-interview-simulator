@@ -1,0 +1,26 @@
+id: mo-flutter-179
+title: "Offstage、Visibility 与 TickerMode 对子树的副作用有何不同？"
+topics: [flutter, widgets, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Offstage 保留 Element 与 State、继续执行 layout，但不绘制、不参与命中测试，也不占父级空间；Visibility 在其上封装了 maintainState、maintainAnimation 等开关。TickerMode 则单独控制子树中的 Ticker 是否推进，二者常配合使用。"
+  keyPoints:
+    - "Offstage 为 true 时仍会 layout 子节点，自身尺寸收缩为最小约束且不 paint"
+    - "Offstage 不会停掉 AnimationController，动画仍在持续请求帧"
+    - "TickerMode(enabled: false) 会静音子树 Ticker，动画暂停但 controller 值保留"
+    - "Visibility 默认在不可见时销毁子树，只有 maintainState 为 true 才保留 Element"
+  pitfalls:
+    - "用 Offstage 隐藏带频繁动画的页面，以为能省性能，实际 ticker 仍在跑"
+    - "混淆 Visibility 的 maintainState 与 maintainAnimation，恢复后状态或动画丢失"
+followups:
+  - "IndexedStack 与 Offstage 在保留状态上有什么差别？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Offstage-class.html
+  title: "Offstage class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

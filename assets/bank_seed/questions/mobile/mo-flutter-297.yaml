@@ -1,0 +1,27 @@
+id: mo-flutter-297
+title: "聊天列表为什么要用 reverse: true？"
+topics: [flutter, scrolling, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "reverse: true 让 ScrollView 从主轴末端开始排布，offset 0 对应列表底部，新消息插到数据头部时视图不会跳动。它适合聊天、日志这类最新内容在底部的场景，但会改变滚动方向与索引直觉。"
+  keyPoints:
+    - "起始滚动位置在末端，offset 0 表示底部而不是顶部"
+    - "新数据插到列表头部时，可视区域保持稳定"
+    - "itemBuilder 的 index 仍按数据顺序，不随 reverse 反转"
+    - "reverse 只改变滚动轴方向，不改变交叉轴布局"
+  pitfalls:
+    - "以为 reverse 会反转 children 顺序，实际只是滚动起点变化"
+    - "在 reverse 列表里用 maxScrollExtent 判断是否到底部"
+followups:
+  - "reverse 与给列表加 transform 相比有什么优势？"
+  - "分页加载历史消息时，reverse 如何避免跳动？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ListView-class.html
+  title: "ListView class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

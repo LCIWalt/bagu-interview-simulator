@@ -1,0 +1,26 @@
+id: mo-flutter-361
+title: "本地缓存除了 TTL 还需要哪些失效条件？"
+topics: [flutter, offline-first, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "只靠 TTL 会出现「过期前一直是旧数据、过期后全量穿透」的两极；实际还需要版本号（数据结构变更时整体失效）、用户或租户切换（隔离命名空间）、服务端删除（墓碑或 410 响应）与手动刷新。写路径要同时更新或删除缓存，避免读到自己刚改的旧值，并为命中率与回源量建立观测。"
+  keyPoints:
+    - "缓存 key 带 schema 版本与用户维度"
+    - "写操作后主动失效相关 key，而不是等 TTL"
+    - "服务端删除用墓碑或版本号传播，避免缓存复活数据"
+    - "记录命中率与回源量，识别集中失效造成的雪崩"
+  pitfalls:
+    - "退出登录只清 token 不清缓存，下一个账号看到他人数据"
+    - "所有 key 同一时间过期，导致整点回源打满"
+followups:
+  - "如何在多 isolate 或多进程之间同步缓存失效？"
+source:
+  url: https://docs.flutter.dev/cookbook/persistence/sqlite
+  title: "Persist data with SQLite"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

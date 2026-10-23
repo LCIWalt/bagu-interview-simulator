@@ -1,0 +1,26 @@
+id: mo-flutter-248
+title: "用 bloc_test 覆盖状态序列"
+topics: [flutter, bloc, testing]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "bloc_test 的 blocTest 接收 build、act、expect，按顺序断言 bloc 发出的每个 state，并能验证错误与是否 close。它省去了手动订阅和收集状态的样板代码。测试应覆盖成功、失败、重复事件被丢弃等路径，并配合 mock 的 repository 隔离外部依赖。"
+  keyPoints:
+    - "expect 是完整状态序列，顺序与数量都要匹配"
+    - "act 返回 Future，blocTest 会等待其完成后再比对"
+    - "errors 用于断言抛出的异常，verify 可检查 mock 调用"
+    - "setUp 与 tearDown 负责创建和关闭 bloc，避免状态泄漏"
+  pitfalls:
+    - "只断言最后一个状态，漏掉中间错误态"
+    - "在 act 里不 await 异步操作，断言早于状态发出"
+followups:
+  - "如何测试使用了 transformer 的防抖行为？"
+source:
+  url: https://bloclibrary.dev/testing/
+  title: "Testing"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

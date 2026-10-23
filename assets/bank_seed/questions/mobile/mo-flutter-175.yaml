@@ -1,0 +1,27 @@
+id: mo-flutter-175
+title: "Widget.canUpdate 与 key：为什么交换列表顺序后 State 会错位？"
+topics: [flutter, widgets, element]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Widget.canUpdate 只有在 runtimeType 与 key 都相同时才返回 true，此时框架复用旧 Element 及其 State，仅更新配置。多子节点更新时，框架先同步首尾，再在旧列表中按 key 查找可复用项；无 key 的同类型子节点只能按位置配对，顺序一变 State 就留在了原位置。"
+  keyPoints:
+    - "canUpdate 的比较条件是 runtimeType 相等且 key 相等，任一不同都会销毁旧 Element 并新建"
+    - "updateChildren 先同步首尾相同项，再对中间段按 key 查表，未命中才创建新 Element"
+    - "无 key 的同类型 StatefulWidget 交换顺序时，State 跟随位置而不是跟随数据"
+    - "key 只需在兄弟节点间唯一且稳定，不要用随机数或易变的拼装值"
+  pitfalls:
+    - "用 index 作为 key 又在头部插入数据，导致所有子项的 State 与输入内容错位"
+    - "认为给 Widget 加任意 key 就能提升性能，key 不匹配反而触发销毁重建"
+followups:
+  - "GlobalKey 在跨父级移动 Element 时具体做了什么？"
+  - "兄弟节点出现重复 key 时框架会怎样报错？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Widget/canUpdate.html
+  title: "Widget.canUpdate method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

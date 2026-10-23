@@ -1,0 +1,27 @@
+id: mo-flutter-315
+title: "DevTools 显示的 Dart 堆内存和系统 RSS 为什么对不上？"
+topics: [flutter, devtools, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "DevTools 的 Memory 视图展示的是 Dart VM 管理的堆，而系统 RSS 还包含引擎、Skia 或 Impeller、GPU 纹理与平台侧分配。图片解码后的像素通常不在 Dart 堆里，所以堆很平稳也可能整体内存在上涨。"
+  keyPoints:
+    - "Dart heap 只统计 Dart 对象，不含大部分原生内存"
+    - "ui.Image 的像素由引擎管理，要结合外部内存与原生内存观察"
+    - "RSS 还包含代码段、GPU 驱动与平台 View"
+    - "用 heap snapshot、allocation profile 与系统内存信息交叉验证"
+  pitfalls:
+    - "只看 Dart 堆就断定没有图片泄漏"
+    - "在 debug 模式对比内存，忽略断言与调试开销"
+followups:
+  - "如何判断增长来自图片缓存而不是业务对象？"
+  - "GC 之后 RSS 不下降一定意味着泄漏吗？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/memory
+  title: "Memory view"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

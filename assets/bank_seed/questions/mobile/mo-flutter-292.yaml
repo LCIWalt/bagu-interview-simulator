@@ -1,0 +1,27 @@
+id: mo-flutter-292
+title: "Flutter 插件如何同时支持 Swift Package Manager 与 CocoaPods？"
+topics: [flutter, plugins, ios]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Flutter 3.24 起 iOS/macOS 插件可以支持 Swift Package Manager，插件在保留 podspec 的同时提供 Package.swift，Flutter 工具会根据工程配置选择 SPM 或 CocoaPods。迁移时两套清单中的源码、资源和平台版本必须一致，否则不同宿主会得到不同构建结果。"
+  keyPoints:
+    - "Package.swift 声明插件 target、依赖与资源，podspec 继续服务 CocoaPods 宿主"
+    - "Flutter 工具根据工程配置选择 SPM 或 CocoaPods 解析"
+    - "两种清单的 source files、resources 与 deployment target 必须一致"
+    - "发布前分别在启用和禁用 SPM 的工程中构建验证"
+  pitfalls:
+    - "只加 Package.swift 不更新 podspec，两套构建行为不一致"
+    - "Package.swift 漏声明资源，SPM 构建后资源缺失"
+followups:
+  - "SPM 与 CocoaPods 混用时依赖如何解析？"
+  - "如何把现有 CocoaPods 插件逐步迁移到 SPM？"
+source:
+  url: "https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-plugin-authors"
+  title: "Swift Package Manager for plugin authors"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

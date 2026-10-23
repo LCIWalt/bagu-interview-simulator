@@ -1,0 +1,26 @@
+id: mo-flutter-238
+title: "AppLifecycleListener 相比 WidgetsBindingObserver 好在哪？"
+topics: [flutter, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AppLifecycleListener 把生命周期回调拆成 onShow、onHide、onPause、onResume、onInactive、onDetach、onRestart 等具名回调，并在内部处理状态转换，免去自己在 didChangeAppLifecycleState 里维护上一状态。它还提供 onExitRequested 处理桌面端退出请求。只需要监听个别状态时，比实现整个 Observer 更清晰。"
+  keyPoints:
+    - "具名回调对应具体转换，不需要手写状态机"
+    - "onExitRequested 可返回 AppExitResponse 决定是否允许退出"
+    - "仍然需要在 dispose 中调用 listener.dispose 解除注册"
+    - "底层仍基于 WidgetsBinding，生命周期语义与 Observer 一致"
+  pitfalls:
+    - "创建了 listener 却忘记 dispose，页面销毁后仍收到回调"
+    - "把 onHide 当成一定发生，桌面与移动端的转换路径并不相同"
+followups:
+  - "onInactive 与 onHide 在移动端的触发差异是什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AppLifecycleListener-class.html
+  title: "AppLifecycleListener class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-325
+title: "2.0x 与 3.0x 图片资源是如何被打包与选择的？"
+topics: [flutter, build, images]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 按目录约定识别分辨率变体，构建时把同名资源的不同倍图一起打包，运行时由 AssetImage 依据 devicePixelRatio 选择最接近的一档。只提供 1x 也能工作，但高分屏会被放大而变糊。"
+  keyPoints:
+    - "变体目录名对应倍率，例如 2.0x/logo.png"
+    - "AssetImage 依据设备像素比选择，而不是屏幕逻辑尺寸"
+    - "构建会把所有变体打进包，倍图越多体积越大"
+    - "缺少目标倍率时会回退到最接近的可用资源"
+  pitfalls:
+    - "以为只打包当前设备命中的那一张图"
+    - "把同一张高分辨率图放多份，导致包体积成倍增长"
+followups:
+  - "如何确认打包后资源变体的实际路径？"
+  - "网络图片也能用这套倍率机制吗？"
+source:
+  url: https://docs.flutter.dev/ui/assets/assets-and-images
+  title: "Assets and images"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

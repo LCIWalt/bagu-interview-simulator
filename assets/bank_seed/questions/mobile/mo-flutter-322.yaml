@@ -1,0 +1,27 @@
+id: mo-flutter-322
+title: "EventChannel 的流在 Widget 测试里如何驱动？"
+topics: [flutter, testing, platform-channel]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "EventChannel 用同名 MethodChannel 处理 listen 与 cancel，真正的数据通过二进制消息以成功信封回传。测试时可以拦截 listen 与 cancel 调用，再主动向该通道注入编码后的事件来驱动 Stream。"
+  keyPoints:
+    - "listen 与 cancel 是方法调用，可被 mock handler 捕获"
+    - "事件用 StandardMethodCodec 的成功信封编码后注入"
+    - "在 handler 中保存 sink，或直接调用 handlePlatformMessage"
+    - "用例结束要 cancel 订阅，避免遗留监听"
+  pitfalls:
+    - "只 mock 方法返回值，却忘记向流里推事件"
+    - "注入事件时用错 codec，导致解码异常"
+followups:
+  - "EventChannel 与 MethodChannel 的 codec 默认值相同吗？"
+  - "如何在测试里验证取消订阅后平台侧收到 cancel？"
+source:
+  url: https://api.flutter.dev/flutter/services/EventChannel-class.html
+  title: "EventChannel class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-330
+title: "FittedBox 为什么有时缩放不生效？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "FittedBox 先按子节点的固有尺寸布局，再按 fit 与 alignment 把结果缩放并绘制到自己的约束里。若父级给的是无界约束，或子节点本身会占满可用空间，缩放就看不出效果。"
+  keyPoints:
+    - "子节点在 FittedBox 内部按自身尺寸布局，不参与外层约束协商"
+    - "fit 决定填充方式，BoxFit.contain 保持比例"
+    - "父级约束无界时无法计算目标尺寸，容易触发布局问题"
+    - "文本需要换行时不适合直接放进 FittedBox"
+  pitfalls:
+    - "用 FittedBox 包 Expanded 子节点，约束冲突"
+    - "以为缩放后的子节点会按新尺寸重新布局文本"
+followups:
+  - "FittedBox 与 Transform.scale 在布局上的差别是什么？"
+  - "如何让文字既自适应又不被无限放大？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/FittedBox-class.html
+  title: "FittedBox class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

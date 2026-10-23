@@ -1,0 +1,26 @@
+id: mo-flutter-372
+title: "dependency_overrides 什么时候必须用，什么时候是毒药？"
+topics: [flutter, package]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "dependency_overrides 会无视传递依赖的版本约束强制替换，只应作为临时手段：等待上游修复期间的紧急补丁、本地联调未发布的包、验证某个修复是否解决问题。它会掩盖真实的兼容性问题，且只影响当前项目的解析，发布为包时 override 不生效，长期使用会让 CI 与用户环境行为不一致。"
+  keyPoints:
+    - "override 无视约束，可能装上是 API 不兼容的版本"
+    - "适合临时验证与等待上游发版的过渡期"
+    - "用 path 或 git 覆盖便于联调，但合并前要移除"
+    - "发布包时 override 不会传递，使用者仍按原约束解析"
+  pitfalls:
+    - "把 override 当常规依赖管理手段长期保留"
+    - "override 到本地 path 后忘记删除，CI 找不到路径"
+followups:
+  - "如何用 override 验证上游修复而不影响主线？"
+source:
+  url: https://dart.dev/tools/pub/pubspec
+  title: "The pubspec file"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

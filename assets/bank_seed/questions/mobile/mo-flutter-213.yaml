@@ -1,0 +1,26 @@
+id: mo-flutter-213
+title: "TickerFuture 与 orCancel：动画被打断时如何正确收尾？"
+topics: [flutter, animation, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AnimationController.forward 返回 TickerFuture，它在动画自然走完时完成；若 ticker 被取消，基础 future 不会完成，而 orCancel 版本会以 TickerCanceled 异常结束。用它可以区分「正常播完」与「被 stop 或 dispose 打断」。"
+  keyPoints:
+    - "TickerFuture 在 ticker 正常结束时 complete，且只会完成一次"
+    - "调用 stop(canceled: true) 或 dispose 后，基础 future 不再完成"
+    - "orCancel 返回在取消时抛出 TickerCanceled 的 Future"
+    - "await 动画结束前要检查 mounted，避免在已销毁的 State 上继续执行"
+  pitfalls:
+    - "直接 await forward() 而不处理取消，页面退出后仍继续后续逻辑"
+    - "以为 dispose 后基础 TickerFuture 一定会完成，导致 await 永久挂起"
+followups:
+  - "TickerFuture.whenComplete 与 orCancel 在错误处理上有什么差别？"
+source:
+  url: https://api.flutter.dev/flutter/scheduler/TickerFuture-class.html
+  title: "TickerFuture class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

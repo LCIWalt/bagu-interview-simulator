@@ -1,0 +1,26 @@
+id: mo-flutter-374
+title: "项目：重构一个三千行的 Widget，应该从哪下手？"
+topics: [flutter, architecture, testing]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先补行为基线：为关键交互写 Widget 测试或 golden，确保重构不改变输出；再按职责切分，把数据获取与业务规则上移到 controller/use case，把纯展示片段抽成接收数据的子 Widget，避免为了拆文件而拆文件。每次只做一种变换（提取方法 → 提取 Widget → 上移状态），小步提交并持续跑测试。"
+  keyPoints:
+    - "先建立测试基线，再动结构"
+    - "按职责而非行数拆分：数据、规则、展示分离"
+    - "子 Widget 接收最小数据与回调，避免传整个 model"
+    - "一次只做一种重构，小步提交并保持可回滚"
+  pitfalls:
+    - "一边重构一边改需求，无法判断回归来自哪里"
+    - "抽出大量只调用一次的私有 Widget，可读性反而下降"
+followups:
+  - "如何判断一个 Widget 应该继续拆分还是合并？"
+source:
+  url: https://github.com/flutter/flutter/blob/master/docs/contributing/Style-guide-for-Flutter-repo.md
+  title: "Style guide for Flutter repo"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

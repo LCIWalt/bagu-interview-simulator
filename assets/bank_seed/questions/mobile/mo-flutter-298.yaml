@@ -1,0 +1,27 @@
+id: mo-flutter-298
+title: "ListView 的 itemExtent 与 prototypeItem 省掉了哪一步？"
+topics: [flutter, performance, scrolling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ListView 默认需要向每个子项询问主轴长度才能确定滚动范围，itemExtent 直接告诉列表每项的高度。滚动机制因此可以跳过测量、精确计算任意位置的 index，并在大幅跳转时少做无用布局。prototypeItem 则是先测量一个样本项来推断统一长度。"
+  keyPoints:
+    - "固定 extent 让 SliverFixedExtentList 无需逐项测量即可定位"
+    - "prototypeItem 适合高度一致但数值不便硬编码的场景"
+    - "两者都要求所有子项主轴尺寸一致，否则会截断或重叠"
+    - "对超长列表和频繁 jumpTo 的场景收益最明显"
+  pitfalls:
+    - "子项高度不一致时仍用 itemExtent，导致内容被裁切"
+    - "以为设置后就不再 layout 子项，可见项仍需正常布局"
+followups:
+  - "prototypeItem 的测量结果在什么情况下会失效？"
+  - "itemExtent 对滚动条的尺寸估算有什么影响？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ListView-class.html
+  title: "ListView class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-286
+title: "热重启后 Dart 状态重置了，为什么原生侧状态还在？"
+topics: [flutter, hot-reload, platform-channel]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "热重启会销毁 Dart isolate 并重新执行 main，Dart 内存中的变量和导航栈都会重建，但 FlutterEngine、原生单例、插件实例和平台缓存仍然存活。因此 Dart 状态看似重置，原生侧计数器和缓存却可能保留，调试时要区分两层状态。"
+  keyPoints:
+    - "热重启重启的是 Dart isolate，不是整个 App 进程"
+    - "引擎与插件实例仍附着，原生静态状态不会自动清空"
+    - "重复初始化可能让原生监听器或缓存叠加，出现事件翻倍"
+    - "需要真正冷启动时，应停止运行并重新安装或启动应用"
+  pitfalls:
+    - "依赖热重启清理原生缓存，结果测试数据互相污染"
+    - "反复热重启后原生监听器叠加，误判为业务 bug"
+followups:
+  - "热重启会触发插件的 onDetachedFromEngine 吗？"
+  - "如何设计幂等的插件注册逻辑？"
+source:
+  url: "https://docs.flutter.dev/tools/hot-reload"
+  title: "Hot reload"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-345
+title: "Web 端该用 hash 还是 path URL 策略？"
+topics: [flutter, routing, web]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter Web 默认使用 hash 策略（/#/path），不需要服务端配合；path 策略（/path）更接近常规站点，利于分享与 SEO，但要求服务器把所有前端路由回退到 index.html，否则直接访问或刷新会 404。切换用 usePathUrlStrategy()，并在托管侧配置 rewrite；无法控制服务器时 hash 是更稳妥的默认。"
+  keyPoints:
+    - "hash 策略不需要服务端 rewrite，部署简单"
+    - "path 策略需要 fallback 到 index.html，否则刷新 404"
+    - "在 runApp 之前调用 usePathUrlStrategy 完成切换"
+    - "策略变更会影响已分享的链接，需要为重定向做兼容"
+  pitfalls:
+    - "本地 dev server 正常就以为线上也正常，忽略 rewrite 配置"
+    - "切换策略后旧 hash 链接全部失效，没有做跳转兼容"
+followups:
+  - "如何同时兼容旧的 hash 链接与新的 path 链接？"
+source:
+  url: https://docs.flutter.dev/ui/navigation/url-strategies
+  title: "Configuring the URL strategy"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

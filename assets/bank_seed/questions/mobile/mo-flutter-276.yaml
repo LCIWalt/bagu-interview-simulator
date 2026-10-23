@@ -1,0 +1,27 @@
+id: mo-flutter-276
+title: "Flutter 桌面多窗口现在应该如何实现？"
+topics: [flutter, desktop, plugins]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Flutter 新的 Desktop Windowing API 用 WindowController 管理窗口、用 Window 组件承载内容，所有窗口共享同一棵 widget tree，因此 Riverpod/Bloc 状态可直接共享。该能力目前仍在 main 分支的实验阶段，需要开启 windowing 配置；稳定版项目只能用平台插件或原生代码实现多窗口。"
+  keyPoints:
+    - "WindowController 负责创建、修改和销毁窗口，Window 组件渲染内容"
+    - "多窗口共享单棵 widget tree，状态管理无需额外跨窗口同步"
+    - "入口改用 runWidget，窗口分为 regular/dialog/popup/tooltip/satellite 等类型"
+    - "该 API 仍是实验特性，发布前要评估 Flutter 版本与平台支持"
+  pitfalls:
+    - "在 stable 渠道直接照搬实验 API，构建失败"
+    - "以为多窗口等于多引擎，按多 isolate 的方式设计状态同步"
+followups:
+  - "窗口关闭请求如何只退出对应窗口而不是整个应用？"
+  - "实验 Windowing API 与 desktop_multi_window 插件如何取舍？"
+source:
+  url: "https://flutter.dev/blog/desktop-windowing-apis"
+  title: "Introducing the Desktop Windowing API for Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-194
+title: "PointerDownEvent 如何从命中测试结果走到 GestureRecognizer？"
+topics: [flutter, gestures, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "指针事件先经过 GestureBinding 的命中测试得到 RenderObject 路径，路径上的 RenderPointerListener 在 handleEvent 中触发 Listener 回调；GestureDetector 内部的 RawGestureDetector 在 onPointerDown 时调用 recognizer.addPointer，把指针加入手势竞技场。此后的事件通过 PointerRouter 直接路由给该 recognizer。"
+  keyPoints:
+    - "命中测试发生在 PointerDownEvent 时，结果决定哪些 RenderObject 收到事件"
+    - "RawGestureDetector 为每个手势创建 recognizer，并在按下时调用 addPointer"
+    - "addPointer 会把 recognizer 注册进 GestureArenaManager 并开始跟踪该指针"
+    - "后续 move、up 由 PointerRouter 按已注册路由分发，不再重新命中测试"
+  pitfalls:
+    - "在 onPointerDown 中重建 Widget 导致 recognizer 被替换，后续事件丢失"
+    - "认为每个 Move 事件都会重新做一次命中测试"
+followups:
+  - "PointerRouter 与 GestureArenaManager 各自维护什么状态？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/GestureRecognizer/addPointer.html
+  title: "GestureRecognizer.addPointer method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-189
+title: "SliverGrid 的 crossAxisCount 与 maxCrossAxisExtent 该如何取舍？"
+topics: [flutter, slivers, layout]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "crossAxisCount 固定列数，适合列数由设计决定的场景；maxCrossAxisExtent 固定单格最大宽度，由可用宽度反推列数，更适合平板、折叠屏等宽度变化大的场景。两者都用 childAspectRatio 推导主轴方向的高度。"
+  keyPoints:
+    - "FixedCrossAxisCount 的列数不变，宽屏下单格会被拉得很宽"
+    - "MaxCrossAxisExtent 按可用交叉轴长度除以单格上限向上取整得到列数"
+    - "childAspectRatio 是交叉轴尺寸与主轴尺寸之比，比例不当会导致内容溢出"
+    - "mainAxisSpacing 与 crossAxisSpacing 会参与可用空间的扣除"
+  pitfalls:
+    - "用固定列数适配所有屏幕，平板上出现超宽卡片"
+    - "改变列数后未调整 childAspectRatio，格子内文字被裁切"
+followups:
+  - "SliverGrid 与 SliverList 混用时如何保持滚动位置稳定？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/SliverGridDelegateWithMaxCrossAxisExtent-class.html
+  title: "SliverGridDelegateWithMaxCrossAxisExtent class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

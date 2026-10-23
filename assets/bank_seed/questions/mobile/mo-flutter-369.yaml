@@ -1,0 +1,26 @@
+id: mo-flutter-369
+title: "Release 崩溃栈全是乱码，符号文件该在哪一步处理？"
+topics: [flutter, release, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "release 构建会做 AOT 与混淆，堆栈里的符号被压缩；使用 --obfuscate 时还要加 --split-debug-info 输出符号文件，崩溃平台需要上传对应 symbol 才能还原。符号文件必须与构建号严格对应并长期归档，缺失对应版本就无法还原历史崩溃；Android 还需保留 mapping.txt 与 native 符号，iOS 用 dSYM。"
+  keyPoints:
+    - "--split-debug-info 指定符号输出目录，与产物一起归档"
+    - "崩溃平台按 build number 与 version 匹配符号，错版无法解析"
+    - "Android 另需 mapping.txt 与 so 符号，iOS 用 dSYM"
+    - "CI 在上传商店前完成符号上传，避免遗漏"
+  pitfalls:
+    - "只上传 ipa/apk 不上传符号，线上崩溃无法定位"
+    - "符号文件被清理策略删除，老版本崩溃永久失联"
+followups:
+  - "如何验证符号上传后堆栈确实可读？"
+source:
+  url: https://docs.flutter.dev/deployment/obfuscate
+  title: "Obfuscate Dart code"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

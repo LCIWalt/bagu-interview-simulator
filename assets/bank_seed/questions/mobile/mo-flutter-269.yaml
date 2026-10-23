@@ -1,0 +1,27 @@
+id: mo-flutter-269
+title: "旋转屏幕或切换深色模式时，Flutter 状态为什么会丢？"
+topics: [flutter, android, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 配置变更默认会重建 Activity；Flutter 模板通常用 android:configChanges 拦住方向、尺寸、uiMode 等变更，让 Activity 不重建并由 Flutter 自行适配。若没有拦截或进程被回收，Dart 状态是否还在取决于引擎是否复用，页面状态应通过 RestorationMixin 持久化。"
+  keyPoints:
+    - "configChanges 只阻止 Activity 重建，不会自动处理横竖屏布局或资源切换"
+    - "Flutter 模板默认声明常见 configChanges，Dart isolate 通常不会因旋转重建"
+    - "未声明时 Activity 重建，新建引擎会重新执行 main 并丢失内存状态"
+    - "RestorationMixin 与 restorationId 用于覆盖进程死亡后的状态恢复"
+  pitfalls:
+    - "加了 configChanges 却不处理横竖屏布局，界面旋转后错位"
+    - "把关键状态放在全局单例里，进程被杀后全部丢失"
+followups:
+  - "配置变更恢复与进程死亡恢复有什么区别？"
+  - "Flutter 如何监听系统亮度、字体缩放等配置变化？"
+source:
+  url: "https://developer.android.com/guide/topics/resources/runtime-changes"
+  title: "Handle configuration changes"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

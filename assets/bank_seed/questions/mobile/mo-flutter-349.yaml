@@ -1,0 +1,26 @@
+id: mo-flutter-349
+title: "运行时切换语言后，为什么有些文案没变？"
+topics: [flutter, i18n]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "语言由 Localizations 组件按 locale 向下提供，MaterialApp 的 locale 变化只会重建依赖它的子树。把文案提前存成常量、在 initState 里缓存字符串、或把 AppLocalizations 实例保存在 State 字段里，都不会随之更新。正确做法是在 build 中通过 AppLocalizations.of(context) 读取，并把持久化的语言选择在启动时传入 MaterialApp.locale。"
+  keyPoints:
+    - "文案在 build 时读取，依赖 Localizations 才会随 locale 重建"
+    - "locale 变化不会重建整个 App，只重建依赖者"
+    - "持久化用户选择，并在启动时传给 MaterialApp.locale"
+    - "命令式弹窗与 SnackBar 用当前 context 取文案，不能提前缓存"
+  pitfalls:
+    - "把 AppLocalizations 存成全局单例，切换语言后仍是旧值"
+    - "用系统语言判断代替 Localizations.localeOf(context)"
+followups:
+  - "如何让语言切换对后台 isolate 产生的通知文案也生效？"
+source:
+  url: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
+  title: "Internationalizing Flutter apps"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-245
+title: "BlocBuilder 与 BlocListener 的职责边界"
+topics: [flutter, bloc, state-management]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "BlocBuilder 根据 state 构建 UI，state 变化时重建；BlocListener 不构建 UI，只在 state 变化时执行一次副作用，如导航、弹窗、SnackBar。两者可用 BlocConsumer 合并，并通过 buildWhen 与 listenWhen 限制触发条件。把副作用写进 builder 会导致每次重建都重复执行。"
+  keyPoints:
+    - "builder 必须纯，返回 widget，不产生导航等副作用"
+    - "listener 在状态变化后调用一次，适合一次性动作"
+    - "buildWhen 与 listenWhen 分别过滤重建与副作用"
+    - "BlocConsumer 同时提供 builder 与 listener，但不要滥用"
+  pitfalls:
+    - "在 BlocBuilder 里 showDialog，重建时弹窗叠加"
+    - "在 listener 里做重计算，阻塞状态流转"
+followups:
+  - "页面首次进入就需要提示时，listener 如何处理初始 state？"
+source:
+  url: https://bloclibrary.dev/flutter-bloc-concepts/
+  title: "Flutter Bloc Concepts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-237
+title: "如何测试 debounce 这类依赖时间的逻辑？"
+topics: [flutter, testing, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "debounce 依赖定时器，测试时不要真的 sleep，而是用 tester.pump 传入时长推进虚拟时钟，观察中间态与最终态。先 pump 小于防抖窗口的时长断言没有触发，再 pump 超过窗口断言只触发一次。这样测试既快又确定。"
+  keyPoints:
+    - "用 pump 指定时长推进 FakeAsync 时钟，而不是 Future.delayed"
+    - "分别验证窗口内不触发、窗口后只触发一次"
+    - "连续输入要用多次 pump 模拟，最后推进到窗口结束"
+    - "用例结束确保没有 pending timer，否则框架会报错"
+  pitfalls:
+    - "用真实 await Future.delayed 等待，测试慢且随机失败"
+    - "只断言最终结果，不验证中间没有多余请求"
+followups:
+  - "如果 debounce 实现在 Bloc 里，测试写法有什么不同？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/WidgetTester/pump.html
+  title: "WidgetTester.pump"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

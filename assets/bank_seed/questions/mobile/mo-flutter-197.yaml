@@ -1,0 +1,26 @@
+id: mo-flutter-197
+title: "自定义 GestureRecognizer 需要重写哪些方法才能进入竞技场？"
+topics: [flutter, gestures, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "自定义 recognizer 通常继承 OneSequenceGestureRecognizer 或 PrimaryPointerGestureRecognizer，在 addAllowedPointer 中开始跟踪指针，在 handleEvent 中根据事件决定 accept 或 reject，并在结束或取消时停止跟踪。只有显式 resolve 才会真正影响竞技场结果。"
+  keyPoints:
+    - "addAllowedPointer 是入口，需调用 startTrackingPointer 让 PointerRouter 开始投递事件"
+    - "handleEvent 中判断位移或时间阈值，调用 resolve 接受或拒绝"
+    - "结束、取消或失败时调用 stopTrackingPointer，避免路由泄漏"
+    - "dispose 中清理内部状态并调用 super.dispose"
+  pitfalls:
+    - "只重写 handleEvent 而忘记 startTrackingPointer，收不到后续事件"
+    - "在 accept 之后仍不停止跟踪，导致重复回调"
+followups:
+  - "PrimaryPointerGestureRecognizer 已经替你处理了哪些逻辑？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/GestureRecognizer-class.html
+  title: "GestureRecognizer class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

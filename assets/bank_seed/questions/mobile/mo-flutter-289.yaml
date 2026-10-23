@@ -1,0 +1,27 @@
+id: mo-flutter-289
+title: "把 C/C++ 库接入 Flutter 插件时，Android 与 iOS 的链接方式有何不同？"
+topics: [flutter, ffi, plugins]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 只支持动态库，C/C++ 代码通常由 CMake 在插件中编译，或把各 ABI 的 .so 放进 jniLibs；iOS/macOS 更常见的是静态链接进插件或 Runner，通过 DynamicLibrary.process/executable 解析符号。若使用动态 framework，则用 DynamicLibrary.open 加载，并确保打包进应用。"
+  keyPoints:
+    - "Android 按 ABI 提供 .so，可用 externalNativeBuild 或 jniLibs 打包"
+    - "iOS 静态库链接后符号在可执行文件中，用 DynamicLibrary.process 或 executable 查找"
+    - "iOS/macOS 动态 framework 用 DynamicLibrary.open 加载"
+    - "用 ffigen 从头文件生成绑定，避免手写函数签名"
+  pitfalls:
+    - "只打包 arm64 的 .so，x86_64 模拟器直接崩"
+    - "符号被 strip 或未导出，DynamicLibrary 查找返回 nullptr"
+followups:
+  - "如何控制 FFI 符号的可见性？"
+  - "App Store 对动态库签名和嵌套 framework 有什么要求？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/android/c-interop"
+  title: "Bind to native code using the legacy FFI plugin template"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

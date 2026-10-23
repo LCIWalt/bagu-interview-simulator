@@ -1,0 +1,26 @@
+id: mo-flutter-365
+title: "Flutter 项目的测试金字塔该怎么分？"
+topics: [flutter, testing, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "单元测试覆盖领域逻辑与数据转换，数量最多、反馈最快；Widget 测试验证单个页面或组件的渲染与交互，用 fake 替换网络与存储；集成测试只保留跨页面的关键路径，跑在真机或模拟器上。比例不是教条，判据是反馈速度与失败定位成本：能用单测覆盖的逻辑，不要放到 Widget 测试里断言。"
+  keyPoints:
+    - "领域逻辑与映射放单测，避免启动引擎"
+    - "Widget 测试覆盖渲染分支与交互，依赖用 fake 注入"
+    - "集成测试只保留登录、支付等关键链路"
+    - "按失败定位成本分配层级，而不是追求固定比例"
+  pitfalls:
+    - "所有逻辑都靠集成测试验证，反馈慢且随机失败"
+    - "Widget 测试里连真实后端，CI 不稳定"
+followups:
+  - "如何衡量一套测试是否还值得继续维护？"
+source:
+  url: https://docs.flutter.dev/testing/overview
+  title: "Testing Flutter apps"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

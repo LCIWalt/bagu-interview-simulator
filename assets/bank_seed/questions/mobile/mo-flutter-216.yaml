@@ -1,0 +1,26 @@
+id: mo-flutter-216
+title: "状态提升应该提升到哪一层？"
+topics: [flutter, state, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "状态提升是把被多个子组件读写的状态移到它们最近的共同祖先，再通过构造参数下发、回调上传。官方原则是状态要放在使用它的 widget 之上；实践上取真正需要共享的最深公共父节点，提升得过高会让无关子树跟着重建。提升之后子组件可以变成无状态、可独立测试的 widget。"
+  keyPoints:
+    - "找到真正共享该状态的最深公共祖先，而不是一律放到根节点"
+    - "值通过构造参数向下传，修改通过回调向上通知，保持单向数据流"
+    - "提升后子 widget 可改为 StatelessWidget 并使用 const 构造"
+    - "过度提升会扩大重建范围，并造成层层透传的 prop drilling"
+  pitfalls:
+    - "把所有状态都提升到 MaterialApp 之上"
+    - "只把值提上去，却让子组件自己改，破坏单一数据源"
+followups:
+  - "prop drilling 到什么程度应该改用 InheritedWidget？"
+source:
+  url: https://docs.flutter.dev/data-and-backend/state-mgmt/simple
+  title: "Simple app state management"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

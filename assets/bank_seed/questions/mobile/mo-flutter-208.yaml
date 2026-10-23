@@ -1,0 +1,26 @@
+id: mo-flutter-208
+title: "LayoutBuilder 与 MediaQuery.sizeOf 的重建范围差别在哪？"
+topics: [flutter, layout, responsive]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "LayoutBuilder 在布局阶段拿到父级给它的约束并重建子树，适合响应局部可用空间；MediaQuery.sizeOf 只订阅屏幕尺寸这一方面，变化时才重建。前者能看到分栏、弹窗等局部约束，后者更轻量但只知道整块屏幕。"
+  keyPoints:
+    - "LayoutBuilder 的回调在 layout 阶段执行，不能依赖 intrinsics"
+    - "MediaQuery.sizeOf 通过 InheritedModel 只订阅 size，避免其他字段变化触发重建"
+    - "分栏、侧边栏等局部宽度变化应使用 LayoutBuilder"
+    - "LayoutBuilder 内不能返回需要父级 intrinsics 的组件，否则抛异常"
+  pitfalls:
+    - "在 LayoutBuilder 里根据 constraints 再包一层 MediaQuery，造成重复重建"
+    - "用 MediaQuery.of(context) 读取尺寸，导致键盘弹出等变化也重建"
+followups:
+  - "为什么在 LayoutBuilder 中调用 showDialog 需要谨慎？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html
+  title: "LayoutBuilder class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

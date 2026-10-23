@@ -1,0 +1,26 @@
+id: mo-flutter-364
+title: "CI 上集成测试总是超时，如何拆分与稳定化？"
+topics: [flutter, testing, ci]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "集成测试跑在真实设备或模拟器上，单机串行执行很容易超过 CI 时限。可行做法是按测试文件或标签分片到多台机器并行，每一片独立冷安装并清理数据；同时固定设备镜像版本、关闭系统动画、通过启动参数控制测试环境来降低抖动，失败时保留截图与日志。"
+  keyPoints:
+    - "按文件或标签分片，多机并行缩短墙钟时间"
+    - "每片独立冷安装，避免残留状态互相影响"
+    - "固定设备镜像与系统版本，关闭系统动画"
+    - "失败时上传截图、日志与录屏，便于定位"
+  pitfalls:
+    - "多个分片共用同一台设备，测试互相抢焦点"
+    - "用固定 sleep 等待网络，机器一慢就随机失败"
+followups:
+  - "分片之间测试时长不均时，如何均衡负载？"
+source:
+  url: https://docs.flutter.dev/testing/integration-tests
+  title: "Integration testing"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

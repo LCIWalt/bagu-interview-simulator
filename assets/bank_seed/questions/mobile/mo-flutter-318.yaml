@@ -1,0 +1,27 @@
+id: mo-flutter-318
+title: "连续两次 pumpWidget 同一个 Widget，State 会保留吗？"
+topics: [flutter, testing, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "pumpWidget 会把新的 Widget 树挂到测试的根上，但框架仍会做 Element 复用：runtimeType 与 key 都相同的节点会原地更新并保留 State。只有类型或 key 改变时，旧 Element 才会被卸载、State 重新创建。"
+  keyPoints:
+    - "相同类型与 key 的子树走 update，State 与滚动位置保留"
+    - "改变 key 或 Widget 类型会触发卸载与重建"
+    - "pumpWidget 之后仍需 pump 才能推进动画与异步"
+    - "测试状态保留逻辑时，可用两次 pumpWidget 构造场景"
+  pitfalls:
+    - "每次 pumpWidget 都换新 key，却期望状态延续"
+    - "以为 pumpWidget 会重置整个测试环境"
+followups:
+  - "两次 pumpWidget 之间不 pump 会有什么影响？"
+  - "GlobalKey 在两次 pumpWidget 之间如何迁移？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/WidgetTester/pumpWidget.html
+  title: "WidgetTester.pumpWidget method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

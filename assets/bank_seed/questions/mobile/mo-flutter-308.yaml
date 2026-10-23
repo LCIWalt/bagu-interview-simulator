@@ -1,0 +1,27 @@
+id: mo-flutter-308
+title: "为什么不能在 layout 阶段调用 setState？"
+topics: [flutter, layout, scheduler]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "layout 阶段框架正在遍历 RenderObject 树并写入几何信息，此时修改 Element 的脏状态会打乱本轮管线。setState 会安排新的构建，但当前帧已经在布局，通常会触发断言，或把修改推迟到下一帧。"
+  keyPoints:
+    - "帧管线按 build、layout、paint 顺序执行，阶段内职责不能混用"
+    - "layout 中 markNeedsBuild 会破坏本轮布局的一致性"
+    - "需要基于测量结果更新状态时，应推迟到帧结束后"
+    - "addPostFrameCallback 或 scheduleMicrotask 可作为延后手段"
+  pitfalls:
+    - "在 LayoutBuilder.builder 里 setState 保存 constraints"
+    - "以为框架会自动合并这次修改而不多出一帧"
+followups:
+  - "addPostFrameCallback 里 setState 会带来几次布局？"
+  - "哪些回调天然运行在 layout 阶段？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html
+  title: "LayoutBuilder class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

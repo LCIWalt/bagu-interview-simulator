@@ -1,0 +1,27 @@
+id: mo-flutter-277
+title: "桌面端快捷键为什么要通过 Shortcuts、Actions 和 Intent 组合实现？"
+topics: [flutter, desktop, input]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 把快捷键拆成三层：Shortcuts 把按键组合映射为 Intent，Actions 把 Intent 映射为具体动作，Focus 决定当前哪个子树参与。这样快捷键可以被局部覆盖、可组合、可测试，也不会把键位判断散落在 RawKeyboardListener 里。"
+  keyPoints:
+    - "Shortcuts 维护 KeySet 到 Intent 的映射，子级可覆盖父级绑定"
+    - "Actions 按 Intent 类型查找并执行，也可用 Actions.invoke 主动触发"
+    - "快捷键只在焦点子树内生效，桌面应用要保证焦点位置正确"
+    - "用 SingleActivator/CharacterActivator 表达组合键，并分别处理 Cmd 与 Ctrl"
+  pitfalls:
+    - "用 RawKeyboardListener 手写所有键位，输入框里频繁误触发"
+    - "忽略 macOS 的 Cmd 与 Windows/Linux 的 Ctrl 差异"
+followups:
+  - "对话框打开时如何临时禁用全局快捷键？"
+  - "如何为快捷键生成可配置的提示文案？"
+source:
+  url: "https://docs.flutter.dev/ui/interactivity/actions-and-shortcuts"
+  title: "Using Actions and Shortcuts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

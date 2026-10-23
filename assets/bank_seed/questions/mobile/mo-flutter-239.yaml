@@ -1,0 +1,26 @@
+id: mo-flutter-239
+title: "restorablePush 如何恢复路由栈？"
+topics: [flutter, navigation, state]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "restorablePush 把路由的创建交给一个静态 route builder，框架在状态恢复时用保存的参数重新调用它，从而重建整个路由栈。route builder 必须标注 vm:entry-point，参数必须能通过 StandardMessageCodec 序列化。需要拿到路由返回值时，用返回的不透明 id 配合 RestorableRouteFuture。"
+  keyPoints:
+    - "routeBuilder 必须是静态函数，并标注 @pragma('vm:entry-point')"
+    - "参数走 StandardMessageCodec，通常用 Map 传简单键值"
+    - "恢复时框架重新调用 builder，而不是复用旧 Route 实例"
+    - "restorablePush 返回不透明 id，可交给 RestorableRouteFuture 取结果"
+  pitfalls:
+    - "用闭包捕获 repository 或 context 作为 routeBuilder"
+    - "传不可序列化的对象作为 arguments，恢复时丢失或报错"
+followups:
+  - "恢复后页面依赖的运行时对象应该从哪里重新获取？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/NavigatorState/restorablePush.html
+  title: "NavigatorState.restorablePush"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

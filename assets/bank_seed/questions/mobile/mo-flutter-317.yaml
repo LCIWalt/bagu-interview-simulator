@@ -1,0 +1,27 @@
+id: mo-flutter-317
+title: "如何用 DevTools 的 App Size 工具定位体积增长？"
+topics: [flutter, devtools, app-size]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "DevTools 的 App Size 工具读取 flutter build --analyze-size 生成的 JSON，把 AOT 快照、资源、字体与原生库按体积展开成树图。它用于回答体积增长来自哪里，而不是直接给出压缩方案。"
+  keyPoints:
+    - "构建时加 --analyze-size 才会产出可分析的 JSON"
+    - "树图按 Dart 代码、资源、字体与原生库归类"
+    - "对比两个版本的快照可定位体积回退来源"
+    - "分析包应为 release，且与线上 ABI 或架构一致"
+  pitfalls:
+    - "用 debug 包分析，体积结论完全失真"
+    - "把下载压缩后的体积与解压后体积混为一谈"
+followups:
+  - "为什么同一个页面在两个 ABI 下体积差异很大？"
+  - "如何判断增长来自代码还是资源？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/app-size
+  title: "App Size tool"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

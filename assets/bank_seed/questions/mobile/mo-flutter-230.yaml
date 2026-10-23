@@ -1,0 +1,26 @@
+id: mo-flutter-230
+title: "StreamController 的 sync 参数改变了什么？"
+topics: [flutter, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "默认的 StreamController 是异步的，add 的事件会在之后的 microtask 中投递给监听者；sync 为 true 时则在调用 add 的同一调用栈内同步派发。同步控制器能降低延迟、便于复现顺序，但也带来重入风险：监听者可能在 add 返回前就执行。"
+  keyPoints:
+    - "默认异步投递，顺序稳定但多一次 microtask 延迟"
+    - "sync 为 true 时在 add 的调用栈内直接调用监听者回调"
+    - "同步派发时监听者抛错会沿 add 的调用栈向上传播"
+    - "onListen 与 onCancel 用于管理上游资源，close 后不能再 add"
+  pitfalls:
+    - "用 sync 控制器在监听者里再次 add，造成递归甚至栈溢出"
+    - "忘记 close 控制器，页面销毁后仍有挂起的流"
+followups:
+  - "为什么 UI 事件通常更适合异步控制器？"
+source:
+  url: https://api.flutter.dev/flutter/dart-async/StreamController-class.html
+  title: "StreamController class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

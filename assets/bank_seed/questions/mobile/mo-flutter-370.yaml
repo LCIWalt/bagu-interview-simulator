@@ -1,0 +1,26 @@
+id: mo-flutter-370
+title: "如何生成合规的开源许可清单并发现许可证风险？"
+topics: [flutter, package, release]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 的 LicenseRegistry 会收集依赖包通过 addLicense 注册的许可文本，showLicensePage 据此展示；但它只汇总文本，不判断许可证兼容性，也不会自动发现未注册的传递依赖。合规审计应在 CI 中扫描 pubspec.lock 与原生依赖，人工复核 GPL/AGPL 与商用限制，并把许可清单随包发布。"
+  keyPoints:
+    - "LicenseRegistry.addLicense 注册，showLicensePage 展示"
+    - "许可文本由包作者提供，可能缺失或不准确"
+    - "CI 扫描 lockfile 与原生依赖，输出许可证矩阵"
+    - "GPL/AGPL 与闭源分发冲突，引入前需法务确认"
+  pitfalls:
+    - "以为 Flutter 自动生成的许可页等于完成了合规审计"
+    - "只查直接依赖，忽略传递依赖的许可证"
+followups:
+  - "如何在应用内提供可搜索的第三方许可列表？"
+source:
+  url: https://api.flutter.dev/flutter/foundation/LicenseRegistry-class.html
+  title: "LicenseRegistry class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-262
+title: "iOS 平台视图为什么只能混合合成，会带来哪些限制？"
+topics: [flutter, platform-view, ios]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "iOS 端只使用混合合成，原生 UIView 被插入 Flutter 的视图层级，因此触摸与无障碍更完整，但会打断 Flutter 的图层合并。ShaderMask 与 ColorFiltered 无法作用于平台视图，BackdropFilter 也有限制；动画期间可以用截图纹理占位来降低合成压力。"
+  keyPoints:
+    - "iOS 没有 Android 的 texture layer 路径，平台视图统一走混合合成"
+    - "原生 UIView 参与 UIKit 视图树，裁剪、动画与层级由两套系统共同决定"
+    - "ShaderMask 与 ColorFiltered 不支持包裹平台视图"
+    - "复杂动画可先截取原生视图作为纹理占位，动画结束后再切回"
+  pitfalls:
+    - "对平台视图套 ShaderMask 做动效，结果完全不生效"
+    - "在平台视图上叠加高频动画，仍期待和普通 Widget 一样的帧率"
+followups:
+  - "平台视图的圆角应该由 Flutter 还是原生侧实现？"
+  - "BackdropFilter 在平台视图上的限制具体是什么？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/ios/platform-views"
+  title: "Host native iOS views in your Flutter app with platform views"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

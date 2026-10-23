@@ -1,0 +1,26 @@
+id: mo-flutter-221
+title: "didUpdateWidget 里为什么要比较新旧 widget？"
+topics: [flutter, lifecycle, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "父组件重建导致配置变化时，框架会复用同一个 State 并调用 didUpdateWidget，把旧 widget 作为参数传入。这里是同步控制器、订阅、定时器与新配置的安全时机，必须比较 oldWidget 的字段，避免无变化时重复重启。调用结束后框架仍会照常执行 build。"
+  keyPoints:
+    - "触发条件是父级重建且 runtimeType 与 key 相同，State 被复用"
+    - "oldWidget 提供旧配置，可据此决定是否需要重启或释放资源"
+    - "重写时必须调用 super.didUpdateWidget(oldWidget)"
+    - "这里可以调用 setState，但通常没必要，因为随后就会 build"
+  pitfalls:
+    - "不比较字段就重建 controller，造成动画跳变或订阅泄漏"
+    - "在该方法里发起依赖 context 的异步请求，却不做取消"
+followups:
+  - "如果 key 变了，didUpdateWidget 还会被调用吗？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html
+  title: "State.didUpdateWidget"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

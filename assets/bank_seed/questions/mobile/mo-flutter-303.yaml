@@ -1,0 +1,27 @@
+id: mo-flutter-303
+title: "Opacity 与 ClipRRect 在什么情况下会触发 saveLayer？"
+topics: [flutter, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "saveLayer 会分配一张离屏纹理，把子树先画进去再整体合成，代价包括额外显存与一次合批中断。Opacity 在 0 与 1 之间时通常需要离屏缓冲才能正确混合，而需要读取背景的滤镜同样会触发它。"
+  keyPoints:
+    - "Opacity 非 0 或 1 时通常需要 saveLayer 才能正确混合"
+    - "BackdropFilter、ShaderMask 等需要离屏内容的组件同样触发"
+    - "ClipRRect 默认走裁剪图层，antiAliasWithSaveLayer 才额外分配"
+    - "能改用带 alpha 的颜色、预合成图片就避免 saveLayer"
+  pitfalls:
+    - "给整页包一层 AnimatedOpacity 做转场，导致每帧离屏合成"
+    - "以为所有 Clip 都会 saveLayer，混淆了裁剪与离屏"
+followups:
+  - "Opacity 为 0 或 1 时框架会做怎样的优化？"
+  - "如何从 DevTools 的图层信息里看出多了一次离屏？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Opacity-class.html
+  title: "Opacity class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

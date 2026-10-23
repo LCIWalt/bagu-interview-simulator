@@ -1,0 +1,27 @@
+id: mo-flutter-296
+title: "IntrinsicHeight 为什么会带来额外的布局开销？"
+topics: [flutter, performance, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "IntrinsicHeight 为了让 Row 中所有子项等高，会先向子项询问固有高度，再做一次真实布局。固有尺寸查询会递归触发子树的额外测量，在长列表或深层嵌套里代价明显。它只适合少量静态、结构简单的子树。"
+  keyPoints:
+    - "先做 intrinsic 探测再布局，等于在同一帧多测一遍"
+    - "固有尺寸不会被缓存，约束变化时会重复计算"
+    - "只应在少量静态、结构简单的子树中使用"
+    - "可用固定高度、AspectRatio 或自定义 RenderObject 替代"
+  pitfalls:
+    - "在 ListView 的 item 里使用，滚动时每一项都多一次探测"
+    - "以为 intrinsic 结果会被缓存，实际每次布局都要重算"
+followups:
+  - "IntrinsicWidth 与 IntrinsicHeight 的开销来源相同吗？"
+  - "不借助 intrinsic 还能怎样让 Row 的子项等高？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/IntrinsicHeight-class.html
+  title: "IntrinsicHeight class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-266
+title: "Flutter 页面结束后，如何把结果回传给宿主原生页面？"
+topics: [flutter, add-to-app, platform-channel]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 页面与宿主 Activity/ViewController 分属两层导航，Navigator.pop 不会自动把结果带回原生。需要约定通道方法，由 Dart 主动把结构化结果发给原生，原生再 finish/dismiss 并回调启动方。用户手势返回与程序返回都要走同一条结果路径，并保证只回调一次。"
+  keyPoints:
+    - "Dart 通过 MethodChannel 发送结束事件与结果，原生侧负责真正关闭页面"
+    - "用 requestCode 或唯一 token 关联并发请求，避免结果串台"
+    - "原生侧保存启动回调，收到结果后只触发一次"
+    - "结果结构要走 codec 支持的类型，并在原生侧做空值与类型校验"
+  pitfalls:
+    - "Dart 直接 SystemNavigator.pop，启动方永远收不到结果"
+    - "手势返回和按钮返回各回调一次，导致上层重复处理"
+followups:
+  - "如何用 Android Activity Result API 串起 Flutter 页面结果？"
+  - "iOS 上 unwind segue 或 completion 闭包如何与通道配合？"
+source:
+  url: "https://docs.flutter.dev/add-to-app/android/add-flutter-screen"
+  title: "Add a Flutter screen to an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

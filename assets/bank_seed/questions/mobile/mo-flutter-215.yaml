@@ -1,0 +1,27 @@
+id: mo-flutter-215
+title: "临时状态与应用状态该如何划分？"
+topics: [flutter, state, state-management]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Flutter 官方把状态分为只属于单个 widget 的临时状态（如动画进度、输入框内容）和需要跨页面共享的应用状态（如登录用户、购物车）。临时状态用 State 与 setState 就够了，应用状态才需要 InheritedWidget、Provider、Riverpod 或 Bloc。判断依据是生命周期与共享范围，而不是代码量。"
+  keyPoints:
+    - "临时状态只在单个 widget 子树内使用，重建时丢失也无妨"
+    - "应用状态被多个页面或组件读写，需要在树的上层持有"
+    - "把临时状态下沉到叶子节点可以自然缩小重建范围"
+    - "把应用状态塞进某个页面的 State 会让跨页面同步变得困难"
+  pitfalls:
+    - "把输入框草稿放进全局单例，页面退出后仍残留"
+    - "为了统一，把高频动画进度也放进全局 store，引发整树重建"
+followups:
+  - "表单草稿属于临时状态还是应用状态？"
+  - "什么时候应该把临时状态提升为应用状态？"
+source:
+  url: https://docs.flutter.dev/data-and-backend/state-mgmt/ephemeral-vs-app
+  title: "Ephemeral vs. app state"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

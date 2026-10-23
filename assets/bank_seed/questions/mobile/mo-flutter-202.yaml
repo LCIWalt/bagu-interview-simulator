@@ -1,0 +1,26 @@
+id: mo-flutter-202
+title: "Text 与 RichText 的职责差别在哪，什么时候该直接用 RichText？"
+topics: [flutter, text, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Text 是对 RichText 的封装，额外处理了默认样式、文本缩放、语义、选择与溢出等细节；RichText 直接接收 InlineSpan 并创建 RenderParagraph，不提供这些便利。只有在需要完全控制排版或复用 span 结构时才应下沉到 RichText。"
+  keyPoints:
+    - "Text 会合并 DefaultTextStyle、应用 textScaler 并生成语义标签"
+    - "RichText 需要自己提供 textDirection、textScaler 与完整样式"
+    - "Text.rich 在保留 Text 封装的同时接受 InlineSpan"
+    - "两者最终都由 RenderParagraph 完成排版与绘制"
+  pitfalls:
+    - "直接用 RichText 却未设置 textDirection，运行时报错"
+    - "用 RichText 替代 Text 后丢失文本缩放与选择能力"
+followups:
+  - "SelectableText 与 SelectionArea 分别解决什么选择需求？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/RichText-class.html
+  title: "RichText class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-290
+title: "平台通道传 Uint8List 会发生几次拷贝，如何降低成本？"
+topics: [flutter, platform-channel, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "StandardMessageCodec 会把 Uint8List 编码进消息缓冲区，跨平台传递时至少发生一次复制，大块二进制会造成明显的内存峰值和延迟。可改用文件路径、共享内存或 FFI 指针视图来避免重复拷贝；如果必须走通道，应分块传输并控制并发。"
+  keyPoints:
+    - "通道消息先编码为字节缓冲，接收端再解码，至少一次复制"
+    - "Dart isolate 与平台线程不能直接共享可变堆内存"
+    - "大文件优先传路径或句柄，让两端各自读写"
+    - "FFI 可用 Pointer 分配后 asTypedList 建立视图，避免再复制"
+  pitfalls:
+    - "在通道上反复传几十 MB 的图片或视频"
+    - "以为 Uint8List 跨通道是零拷贝"
+followups:
+  - "ExternalTypedData 在什么场景下能实现零拷贝？"
+  - "分块传输大文件时如何保证顺序和完整性？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/platform-channels"
+  title: "Writing custom platform-specific code"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

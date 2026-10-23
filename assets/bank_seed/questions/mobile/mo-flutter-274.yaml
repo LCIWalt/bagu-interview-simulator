@@ -1,0 +1,27 @@
+id: mo-flutter-274
+title: "深链冷启动时，Flutter 从哪里拿到第一个路由？"
+topics: [flutter, deep-linking, navigation]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "深链冷启动时，平台把启动 URL 交给引擎，Flutter 通过 PlatformRouteInformationProvider 的初始 route information 进入 Router，或通过 WidgetsApp 的 initialRoute 进入 Navigator。热启动时同一链接会走 pushRouteInformation 追加到现有路由栈。两条路径必须复用同一套解析逻辑，否则会出现冷启动能开、热启动打不开的问题。"
+  keyPoints:
+    - "冷启动的初始链接在 Dart 入口执行前由引擎注入"
+    - "Router 用 PlatformRouteInformationProvider 读取初始与后续链接"
+    - "onGenerateRoute/onGenerateInitialRoutes 要处理未知路由与参数解码"
+    - "热启动通过 pushRouteInformation 追加，不应重建整个应用"
+  pitfalls:
+    - "只在 main 里读一次链接，漏掉热启动和后台唤醒"
+    - "直接信任 URL 参数拼路由，未做白名单与解码"
+followups:
+  - "如何用 DevTools 验证深链跳转？"
+  - "未登录时收到深链，应该暂存还是先跳登录？"
+source:
+  url: "https://docs.flutter.dev/ui/navigation/deep-linking"
+  title: "Deep linking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

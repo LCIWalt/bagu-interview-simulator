@@ -1,0 +1,26 @@
+id: mo-flutter-223
+title: "initState 里能不能 await？"
+topics: [flutter, lifecycle, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "initState 必须是同步的，框架不会等待它返回，所以不能把方法声明为 async。需要异步初始化时，在 initState 里调用一个返回 Future 的方法并显式处理错误，完成后先判断 mounted 再 setState。依赖 InheritedWidget 的读取应放到 didChangeDependencies。"
+  keyPoints:
+    - "生命周期方法签名是 void，改成 async 会返回被忽略的 Future"
+    - "未 await 的 Future 抛错不走当前调用栈，需要 catchError 或内部 try/catch"
+    - "异步回调返回时 State 可能已 dispose，必须先检查 mounted"
+    - "需要 context 的初始化放到 didChangeDependencies 更安全"
+  pitfalls:
+    - "写成 void initState() async，分析器不报错但异常无人处理"
+    - "在 await 之后直接用 context 导航，页面已销毁时抛异常"
+followups:
+  - "如果初始化必须在首帧前完成，有哪些替代做法？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/initState.html
+  title: "State.initState"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

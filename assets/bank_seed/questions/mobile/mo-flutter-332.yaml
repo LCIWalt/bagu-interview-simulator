@@ -1,0 +1,27 @@
+id: mo-flutter-332
+title: "项目：如何为 Flutter 应用建立可回归的性能基线？"
+topics: [flutter, performance, ci]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先定义可复现的指标与场景，再在固定设备、profile 模式下重复采集，才能把「感觉卡」变成可比较的数字。基线要覆盖帧耗时、启动时间与内存，并在 CI 中对回归设阈值告警。"
+  keyPoints:
+    - "固定设备型号、系统版本、构建模式与测试脚本"
+    - "每个场景重复多轮，取中位数与 p90 而不是单次值"
+    - "用 integration_test 驱动真实路径并采集 FrameTiming 或 timeline"
+    - "基线随版本存档，回归超过阈值时阻断合并"
+  pitfalls:
+    - "用 debug 包或模拟器数据当基线"
+    - "只比较平均值，忽略长尾卡顿"
+followups:
+  - "CI 机器性能波动大时如何降低误报？"
+  - "哪些指标适合做成硬门槛，哪些只做趋势观察？"
+source:
+  url: https://docs.flutter.dev/perf/best-practices
+  title: "Flutter performance best practices"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

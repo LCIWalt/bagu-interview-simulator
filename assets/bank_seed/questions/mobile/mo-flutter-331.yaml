@@ -1,0 +1,27 @@
+id: mo-flutter-331
+title: "如何用 addTimingsCallback 在线上统计掉帧？"
+topics: [flutter, performance, observability]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "SchedulerBinding.addTimingsCallback 会在每帧结束后批量回传 FrameTiming，包含 build、raster 与 vsync 开销。它适合在线上统计掉帧率与分位耗时，回调里只做轻量聚合，避免再拖慢 UI 线程。"
+  keyPoints:
+    - "回调收到一批 FrameTiming，而不是单帧即时回调"
+    - "buildDuration 对应 UI 线程，rasterDuration 对应光栅线程"
+    - "totalSpan 可判断帧是否超出预算"
+    - "在 dispose 或合适生命周期移除回调"
+  pitfalls:
+    - "在回调里同步写日志或上报，反而制造卡顿"
+    - "用 debug 构建的数据做线上性能结论"
+followups:
+  - "FrameTiming 能区分 jank 来自 UI 还是 Raster 吗？"
+  - "采样上报应该按比例还是全量？"
+source:
+  url: https://api.flutter.dev/flutter/scheduler/SchedulerBinding/addTimingsCallback.html
+  title: "SchedulerBinding.addTimingsCallback method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

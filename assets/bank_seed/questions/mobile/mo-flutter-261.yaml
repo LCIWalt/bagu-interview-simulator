@@ -1,0 +1,27 @@
+id: mo-flutter-261
+title: "列表中的 PlatformView 反复创建销毁，成本从哪里来？"
+topics: [flutter, platform-view, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "每个平台视图都对应一个原生 View、一个平台视图控制器和额外的合成层，创建与销毁都要跨平台调用并分配资源；在长列表里随滚动反复创建，会把主线程开销和合成成本放大。纯展示内容可考虑截图、纹理或 Flutter 自绘，必须交互时再限制同屏数量。"
+  keyPoints:
+    - "平台视图数量增加会打断图层合并，滚动时更容易掉帧"
+    - "创建平台视图涉及引擎注册、原生 View 初始化和纹理/Surface 分配"
+    - "把平台视图移出高频滚动的 itemBuilder，或缓存少量实例复用"
+    - "先用 DevTools 与平台 profiling 区分创建开销和合成开销"
+  pitfalls:
+    - "每个列表项都放一个 WebView 或地图视图"
+    - "在 itemBuilder 中执行昂贵的原生初始化，滚动时反复触发"
+followups:
+  - "如何判断掉帧来自平台视图创建还是图层合成？"
+  - "PlatformViewLink 的生命周期状态如何对应原生 View 的创建与销毁？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/android/platform-views"
+  title: "Hosting native Android views in your Flutter app with Platform Views"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

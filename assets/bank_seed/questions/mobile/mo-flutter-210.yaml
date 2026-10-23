@@ -1,0 +1,26 @@
+id: mo-flutter-210
+title: "项目：折叠屏与多窗口下的布局适配如何落地？"
+topics: [flutter, responsive, adaptive]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "折叠屏适配的关键是不要假设只有一个连续矩形视口：通过 MediaQuery.displayFeatures 读取铰链或折叠区域的 bounds 与状态，再结合 LayoutBuilder 的局部约束决定分栏或避让。系统提供的 DisplayFeatureSubScreen 可用于让弹窗避开折叠线。"
+  keyPoints:
+    - "displayFeatures 给出每个 DisplayFeature 的 bounds、type 与 state"
+    - "铰链区域应视为不可用空间，跨铰链的内容需要拆分或避让"
+    - "布局切换应基于局部 constraints 与 feature bounds，而不是固定设备宽度"
+    - "DisplayFeatureSubScreen 可把对话框限制在单个屏幕区域"
+  pitfalls:
+    - "只用屏幕宽度断点判断平板或折叠屏，忽略展开状态与铰链位置"
+    - "在配置变更时重建整个页面，丢失滚动位置与输入状态"
+followups:
+  - "折叠状态变化时如何保持列表滚动位置与播放进度？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/MediaQueryData/displayFeatures.html
+  title: "MediaQueryData.displayFeatures property - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

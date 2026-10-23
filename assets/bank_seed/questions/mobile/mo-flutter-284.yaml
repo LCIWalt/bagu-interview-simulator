@@ -1,0 +1,27 @@
+id: mo-flutter-284
+title: "什么情况下可以用 dependency_overrides，风险如何控制？"
+topics: [flutter, packages, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "dependency_overrides 会强制整个依赖图使用指定版本，优先级高于普通约束，适合临时验证上游修复或本地联调。它绕过正常求解，可能让某个包拿到不兼容的传递依赖，因此只应短期使用，并记录原因和移除条件。"
+  keyPoints:
+    - "overrides 作用于整个工程，包括传递依赖，优先级最高"
+    - "适合等待上游发版前的临时修复，或 path/git 本地联调"
+    - "强制版本可能缺少下游期望的 API，编译通过也可能运行时崩溃"
+    - "合并前要有移除计划，避免长期留在主分支"
+  pitfalls:
+    - "把 override 当成解决版本冲突的常规手段"
+    - "忘记删除导致发布包版本不可复现"
+followups:
+  - "dependency_overrides 与 dependency substitution 有什么区别？"
+  - "如何推动上游尽快发版以缩短 override 生命周期？"
+source:
+  url: "https://docs.flutter.dev/packages-and-plugins/dependency-management"
+  title: "Package dependency management"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

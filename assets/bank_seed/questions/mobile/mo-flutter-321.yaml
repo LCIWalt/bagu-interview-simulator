@@ -1,0 +1,27 @@
+id: mo-flutter-321
+title: "find.byType 找不到 Offstage 里的控件，为什么？"
+topics: [flutter, testing, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Finder 默认 skipOffstage: true，会跳过 Offstage、未激活路由等不在屏幕上的子树，所以控件确实 build 了也可能找不到。需要断言这些节点时显式传 skipOffstage: false，但它们仍然不可点击。"
+  keyPoints:
+    - "默认跳过 offstage 节点，这是多数 finder 的默认行为"
+    - "路由栈下层页面常处于 offstage 状态"
+    - "传 skipOffstage: false 可以查到，但仍然不能 tap"
+    - "断言前先确认控件在当前路由中可见"
+  pitfalls:
+    - "以为查不到就是没 build，实际只是被跳过"
+    - "关掉 skipOffstage 后直接 tap，命中测试仍然失败"
+followups:
+  - "findsNothing 与 skipOffstage 的关系是什么？"
+  - "如何断言一个页面被 push 后仍然保留了状态？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/CommonFinders/byType.html
+  title: "CommonFinders.byType method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

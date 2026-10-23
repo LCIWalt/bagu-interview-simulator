@@ -1,0 +1,27 @@
+id: mo-flutter-309
+title: "文本测量为什么昂贵，TextPainter 该如何复用？"
+topics: [flutter, rendering, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "TextPainter 把文本 shaped 成字形并计算行高，一次 layout 的成本远高于普通 Widget 组合。若在 paint 中反复创建 TextPainter 并 layout，滚动时就会持续做文本测量，直接抬高 UI 线程耗时。"
+  keyPoints:
+    - "文本、样式、宽度或 textScaler 变化时才需要重新 layout"
+    - "复用实例并缓存结果，避免在 paint 中构造"
+    - "paint 只负责绘制，不应承担测量与字符串拼接"
+    - "用完调用 dispose，避免长期持有原生排版资源"
+  pitfalls:
+    - "在 CustomPainter.paint 里新建 TextPainter"
+    - "改了 style 却没有重新 layout，绘制结果仍是旧布局"
+followups:
+  - "TextPainter 的 layout 与 Text 的布局结果为什么可能不一致？"
+  - "行高与省略号会影响测量成本吗？"
+source:
+  url: https://api.flutter.dev/flutter/painting/TextPainter-class.html
+  title: "TextPainter class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

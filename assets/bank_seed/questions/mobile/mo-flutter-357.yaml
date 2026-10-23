@@ -1,0 +1,26 @@
+id: mo-flutter-357
+title: "重试不是加个循环：哪些请求可以重试？"
+topics: [flutter, network, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "只有幂等或带幂等键的请求才适合自动重试，POST 创建订单这类操作若没有幂等键，重试会产生重复数据。可重试的错误应限定在连接失败、超时、429 与 5xx，并对 429/503 尊重 Retry-After；退避采用指数加抖动，设置最大次数与总时长，且要能被用户取消，避免页面退出后仍在后台打请求。"
+  keyPoints:
+    - "只重试幂等请求，非幂等请求必须携带幂等键"
+    - "4xx（除 408/429）不重试，避免放大错误"
+    - "指数退避加随机抖动，防止同时重试造成惊群"
+    - "重试要有上限且可取消，并与整体超时联动"
+  pitfalls:
+    - "对所有异常无差别重试，弱网下放大服务端压力"
+    - "重试时复用已消费的请求体流，第二次发出空 body"
+followups:
+  - "重试与离线队列的重放如何避免叠加？"
+source:
+  url: https://docs.flutter.dev/cookbook/networking/fetch-data
+  title: "Fetch data from the internet"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

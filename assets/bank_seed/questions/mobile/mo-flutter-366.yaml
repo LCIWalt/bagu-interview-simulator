@@ -1,0 +1,26 @@
+id: mo-flutter-366
+title: "Android 签名密钥该如何生成、保管与轮换？"
+topics: [flutter, release, security]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "上传密钥与应用签名密钥要分离：本地用 keytool 生成 keystore 并备份到受控的密钥库，CI 通过 secret 注入且只在发布任务使用。启用 Play App Signing 后，Google 持有应用签名密钥，开发者持有上传密钥，上传密钥泄露可以申请重置而无需更换包名；但它丢失会导致无法更新已发布应用。"
+  keyPoints:
+    - "keytool 生成 keystore，别名与密码分开保管"
+    - "启用 Play App Signing，区分上传密钥与应用签名密钥"
+    - "CI 用 secret 注入 keystore 与口令，产物不落明文"
+    - "上传密钥泄露可重置，签名密钥丢失则无法更新"
+  pitfalls:
+    - "把 keystore 与密码提交到仓库"
+    - "用 debug 签名发布，后续版本无法覆盖安装"
+followups:
+  - "如何在 CI 中安全地临时写入 keystore 文件？"
+source:
+  url: https://docs.flutter.dev/deployment/android
+  title: "Build and release an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

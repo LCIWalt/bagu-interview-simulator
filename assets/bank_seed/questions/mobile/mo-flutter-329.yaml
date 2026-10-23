@@ -1,0 +1,27 @@
+id: mo-flutter-329
+title: "Image 的 frameBuilder 与 loadingBuilder 分别解决什么？"
+topics: [flutter, images, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "frameBuilder 关注帧何时可用，可以在首帧到达时做淡入，或标记同步加载完成的场景。loadingBuilder 关注数据还在下载，用于展示进度与占位，两者职责不同但可以组合。"
+  keyPoints:
+    - "frameBuilder 在每帧可用时调用，可返回包装后的 Widget"
+    - "wasSynchronouslyLoaded 表示图片已在缓存中，可跳过动画"
+    - "loadingBuilder 只在加载中回调，适合进度与占位"
+    - "两者都只影响展示，不改变解码与缓存策略"
+  pitfalls:
+    - "在 frameBuilder 里每次重建都新建 AnimationController"
+    - "把 loadingBuilder 当成解码完成回调，实际它只反映加载进度"
+followups:
+  - "图片加载失败时应该用哪个回调处理？"
+  - "淡入动画如何避免在缓存命中时重复播放？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Image/frameBuilder.html
+  title: "Image.frameBuilder property"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

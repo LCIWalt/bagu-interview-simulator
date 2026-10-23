@@ -1,0 +1,26 @@
+id: mo-flutter-206
+title: "ThemeData.platform 与 MaterialApp 的 cupertinoOverrideTheme 如何影响外观？"
+topics: [flutter, theming, material]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ThemeData.platform 决定 Material 组件采用哪套平台习惯，例如滚动回弹、页面转场与选择控件；MaterialApp 的 cupertinoOverrideTheme 用于把 Cupertino 主题桥接进来。二者共同影响跨平台外观，但不会改变 Widget 的实际构建逻辑。"
+  keyPoints:
+    - "platform 通常来自 defaultTargetPlatform，可被 ThemeData 显式覆盖"
+    - "pageTransitionsTheme 会依据 platform 选择转场动画"
+    - "cupertinoOverrideTheme 让 Cupertino 组件在 MaterialApp 下继承自定义配色"
+    - "ThemeData.localize 把本地化的文字几何写入主题，MaterialApp 内部按 locale 调用"
+  pitfalls:
+    - "在 iOS 上强行把 platform 设为 android，导致返回手势与转场不一致"
+    - "以为 cupertinoOverrideTheme 会覆盖 Material 组件的颜色"
+followups:
+  - "如何让单个页面使用与全局不同的平台风格？"
+source:
+  url: https://api.flutter.dev/flutter/material/ThemeData/localize.html
+  title: "ThemeData.localize method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

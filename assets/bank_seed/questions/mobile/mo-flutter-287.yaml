@@ -1,0 +1,27 @@
+id: mo-flutter-287
+title: "通过 dart:ffi 把 Dart 字符串传给 C 时，内存该由谁释放？"
+topics: [flutter, ffi, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 字符串是 UTF-16 且由 GC 管理，传给 C 前要用 malloc 分配 UTF-8 缓冲区并复制，调用结束后由分配方释放。C 侧若长期保存指针，必须明确所有权转移和释放接口，不能把 Dart 字符串内部的地址交出去。"
+  keyPoints:
+    - "用 package:ffi 的 toNativeUtf8 分配并复制，得到 Pointer<Utf8>"
+    - "谁分配谁释放，通常在 finally 中用同一 allocator 释放"
+    - "C 侧若保存指针，必须约定所有权转移与释放函数"
+    - "长度按 UTF-8 字节数计算，并保留结尾的 NUL"
+  pitfalls:
+    - "把指针存到 C 全局后立刻 free，后续访问野指针"
+    - "用 Dart 字符数当字节长度，中文或 emoji 被截断"
+followups:
+  - "如何把 C 返回的字符串安全转回 Dart？"
+  - "Arena 如何简化一次调用中的多次分配？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/ios/c-interop"
+  title: "Bind to native code using the legacy FFI plugin template"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

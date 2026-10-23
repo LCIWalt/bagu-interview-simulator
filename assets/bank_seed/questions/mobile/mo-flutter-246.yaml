@@ -1,0 +1,26 @@
+id: mo-flutter-246
+title: "Bloc 的事件并发策略怎么选？"
+topics: [flutter, bloc, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Bloc 的 on<Event> 可以传 transformer 控制同一 handler 的事件处理方式，默认是并发。bloc_concurrency 提供 sequential（排队串行）、droppable（处理中丢弃新事件）、restartable（取消旧的处理）、concurrent（并行）。选错会导致请求乱序、重复提交或旧结果覆盖新结果。"
+  keyPoints:
+    - "默认 transformer 并发执行，多个 handler 可能同时进行"
+    - "sequential 保证顺序，但会积压事件"
+    - "droppable 适合防重复提交，restartable 适合搜索联想"
+    - "transformer 只作用于该次 on 注册，不影响其他事件类型"
+  pitfalls:
+    - "以为 Bloc 天然串行处理所有事件"
+    - "对写操作使用 concurrent，产生竞态"
+followups:
+  - "自定义 transformer 时，如何正确取消上一个事件的处理？"
+source:
+  url: https://bloclibrary.dev/bloc-concepts/
+  title: "Bloc Concepts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

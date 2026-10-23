@@ -1,0 +1,26 @@
+id: mo-flutter-231
+title: "如何用 StreamTransformer 做去重与节流？"
+topics: [flutter, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Stream.transform 把上游流交给一个 StreamTransformer，对事件做有状态加工后再发给下游。用 StreamTransformer.fromHandlers 可以拦截 data、error、done，自行维护时间戳实现节流；rxdart 与 stream_transform 提供了现成的 debounce、throttle。关键是转换器里的定时器要在取消时清理。"
+  keyPoints:
+    - "transform 返回新流，原流在新流被监听时才建立订阅"
+    - "fromHandlers 的 handleData、handleError、handleDone 可控制转发"
+    - "有状态的转换器必须在 cancel 或 close 时释放定时器与缓冲"
+    - "distinct 只能做相邻去重，不处理时间窗口"
+  pitfalls:
+    - "自己实现 debounce 却不清理 Timer，页面销毁后仍触发"
+    - "在转换器里修改共享变量，多个订阅之间互相污染"
+followups:
+  - "节流与防抖在搜索框场景下分别解决什么问题？"
+source:
+  url: https://api.flutter.dev/flutter/dart-async/Stream/transform.html
+  title: "Stream.transform"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

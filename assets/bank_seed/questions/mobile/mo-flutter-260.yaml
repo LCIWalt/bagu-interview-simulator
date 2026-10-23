@@ -1,0 +1,27 @@
+id: mo-flutter-260
+title: "PlatformView 的手势与 Flutter 外层 GestureDetector 冲突时怎么处理？"
+topics: [flutter, platform-view, gestures]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "平台视图会参与 Flutter 的手势竞技场：AndroidViewSurface 与 UiKitView 都提供 gestureRecognizers，用来声明哪些手势应交给原生视图。若 Flutter 的识别器赢得竞技场，原生视图会收到 cancel；若没有 Flutter 识别器认领，事件才落到原生视图。设计混合页面时要明确哪些交互归 Flutter、哪些归原生。"
+  keyPoints:
+    - "gestureRecognizers 为空时，未被其他识别器认领的手势会转发给平台视图"
+    - "Flutter 手势获胜后原生视图收到 cancel，不会再触发原生点击"
+    - "hitTestBehavior 决定透明或空白区域是否命中平台视图"
+    - "平台视图被缩放、裁剪或旋转时，触摸坐标需要按变换映射"
+  pitfalls:
+    - "外层 GestureDetector 与原生手势同时响应，出现一次点击触发两次"
+    - "为了让点击穿透而随意改 hitTestBehavior，导致平台视图完全收不到事件"
+followups:
+  - "如何让地图在列表滚动与地图拖动之间正确分流？"
+  - "PlatformView 的触摸坐标如何从 Flutter 局部坐标转换到原生坐标？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/android/platform-views"
+  title: "Hosting native Android views in your Flutter app with Platform Views"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

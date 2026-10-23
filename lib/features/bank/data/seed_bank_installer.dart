@@ -28,7 +28,12 @@ class SeedBankInstaller {
   static String manifestPath(String root) => '$root/manifest.json';
 
   Future<bool> installIfNeeded({bool force = false}) async {
-    final raw = await _bundle.loadString(manifestPath(assetRoot));
+    // 使用 bytes + 同步 UTF-8 解码：manifest 现已超过 50KB，loadString 会走
+    // compute isolate，在 widget test 的 fake async 下会卡住。
+    final data = await _bundle.load(manifestPath(assetRoot));
+    final raw = utf8.decode(
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+    );
     final decoded = jsonDecode(raw);
     if (decoded is! Map<String, dynamic>) {
       throw const FormatException('bank_seed manifest.json 必须是对象');

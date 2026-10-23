@@ -1,0 +1,26 @@
+id: mo-flutter-363
+title: "构建结果不可复现，除了 pubspec.lock 还要锁什么？"
+topics: [flutter, release, package]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 依赖由 pubspec.lock 锁定，但原生侧还有 Gradle 依赖版本、CocoaPods 的 Podfile.lock、Flutter SDK 版本与 Xcode/AGP 版本，任一漂移都可能产出不同二进制。实践是用 FVM 或 CI 镜像固定 SDK，提交 Podfile.lock 与 Gradle 依赖锁定，构建号由 CI 单调递增注入，而不是用本地时间。"
+  keyPoints:
+    - "pubspec.lock 与 Podfile.lock 都要提交到仓库"
+    - "用 FVM 或 CI 镜像固定 Flutter 与 Dart 版本"
+    - "Gradle 依赖用锁定或版本目录约束，避免动态版本"
+    - "构建号由 CI 注入并单调递增，保证产物可追溯"
+  pitfalls:
+    - "本地手动改版本号，导致商店拒绝重复的 build number"
+    - "忽略 Xcode/AGP 升级带来的行为差异"
+followups:
+  - "如何验证两次构建的差异来自代码而不是环境？"
+source:
+  url: https://dart.dev/tools/pub/cmd/pub-get
+  title: "pub get"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-347
+title: "恢复数据的 scope id 重复或缺失会导致什么后果？"
+topics: [flutter, state, state-restoration]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "恢复数据按 restorationScopeId 逐层拼成路径，MaterialApp 的 restorationScopeId 提供根作用域，RestorationScope 可给子树再开一层。同一父作用域下 id 重复，会让两个子树读写同一份数据，表现为 A 页面的输入出现在 B 页面，或恢复后状态串台。缺失作用域时子级的 registerForRestoration 不会生效，数据静默丢失，因此动态列表里的 id 必须包含稳定业务标识。"
+  keyPoints:
+    - "id 在父作用域内必须唯一，并逐层拼接成恢复数据路径"
+    - "MaterialApp 的 restorationScopeId 是根作用域，RestorationScope 划分子树"
+    - "缺少作用域时恢复注册被忽略，且不一定报错"
+    - "列表项 id 应包含稳定业务 key，而不是下标"
+  pitfalls:
+    - "用 index 作为 restorationId，插入删除后状态错位"
+    - "测试只验证冷启动，忽略同 id 冲突场景"
+followups:
+  - "如何验证恢复数据确实按预期写入与读取？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/RestorationScope-class.html
+  title: "RestorationScope class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

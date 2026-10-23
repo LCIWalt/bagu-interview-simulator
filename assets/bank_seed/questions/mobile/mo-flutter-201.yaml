@@ -1,0 +1,26 @@
+id: mo-flutter-201
+title: "自定义 RenderObject 如何向语义树描述自己？"
+topics: [flutter, semantics, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "自定义 RenderObject 通过重写 describeSemanticsConfiguration 向语义树描述自己：设置 label、value、hint 等属性，声明 isSemanticBoundary 建立节点，并用 SemanticsAction 注册动作回调。语义属性变化后要调用 markNeedsSemanticsUpdate 触发更新。"
+  keyPoints:
+    - "describeSemanticsConfiguration 中填充 SemanticsConfiguration，而不是直接创建节点"
+    - "isSemanticBoundary 为 true 时该 RenderObject 拥有独立 SemanticsNode"
+    - "通过 config.onTap 等注册动作，读屏触发时回调到 RenderObject"
+    - "属性变化后调用 markNeedsSemanticsUpdate，更新会合并到语义阶段处理"
+  pitfalls:
+    - "在 paint 或 layout 中改语义属性却不发更新通知"
+    - "为纯装饰 RenderObject 建语义边界，产生大量空节点"
+followups:
+  - "SemanticsConfiguration 的 isMergingSemanticsOfDescendants 什么时候该开？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderObject/describeSemanticsConfiguration.html
+  title: "RenderObject.describeSemanticsConfiguration method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

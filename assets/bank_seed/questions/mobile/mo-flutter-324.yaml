@@ -1,0 +1,27 @@
+id: mo-flutter-324
+title: "CI 上缓存 Flutter 依赖该以什么为 key？"
+topics: [flutter, ci, build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter CI 的主要耗时在 SDK 下载、pub 依赖与原生构建缓存。缓存应以 lockfile 与 SDK 版本的哈希为 key，只缓存依赖目录，不缓存 build 与 .dart_tool 等产物目录。"
+  keyPoints:
+    - "以 pubspec.lock 的哈希作为 pub cache 的 key"
+    - "Gradle 与 CocoaPods 缓存可显著缩短原生构建"
+    - "固定 Flutter 版本，缓存 key 要包含版本号"
+    - "不缓存 build/ 与 .dart_tool，避免陈旧产物"
+  pitfalls:
+    - "缓存整个仓库目录，命中后仍带着旧编译产物"
+    - "key 只用分支名，lockfile 变化后拿到错误缓存"
+followups:
+  - "依赖缓存命中后还需要执行 pub get 吗？"
+  - "如何避免 CI 缓存让平台构建出现「本地能过线上不能过」？"
+source:
+  url: https://docs.flutter.dev/deployment/cd
+  title: "Continuous delivery with Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

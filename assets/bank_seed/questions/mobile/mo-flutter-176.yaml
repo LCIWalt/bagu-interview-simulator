@@ -1,0 +1,26 @@
+id: mo-flutter-176
+title: "BoxConstraints 的 normalize 与 enforce 分别在什么时候生效？"
+topics: [flutter, layout, rendering]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "BoxConstraints 用 minWidth、maxWidth、minHeight、maxHeight 描述一个区间，normalize 把颠倒的区间纠正，enforce 则把一组约束夹到另一组允许的范围内。父级传给子级的约束必须先合法，否则布局前的断言会直接失败。"
+  keyPoints:
+    - "normalize 返回把 min 与 max 对调后的合法约束，不修改原对象"
+    - "enforce 用另一组约束的上下界夹住当前约束，ConstrainedBox 与 Padding 都依赖它"
+    - "isTight 要求四个方向都满足 min == max，此时子节点尺寸完全确定"
+    - "debugAssertIsValid 会检查 min ≤ max 且非负，非法约束在布局前报错"
+  pitfalls:
+    - "把 minWidth 设得比 maxWidth 大，布局前直接触发约束断言"
+    - "以为 enforce 会原地修改约束对象，实际返回的是新实例"
+followups:
+  - "为什么 Column 给子节点的宽度约束常常是松约束？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/BoxConstraints-class.html
+  title: "BoxConstraints class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

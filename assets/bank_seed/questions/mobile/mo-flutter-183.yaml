@@ -1,0 +1,26 @@
+id: mo-flutter-183
+title: "Stack 里 Positioned 同时给 left 与 right 时尺寸怎么算？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Stack 布局 Positioned 子节点时，若同时给出 left 与 right，宽度由 Stack 宽度减去两边偏移得到，此时显式 width 会被忽略；只给一侧时才用 width 或子节点自身尺寸。垂直方向的 top、bottom、height 遵循同样的规则。"
+  keyPoints:
+    - "left 与 right 同时存在时，宽度被约束为 stackWidth - left - right"
+    - "同时提供 width 时以双边定位为准，width 不参与计算"
+    - "只给 left 时 x 由 left 决定，否则按 right 或 alignment 定位"
+    - "Positioned 的偏移相对于 Stack 的内容区域，而非屏幕坐标"
+  pitfalls:
+    - "同时写 left、right、width 并期望以 width 为准，结果宽度被拉伸"
+    - "在 Stack 外包裹 Padding 后仍按屏幕坐标计算 Positioned 偏移"
+followups:
+  - "Stack 的 fit 与 alignment 如何影响非 Positioned 子节点？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Stack-class.html
+  title: "Stack class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

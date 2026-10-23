@@ -1,0 +1,26 @@
+id: mo-flutter-204
+title: "TextSpan 上的 TapGestureRecognizer 为什么要手动 dispose？"
+topics: [flutter, text, gestures]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "TextSpan 上的 TapGestureRecognizer 由业务代码创建，TextSpan 不负责它的生命周期；每次 build 新建却不 dispose，会持续占用指针路由与原生资源。应在 State 中持有并在 dispose 时释放，或改用 WidgetSpan 承载可点击内容。"
+  keyPoints:
+    - "recognizer 必须由创建方 dispose，否则每次重建都会泄漏"
+    - "在 build 中直接 new TapGestureRecognizer 是最常见的泄漏来源"
+    - "长文本中多个可点击片段应为每个 recognizer 建立对应关系并统一释放"
+    - "需要复杂交互时用 WidgetSpan 嵌入真实按钮，语义与焦点更完整"
+  pitfalls:
+    - "复用同一个 recognizer 绑到多个 TextSpan，回调无法区分点击位置"
+    - "只 dispose 最后一个 recognizer，遗漏历史重建产生的实例"
+followups:
+  - "WidgetSpan 与 TextSpan 在语义和无障碍上有什么差别？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/TapGestureRecognizer-class.html
+  title: "TapGestureRecognizer class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

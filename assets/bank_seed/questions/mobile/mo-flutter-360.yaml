@@ -1,0 +1,26 @@
+id: mo-flutter-360
+title: "用 ETag 做条件请求能省多少流量，怎么落地？"
+topics: [flutter, network, offline-first]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "服务端返回 ETag 后，客户端下次带 If-None-Match，内容未变则得到 304 且无 body，可显著减少重复下载；配合 Cache-Control 的 max-age 决定是否可以完全跳过网络。落地时要按 URL 加用户维度存 ETag 与响应体，304 时刷新本地时间戳，并处理好 200 覆盖与登录切换后的缓存隔离。"
+  keyPoints:
+    - "缓存 ETag 与响应体，请求时携带 If-None-Match"
+    - "304 表示可复用本地内容，但仍需更新过期时间"
+    - "Cache-Control 决定能否跳过网络，ETag 决定能否跳过 body"
+    - "缓存 key 要包含用户与租户，避免串数据"
+  pitfalls:
+    - "把 304 当错误处理，UI 显示加载失败"
+    - "只缓存 body 不存 ETag，永远拿不到 304"
+followups:
+  - "gzip 压缩与 ETag 同时使用时要注意什么？"
+source:
+  url: https://api.flutter.dev/flutter/dart-io/HttpHeaders-class.html
+  title: "HttpHeaders class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

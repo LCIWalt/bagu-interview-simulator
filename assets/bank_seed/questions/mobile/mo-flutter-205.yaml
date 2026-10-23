@@ -1,0 +1,26 @@
+id: mo-flutter-205
+title: "FontFeature 与 FontVariation 分别能开启什么排版能力？"
+topics: [flutter, text, fonts]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FontFeature 开启字体内置的 OpenType 特性，如等宽数字、连字与风格集；FontVariation 则用于可变字体，按轴名设置连续取值。两者都要求字体文件本身支持对应特性，否则设置无效且不会报错。"
+  keyPoints:
+    - "FontFeature('tnum') 让数字等宽，适合表格与倒计时"
+    - "FontFeature 可组合多个特性，如 smcp、liga、ss01"
+    - "FontVariation('wght', 600) 在可变字体上选择字重实例"
+    - "fontVariations 可直接控制 wght 轴，绕过 fontWeight 的离散字重映射"
+  pitfalls:
+    - "对静态字体设置 FontVariation，期望得到粗体却毫无变化"
+    - "用 FontFeature 实现字距调整，忽略 letterSpacing 才是正确手段"
+followups:
+  - "如何确认打包的字体支持某个 OpenType 特性？"
+source:
+  url: https://api.flutter.dev/flutter/dart-ui/FontFeature-class.html
+  title: "FontFeature class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

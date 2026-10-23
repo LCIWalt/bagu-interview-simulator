@@ -1,0 +1,26 @@
+id: mo-flutter-337
+title: "构造函数注入、InheritedWidget 与 service locator 该怎么选？"
+topics: [flutter, architecture, package]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "构造函数注入把依赖显式写进 API，缺失在编译期就暴露，测试替换最直接，适合 use case 与 repository 这类纯逻辑组件。InheritedWidget 或 Provider 解决的是 Widget 树上的依赖查找，适合需要随树创建销毁的 UI 依赖。service locator 全局可取、写起来省事，但隐藏依赖且测试之间容易串状态；官方指南倾向构造注入加一个组合根，只在 Widget 层用 InheritedWidget 向下提供。"
+  keyPoints:
+    - "构造注入让依赖关系显式，测试无需重置全局容器"
+    - "组合根在启动处集中组装具体实现，业务类不感知容器"
+    - "InheritedWidget 适合随 Widget 树生命周期管理的依赖"
+    - "service locator 需限制使用范围，避免变成隐式全局变量"
+  pitfalls:
+    - "在业务类里直接取 GetIt 实例，单测必须注册全局单例"
+    - "把 Provider.of 当万能容器，Widget 复用性被绑死"
+followups:
+  - "如何避免组合根随着功能增加变成上帝对象？"
+source:
+  url: https://docs.flutter.dev/app-architecture/case-study/dependency-injection
+  title: "Dependency injection"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

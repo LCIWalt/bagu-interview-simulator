@@ -1,0 +1,26 @@
+id: mo-flutter-184
+title: "AspectRatio 在宽高都无界时为什么直接报错？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "AspectRatio 需要至少一个有界维度才能由比例推导另一个维度；当宽高约束都无界时无法确定尺寸，debug 下会断言失败。常见触发场景是把图片或容器放进无约束的横向 ListView 或 IntrinsicWidth 中。"
+  keyPoints:
+    - "优先用有界的 maxWidth 推导高度，宽度无界时改用 maxHeight 推导宽度"
+    - "约束为紧约束时直接返回约束尺寸，宽高比不再生效"
+    - "宽高都无界时无法求解，debug 模式抛出断言"
+    - "可用 SizedBox、ConstrainedBox 或 LayoutBuilder 提供有界维度兜底"
+  pitfalls:
+    - "在横向 ListView 中直接放 AspectRatio，宽度无界导致崩溃"
+    - "以为 AspectRatio 会覆盖紧约束，实际紧约束优先"
+followups:
+  - "图片在无界约束下还有哪些安全的兜底写法？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AspectRatio-class.html
+  title: "AspectRatio class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

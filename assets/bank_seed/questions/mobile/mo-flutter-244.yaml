@@ -1,0 +1,26 @@
+id: mo-flutter-244
+title: "用 select 精确控制 Riverpod 的重建范围"
+topics: [flutter, riverpod, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ref.watch(provider.select(selector)) 只在选择结果按 == 变化时才触发重建，适合从大对象里只取一个字段。selector 必须纯且轻量，因为它在每次上游变化时都会执行。对列表应选择长度或某个元素，而不是返回新构造的集合。"
+  keyPoints:
+    - "select 的比较发生在 provider 通知之后、重建之前"
+    - "selector 返回值应实现可靠的 ==，否则每次都会判定为变化"
+    - "不要在 selector 里做过滤、排序等重计算，放到 provider 中"
+    - "需要多个字段时可组合 record，或拆成两个 select"
+  pitfalls:
+    - "selector 返回 list.map(...).toList()，每次都是新实例"
+    - "在 select 里读取其他 provider，产生隐藏依赖"
+followups:
+  - "select 与把状态拆成多个小 provider 各有什么取舍？"
+source:
+  url: https://riverpod.dev/docs/how_to/select
+  title: "Selecting a subset of a provider"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-181
+title: "Row 的 baseline 对齐为什么要显式指定 textBaseline？"
+topics: [flutter, layout, text]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "baseline 对齐需要知道每个子节点基线到其顶部的距离，因此必须显式给出 textBaseline 才能查询；没有基线信息的子节点会退化为按顶部对齐。它适合文字与图标、按钮混排，但会引入额外的基线测量。"
+  keyPoints:
+    - "CrossAxisAlignment.baseline 必须同时设置 textBaseline，否则断言失败"
+    - "RenderBox.getDistanceToBaseline 返回基线距离，未实现时返回 null"
+    - "没有基线的子节点在 baseline 对齐下按顶部对齐处理"
+    - "基线对齐需要逐个子节点查询，成本高于 start 与 end 对齐"
+  pitfalls:
+    - "只设 crossAxisAlignment.baseline 却忘记 textBaseline，运行时直接报错"
+    - "在包含图片等无基线子节点的 Row 中使用 baseline，期望整体垂直居中"
+followups:
+  - "TextBaseline.alphabetic 与 ideographic 分别适合什么文字？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderBox/getDistanceToBaseline.html
+  title: "RenderBox.getDistanceToBaseline method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

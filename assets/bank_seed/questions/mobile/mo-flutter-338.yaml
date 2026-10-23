@@ -1,0 +1,26 @@
+id: mo-flutter-338
+title: "Repository 的接口与返回值应该怎么设计？"
+topics: [flutter, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "接口按领域用例定义在 domain，返回领域模型或显式的结果类型，而不是把 HTTP 响应、JSON Map 或 SDK 异常暴露给上层。data 层负责 DTO 映射、缓存与错误转换，presentation 只处理成功数据与 Failure 分支。这样替换数据源（REST 换 GraphQL、加本地缓存）不会波及用例与 UI。"
+  keyPoints:
+    - "接口以领域用例为粒度，而不是照搬后端 endpoint"
+    - "返回值用领域模型加 Result/Failure，禁止透传 Map 或 Response"
+    - "DTO 与领域模型分离，映射失败归为 ParseFailure"
+    - "缓存、重试、鉴权刷新都属于 data 层职责"
+  pitfalls:
+    - "一个 repository 塞进十几个方法，实际变成后端 API 镜像"
+    - "把 dio 的异常类型写进 domain 的接口签名"
+followups:
+  - "同时有本地与远程数据源时，repository 内部如何编排？"
+source:
+  url: https://docs.flutter.dev/app-architecture/concepts
+  title: "Architecture concepts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-247
+title: "Bloc 中 emit 相同 state 为什么不触发重建？"
+topics: [flutter, bloc, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "BlocBase.emit 会先用 == 比较新旧 state，相等则直接忽略，不通知监听者。因此用普通 class 做 state 时，即使字段变了但引用未变，UI 也不会更新；需要 Equatable、freezed 或手写 == 来保证值语义。反过来，值相等的两次 emit 本来也不该触发重建。"
+  keyPoints:
+    - "emit 内部做 state == nextState 判断，相等则跳过"
+    - "默认引用相等下，copyWith 产生的新实例能正常触发"
+    - "推荐用 Equatable 或 freezed，只比较真正影响 UI 的字段"
+    - "close 之后 emit 会抛错，异步回调要先判断 isClosed"
+  pitfalls:
+    - "在 state 里放可变 List 并原地 add，UI 不刷新"
+    - "Equatable 的 props 里包含时间戳等每次都变的字段"
+followups:
+  - "如果 state 必须包含不可比较的字段，怎么处理？"
+source:
+  url: https://bloclibrary.dev/modeling-state/
+  title: "Modeling State"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

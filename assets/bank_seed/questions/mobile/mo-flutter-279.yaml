@@ -1,0 +1,27 @@
+id: mo-flutter-279
+title: "path_provider 的临时目录、文档目录与支持目录该怎么选？"
+topics: [flutter, plugins, files]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "path_provider 暴露的目录语义不同：临时目录可被系统随时清理，文档目录适合用户数据并会进入备份，应用支持目录适合数据库和私有配置。路径在不同平台、不同安装方式下都不同，必须在运行时获取，不能硬编码。大文件或敏感数据还要考虑备份排除与清理策略。"
+  keyPoints:
+    - "getTemporaryDirectory 随时可能被系统清理，不能放唯一副本"
+    - "getApplicationDocumentsDirectory 在 iOS 会进入备份，适合用户数据"
+    - "getApplicationSupportDirectory 适合数据库、配置等应用私有文件"
+    - "目录路径必须运行时获取，并在写入前确保父目录存在"
+  pitfalls:
+    - "把大缓存写进 Documents，导致 iCloud 备份膨胀甚至审核问题"
+    - "硬编码 /tmp 或沙盒绝对路径，换平台或重装后失效"
+followups:
+  - "如何把某个目录排除出 iCloud 备份？"
+  - "Android 的分区存储对文件路径有什么影响？"
+source:
+  url: "https://docs.flutter.dev/cookbook/persistence/reading-writing-files"
+  title: "Read and write files"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

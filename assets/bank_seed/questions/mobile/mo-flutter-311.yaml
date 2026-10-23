@@ -1,0 +1,27 @@
+id: mo-flutter-311
+title: "AnimatedList 插入删除动画为什么会错位？"
+topics: [flutter, animation, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AnimatedList 依赖 GlobalKey 与 insertItem、removeItem 的索引对应关系来播放入场与退场动画。若数据源与列表操作顺序不一致，或 key 不稳定，动画就会作用到错误的 item 上。"
+  keyPoints:
+    - "insertItem 与 removeItem 的 index 必须与数据源同一时刻保持一致"
+    - "每个 item 需要稳定 key，否则 Element 复用会串位"
+    - "removeItem 的 builder 要渲染即将移除的数据，而不是最新数据"
+    - "批量变更应逐个调用并保持索引同步，或改用 SliverAnimatedList"
+  pitfalls:
+    - "只更新数据源不调用 insertItem 或 removeItem，列表不刷新"
+    - "removeItem 的 builder 从最新数据源取内容，删错对象"
+followups:
+  - "AnimatedList 与隐式动画在列表场景如何取舍？"
+  - "删除动画期间数据源又被更新会怎样？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AnimatedList-class.html
+  title: "AnimatedList class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

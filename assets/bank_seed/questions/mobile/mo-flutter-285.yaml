@@ -1,0 +1,27 @@
+id: mo-flutter-285
+title: "Android 前台服务与 Flutter 引擎如何配合长时间任务？"
+topics: [flutter, android, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "前台服务让 Android 在后台继续执行并显示常驻通知，但 Flutter 的 Dart isolate 是否继续运行取决于进程和引擎是否存活，不能假设服务启动后 Flutter 一定在跑。长时间任务应放在原生服务或 WorkManager 中，Flutter 只负责控制和展示状态。Android 14 起还必须声明具体的前台服务类型和对应权限。"
+  keyPoints:
+    - "前台服务要声明 FOREGROUND_SERVICE 及具体类型权限"
+    - "服务与 FlutterEngine 生命周期独立，进程被杀后 Dart 状态不再可靠"
+    - "可延迟的长任务优先用 WorkManager，实时任务才用前台服务"
+    - "通知渠道与前台服务类型必须匹配，否则启动会崩溃"
+  pitfalls:
+    - "用前台服务保活 WebSocket，却不处理 Doze 与后台启动限制"
+    - "Android 14 未声明 service type，startForeground 直接抛异常"
+followups:
+  - "WorkManager 与前台服务应该如何选择？"
+  - "Flutter 插件如何在原生服务中把进度回传 Dart？"
+source:
+  url: "https://developer.android.com/develop/background-work/services/fgs"
+  title: "Foreground services overview"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

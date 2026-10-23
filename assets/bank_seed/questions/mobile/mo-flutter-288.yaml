@@ -1,0 +1,27 @@
+id: mo-flutter-288
+title: "FFI 分配的原生内存如何避免泄漏？NativeFinalizer 能解决什么？"
+topics: [flutter, ffi, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FFI 分配的 native 内存与原生句柄不受 Dart GC 管理，必须显式释放；NativeFinalizer 可以在 Dart 对象被回收后执行清理回调，适合包装长期存活的 native handle。但 finalizer 不保证及时执行，也不能替代确定性的 close/dispose。"
+  keyPoints:
+    - "NativeFinalizer 绑定 Dart 对象与 native 资源，对象被回收后触发清理"
+    - "仍应提供 close/dispose 做确定性释放，finalizer 只作兜底"
+    - "finalizer 回调必须是顶层或静态函数，通过 Pointer.fromFunction 注册"
+    - "回调闭包不能捕获持有该资源的对象，否则永远无法回收"
+  pitfalls:
+    - "只依赖 finalizer，内存峰值远超预期"
+    - "在 finalizer 回调里访问已销毁的 isolate 或全局状态"
+followups:
+  - "Finalizer 与 NativeFinalizer 有什么区别？"
+  - "如何检测 FFI 原生内存泄漏？"
+source:
+  url: "https://api.flutter.dev/flutter/dart-ffi/NativeFinalizer-class.html"
+  title: "NativeFinalizer class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

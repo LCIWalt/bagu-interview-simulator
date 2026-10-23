@@ -1,0 +1,26 @@
+id: mo-flutter-178
+title: "RenderObject 的 sizedByParent 为 true 意味着什么？"
+topics: [flutter, rendering, layout]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "sizedByParent 为 true 的 RenderObject 在 layout 中直接由约束算出自身尺寸，performLayout 只负责摆放子节点；因此子节点尺寸变化不会反向影响它，它天然成为 relayoutBoundary。尺寸计算必须只依赖 constraints，才能与 computeDryLayout 保持一致。"
+  keyPoints:
+    - "sizedByParent 为 true 时，layout 先通过 computeDryLayout 确定 size，再调用 performLayout"
+    - "performLayout 中不得再设置 size，只能对子节点执行布局与定位"
+    - "尺寸不依赖子节点，子节点重排时父级无需重新计算，可截断布局传播"
+    - "computeDryLayout 只能读取 constraints，不能查询 child.size"
+  pitfalls:
+    - "在 performLayout 里给 size 赋值，触发 sizedByParent 相关断言"
+    - "声明 sizedByParent 却在 computeDryLayout 中读取子节点尺寸"
+followups:
+  - "哪些常见 RenderObject 是 sizedByParent 的？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderObject/sizedByParent.html
+  title: "RenderObject.sizedByParent property - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

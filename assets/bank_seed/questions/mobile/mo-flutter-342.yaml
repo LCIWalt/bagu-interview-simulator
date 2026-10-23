@@ -1,0 +1,26 @@
+id: mo-flutter-342
+title: "StatefulShellRoute 如何让每个底部 Tab 保留独立的导航栈？"
+topics: [flutter, routing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "StatefulShellRoute.indexedStack 为每个 StatefulShellBranch 维护独立的 Navigator 与路由栈，切换分支时用 IndexedStack 保留各栈的 Widget 与滚动状态，返回键先在当前分支内 pop。分支可以各自设置 navigatorKey 与 initialLocation。需要覆盖全屏的页面（登录、支付）应放在 shell 之外，否则会污染 Tab 栈。"
+  keyPoints:
+    - "每个 branch 拥有独立 Navigator，栈状态互不影响"
+    - "indexedStack 保留非活动分支的 Widget 与滚动位置"
+    - "navigatorKey 便于从任意位置定位某个分支的 Navigator"
+    - "全屏页面放在 shell 路由之外，不进入任何 Tab 栈"
+  pitfalls:
+    - "用 go 切换 Tab 导致目标分支的栈被重置"
+    - "把登录页注册进某个 branch，登录后返回栈里残留它"
+followups:
+  - "如何实现再次点击当前 Tab 时回到该分支的根页面？"
+source:
+  url: https://github.com/flutter/packages/tree/main/packages/go_router
+  title: "go_router package"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

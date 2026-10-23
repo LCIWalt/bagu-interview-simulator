@@ -1,0 +1,26 @@
+id: mo-flutter-207
+title: "DefaultTextStyle 与 IconTheme 的就近继承如何影响子树？"
+topics: [flutter, theming, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "DefaultTextStyle 与 IconTheme 都是 InheritedWidget，分别向子树提供默认文本样式和图标样式；Text 与 Icon 在 build 时读取最近的一层并与自身属性合并。把它们放在局部子树外层，就能统一改样式而不必逐个传参。"
+  keyPoints:
+    - "Text 未指定 style 时使用 DefaultTextStyle.of(context).style"
+    - "Text.style 会 merge 到默认样式之上，而不是完全替换"
+    - "IconTheme 提供 size、color、opacity，Icon 读取最近的一层"
+    - "DefaultTextStyle.merge 与 IconTheme.merge 可保留上层配置只覆盖部分字段"
+  pitfalls:
+    - "在 MaterialApp 外层设置 DefaultTextStyle，以为能覆盖 Material 组件内部样式"
+    - "用 IconTheme 改颜色却发现 Icon 显式设置了 color，优先级更高"
+followups:
+  - "Material 与 AppBar 分别在什么时候插入自己的 DefaultTextStyle？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/DefaultTextStyle-class.html
+  title: "DefaultTextStyle class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

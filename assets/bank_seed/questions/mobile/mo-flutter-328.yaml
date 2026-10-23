@@ -1,0 +1,27 @@
+id: mo-flutter-328
+title: "如何给 Flutter 错误日志补上更多上下文？"
+topics: [flutter, error-handling, observability]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FlutterErrorDetails 除了异常与堆栈，还可以挂 informationCollector 与 context，用来在崩溃时附带当时的业务与渲染信息。它把「怎么复现」变成日志的一部分，比事后猜测更可靠。"
+  keyPoints:
+    - "informationCollector 返回 DiagnosticsNode 列表，按需延迟求值"
+    - "context 用于描述错误发生的场景，便于聚合与检索"
+    - "通过 FlutterError.reportError 主动上报自定义错误"
+    - "收集器本身要防御性编写，不能再抛出异常"
+  pitfalls:
+    - "在收集器里做大计算或同步 IO，拖慢错误处理"
+    - "把敏感信息直接写进 context，造成隐私泄漏"
+followups:
+  - "informationCollector 与 FlutterError.onError 的关系是什么？"
+  - "线上错误聚合时如何设计 context 字段？"
+source:
+  url: https://api.flutter.dev/flutter/foundation/FlutterErrorDetails-class.html
+  title: "FlutterErrorDetails class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

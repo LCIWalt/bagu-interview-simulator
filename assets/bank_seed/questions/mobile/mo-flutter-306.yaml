@@ -1,0 +1,27 @@
+id: mo-flutter-306
+title: "没有动画时 Flutter 为什么不再调度新帧？"
+topics: [flutter, scheduler, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Flutter 的帧由 vsync 驱动，只有存在待处理工作时 SchedulerBinding 才向引擎请求下一帧。setState 只是把 Element 标脏并触发 ensureVisualUpdate，真正出帧要等引擎在下一个 vsync 回调。没有动画和脏标记时不会持续调度，CPU 因此可以休眠。"
+  keyPoints:
+    - "setState 会走 markNeedsBuild、ensureVisualUpdate 与 scheduleFrame"
+    - "scheduleFrame 只是向引擎登记需求，回调在 vsync 时到达"
+    - "scheduleFrameCallback 是一次性的，需要每帧重新注册"
+    - "空闲时没有帧调度，分析时要区分「无帧」与「掉帧」"
+  pitfalls:
+    - "在 scheduleFrameCallback 里忘记重新注册，动画只跑一帧"
+    - "用 Timer.periodic 驱动动画，绕过 vsync 产生抖动"
+followups:
+  - "ensureVisualUpdate 在 schedulerPhase 不同阶段分别做什么？"
+  - "persistentFrameCallback 与 transientFrameCallback 有何区别？"
+source:
+  url: https://api.flutter.dev/flutter/scheduler/SchedulerBinding/scheduleFrame.html
+  title: "SchedulerBinding.scheduleFrame method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-187
+title: "SliverConstraints 的 scrollOffset、precedingScrollExtent 与 overlap 分别表示什么？"
+topics: [flutter, slivers, scrolling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "SliverConstraints 描述当前 sliver 在视口中的位置与可用空间：scrollOffset 是它前沿已被滚出视口的距离，precedingScrollExtent 是前面所有 sliver 的滚动总长度，overlap 是前一个 sliver 压入本 sliver 的高度。三者共同决定吸顶、折叠与可用绘制区域。"
+  keyPoints:
+    - "scrollOffset 是本 sliver 前沿相对视口前沿的偏移，随滚动增大"
+    - "precedingScrollExtent 用于计算全局滚动位置，不受当前 sliver 自身布局影响"
+    - "overlap 常由 pinned 的 SliverPersistentHeader 产生，需要从可用空间中扣除"
+    - "remainingPaintExtent 与 remainingCacheExtent 决定还能绘制和缓存多少内容"
+  pitfalls:
+    - "把 scrollOffset 当成全局滚动 offset，忽略前面 sliver 的长度"
+    - "实现自定义 sliver 时忘记扣除 overlap，内容被吸顶头遮挡"
+followups:
+  - "SliverPersistentHeaderDelegate 的 maxExtent 与 minExtent 如何影响 overlap？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/SliverConstraints-class.html
+  title: "SliverConstraints class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

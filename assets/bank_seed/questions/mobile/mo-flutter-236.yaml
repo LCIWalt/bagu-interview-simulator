@@ -1,0 +1,26 @@
+id: mo-flutter-236
+title: "tester.idle 与 pump 在等待异步时有什么不同？"
+topics: [flutter, testing, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "idle 只清空 microtask 队列并执行已排定的零时长定时器，不会构建新帧；pump 会推进虚拟时钟并调度一帧，让 build 与布局真正发生。Future 完成后的 setState 只把 Element 标脏，必须再 pump 才能在界面上看到结果。测试里常先 await idle 等待异步链，再 pump 验证 UI。"
+  keyPoints:
+    - "idle 清空 microtask 与零时长 timer，不推进帧"
+    - "pump 触发帧调度，可带 Duration 推进 FakeAsync 时钟"
+    - "setState 只标脏，未 pump 前 widget 树不会更新"
+    - "idle 不执行之后才排定的 timer，长延时仍需 pump"
+  pitfalls:
+    - "只 await idle 就断言界面变化，build 还没发生"
+    - "用 idle 等待真实网络请求，它不会推进真实时间"
+followups:
+  - "为什么 idle 可能陷入无限循环？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/WidgetTester/idle.html
+  title: "WidgetTester.idle"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

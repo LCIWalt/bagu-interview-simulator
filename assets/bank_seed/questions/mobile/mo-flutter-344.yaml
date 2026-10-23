@@ -1,0 +1,26 @@
+id: mo-flutter-344
+title: "go_router 的 extra 为什么会丢，参数该如何建模？"
+topics: [flutter, routing]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "extra 是进程内的对象传递通道，不参与 URL 序列化，因此在深链冷启动、Web 刷新与状态恢复后都不存在，依赖 extra 传整个对象会让页面在这些场景下拿到 null。可分享、可恢复的状态应编码进路径或 query 参数，页面只依赖 id 之类的稳定标识，再自行从 repository 取数据；extra 仅作为同进程内的性能优化并必须有兜底。"
+  keyPoints:
+    - "extra 不进入 URL，无法跨进程、跨刷新存活"
+    - "页面参数以路径或查询参数中的稳定 id 为准"
+    - "把 extra 当缓存提示，缺失时回退到按 id 查询"
+    - "复杂对象需要可分享时序列化为 id 加版本，而不是整段 JSON"
+  pitfalls:
+    - "把领域对象塞进 extra，深链进入时状态为 null"
+    - "在 URL 里传完整 JSON，长度、编码与安全都不可控"
+followups:
+  - "Web 刷新后如何恢复筛选条件这类复杂状态？"
+source:
+  url: https://github.com/flutter/packages/tree/main/packages/go_router
+  title: "go_router package"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

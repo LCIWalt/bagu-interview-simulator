@@ -1,0 +1,27 @@
+id: mo-flutter-280
+title: "开发一个 Flutter 插件时，pubspec 的 plugin 段应该怎么声明？"
+topics: [flutter, plugins, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "插件的 pubspec 通过 flutter.plugin.platforms 声明每个平台的实现入口，Android 用 package 与 pluginClass，iOS/macOS 用 pluginClass，Flutter 工具据此生成注册代码。纯 Dart 包不需要 plugin 段；有原生代码但只服务单个应用时，可以用 path 依赖而不发布。平台声明与原生类名必须严格一致。"
+  keyPoints:
+    - "platforms 下按 android/ios/macos/windows/linux/web 分别声明实现"
+    - "Android 需要 package 与 pluginClass，iOS/macOS 主要声明 pluginClass"
+    - "插件类要实现 FlutterPlugin 并正确处理 onAttachedToEngine/onDetachedFromEngine"
+    - "改平台声明后要重新生成注册文件，不能只改原生代码"
+  pitfalls:
+    - "漏写某个平台声明，运行时插件根本没有注册"
+    - "把 example 应用当成插件本体发布，缺少 plugin 配置"
+followups:
+  - "插件的 example 工程应该如何组织与测试？"
+  - "federated 插件的 pubspec 与普通插件有什么不同？"
+source:
+  url: "https://docs.flutter.dev/packages-and-plugins/developing-packages"
+  title: "Developing packages & plugins"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

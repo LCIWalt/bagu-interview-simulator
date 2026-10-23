@@ -1,0 +1,27 @@
+id: mo-flutter-295
+title: "RepaintBoundary 不是免费的：什么时候加了反而更慢？"
+topics: [flutter, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "RepaintBoundary 把子树放进独立 Layer，父级重绘时可以复用该层的栅格结果，因此适合包裹频繁变化的小区域。但每个边界都会增加图层、离屏纹理与合成开销，滥用反而更慢。是否需要应先用 debugRepaintRainbowEnabled 观察真实重绘范围。"
+  keyPoints:
+    - "边界内的重绘不会向上传播，父层可以复用已有栅格缓存"
+    - "每个边界多一个 Layer 与可能的离屏纹理，内存与合成成本上升"
+    - "适合放在静态内容与高频动画、滚动内容的交界处"
+    - "用 debugRepaintRainbowEnabled 验证重绘是否真的被隔离"
+  pitfalls:
+    - "给列表每个 item 都包一层，导致图层爆炸、内存上涨"
+    - "以为加上边界能减少 build 与 layout，它只影响 paint 与合成"
+followups:
+  - "RepaintBoundary 与 RelayoutBoundary 的触发条件有什么不同？"
+  - "如何确认某个边界的缓存真的被复用了？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/RepaintBoundary-class.html
+  title: "RepaintBoundary class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-312
+title: "AbsorbPointer 与 IgnorePointer 都能禁用点击，区别是什么？"
+topics: [flutter, gestures, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "两者都会让子树收不到指针事件，但 AbsorbPointer 自己会参与命中测试并消费事件，IgnorePointer 则让事件完全穿透到下层。需要挡住下层时用 AbsorbPointer，只想临时忽略子树时用 IgnorePointer。"
+  keyPoints:
+    - "IgnorePointer 让子树不参与命中，事件可继续传给后面的兄弟"
+    - "AbsorbPointer 自身命中并阻止事件继续向下与向后传递"
+    - "ignoring 与 absorbing 可动态切换，适合加载中禁用交互"
+    - "两者都不改变布局与绘制，只影响命中测试"
+  pitfalls:
+    - "用 IgnorePointer 做全屏遮罩，结果下层按钮仍可点击"
+    - "以为设置后子树会变灰或不可见"
+followups:
+  - "它们与 HitTestBehavior.opaque 的效果如何对应？"
+  - "加载遮罩应该怎样组合 AbsorbPointer 与视觉层？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AbsorbPointer-class.html
+  title: "AbsorbPointer class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-305
+title: "Scrollable.ensureVisible 为什么有时滚不到目标位置？"
+topics: [flutter, scrolling, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ensureVisible 会遍历包裹目标的所有可滚动祖先，让它们协同滚动，使目标进入视口。目标必须已完成布局，偏移还要受 physics、alignment 与当前动画状态影响，因此调用时机不对就可能滚不到位。"
+  keyPoints:
+    - "会滚动所有包裹目标的滚动祖先，而不只是最近一层"
+    - "依赖目标已经完成布局，否则拿不到有效的位置信息"
+    - "alignment 决定目标停在视口的哪个比例位置"
+    - "duration 为 0 时直接跳转，非 0 时走动画并可被打断"
+  pitfalls:
+    - "在目标 Widget 首次 build 前调用，拿到错误偏移"
+    - "忽略已在进行中的滚动动画，两个动画互相抢位置"
+followups:
+  - "ensureVisible 与 ScrollController.animateTo 该如何选择？"
+  - "目标尚未被 Sliver 构建时，ensureVisible 能直接工作吗？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Scrollable/ensureVisible.html
+  title: "Scrollable.ensureVisible method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

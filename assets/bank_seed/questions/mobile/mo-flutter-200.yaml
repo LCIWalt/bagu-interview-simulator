@@ -1,0 +1,26 @@
+id: mo-flutter-200
+title: "SemanticsService.announce 在什么时机调用才有效？"
+topics: [flutter, semantics, accessibility]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "SemanticsService.announce 通过平台无障碍通道主动播报一条消息，适合异步状态变化等没有自然焦点转移的场景。它需要 textDirection，且只应在确有必要时调用，频繁播报会不断打断读屏用户。"
+  keyPoints:
+    - "调用后由 TalkBack 或 VoiceOver 播报，不依赖节点当前是否可见"
+    - "必须传入 textDirection，否则混排文本无法正确朗读"
+    - "适合「已发送」「加载失败」等没有界面焦点变化的结果提示"
+    - "语义树中的 liveRegion 是声明式替代方案"
+  pitfalls:
+    - "在每个列表项加载完成时都 announce，造成播报轰炸"
+    - "把 announce 当作 Toast 使用，忽略读屏关闭时它没有任何视觉效果"
+followups:
+  - "liveRegion 与 announce 分别适合什么更新频率？"
+source:
+  url: https://api.flutter.dev/flutter/semantics/SemanticsService/announce.html
+  title: "SemanticsService.announce method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

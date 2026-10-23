@@ -1,0 +1,26 @@
+id: mo-flutter-195
+title: "项目：列表项里的横向拖拽总被外层滚动抢走，如何排查？"
+topics: [flutter, gestures, scrolling]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "这是典型的手势竞技场竞争：横向拖拽识别器与外层 Scrollable 的纵向识别器同时收到指针，谁先越过自己的 slop 并 accept 谁获胜。排查时先打开竞技场调试日志确认获胜者，再决定用方向约束、动态禁用外层滚动，还是自定义 recognizer 组合。"
+  keyPoints:
+    - "用 debugPrintGestureArenaDiagnostics 观察每个 recognizer 的 accept 与 reject 顺序"
+    - "横向 DragGestureRecognizer 与纵向 Scrollable 同时入场，先达到 slop 的一方获胜"
+    - "可在拖拽开始时把外层 physics 切为 NeverScrollableScrollPhysics，结束后恢复"
+    - "需要稳定共存时用 RawGestureDetector 自定义 recognizer 并显式控制竞技场"
+  pitfalls:
+    - "只在子节点包 GestureDetector，忽略外层 Scrollable 也会参与竞争"
+    - "用 AbsorbPointer 包住整块列表，顺带屏蔽了所有滚动与点击"
+followups:
+  - "如果希望横向拖拽与纵向滚动同时进行，交互上应该怎样设计？"
+source:
+  url: https://docs.flutter.dev/ui/interactivity/gestures
+  title: "Handle taps and gestures - Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-259
+title: "EventChannel 的 onListen/onCancel 应该如何管理原生事件源？"
+topics: [flutter, platform-channel, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "EventChannel 把原生事件源暴露为广播 Stream：Dart 侧首个订阅触发 onListen，最后一个订阅取消触发 onCancel，原生端应在这两个回调里注册和注销传感器、广播接收器或监听器。事件通过 EventSink 的 success/error/endOfStream 发送，取消订阅后继续发送会抛异常。正确的注销逻辑是避免泄漏和重复事件的关键。"
+  keyPoints:
+    - "receiveBroadcastStream 的参数会原样传给 onListen，可用于区分订阅方"
+    - "onCancel 中要停止事件源并释放资源，不能只把 sink 置空"
+    - "错误用 events.error 发送，正常结束用 endOfStream"
+    - "多个订阅共享一个原生事件源时，需要自己做引用计数"
+  pitfalls:
+    - "onCancel 之后原生定时器仍在向已关闭的 sink 发事件"
+    - "每次 listen 都重新注册一遍广播接收器，导致事件重复"
+followups:
+  - "如何把 EventChannel 封装成可注入、可测试的 Stream？"
+  - "热重启后原生事件源为什么可能仍然存活？"
+source:
+  url: "https://api.flutter.dev/flutter/services/EventChannel-class.html"
+  title: "EventChannel class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

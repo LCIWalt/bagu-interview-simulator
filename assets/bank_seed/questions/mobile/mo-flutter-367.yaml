@@ -1,0 +1,26 @@
+id: mo-flutter-367
+title: "iOS 证书与描述文件在 CI 上如何管理？"
+topics: [flutter, release, ci]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "iOS 签名需要证书（.p12 加密码）与匹配 Bundle ID 的 provisioning profile，CI 上通常用 fastlane match 或手工导入临时 keychain，构建结束后清理。证书与 profile 都有有效期，过期会让流水线突然失败，需要提前监控。自动签名适合本地开发，CI 应使用显式签名配置以保证可复现。"
+  keyPoints:
+    - "证书导出为 p12 并加密存储，CI 导入临时 keychain"
+    - "profile 必须与 Bundle ID、证书、环境类型匹配"
+    - "构建结束删除 keychain 与描述文件，避免残留"
+    - "监控证书到期时间，提前续期并更新 CI secret"
+  pitfalls:
+    - "使用 Xcode 自动签名，CI 上凭据缺失导致随机失败"
+    - "profile 与 flavor 的 Bundle ID 不匹配，归档时报错"
+followups:
+  - "存在 Widget、通知扩展等多个 target 时签名如何配置？"
+source:
+  url: https://docs.flutter.dev/deployment/ios
+  title: "Build and release an iOS app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

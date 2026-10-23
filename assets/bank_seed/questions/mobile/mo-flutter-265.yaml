@@ -1,0 +1,27 @@
+id: mo-flutter-265
+title: "Add-to-App 启动 Flutter 时如何指定 initialRoute 并传参？"
+topics: [flutter, add-to-app, navigation]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Add-to-App 启动 Flutter 时可以把 initialRoute 作为 Dart 入口参数传给引擎，FlutterActivity/FlutterFragment 都提供相应构造方式，Dart 侧再由 WidgetsApp 或 Router 解析。对已经运行过的缓存引擎，initialRoute 不会重新执行 main，需要在 Dart 侧通过路由 API 跳转。"
+  keyPoints:
+    - "initialRoute 最终由 WidgetsApp/Router 解析，不是原生直接创建页面"
+    - "FlutterActivity 与 FlutterFragment 的新引擎构造器可指定 initialRoute"
+    - "缓存引擎的入口已确定，改路由要走导航通道或 Dart 路由 API"
+    - "复杂参数不要塞进超长路由字符串，启动后通过通道或共享容器读取"
+  pitfalls:
+    - "对 cached engine 设置 initialRoute 并期待生效"
+    - "路由参数未做 URI 编码，含斜杠或中文时解析错乱"
+followups:
+  - "冷启动与热启动拿到深链的方式为什么不同？"
+  - "如何在 Flutter 内统一处理初始路由和后续深链？"
+source:
+  url: "https://docs.flutter.dev/add-to-app/android/add-flutter-screen"
+  title: "Add a Flutter screen to an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

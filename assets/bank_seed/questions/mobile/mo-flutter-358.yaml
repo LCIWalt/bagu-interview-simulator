@@ -1,0 +1,26 @@
+id: mo-flutter-358
+title: "如何把网络异常收敛成可分支的领域错误？"
+topics: [flutter, network, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "网络层应把 SocketException、TimeoutException、HTTP 状态码与解析失败统一映射为少量稳定的 Failure 类型，并附带是否可重试与文案 key，而不是把原始异常抛给 UI。映射发生在 repository/data 边界，presentation 用 switch 穷举处理。日志里保留原始错误与请求 id，展示层不暴露内部细节。"
+  keyPoints:
+    - "在 data 层把技术异常映射为 sealed Failure"
+    - "区分网络不可达、超时、鉴权失败、服务端错误与解析失败"
+    - "Failure 携带 retryable 与文案 key，而不是硬编码中文"
+    - "原始异常只进日志，并附带可关联的请求 id"
+  pitfalls:
+    - "UI 直接 catch DioException 并判断状态码"
+    - "把所有错误都提示为「网络错误」，用户无法自助"
+followups:
+  - "401 刷新 token 失败后，如何通知全局登出？"
+source:
+  url: https://docs.flutter.dev/cookbook/networking/fetch-data
+  title: "Fetch data from the internet"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

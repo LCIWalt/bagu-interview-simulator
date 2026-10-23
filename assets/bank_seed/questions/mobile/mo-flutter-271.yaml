@@ -1,0 +1,27 @@
+id: mo-flutter-271
+title: "iOS 权限弹窗不出现，Info.plist 里缺了什么？"
+topics: [flutter, permissions, ios]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "iOS 在首次访问相机、麦克风、相册、定位等受保护资源时会读取 Info.plist 中对应的 UsageDescription 键，缺失时应用会直接终止而不是弹窗。描述文案会展示在系统权限弹窗里，必须说明具体用途并支持本地化。权限请求应由用户操作触发，拒绝后提供设置页入口和功能降级。"
+  keyPoints:
+    - "相机、麦克风、相册、定位等分别有对应的 UsageDescription 键"
+    - "缺少用途描述会在首次访问时触发运行时终止"
+    - "描述要具体、诚实、可本地化，不能写空泛套话"
+    - "系统通常只弹一次，拒绝后只能引导用户去设置页"
+  pitfalls:
+    - "为了过审写一句万能描述，审核或用户体验都会出问题"
+    - "在启动时就请求所有权限，用户不知道用途而大量拒绝"
+followups:
+  - "如何区分 notDetermined 与 denied 状态？"
+  - "Flutter 插件如何把权限状态变化同步给 Dart？"
+source:
+  url: "https://developer.apple.com/documentation/bundleresources/information-property-list"
+  title: "Information Property List"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

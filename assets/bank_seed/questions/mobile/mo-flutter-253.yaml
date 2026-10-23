@@ -1,0 +1,26 @@
+id: mo-flutter-253
+title: "项目：为异步数据流补一套不 flaky 的测试"
+topics: [flutter, testing, async]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "异步 UI 测试的不稳定通常来自真实时间、未受控的流和遗漏的 pending timer。做法是把 repository 换成可控的 fake，用 Completer 精确控制 Future 完成时机，用 StreamController 手动推送事件，再用 pump 推进帧。每个用例结束前确认没有挂起的定时器，并覆盖 loading、data、error、empty 四条路径。"
+  keyPoints:
+    - "用 Completer 与 StreamController 控制完成时机，替代真实延迟"
+    - "每次状态变化后 pump，验证中间态而不是只断言最终态"
+    - "在 tearDown 关闭 controller，避免 Timer is still pending"
+    - "对错误路径注入异常，验证 UI 的错误态与重试入口"
+  pitfalls:
+    - "用 runAsync 加真实 delay 等待，测试慢且随机失败"
+    - "只测成功路径，错误态依赖人工验证"
+followups:
+  - "如何在 CI 上定位偶发失败的异步测试？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/WidgetTester/pump.html
+  title: "WidgetTester.pump"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

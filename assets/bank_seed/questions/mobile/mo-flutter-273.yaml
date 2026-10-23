@@ -1,0 +1,27 @@
+id: mo-flutter-273
+title: "Android 13 的通知权限应该如何请求与降级？"
+topics: [flutter, permissions, android]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 13（API 33）起 POST_NOTIFICATIONS 成为运行时权限，应用需要在合适时机请求；未授权时普通通知不会展示。targetSdk 低于 33 时系统会在创建通知渠道后自动询问，升级 targetSdk 后行为会变化。请求前应检查通知是否已启用，拒绝后提供设置页入口并保证核心功能不依赖通知。"
+  keyPoints:
+    - "在 manifest 声明 POST_NOTIFICATIONS，并在 API 33+ 运行时请求"
+    - "targetSdk 33+ 必须主动请求，低于 33 时由系统在特定时机代问"
+    - "用 areNotificationsEnabled 检查状态，避免无意义弹窗"
+    - "通知渠道一旦创建，其重要性等设置由用户掌控"
+  pitfalls:
+    - "在 Application 启动时立刻请求，用户直接拒绝"
+    - "把普通通知权限与前台服务通知混为一谈"
+followups:
+  - "通知渠道的创建时机如何影响设置页展示？"
+  - "Android 14 前台服务类型对通知有什么额外要求？"
+source:
+  url: "https://developer.android.com/develop/ui/views/notifications/notification-permission"
+  title: "Notification runtime permission"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

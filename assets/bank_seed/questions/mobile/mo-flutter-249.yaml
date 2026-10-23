@@ -1,0 +1,26 @@
+id: mo-flutter-249
+title: "RepositoryProvider 在 Bloc 架构中的位置"
+topics: [flutter, bloc, dependency-injection]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "RepositoryProvider 只是把 repository 放进 widget 树供后代读取，本身不持有可变状态，也不触发重建；它常放在 BlocProvider 之上，让多个 bloc 共享同一数据源。真正的状态由 bloc 管理，repository 负责数据访问与映射。这种分层让 bloc 可以脱离 widget 树单测。"
+  keyPoints:
+    - "RepositoryProvider 基于 InheritedWidget，提供只读依赖"
+    - "用 context.read 获取，不建立重建依赖"
+    - "与 BlocProvider 组合时，repository 生命周期通常更长"
+    - "repository 接口放在 domain 层，便于替换与 mock"
+  pitfalls:
+    - "用 RepositoryProvider 存放会变化的状态"
+    - "在 bloc 内部直接 context.read，导致 bloc 依赖 widget 树"
+followups:
+  - "多页面共享 repository 时，应该把 provider 放在哪一层？"
+source:
+  url: https://bloclibrary.dev/flutter-bloc-concepts/
+  title: "Flutter Bloc Concepts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

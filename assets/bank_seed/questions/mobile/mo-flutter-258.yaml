@@ -1,0 +1,27 @@
+id: mo-flutter-258
+title: "StandardMessageCodec 能传哪些类型，为什么不能直接传自定义对象？"
+topics: [flutter, platform-channel, serialization]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StandardMessageCodec 只支持一组跨语言的基础类型：null、bool、num、String、Uint8List/Int32List/Int64List/Float64List，以及由这些类型组成的 List 和 Map。自定义 Dart 对象、DateTime、枚举都不会被自动序列化，必须显式转成 Map 或使用 Pigeon 生成的 DTO。编码后消息会变成字节，接收端解码出新对象，存在复制成本。"
+  keyPoints:
+    - "Map 的 key 与 value 都必须是受支持类型，不能直接放自定义对象"
+    - "Dart int 在 Android 侧会按 32 位/64 位映射为 Integer 或 Long"
+    - "解码结果是 List<Object?> 与 Map<Object?, Object?>，使用前应显式转换"
+    - "复杂结构建议定义 DTO 并集中转换，或交给 Pigeon 生成"
+  pitfalls:
+    - "直接传 DateTime、枚举或自定义类，运行时报编解码错误"
+    - "把解码出的 Map 强转成 Map<String, dynamic> 而不检查 key 类型"
+followups:
+  - "如何通过继承 StandardMessageCodec 支持自定义类型？"
+  - "Uint8List 跨通道传输是否会发生拷贝？"
+source:
+  url: "https://api.flutter.dev/flutter/services/StandardMessageCodec-class.html"
+  title: "StandardMessageCodec class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

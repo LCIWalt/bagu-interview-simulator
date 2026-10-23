@@ -1,0 +1,26 @@
+id: mo-flutter-191
+title: "ScrollPosition.applyContentDimensions 返回 false 意味着什么？"
+topics: [flutter, scrolling, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "applyContentDimensions 返回 false 表示当前位置不接受这组内容尺寸，需要重新布局或修正尺寸后再试。它通常出现在自定义 ScrollPosition 中，用于处理内容尺寸与视口约束矛盾的情况，返回 true 才表示尺寸已生效。"
+  keyPoints:
+    - "返回 false 时框架不会认为滚动范围已确定，会触发再次布局"
+    - "ScrollPosition 在该方法中更新 minScrollExtent 与 maxScrollExtent"
+    - "内容尺寸变化可能在同一帧内多次调用，注意避免无限循环"
+    - "返回 false 后必须确保下一次计算能得到不同结果，否则会卡死"
+  pitfalls:
+    - "无条件返回 false，导致布局阶段反复重试"
+    - "在方法里直接调用 jumpTo，绕过尺寸修正流程"
+followups:
+  - "ScrollPosition 与 ScrollController 的职责边界在哪里？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ScrollPosition/applyContentDimensions.html
+  title: "ScrollPosition.applyContentDimensions method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

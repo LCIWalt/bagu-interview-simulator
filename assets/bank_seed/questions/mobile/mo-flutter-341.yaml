@@ -1,0 +1,26 @@
+id: mo-flutter-341
+title: "go_router 的 redirect 与 refreshListenable 如何配合做登录守卫？"
+topics: [flutter, routing, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "redirect 在每次导航与刷新时执行，根据登录态返回目标位置或 null 放行；refreshListenable 接收一个 Listenable，登录态变化时通知 router 重新执行 redirect，从而把停留在受保护页面的用户送回登录页。守卫逻辑要幂等且无副作用，回跳地址通过 query 参数携带，登录成功后跳回原页面。"
+  keyPoints:
+    - "redirect 返回新位置即跳转，返回 null 表示放行"
+    - "refreshListenable 在登录态变化时触发重新解析路由"
+    - "用 matchedLocation 判断受保护前缀，避免误伤登录页本身"
+    - "回跳地址放 query 参数，登录后校验为站内路径再使用"
+  pitfalls:
+    - "在 redirect 里发请求或写存储，造成重入甚至死循环"
+    - "登录页自身也被守卫拦截，形成无限重定向"
+followups:
+  - "多个守卫（登录、实名、强制升级）同时存在时如何排序？"
+source:
+  url: https://github.com/flutter/packages/tree/main/packages/go_router
+  title: "go_router package"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

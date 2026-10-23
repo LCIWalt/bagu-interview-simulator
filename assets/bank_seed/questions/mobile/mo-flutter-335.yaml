@@ -1,0 +1,26 @@
+id: mo-flutter-335
+title: "feature-first 与 layer-first 目录结构该如何取舍？"
+topics: [flutter, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "feature-first 按业务能力切分，每个 feature 内部再分 data/domain/presentation，一次需求改动通常集中在一个目录，跨 feature 依赖必须显式声明。layer-first 按 data/domain/ui 全局分层，适合功能少、共享模型多的项目。官方架构指南推荐以 feature 为外层、层为内层，并用依赖规则约束 feature 之间只通过公开接口通信。"
+  keyPoints:
+    - "feature 目录内聚三层代码，评审时改动范围可预测"
+    - "layer-first 在功能增长后容易出现巨型 shared 与循环依赖"
+    - "跨 feature 只允许依赖对方的公开 API 或共享 domain 模型"
+    - "用 import 规则或 lint 固化边界，否则结构会随时间腐化"
+  pitfalls:
+    - "只改了目录名却不约束依赖，代码仍然到处互相 import"
+    - "过早为每个 feature 建满四层，空目录反而增加导航成本"
+followups:
+  - "如何用 lint 或脚本检测 feature 之间的非法依赖？"
+source:
+  url: https://docs.flutter.dev/app-architecture/guide
+  title: "Guide to app architecture"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

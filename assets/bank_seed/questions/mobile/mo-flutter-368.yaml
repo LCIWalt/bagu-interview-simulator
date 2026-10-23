@@ -1,0 +1,26 @@
+id: mo-flutter-368
+title: "灰度发布期间，应该看哪些指标决定是否全量？"
+topics: [flutter, release, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "灰度不是发完等几天，而是预设门槛：崩溃-free 会话率、ANR 率、关键路径成功率、启动耗时与退款/投诉量，按版本与设备维度对比基线。分阶段放量（如 5%→20%→50%→100%），每个阶段积累足够样本再继续；异常时用 Play 的分阶段暂停或服务端开关回退，而不是只能等新版本。"
+  keyPoints:
+    - "放量前定义崩溃率、ANR、关键转化等门槛与观察窗口"
+    - "按版本、机型、系统分层对比，避免辛普森悖论"
+    - "分阶段放量，每阶段积累足够样本再继续"
+    - "准备服务端开关与热配置，实现不发版回退"
+  pitfalls:
+    - "只看崩溃总数不看会话基数，误判灰度健康度"
+    - "灰度期间同时上线其他变更，出问题无法归因"
+followups:
+  - "Flutter 侧如何把版本与 flavor 带进崩溃上报？"
+source:
+  url: https://docs.flutter.dev/deployment/android
+  title: "Build and release an Android app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

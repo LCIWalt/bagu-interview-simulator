@@ -1,0 +1,27 @@
+id: mo-flutter-319
+title: "长列表测试里 scrollUntilVisible 该怎么用？"
+topics: [flutter, testing, scrolling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "scrollUntilVisible 会反复拖动指定的 Scrollable，直到目标 finder 可见或达到最大次数，适合验证懒加载列表深处的元素。它需要明确滚动容器、滚动增量与最大尝试次数，否则容易空转或误判。"
+  keyPoints:
+    - "scrollable 参数要指向真正滚动的 Scrollable，而不是外层页面"
+    - "delta 决定每次滚动的距离，方向由正负号控制"
+    - "maxScrolls 防止无限循环，找不到时抛出明确错误"
+    - "目标出现后仍需 pump 等待图片与动画稳定"
+  pitfalls:
+    - "默认次数不够时直接失败，没有调整 maxScrolls"
+    - "把 finder 指向尚未构建的 item，误以为滚动无效"
+followups:
+  - "scrollUntilVisible 与 dragUntilVisible 的区别是什么？"
+  - "如何断言滚动过程中触发了分页加载？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/WidgetController/scrollUntilVisible.html
+  title: "WidgetController.scrollUntilVisible method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

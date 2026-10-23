@@ -1,0 +1,26 @@
+id: mo-flutter-220
+title: "InheritedNotifier 与 ChangeNotifier 如何配合？"
+topics: [flutter, widgets, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "InheritedNotifier 接收一个 Listenable，通知到达时重建所有依赖它的后代，并把通知者本身暴露给子树。它省去了手写 InheritedWidget 的 updateShouldNotify，但通知粒度仍是整棵依赖子树。适合把已有的 ChangeNotifier 直接接入 widget 树，而不引入额外状态库。"
+  keyPoints:
+    - "构造时传入 notifier，通知后自动标脏依赖它的后代"
+    - "后代通过 dependOnInheritedWidgetOfExactType 拿到 notifier 并读取字段"
+    - "notifier 实例变化时，InheritedNotifier 比较新旧实例决定是否更新"
+    - "不需要重建的后代应避免建立依赖，改用非依赖式读取"
+  pitfalls:
+    - "在 build 中直接调用 notifier 的修改方法，触发构建期通知异常"
+    - "把高频变化的动画值放进同一个 notifier，导致整片子树重建"
+followups:
+  - "为什么 InheritedNotifier 不能做到按字段精确重建？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/InheritedNotifier-class.html
+  title: "InheritedNotifier class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

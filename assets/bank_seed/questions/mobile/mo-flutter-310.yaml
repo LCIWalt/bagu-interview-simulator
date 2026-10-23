@@ -1,0 +1,27 @@
+id: mo-flutter-310
+title: "手指抬起后的惯性滚动是由谁驱动的？"
+topics: [flutter, scrolling, animation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "手指抬起后，ScrollPosition 把速度交给 ScrollPhysics.createBallisticSimulation，由 Simulation 每帧给出新的位置，直到速度衰减或触边。惯性、回弹与停靠行为都由 physics 与 simulation 决定，而不是手势回调自己累加。"
+  keyPoints:
+    - "drag end 时用当前速度创建 ballistic simulation"
+    - "Clamping 与 Bouncing 的差异体现在 simulation 与边界处理"
+    - "自定义 physics 可改变摩擦、停靠点与越界回弹"
+    - "动画期间位置由 ScrollActivity 驱动，可用 position.activity 观察"
+  pitfalls:
+    - "在手势回调里自己累加 offset，绕过 physics 导致惯性失效"
+    - "以为 setState 能停止惯性，实际要用 jumpTo 或 hold"
+followups:
+  - "createBallisticSimulation 返回 null 代表什么？"
+  - "如何让列表在惯性结束后自动吸附到最近一页？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ScrollPhysics-class.html
+  title: "ScrollPhysics class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-255
+title: "BasicMessageChannel 与 MethodChannel 的语义差异是什么？"
+topics: [flutter, platform-channel, plugins]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "MethodChannel 用方法名加参数发起一次调用，并等待原生返回单个结果；BasicMessageChannel 直接收发任意消息，reply 可以为空，适合 request-response 或双向推送。EventChannel 则把原生事件源包装成广播 Stream，由 onListen/onCancel 管理订阅。三者都建立在 BinaryMessenger 与 codec 之上，差别在消息协议而不是传输层。"
+  keyPoints:
+    - "MethodChannel 的协议包含 method 与 arguments，handler 必须且只能回调一次 result"
+    - "BasicMessageChannel 用 codec 直接编码消息，没有方法名语义，send 的 reply 可选"
+    - "EventChannel.receiveBroadcastStream 在首个订阅时触发 onListen，最后一个订阅取消时触发 onCancel"
+    - "通道名与 codec 必须两端一致，否则会出现 MissingPluginException 或解码错误"
+  pitfalls:
+    - "用 EventChannel 实现一次性的请求-响应，导致订阅管理复杂化"
+    - "在 BasicMessageChannel 两端使用不同 codec，消息静默解析失败"
+followups:
+  - "EventChannel 取消订阅后，原生端还需要发送 endOfStream 吗？"
+  - "自定义 codec 时如何保证两端版本兼容？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/platform-channels"
+  title: "Writing custom platform-specific code"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-188
+title: "SliverLayoutBuilder 能解决什么普通 LayoutBuilder 解决不了的问题？"
+topics: [flutter, slivers, layout]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "SliverLayoutBuilder 在 sliver 布局阶段把 SliverConstraints 交给 builder，让子 sliver 能根据剩余空间、滚动偏移动态改变结构。它适合「滚动到一定位置才插入或替换 sliver」这类需求，但 builder 在 layout 阶段执行，不能触发 setState 或依赖 intrinsics。"
+  keyPoints:
+    - "builder 收到 SliverConstraints，可读取 remainingPaintExtent、scrollOffset 等"
+    - "返回的仍是 sliver，可据此条件性插入 SliverToBoxAdapter 或占位 sliver"
+    - "回调在 layout 阶段执行，不能调用 setState 或依赖父级 intrinsics"
+    - "频繁改变 sliver 结构会触发重新布局，应避免每帧都替换整棵树"
+  pitfalls:
+    - "在 builder 中用 setState 驱动变化，触发布局期间重建断言"
+    - "把它当普通 LayoutBuilder 用，忽略回调只能返回 sliver"
+followups:
+  - "SliverLayoutBuilder 与 SliverPersistentHeader 的适用场景差别？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/SliverLayoutBuilder-class.html
+  title: "SliverLayoutBuilder class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

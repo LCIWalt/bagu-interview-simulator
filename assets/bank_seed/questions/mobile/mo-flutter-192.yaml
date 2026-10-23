@@ -1,0 +1,26 @@
+id: mo-flutter-192
+title: "SliverFillRemaining 的 hasScrollBody 为 true 与 false 有何区别？"
+topics: [flutter, slivers, scrolling]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "SliverFillRemaining 会占据视口中剩余的空间；hasScrollBody 为 true 时把子节点当作可滚动主体，允许其高度超过剩余空间并继续滚动，为 false 时则把子节点约束在剩余空间内。前者适合长内容，后者适合空状态或加载页。"
+  keyPoints:
+    - "hasScrollBody 为 true 时子节点获得宽松约束，可以高于剩余视口"
+    - "hasScrollBody 为 false 时子节点被限制在剩余 extent 内，不再产生额外滚动"
+    - "fillOverscroll 控制回弹时是否把剩余空间一并拉伸"
+    - "常放在 CustomScrollView 末尾，用于占满不足一屏的内容"
+  pitfalls:
+    - "用 hasScrollBody: true 承载空状态，结果出现莫名的可滚动区域"
+    - "内容已足够长时仍使用 SliverFillRemaining，造成底部大片空白"
+followups:
+  - "SliverFillViewport 与 SliverFillRemaining 的适用场景差别？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/SliverFillRemaining-class.html
+  title: "SliverFillRemaining class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

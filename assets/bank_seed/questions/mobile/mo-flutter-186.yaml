@@ -1,0 +1,26 @@
+id: mo-flutter-186
+title: "CustomMultiChildLayout 里 layoutChild 与 positionChild 的顺序要求"
+topics: [flutter, layout, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "CustomMultiChildLayout 通过 MultiChildLayoutDelegate 接管子节点布局：performLayout 中用 LayoutId 定位子节点，先 layoutChild 得到尺寸，再 positionChild 设置偏移。每个子节点必须被布局恰好一次，顺序不能颠倒。"
+  keyPoints:
+    - "LayoutId 的 id 必须在 delegate 中唯一对应，缺失或重复会触发断言"
+    - "layoutChild 返回 Size 并确定子节点尺寸，必须在 positionChild 之前调用"
+    - "positionChild 只写入偏移，不改变尺寸，且每个子节点只能调用一次"
+    - "delegate 的 shouldRelayout 应比较影响布局的字段，避免无谓重排"
+  pitfalls:
+    - "先 positionChild 再 layoutChild，导致偏移基于旧尺寸计算"
+    - "在 performLayout 中遗漏某个子节点，debug 下报 child not laid out"
+followups:
+  - "什么时候应该用 CustomMultiChildLayout 而不是手写 RenderObject？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/CustomMultiChildLayout-class.html
+  title: "CustomMultiChildLayout class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-272
+title: "Flutter 插件如何正确封装 Android 运行时权限请求？"
+topics: [flutter, permissions, android]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 6.0+ 的危险权限必须在运行时请求，Flutter 插件需要实现 ActivityAware 拿到当前 Activity，发起请求并在 onRequestPermissionsResult 或 Activity Result API 中把结果回传 Dart。还要处理拒绝、永久拒绝、配置变更导致请求丢失，以及用户从设置页返回后的状态刷新。"
+  keyPoints:
+    - "权限请求必须依附 Activity，插件要实现 ActivityAware 并转发结果"
+    - "shouldShowRequestPermissionRationale 用于判断是否需要先解释"
+    - "永久拒绝后只能引导设置页，不能再次弹系统框"
+    - "请求期间 Activity 可能重建，等待中的调用要能恢复或失败"
+  pitfalls:
+    - "用 application context 请求权限，直接抛异常"
+    - "把权限结果缓存成一次性布尔值，用户改设置后状态不更新"
+followups:
+  - "Android 14 的部分照片访问权限如何处理？"
+  - "多个权限并发请求时如何关联各自的回调？"
+source:
+  url: "https://developer.android.com/training/permissions/requesting"
+  title: "Request runtime permissions"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

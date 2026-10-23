@@ -1,0 +1,27 @@
+id: mo-flutter-270
+title: "iOS 的 AppDelegate 回调如何影响 Flutter 引擎的启动与暂停？"
+topics: [flutter, ios, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "iOS 的应用级生命周期由 UIApplicationDelegate 接收，Flutter 通过 FlutterAppDelegate 把这些回调转发给引擎，Dart 侧才会收到 resumed/paused 等状态。Add-to-App 自定义 delegate 时，覆盖方法要调用 super 或显式转发，否则引擎可能一直以为应用在前台。启动阶段也不要在 didFinishLaunching 里做阻塞工作。"
+  keyPoints:
+    - "UIApplicationDelegate 负责 didBecomeActive、willResignActive、didEnterBackground 等回调"
+    - "FlutterAppDelegate 把应用级事件转成引擎生命周期消息"
+    - "自定义 delegate 覆盖方法时保留 super 调用或手动转发"
+    - "启动重活延后到首帧之后，避免拖慢首帧或触发 watchdog"
+  pitfalls:
+    - "重写 didFinishLaunching 不调用 super，插件与生命周期转发失效"
+    - "在 applicationWillTerminate 里等待异步任务完成，系统不会给足时间"
+followups:
+  - "使用 SceneDelegate 时生命周期事件如何传到 Flutter 引擎？"
+  - "Flutter 如何处理后台音频与位置更新？"
+source:
+  url: "https://developer.apple.com/documentation/uikit/uiapplicationdelegate"
+  title: "UIApplicationDelegate"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-177
+title: "ParentDataWidget 如何把 Expanded、Positioned 的配置写进 RenderObject？"
+topics: [flutter, widgets, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Expanded、Flexible、Positioned 这类 ParentDataWidget 不参与布局计算，而是把配置写入子 RenderObject 的 parentData。对应的 RenderObject 在 performLayout 时读取 parentData 中的 flex 或位置信息，从而改变空间分配与定位。"
+  keyPoints:
+    - "ParentDataWidget.applyParentData 直接写 renderObject.parentData，不会创建新的 RenderObject"
+    - "Positioned 必须直接位于 Stack 的 children 中，Expanded 必须直接位于 Flex 中"
+    - "中间插入普通 RenderObjectWidget 会切断 ParentDataWidget 与目标 RenderObject 的对应关系"
+    - "FlexParentData 保存 flex 与 fit，StackParentData 保存四边偏移与宽高"
+  pitfalls:
+    - "把 Positioned 包在 Container 里再放进 Stack，运行时报 Incorrect use of ParentDataWidget"
+    - "以为 Expanded 会直接修改子 Widget 的约束，实际是父 Flex 读取 parentData 后决定约束"
+followups:
+  - "为什么 ParentDataWidget 必须搭配特定的 RenderObjectWidget 使用？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ParentDataWidget-class.html
+  title: "ParentDataWidget class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

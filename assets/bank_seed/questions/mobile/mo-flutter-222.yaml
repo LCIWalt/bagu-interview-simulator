@@ -1,0 +1,26 @@
+id: mo-flutter-222
+title: "didChangeDependencies 会被调用多少次？"
+topics: [flutter, lifecycle, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "didChangeDependencies 在 initState 之后立即调用一次，之后每当本 State 依赖的 InheritedWidget 发生变化时再次调用。因此它可能被调用多次，只应做依赖同步，不要放只能执行一次的初始化。首次调用时已经可以安全读取 Theme、MediaQuery 等继承数据。"
+  keyPoints:
+    - "调用顺序是 initState、didChangeDependencies、build"
+    - "依赖通过 dependOnInheritedWidgetOfExactType 或 Theme.of 等建立"
+    - "每次依赖对象更新都会再次触发，次数不确定"
+    - "需要订阅与退订时应成对处理，并防止重复注册"
+  pitfalls:
+    - "在这里发起一次性网络请求，主题一变就重复请求"
+    - "把只能在 initState 做的事搬过来，误以为只执行一次"
+followups:
+  - "为什么在 initState 里读 MediaQuery 会报错？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html
+  title: "State.didChangeDependencies"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-214
+title: "Hero 的 flightShuttleBuilder 与 placeholderBuilder 用在什么场景？"
+topics: [flutter, animation, navigation]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Hero 飞行期间默认使用目标页 Hero 的 child 作为穿梭内容，来源与目标外观差异大时会显得突兀；flightShuttleBuilder 可以自定义飞行中的 Widget，placeholderBuilder 则定义原位置留下的占位内容。二者都只在转场期间生效。"
+  keyPoints:
+    - "flightShuttleBuilder 可拿到 from、to 的 BuildContext 与动画，按需构建内容"
+    - "placeholderBuilder 决定 Hero 起飞后原位置显示什么，默认是等尺寸空盒子"
+    - "flightShuttleBuilder 的 direction 可区分 push 与 pop"
+    - "HeroMode 可以关闭子树中的 Hero 动画"
+  pitfalls:
+    - "在 flightShuttleBuilder 中读取依赖 Hero 尺寸的 context，转场中尺寸仍在变化"
+    - "以为 placeholderBuilder 会影响目标页布局，它只作用于来源位置"
+followups:
+  - "push 与 pop 需要使用不同穿梭内容时如何判断方向？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Hero/flightShuttleBuilder.html
+  title: "Hero.flightShuttleBuilder property - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

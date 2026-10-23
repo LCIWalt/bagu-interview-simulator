@@ -1,0 +1,27 @@
+id: mo-flutter-320
+title: "如何在测试里模拟不同屏幕尺寸与像素密度？"
+topics: [flutter, testing, layout]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "测试默认使用 800×600 的逻辑窗口与 3.0 的 devicePixelRatio，很多布局与图片断言都依赖这组值。setSurfaceSize 改逻辑尺寸，tester.view 改物理尺寸与 DPR，两者都需要在 tearDown 中还原。"
+  keyPoints:
+    - "默认测试 surface 为 800×600 逻辑像素"
+    - "setSurfaceSize 只改逻辑尺寸，会影响 MediaQuery.size"
+    - "tester.view.physicalSize 与 devicePixelRatio 控制真实像素"
+    - "用 addTearDown 调 reset，避免污染后续用例"
+  pitfalls:
+    - "只改 setSurfaceSize 却按物理像素断言图片尺寸"
+    - "修改 tester.view 后不 reset，导致同文件后续测试漂移"
+followups:
+  - "如何模拟文字缩放与安全区？"
+  - "setSurfaceSize 与 tester.view 同时设置时谁生效？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/TestWidgetsFlutterBinding/setSurfaceSize.html
+  title: "TestWidgetsFlutterBinding.setSurfaceSize method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

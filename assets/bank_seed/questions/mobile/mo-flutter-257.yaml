@@ -1,0 +1,27 @@
+id: mo-flutter-257
+title: "平台通道抛错时，code、message、details 应如何设计？"
+topics: [flutter, platform-channel, error-handling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "原生 handler 调用 result.error(code, message, details) 后，Dart 的 invokeMethod 会抛出 PlatformException；code 应是稳定的机器可读标识，message 面向人，details 携带结构化上下文。把错误统一映射成业务失败，比在 UI 层逐个 catch 字符串更可靠。"
+  keyPoints:
+    - "success/error/notImplemented 三选一，且每次调用只能回调一次"
+    - "code 要稳定可枚举，重试与提示按 code 分支而不是 message"
+    - "details 必须是 codec 支持的类型，避免塞入超大对象或敏感信息"
+    - "MissingPluginException 表示通道未注册，应与原生业务错误分开处理"
+  pitfalls:
+    - "把原生异常堆栈原样透传给最终用户"
+    - "Dart 侧 catch 后吞掉 PlatformException，界面停在加载态"
+followups:
+  - "如何设计一层通道错误到领域 Failure 的映射？"
+  - "notImplemented 应该在什么场景返回？"
+source:
+  url: "https://api.flutter.dev/flutter/services/PlatformException-class.html"
+  title: "PlatformException class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

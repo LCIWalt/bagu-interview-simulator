@@ -1,0 +1,26 @@
+id: mo-flutter-355
+title: "日志里混进 token 和手机号，如何系统性脱敏？"
+topics: [flutter, security, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "脱敏要在出口统一做，而不是靠每个调用点自觉：封装一层 logger，在写入前按字段名与正则替换敏感值（authorization、token、phone、email、证件号），对请求体做结构化过滤而不是整段字符串替换。交给崩溃或错误上报 SDK 的 payload 同样要过滤，因为堆栈、breadcrumb 与请求上下文会被一起上传。release 必须关闭详细的请求与响应日志，并避免把日志写进可被备份的明文文件。"
+  keyPoints:
+    - "所有日志经统一入口，入口处执行 redact 后再输出"
+    - "按字段名白名单/黑名单处理结构化数据，正则只作兜底"
+    - "release 关闭请求体与响应体日志，仅保留状态码与耗时"
+    - "日志落盘要加密或排除备份，避免脱敏遗漏被放大"
+  pitfalls:
+    - "只对 message 做字符串替换，JSON 嵌套字段仍然泄露"
+    - "异常堆栈里带完整 URL，query 中的 token 被一起打出来"
+followups:
+  - "如何写测试保证新增日志字段不会绕过脱敏？"
+source:
+  url: https://docs.flutter.dev/cookbook/maintenance/error-reporting
+  title: "Report errors to a service"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

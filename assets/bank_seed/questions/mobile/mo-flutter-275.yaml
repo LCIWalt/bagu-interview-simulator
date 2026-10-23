@@ -1,0 +1,27 @@
+id: mo-flutter-275
+title: "同一个深链被重复处理，通常是什么原因？"
+topics: [flutter, deep-linking, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "同一个深链可能从 initial route 和平台回调两条路径到达，Activity/Scene 重建也可能重放链接；如果每次回调都无条件 push，就会出现同一页面叠两层。路由层应按 URI、来源和时间窗做幂等处理，并区分冷启动恢复与真正的再次导航。"
+  keyPoints:
+    - "冷启动时初始链接与平台回调可能重复投递"
+    - "用 URI 加时间窗或单调序号去重，不能只比较页面名"
+    - "Activity/Scene 重建应恢复状态，而不是重新执行导航"
+    - "处理失败时保留可重试状态，不要直接吞掉链接"
+  pitfalls:
+    - "在 initState 和平台回调里各 push 一次"
+    - "用当前路由路径判断重复，导致用户合法重复访问被拦截"
+followups:
+  - "如何测试冷启动、热启动、后台唤醒三种深链路径？"
+  - "多引擎场景下，深链应该投递给哪个引擎？"
+source:
+  url: "https://docs.flutter.dev/ui/navigation/deep-linking"
+  title: "Deep linking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

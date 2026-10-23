@@ -1,0 +1,26 @@
+id: mo-flutter-251
+title: "catchError 与 try/catch 的覆盖范围差异"
+topics: [flutter, async, error-handling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "try/catch 只能捕获当前 async 函数中 await 链上抛出的错误，未 await 的 Future 抛错不会经过它；catchError 则挂在该 Future 上，处理它自身的错误。两者都不处理之后注册的回调里新抛出的错误。要覆盖整个异步边界，还需要 Zone 或全局错误钩子。"
+  keyPoints:
+    - "await 会把 Future 的错误转成同步抛出，可被 try/catch 捕获"
+    - "未 await 的 Future 需要 catchError 或显式的错误处理入口"
+    - "catchError 的 onError 返回值会成为新的 Future 值"
+    - "test 参数可限定只处理特定异常类型"
+  pitfalls:
+    - "用 try/catch 包住未 await 的调用，误以为能兜底"
+    - "在 catchError 里返回 null，悄悄改变 Future 的类型"
+followups:
+  - "Zone 如何统一兜住没有被 await 的异步错误？"
+source:
+  url: https://api.flutter.dev/flutter/dart-async/Future/catchError.html
+  title: "Future.catchError"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

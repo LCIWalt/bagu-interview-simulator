@@ -1,0 +1,26 @@
+id: mo-flutter-185
+title: "自定义 RenderBox 时 computeDryLayout 为什么必须与 performLayout 一致？"
+topics: [flutter, rendering, layout]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "computeDryLayout 是在不产生副作用的前提下计算尺寸的纯函数，会被 getDryLayout 以及需要在 layout 前预知尺寸的调用方使用。它必须与 performLayout 得到相同尺寸，否则同一节点在不同布局路径下会出现尺寸不一致，甚至触发断言。"
+  keyPoints:
+    - "computeDryLayout 不能修改状态、不能调用 child.layout，只能基于约束与 getDryLayout 计算"
+    - "父级可能只调用 getDryLayout 取尺寸而不执行 performLayout，此时只能走这条路径"
+    - "自定义 RenderBox 应同时重写两者，并保证返回的 Size 完全一致"
+    - "确实无法预计算时应明确抛错，而不是返回一个碰巧能跑的尺寸"
+  pitfalls:
+    - "在 computeDryLayout 中调用 child.layout 或修改状态，破坏布局阶段约束"
+    - "performLayout 做了额外收缩而 computeDryLayout 没同步，导致 Baseline 错位"
+followups:
+  - "RenderBox.getDryLayout 与 layout 在什么情况下会走不同路径？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderBox/computeDryLayout.html
+  title: "RenderBox.computeDryLayout method - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

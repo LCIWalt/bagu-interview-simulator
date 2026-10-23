@@ -1,0 +1,26 @@
+id: mo-flutter-227
+title: "AnimatedBuilder 的 child 参数为什么能省重建？"
+topics: [flutter, animation, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AnimatedBuilder 每帧调用 builder 传入当前动画值，但 child 只在父级构建时创建一次并原样透传。把不随动画变化的子树放进 child，可以避免每帧重建这部分 Element 树。它的重建机制与 ListenableBuilder 相同，只是参数命名面向 Animation。"
+  keyPoints:
+    - "builder 每帧执行，child 不随动画重建"
+    - "child 应在 builder 之外创建或作为参数传入"
+    - "用 AnimatedBuilder 包住最小范围，而不是整页"
+    - "纯 CustomPainter 动画可改用 repaint 参数，避免重建 widget"
+  pitfalls:
+    - "在 builder 内部构造 child，失去优化意义"
+    - "用它包住整棵页面，每帧仍然走一遍完整 build"
+followups:
+  - "AnimatedBuilder 与 AnimatedWidget 各适合什么场景？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AnimatedBuilder-class.html
+  title: "AnimatedBuilder class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

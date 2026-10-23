@@ -1,0 +1,27 @@
+id: mo-flutter-293
+title: "桌面窗口的大小与显示状态如何在重启后恢复？"
+topics: [flutter, desktop, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "稳定版 Flutter 没有统一的跨平台窗口几何 API，窗口大小与显示状态通常由原生 embedder 或窗口插件提供；实验性的 Windowing API 提供了 WindowController，但持久化仍要自己做。恢复时要校验屏幕边界、DPI 和最小尺寸，避免窗口出现在已断开的显示器上。"
+  keyPoints:
+    - "窗口几何信息来自原生窗口系统，Dart 侧需通过插件或实验 API 获取"
+    - "保存前记录逻辑尺寸与所在显示器，恢复时做边界和缩放校验"
+    - "启动时尽早恢复窗口状态，减少闪烁和布局跳变"
+    - "多窗口要按窗口 ID 分别持久化，不能共用一个全局 key"
+  pitfalls:
+    - "直接保存物理像素，换缩放比例后窗口尺寸错误"
+    - "恢复时未限制最小尺寸，窗口被压成不可操作的一条"
+followups:
+  - "如何区分用户关闭窗口与应用整体退出？"
+  - "多窗口的级联布局应该如何设计？"
+source:
+  url: "https://flutter.dev/blog/desktop-windowing-apis"
+  title: "Introducing the Desktop Windowing API for Flutter"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

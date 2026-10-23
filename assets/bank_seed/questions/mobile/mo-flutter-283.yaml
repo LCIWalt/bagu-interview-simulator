@@ -1,0 +1,27 @@
+id: mo-flutter-283
+title: "pub 报 version solving failed 时，如何找到真正的约束冲突？"
+topics: [flutter, packages, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "pub 的 version solving failed 表示所有直接与传递依赖的版本约束无法求交，报错会列出互相矛盾的包和依赖来源。应先沿着 because 链找到冲突的两个约束，再用 flutter pub deps 查看依赖图，优先升级直接依赖或放宽自己包的约束。不要一上来就用 dependency_overrides 掩盖不兼容。"
+  keyPoints:
+    - "读报错中的 because 链，定位是哪两个包对同一依赖提出了不同约束"
+    - "用 flutter pub deps 查看依赖来源与版本"
+    - "优先升级直接依赖，让传递依赖自然收敛"
+    - "确认 API 兼容性，而不是只看版本号能否求解"
+  pitfalls:
+    - "给所有依赖写 any，短期能解但运行时行为不可控"
+    - "用 override 强压版本后出现 NoSuchMethodError"
+followups:
+  - "pubspec.lock 在应用和库中分别应不应该提交？"
+  - "如何用 flutter pub outdated 规划升级？"
+source:
+  url: "https://docs.flutter.dev/packages-and-plugins/dependency-management"
+  title: "Package dependency management"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

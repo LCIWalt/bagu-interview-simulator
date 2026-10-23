@@ -1,0 +1,26 @@
+id: mo-flutter-250
+title: "Future.wait 的 eagerError 与异常聚合"
+topics: [flutter, async, error-handling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Future.wait 并行等待多个 Future，默认等全部完成后才以第一个错误失败；eagerError 为 true 时任一 Future 出错就立即完成错误，其余任务继续运行但结果被丢弃。它只返回成功值列表，不会聚合多个错误，需要全部错误时得自己包一层。cleanUp 可用于释放已成功的结果。"
+  keyPoints:
+    - "默认等待全部完成，错误在全部结束后才抛出"
+    - "eagerError 为 true 时首个错误立即完成，但其他 Future 不会被取消"
+    - "结果顺序与输入顺序一致，与完成顺序无关"
+    - "任一 Future 出错时整体失败，不保留部分结果"
+  pitfalls:
+    - "以为 eagerError 会取消其他正在执行的任务"
+    - "用 Future.wait 处理允许部分失败的场景，导致全部结果丢失"
+followups:
+  - "需要收集每个任务的成功或失败时，应该怎么改？"
+source:
+  url: https://api.flutter.dev/flutter/dart-async/Future/wait.html
+  title: "Future.wait"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

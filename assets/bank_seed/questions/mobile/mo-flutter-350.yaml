@@ -1,0 +1,26 @@
+id: mo-flutter-350
+title: "自绘组件和图片在 RTL 下不镜像，该怎么处理？"
+topics: [flutter, i18n, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Directionality 只影响依赖它的布局与图标，图标是否镜像由 matchTextDirection 决定，而 CustomPainter 里的坐标、Canvas 绘制和硬编码 Offset 不会自动翻转。自绘时应根据 Directionality.of(context) 决定绘制方向，或对 canvas 做水平翻转。语义上表示「前进」的箭头才需要镜像，时钟、品牌 Logo、媒体播放键应保持原样。"
+  keyPoints:
+    - "Directionality 提供方向，但不会自动翻转 Canvas 绘制"
+    - "需要镜像的图标设置 matchTextDirection，而非全部翻转"
+    - "自绘组件读取 TextDirection 后调整坐标，或做水平缩放"
+    - "与语义无关的图形（Logo、进度环）保持原始方向"
+  pitfalls:
+    - "对整个页面做翻转，文字与图片一起反了"
+    - "用 left/right 而不是 start/end，RTL 下间距错位"
+followups:
+  - "如何在测试中覆盖 RTL 布局？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Directionality-class.html
+  title: "Directionality class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

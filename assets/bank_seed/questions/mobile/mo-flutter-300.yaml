@@ -1,0 +1,27 @@
+id: mo-flutter-300
+title: "ImageProvider 的相等性为什么会造成重复下载与重复解码？"
+topics: [flutter, performance, images]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ImageCache 以 ImageProvider 经 obtainKey 得到的键作为缓存标识，而键的相等性来自 operator== 与 hashCode。自定义 Provider 若没有正确实现相等性，每次 build 都会生成新键，同一张图会被反复解码。URL 或缩放参数变化同样会产生新条目。"
+  keyPoints:
+    - "obtainKey 的结果决定缓存键，NetworkImage 以 url 与 scale 判等"
+    - "自定义 Provider 必须实现 == 与 hashCode，否则缓存永不命中"
+    - "ResizeImage 会把目标尺寸编进键，尺寸不同即不同缓存项"
+    - "同一 URL 拼随机参数会绕过缓存并重复下载"
+  pitfalls:
+    - "为刷新图片在 URL 后加时间戳，导致缓存失效与流量浪费"
+    - "自定义 Provider 只重写 loadImage 而忽略相等性"
+followups:
+  - "ImageProvider 的 resolve 与 resolveStreamForKey 是什么关系？"
+  - "同一张图不同 cacheWidth 会占两份缓存吗？"
+source:
+  url: https://api.flutter.dev/flutter/painting/ImageProvider-class.html
+  title: "ImageProvider class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

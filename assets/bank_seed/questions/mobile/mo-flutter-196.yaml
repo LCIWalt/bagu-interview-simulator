@@ -1,0 +1,26 @@
+id: mo-flutter-196
+title: "onTap 与 onDoubleTap 同时存在时，为什么单击会延迟？"
+topics: [flutter, gestures, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "双击识别器在第一次点击后不会立刻失败，而是等待双击超时窗口，以判断是否还有第二次点击；在此期间单击识别器无法确定自己是否获胜，因此回调被推迟。这是竞技场为保证语义正确而做的取舍，不是性能问题。"
+  keyPoints:
+    - "TapGestureRecognizer 与 DoubleTapGestureRecognizer 会同时加入竞技场"
+    - "双击识别器在首次抬起后保持竞争，等待约 kDoubleTapTimeout"
+    - "超时前没有第二次点击，单击才被判定获胜并触发回调"
+    - "只设置 onTap 时没有等待，单击在抬起后立即触发"
+  pitfalls:
+    - "把延迟误判为卡顿，去优化构建或绘制"
+    - "在需要即时反馈的按钮上同时挂双击手势"
+followups:
+  - "如何在不牺牲双击的前提下给用户即时视觉反馈？"
+source:
+  url: https://api.flutter.dev/flutter/gestures/DoubleTapGestureRecognizer-class.html
+  title: "DoubleTapGestureRecognizer class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-354
+title: "证书锁定（pinning）该不该做，怎么避免把自己锁死？"
+topics: [flutter, security, release]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "pinning 把服务端证书或公钥摘要内置到客户端，能抵御用户设备上的中间人代理，但证书轮换时旧版本 App 会直接断网，因此必须准备备用 pin 与过渡期。实现通常在安全上下文中校验证书链（如 HttpClient 的 badCertificateCallback 或原生网络栈），并配合远程配置在紧急情况下关闭校验。它防的是本机代理，不是服务端被攻破。"
+  keyPoints:
+    - "锁定公钥或 SPKI 摘要而非叶子证书，减少轮换频率"
+    - "至少配置一个备用 pin，并预留证书重叠期"
+    - "保留可远程关闭的开关，避免全量用户断网"
+    - "pinning 不能替代 TLS 与证书校验，只增加攻击成本"
+  pitfalls:
+    - "只 pin 当前证书，续期后老版本请求全部失败"
+    - "在 badCertificateCallback 里无条件返回 true，等于没有校验"
+followups:
+  - "如何在 CI 中验证 pin 配置与线上证书匹配？"
+source:
+  url: https://docs.flutter.dev/security
+  title: "Security"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

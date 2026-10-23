@@ -1,0 +1,26 @@
+id: mo-flutter-203
+title: "TextStyle.height 与 StrutStyle 如何决定行高？"
+topics: [flutter, text, layout]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "TextStyle.height 是行高相对 fontSize 的倍数，会参与每行基线距离的计算；StrutStyle 则为整段文本强制一套最小行高与基线度量，不受具体字形影响。混排中英文或使用回退字体时，StrutStyle 能让行高保持稳定。"
+  keyPoints:
+    - "height 为 null 时使用字体自身的 ascent 与 descent 决定行高"
+    - "设置 height 后，额外空间按 leadingDistribution 分配到基线上下的比例"
+    - "StrutStyle 强制最小行高，避免不同字体回退导致行高跳动"
+    - "forceStrutHeight 为 true 时会覆盖字体的实际度量"
+  pitfalls:
+    - "用 height 压缩行高后忘记检查中文与 emoji 是否被裁切"
+    - "以为 StrutStyle 只影响第一行，实际作用于每一行"
+followups:
+  - "leadingDistribution 的 proportional 与 even 分别适合什么排版？"
+source:
+  url: https://api.flutter.dev/flutter/painting/StrutStyle-class.html
+  title: "StrutStyle class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

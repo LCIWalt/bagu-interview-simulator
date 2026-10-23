@@ -1,0 +1,26 @@
+id: mo-flutter-252
+title: "notifyListeners 在 build 期间调用会怎样？"
+topics: [flutter, state, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ChangeNotifier 通知监听者时，依赖它的 widget 会 markNeedsBuild；如果在 build 过程中触发，框架会抛出 setState() or markNeedsBuild() called during build。正确做法是把状态修改放到事件回调、微任务或帧回调中，或改用 ValueNotifier 在构建前完成更新。dispose 之后再 notify 也会触发断言。"
+  keyPoints:
+    - "通知导致依赖者标脏，构建期间标脏被框架禁止"
+    - "常见触发点是在 build 里调用 provider 的修改方法"
+    - "用 scheduleMicrotask 或 addPostFrameCallback 推迟到构建之后"
+    - "dispose 后必须移除监听并避免再次通知"
+  pitfalls:
+    - "在 build 中根据新数据直接改 notifier，形成循环"
+    - "忘记 dispose notifier，监听者持有已销毁页面"
+followups:
+  - "为什么在 initState 里 notifyListeners 也可能出问题？"
+source:
+  url: https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html
+  title: "ChangeNotifier class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

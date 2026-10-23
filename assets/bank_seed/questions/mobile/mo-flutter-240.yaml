@@ -1,0 +1,26 @@
+id: mo-flutter-240
+title: "deactivate 之后 State 还可能被复用吗？"
+topics: [flutter, lifecycle, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "当 Element 从树中移除时框架调用 deactivate，但在同一帧内它可能被 GlobalKey 重新插入到别处，此时会再调用 activate 并重新 build。因此 deactivate 里不应释放无法重建的资源，真正的清理应留到 dispose。只有确认不会再插入时，dispose 才会在帧末被调用。"
+  keyPoints:
+    - "deactivate 在 Element 被移出树时调用，可能同一帧内再次插入"
+    - "GlobalKey 触发的 graft 会复用 State，并调用 activate"
+    - "可重建的链接在 deactivate 处理，难恢复的资源留到 dispose"
+    - "重写时应在末尾调用 super.deactivate()"
+  pitfalls:
+    - "在 deactivate 里关闭全局依赖，activate 后无法恢复"
+    - "认为 deactivate 一定紧跟 dispose，提前置空引用"
+followups:
+  - "GlobalKey 重挂载时 build 会拿到新的 context 吗？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/State/deactivate.html
+  title: "State.deactivate"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

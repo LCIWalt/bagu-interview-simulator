@@ -1,0 +1,26 @@
+id: mo-flutter-218
+title: "GetX 这类一体化方案的成本在哪里？"
+topics: [flutter, state-management, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "GetX 把状态、依赖注入和路由打包在一起，用全局容器和扩展方法换取更少的样板代码。代价是依赖关系隐式、生命周期不透明，测试时需要重置全局状态，团队也容易被框架绑定。官方文档把这类方案归入社区提供的包，框架本身只保证 setState、InheritedWidget 等内置能力；选型应比较可测试性与长期维护成本，而不是只看代码行数。"
+  keyPoints:
+    - "全局 Get.put 与 Get.find 让依赖关系不可见，编译期无法检查"
+    - "控制器生命周期与路由绑定，页面外复用容易泄漏"
+    - "隐式全局状态会让并行测试相互污染"
+    - "选型应对比可测试性、调试工具和迁移成本"
+  pitfalls:
+    - "把 Get.find 散落在业务代码里，单测必须启动整个框架"
+    - "认为少写样板代码就等于低维护成本"
+followups:
+  - "如果团队已经大量使用 GetX，怎样逐步收敛依赖？"
+source:
+  url: https://docs.flutter.dev/data-and-backend/state-mgmt/options
+  title: "State management options"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-359
+title: "连接超时、首字节超时与整体超时有什么区别？"
+topics: [flutter, network]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "连接超时限制建立 TCP/TLS 连接的时长，首字节超时限制连接建立后等待响应的空闲时间，整体超时覆盖从发起到收完的全程，三者解决不同阶段的卡死。只设整体超时会让慢速大文件下载被误杀，只设连接超时则服务端迟迟不返回时请求一直挂起，需要按请求类型分别配置并支持取消。"
+  keyPoints:
+    - "连接超时针对握手阶段，DNS 慢或网络差时先触发"
+    - "首字节超时针对已连接但服务端不响应"
+    - "整体超时覆盖上传下载全过程，流式响应要单独放宽"
+    - "超时后主动取消底层请求，释放连接与回调"
+  pitfalls:
+    - "把整体超时设得很短，弱网下大响应必然失败"
+    - "捕获超时后不取消请求，回调仍在后台执行"
+followups:
+  - "上传大文件时如何设计分片与超时？"
+source:
+  url: https://api.flutter.dev/flutter/dart-io/HttpClient-class.html
+  title: "HttpClient class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

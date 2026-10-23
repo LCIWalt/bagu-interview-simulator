@@ -1,0 +1,27 @@
+id: mo-flutter-316
+title: "Inspector 的 Track Widget Rebuilds 能帮你发现什么？"
+topics: [flutter, devtools, testing]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter Inspector 的 Track Widget Rebuilds 会在每帧后高亮发生重建的 Widget，并统计重建次数。它适合定位一次 setState 牵连了多大范围，但不能直接说明重建是否昂贵。"
+  keyPoints:
+    - "开启后重建过的 Widget 会被着色标记"
+    - "按帧观察动画或输入时哪些子树反复重建"
+    - "重建不等于重绘，也不等于布局，要结合 Performance 视图"
+    - "定位后应缩小 setState 或 notifier 的作用范围"
+  pitfalls:
+    - "看到高亮就认为一定卡顿，小部件重建成本可能很低"
+    - "忘记关闭跟踪，调试期间额外开销影响判断"
+followups:
+  - "重建次数多但帧时间正常，需要优化吗？"
+  - "如何区分 build 开销与 paint 开销？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/inspector
+  title: "Flutter Inspector"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

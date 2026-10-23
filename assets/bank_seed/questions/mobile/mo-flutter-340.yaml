@@ -1,0 +1,26 @@
+id: mo-flutter-340
+title: "跨层错误该用异常还是显式的 Result 类型？"
+topics: [flutter, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 的异常适合表示程序错误与不可恢复状态，业务上可预期的失败（断网、校验不通过、未登录）若用异常表达，调用方容易漏 catch，类型信息也在跨层时丢失。显式的 Result/Failure 让编译器强制处理分支，UI 可以按 Failure 类型映射文案。两者可以共存：底层库抛异常，在 data 层边界统一转换为 Failure 向上返回。"
+  keyPoints:
+    - "在 data 层边界把 SDK 异常转换为 sealed Failure"
+    - "sealed class 加 switch 让新增失败类型在编译期暴露漏处理分支"
+    - "异常保留给真正的编程错误，不用来做流程控制"
+    - "Failure 携带可观测上下文，但避免泄露敏感信息"
+  pitfalls:
+    - "catch 所有异常后返回 null，失败原因彻底丢失"
+    - "把原始异常 message 直接展示给用户，既难懂又可能泄露内部信息"
+followups:
+  - "如何为 Failure 设计可重试标记与用户文案的映射？"
+source:
+  url: https://dart.dev/language/error-handling
+  title: "Error handling"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

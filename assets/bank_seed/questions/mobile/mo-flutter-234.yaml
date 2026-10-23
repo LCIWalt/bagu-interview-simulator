@@ -1,0 +1,26 @@
+id: mo-flutter-234
+title: "TransferableTypedData 如何避免大对象拷贝？"
+topics: [flutter, isolate, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "isolate 间发送消息默认是拷贝，传几十 MB 的 Uint8List 会带来明显的内存与时间开销。TransferableTypedData 把底层缓冲区一次性转移给接收方，发送后原对象即失效，接收方通过 materialize 取回 ByteBuffer，实现零拷贝。它只适用于可以放弃所有权的数据。"
+  keyPoints:
+    - "用 TransferableTypedData.fromList 包装，发送后源缓冲区不可再用"
+    - "接收方调用 materialize 取得 ByteBuffer，且只能物化一次"
+    - "转移是所有权移交，不产生额外的大块内存拷贝"
+    - "它只承载字节数据，结构化对象仍需序列化"
+  pitfalls:
+    - "发送后继续读取原 Uint8List，得到空数据或异常"
+    - "对同一份数据多次 materialize，第二次失败"
+followups:
+  - "图片解码结果适合用这种方式跨 isolate 传递吗？"
+source:
+  url: https://api.flutter.dev/flutter/dart-isolate/TransferableTypedData-class.html
+  title: "TransferableTypedData class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

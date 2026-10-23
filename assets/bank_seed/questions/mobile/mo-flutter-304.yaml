@@ -1,0 +1,27 @@
+id: mo-flutter-304
+title: "BackdropFilter 模糊背景的代价来自哪里？"
+topics: [flutter, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "BackdropFilter 模糊的是已经绘制在它下面的内容，因此框架必须先把背景保存到离屏图层，再对整块区域做滤镜。模糊半径越大、区域越大，采样与合成成本越高，全屏动态模糊很容易吃掉整个帧预算。"
+  keyPoints:
+    - "需要读取背景，天然依赖 saveLayer 与离屏纹理"
+    - "开销随模糊半径和被裁剪区域的面积增长"
+    - "用 ClipRect 限定范围，避免默认铺满整个可用区域"
+    - "静态背景可预生成模糊图，只模糊子树时改用 ImageFiltered"
+  pitfalls:
+    - "全屏 BackdropFilter 配合滚动，每帧重新模糊"
+    - "以为 ImageFiltered 与 BackdropFilter 等价，前者只处理自己的子树"
+followups:
+  - "为什么 BackdropFilter 必须配合 ClipRect 使用？"
+  - "毛玻璃效果在低端机上还有哪些降级方案？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/BackdropFilter-class.html
+  title: "BackdropFilter class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

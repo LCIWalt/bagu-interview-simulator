@@ -1,0 +1,27 @@
+id: mo-flutter-263
+title: "平台视图里的原生控件，屏幕阅读器能正确读到吗？"
+topics: [flutter, platform-view, accessibility]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "平台视图内部是原生控件，其无障碍信息由 Android/iOS 各自的原生树提供，Flutter 的 Semantics 不会自动描述原生子树的细节。外层再包一层 Semantics 容易造成重复播报，应让原生控件保留自己的 label，并在 Flutter 侧只补充容器级说明。最终必须用 TalkBack/VoiceOver 实机验证。"
+  keyPoints:
+    - "原生控件要设置 contentDescription 或 accessibilityLabel 等原生属性"
+    - "外层 Semantics 可能和原生节点重复，必要时用 excludeSemantics 隔离"
+    - "平台视图的可见、启用状态要同步给原生，否则读屏状态错误"
+    - "Widget 测试覆盖不到原生无障碍树，需要实机读屏验证"
+  pitfalls:
+    - "给整个平台视图加一个大 label，掩盖内部可操作控件"
+    - "假设 Flutter 的 Semantics 能穿透平台视图并自动合并"
+followups:
+  - "混合页面的朗读顺序应该如何设计？"
+  - "平台视图不可见时如何从无障碍树中移除？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/android/platform-views"
+  title: "Hosting native Android views in your Flutter app with Platform Views"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

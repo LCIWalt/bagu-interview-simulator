@@ -1,0 +1,26 @@
+id: mo-flutter-371
+title: "pub 报版本冲突时，错误信息该怎么读？"
+topics: [flutter, package]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "pub 的求解器为每个包选择满足所有约束的最高版本，冲突时会列出涉事包、各自约束与推导链，根因通常是某个包把共享依赖的上限压得很低。解决顺序是升级直接依赖、放宽不必要的上限、寻找替代包，最后才考虑 dependency_overrides，并确认覆盖不会破坏运行时。"
+  keyPoints:
+    - "约束是区间，求解器选择满足所有约束的最高版本"
+    - "报错中的推导链指出是哪个包限制了版本"
+    - "优先升级直接依赖，而不是直接 override"
+    - "SDK 约束不匹配也会表现为依赖解析失败"
+  pitfalls:
+    - "看到冲突就删 pubspec.lock，掩盖真实的约束问题"
+    - "长期依赖 override，CI 与本地解析结果不一致"
+followups:
+  - "如何判断一个依赖包是否已经停止维护？"
+source:
+  url: https://dart.dev/tools/pub/dependencies
+  title: "Dependencies"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-301
+title: "precacheImage 能提前解码，为什么首帧仍可能掉帧？"
+topics: [flutter, performance, images]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "precacheImage 会提前 resolve 并解码图片，把结果放进 ImageCache，使真正展示时省掉解码等待。它仍是异步的，且会和首帧争抢资源，因此应在首帧之后按优先级预热，并处理失败回调。"
+  keyPoints:
+    - "提前完成解码，首次绘制时可直接命中缓存"
+    - "需要 BuildContext，通常在首帧后或页面跳转前调用"
+    - "传入 ResizeImage 可按目标尺寸解码，避免大图占内存"
+    - "用 onError 处理失败，缓存也可能被 evict 后重新加载"
+  pitfalls:
+    - "在 main 里等待大量图片预热，拖慢冷启动"
+    - "以为预热后一定不掉帧，纹理上传仍发生在绘制时"
+followups:
+  - "precacheImage 返回的 Future 完成是否代表纹理已上传？"
+  - "页面级预热应该放在哪个生命周期里？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/precacheImage.html
+  title: "precacheImage function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-264
+title: "FlutterEngineGroup 如何降低多引擎的内存与启动开销？"
+topics: [flutter, add-to-app, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FlutterEngineGroup 让多个 FlutterEngine 共享同一份已加载的 Dart VM、快照和部分原生资源，新引擎从组内派生，启动更快、内存更省；但每个引擎仍有独立的 isolate 和 UI，不能直接共享 Dart 堆对象。它适合多入口、多窗口或需要多个 Flutter 实例的 Add-to-App 场景。"
+  keyPoints:
+    - "组内引擎共享 VM 与快照资源，isolate 仍然彼此独立"
+    - "通过 FlutterEngineGroup.createAndRunEngine 派生引擎，并逐个管理生命周期"
+    - "每个引擎有自己的导航栈与通道，状态不能靠全局变量隐式共享"
+    - "不再使用时调用 destroy 释放引擎，避免原生内存泄漏"
+  pitfalls:
+    - "以为组内引擎能共享 Dart 全局变量或单例"
+    - "只创建不销毁，多个引擎把内存占用推高"
+followups:
+  - "FlutterEngineGroup 与缓存单个 FlutterEngine 该如何取舍？"
+  - "多个引擎之间如何共享插件配置或登录态？"
+source:
+  url: "https://api.flutter.dev/javadoc/io/flutter/embedding/engine/FlutterEngineGroup.html"
+  title: "FlutterEngineGroup"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

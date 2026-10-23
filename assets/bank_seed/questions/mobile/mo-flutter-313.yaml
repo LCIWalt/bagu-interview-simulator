@@ -1,0 +1,27 @@
+id: mo-flutter-313
+title: "点击事件是怎样从根节点找到最上层的 Widget 的？"
+topics: [flutter, gestures, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "命中测试从根 RenderBox 开始，先判断点是否在自身范围内，再按与绘制相反的顺序询问子节点，最后才问自己。任一子节点返回命中即停止遍历兄弟，因此 Stack 中后绘制的上层组件优先拿到事件。"
+  keyPoints:
+    - "同层子节点按逆绘制顺序测试，最上层优先"
+    - "子节点命中后不再测试其兄弟"
+    - "hitTestSelf 用于没有子节点也想接收事件的场景"
+    - "IgnorePointer 与 AbsorbPointer 会在遍历前短路整棵子树"
+  pitfalls:
+    - "以为先 add 的 child 先收到点击"
+    - "用 Transform 移动了视觉位置，却忽略点击坐标也会被变换"
+followups:
+  - "RenderBox.hitTest 与 hitTestSelf 的职责如何划分？"
+  - "为什么超出父级边界的子节点通常收不到点击？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderBox/hitTest.html
+  title: "RenderBox.hitTest method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

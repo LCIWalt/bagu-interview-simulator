@@ -1,0 +1,26 @@
+id: mo-flutter-242
+title: "Riverpod 中 Notifier 取代 StateNotifier 的原因"
+topics: [flutter, riverpod, state-management]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Notifier 把初始状态放进 build 方法，通过 state setter 更新，并且原生支持 ref、autoDispose 与代码生成；StateNotifier 来自独立包，初始状态要在构造函数里传，生命周期与 Riverpod 的依赖图是两套东西。官方迁移文档建议新代码直接用 Notifier 与 AsyncNotifier。AsyncNotifier 还把加载与错误状态纳入统一模型。"
+  keyPoints:
+    - "Notifier 的 state 在 build 中初始化，可读取其他 provider"
+    - "StateNotifier 需要 super(initialState)，且与 autoDispose 语义分离"
+    - "Notifier 的 state setter 会做相等性判断，相同值不通知"
+    - "AsyncNotifier 用 AsyncValue 表达 loading、data、error"
+  pitfalls:
+    - "在 Notifier 构造函数里读 ref，时机早于 provider 初始化"
+    - "直接修改 state 对象内部字段，引用不变导致不刷新"
+followups:
+  - "迁移到 Notifier 时，已有的 StateNotifier 测试要怎么改？"
+source:
+  url: https://riverpod.dev/docs/migration/from_state_notifier
+  title: "Migration from StateNotifier"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

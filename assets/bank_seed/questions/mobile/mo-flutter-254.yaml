@@ -1,0 +1,26 @@
+id: mo-flutter-254
+title: "子 isolate 抛错后主 isolate 怎么拿到？"
+topics: [flutter, isolate, error-handling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Isolate.run 返回的 Future 会以子 isolate 的错误完成，调用方可以直接 try/catch。用 Isolate.spawn 时错误不会自动回到主 isolate，需要给子 isolate 添加 onError 端口，或让子 isolate 自己捕获后通过 SendPort 发送错误消息。onExit 端口还能感知 isolate 非正常退出。"
+  keyPoints:
+    - "Isolate.run 会把错误转发为 Future 的错误"
+    - "Isolate.spawn 的错误需 addErrorListener 或自定义协议回传"
+    - "错误对象本身也必须可跨 isolate 发送，否则退化为 RemoteError"
+    - "addOnExitListener 可区分正常结束与异常终止"
+  pitfalls:
+    - "只监听数据端口，子 isolate 崩溃后主 isolate 一直等待"
+    - "把含闭包或 socket 的异常对象直接发送，序列化失败"
+followups:
+  - "常驻 worker 的错误应该如何建模成消息？"
+source:
+  url: https://api.flutter.dev/flutter/dart-isolate/Isolate/addErrorListener.html
+  title: "Isolate.addErrorListener"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

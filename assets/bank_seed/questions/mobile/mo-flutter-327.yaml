@@ -1,0 +1,27 @@
+id: mo-flutter-327
+title: "deferred as 为什么在 iOS 上不能减小初始包？"
+topics: [flutter, build, app-size]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "deferred as 把部分 Dart 代码标记为延迟加载，但真正生效依赖 Android App Bundle 的 dynamic feature 与 Play Core 分发。iOS 不支持该机制，loadLibrary 在缺模块时会抛错，因此它更适合 Android 上体积敏感的大功能。"
+  keyPoints:
+    - "仅 Android 与 App Bundle 支持，需要 Play 分发"
+    - "import 时用 deferred as，使用时 await loadLibrary"
+    - "模块可分为安装时交付与按需下载"
+    - "iOS 上延迟导入不会被拆分，需要另做方案"
+  pitfalls:
+    - "以为加了 deferred 就一定减小初始下载体积"
+    - "不处理 loadLibrary 失败，弱网或非 Play 渠道直接崩溃"
+followups:
+  - "deferred 模块里的资源与原生库会被一起拆分吗？"
+  - "如何验证延迟模块在测试轨道上能正确下载？"
+source:
+  url: https://docs.flutter.dev/perf/deferred-components
+  title: "Deferred components"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

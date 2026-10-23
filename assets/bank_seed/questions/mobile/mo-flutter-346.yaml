@@ -1,0 +1,26 @@
+id: mo-flutter-346
+title: "PageStorageKey 与 RestorationMixin 分别记住什么？"
+topics: [flutter, state, state-restoration]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "PageStorageKey 把状态存进所在路由的 PageStorageBucket，只在同一 Route 生命周期内有效，典型用途是切换 Tab 后保留列表滚动位置。RestorationMixin 走引擎的恢复数据，能跨进程被杀与冷启动恢复，但只支持可序列化的 RestorableProperty。两者都要求 id 稳定且唯一，混用时必须明确哪一层负责持久化。"
+  keyPoints:
+    - "PageStorage 存在 Route 内，路由销毁即丢失"
+    - "Restoration 由引擎持久化，可跨进程恢复"
+    - "PageStorageKey 的 value 决定 bucket 中的存储槽位"
+    - "恢复数据只放轻量状态，大数据重新请求"
+  pitfalls:
+    - "以为 PageStorageKey 能扛住进程回收"
+    - "ScrollController 已 attach 时替换 key，位置记录错乱"
+followups:
+  - "同一个列表既要保滚动位置又要跨进程恢复，该怎么组合？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/PageStorageKey-class.html
+  title: "PageStorageKey class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

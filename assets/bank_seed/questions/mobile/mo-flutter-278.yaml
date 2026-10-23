@@ -1,0 +1,27 @@
+id: mo-flutter-278
+title: "桌面端剪贴板读写与移动端有哪些差异？"
+topics: [flutter, desktop, platform-channel]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Flutter 的 Clipboard 通过平台通道读写系统剪贴板，接口在移动端和桌面端一致，但标准 API 只覆盖纯文本。桌面剪贴板常包含 HTML、图片或文件列表，这些格式需要原生插件；读取结果也可能为空或被其他应用随时覆盖，不能当持久存储。"
+  keyPoints:
+    - "Clipboard.setData/getData 使用 ClipboardData 承载纯文本，跨平台接口一致"
+    - "桌面端剪贴板可能包含富文本、图片和文件 URL，标准 API 读不到"
+    - "读取可能返回 null 或被其他应用改写，使用前必须判空"
+    - "敏感内容写入剪贴板要考虑清除和系统剪贴板历史"
+  pitfalls:
+    - "假设 getData 一定有值，直接对 null 解引用"
+    - "把密码或 token 长期留在剪贴板"
+followups:
+  - "如何监听剪贴板内容变化？"
+  - "如何实现富文本或图片粘贴？"
+source:
+  url: "https://api.flutter.dev/flutter/services/Clipboard-class.html"
+  title: "Clipboard class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

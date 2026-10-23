@@ -1,0 +1,26 @@
+id: mo-flutter-182
+title: "Stack 的 fit 与 alignment 如何影响非 Positioned 子节点？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Stack 先用 fit 决定非 Positioned 子节点拿到的约束：loose 允许子节点按自身尺寸，expand 则强制填满 Stack；随后 alignment 决定这些子节点在 Stack 内的摆放位置。Positioned 子节点不受 fit 与 alignment 影响。"
+  keyPoints:
+    - "StackFit.loose 传松约束，子节点可以小于 Stack"
+    - "StackFit.expand 传紧约束，等价于强制子节点填满可用空间"
+    - "alignment 只定位非 Positioned 子节点，默认是 AlignmentDirectional.topStart"
+    - "父约束有界时 Stack 取 constraints.biggest，无界时才按最大子节点计算尺寸"
+  pitfalls:
+    - "以为 alignment 会移动 Positioned 子节点"
+    - "用 expand 包裹未设尺寸的图片，导致图片被拉伸变形"
+followups:
+  - "Stack 的 clipBehavior 默认值是什么，溢出时会怎样表现？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Stack-class.html
+  title: "Stack class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-334
+title: "用 NotificationListener 监听滚动，怎样避免整页重建？"
+topics: [flutter, widgets, scrolling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ScrollNotification 会沿 Element 树向上冒泡，NotificationListener 可以在不持有 ScrollController 的情况下感知开始、更新与结束。它适合做滚到顶部显示阴影、接近底部加载更多，但不应在每次更新时重建大范围 UI。"
+  keyPoints:
+    - "通知从 Scrollable 向上冒泡，可在任意祖先拦截"
+    - "depth 用于区分嵌套滚动容器"
+    - "返回 true 可阻止通知继续向上传递"
+    - "高频更新只改局部状态，或用 ValueNotifier 驱动"
+  pitfalls:
+    - "每个 ScrollUpdateNotification 都 setState 整页"
+    - "不判断 depth，内层列表滚动误触发外层逻辑"
+followups:
+  - "NotificationListener 与 ScrollController.addListener 该如何选择？"
+  - "滚动到底部加载更多时如何避免重复触发？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/NotificationListener-class.html
+  title: "NotificationListener class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

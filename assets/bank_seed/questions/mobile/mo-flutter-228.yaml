@@ -1,0 +1,26 @@
+id: mo-flutter-228
+title: "StreamBuilder 遇到 broadcast 流要注意什么？"
+topics: [flutter, stream, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StreamBuilder 在 initState 订阅流，在 didUpdateWidget 发现 stream 变化时重新订阅并丢弃旧快照。broadcast 流不缓存历史事件，晚订阅的监听者只能收到之后的事件；若每次 build 都新建流实例，还会反复退订、回到 waiting 状态。因此流实例应保存在 State 或上层 provider 中。"
+  keyPoints:
+    - "stream 参数变化会触发退订再订阅，连接状态回到 waiting"
+    - "broadcast 流允许多个 listener，但没有 replay，晚到者收不到旧事件"
+    - "单订阅流被两个 StreamBuilder 监听会抛 Bad state"
+    - "需要保留最新值时用 initialData，或在上层缓存快照"
+  pitfalls:
+    - "在 build 里新建 Stream.periodic 或 controller，每次重建都重置流"
+    - "认为 broadcast 流会自动补发最后一次事件"
+followups:
+  - "如何让 StreamBuilder 在重建后不丢失已收到的最新数据？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
+  title: "StreamBuilder class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

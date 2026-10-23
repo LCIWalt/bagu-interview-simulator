@@ -1,0 +1,27 @@
+id: mo-flutter-307
+title: "markNeedsLayout 与 markNeedsPaint 的传播范围有何不同？"
+topics: [flutter, rendering, layout]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "markNeedsLayout 表示约束或尺寸可能变化，会把脏标记向上传播到最近的 relayout boundary，并在下一帧重新走 layout 与 paint。markNeedsPaint 只影响绘制，向上传播到最近的 repaint boundary 即止，不会重新测量。"
+  keyPoints:
+    - "layout 脏标记沿父链找到 relayoutBoundary 后停止"
+    - "paint 脏标记只需到 repaintBoundary，父级可复用图层"
+    - "layout 一定会带来 paint，反向不成立"
+    - "两者都通过 owner 调度，同一帧内多次调用会被合并"
+  pitfalls:
+    - "在 paint 中调用 markNeedsLayout，触发断言或布局循环"
+    - "以为 markNeedsPaint 会重新计算尺寸与位置"
+followups:
+  - "什么条件下一个 RenderObject 会成为 relayoutBoundary？"
+  - "为什么 layout 脏标记要向上传播而不是向下？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderObject/markNeedsLayout.html
+  title: "RenderObject.markNeedsLayout method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

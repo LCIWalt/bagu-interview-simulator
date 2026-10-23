@@ -1,0 +1,26 @@
+id: mo-flutter-209
+title: "SafeArea 的 minimum 与键盘弹出后的 padding 如何配合？"
+topics: [flutter, layout, responsive]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "SafeArea 会把 MediaQuery.padding 转成内边距，并用 minimum 保证至少留出指定空白；它默认还会从子树中移除已消费的 padding。键盘弹出时 padding.bottom 会变为 0，而 viewPadding 仍保留原始值。"
+  keyPoints:
+    - "SafeArea 的 padding 取 MediaQuery.padding 与 minimum 的较大值"
+    - "maintainBottomViewPadding 为 true 时使用 viewPadding，键盘弹出后仍保留底部间距"
+    - "SafeArea 会把已消费的 padding 从子树的 MediaQuery 中移除，避免重复避让"
+    - "Scaffold 的 resizeToAvoidBottomInset 决定键盘是否压缩 body"
+  pitfalls:
+    - "在 Scaffold body 外层再包 SafeArea，导致底部出现双倍空白"
+    - "以为键盘弹出后 padding.bottom 仍等于原始安全区高度"
+followups:
+  - "自定义底部输入栏时应该用 padding 还是 viewInsets 避让键盘？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/SafeArea-class.html
+  title: "SafeArea class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

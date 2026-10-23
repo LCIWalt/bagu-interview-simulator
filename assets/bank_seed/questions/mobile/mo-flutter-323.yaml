@@ -1,0 +1,27 @@
+id: mo-flutter-323
+title: "如何用 matchesSemantics 断言无障碍语义？"
+topics: [flutter, testing, accessibility]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "matchesSemantics 用一组具名参数描述期望的语义节点，例如 label、isButton、hasTapAction，比逐字段断言更易读。断言前需要通过 tester.ensureSemantics 打开语义树，用例结束再释放句柄。"
+  keyPoints:
+    - "ensureSemantics 返回句柄，测试结束需要 dispose"
+    - "matchesSemantics 支持 label、flags 与 action 的组合"
+    - "用 tester.getSemantics 取目标节点的语义数据"
+    - "只断言与可访问性契约相关的字段，避免过度绑定实现"
+  pitfalls:
+    - "未开启语义就断言，拿到的是空语义树"
+    - "把视觉属性写进语义断言，重构后大量误报"
+followups:
+  - "合并语义与排除语义分别解决什么问题？"
+  - "如何测试读屏顺序而不依赖具体 Widget 结构？"
+source:
+  url: https://api.flutter.dev/flutter/flutter_test/matchesSemantics.html
+  title: "matchesSemantics function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

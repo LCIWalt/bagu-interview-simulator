@@ -1,0 +1,26 @@
+id: mo-flutter-211
+title: "CurvedAnimation 的 curve 与 reverseCurve 分别在什么时候生效？"
+topics: [flutter, animation, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "CurvedAnimation 把线性的 controller 值映射为曲线值；正向播放时应用 curve，反向播放时应用 reverseCurve，因此可以做出「进快出慢」的效果。它只改变读取到的值，不修改 controller 本身的 value。"
+  keyPoints:
+    - "CurvedAnimation 是 Animation<double> 的适配器，包装 parent 而不改写它的值"
+    - "status 为 forward 时使用 curve，status 为 reverse 时使用 reverseCurve"
+    - "reverseCurve 为 null 时，反向播放继续使用 curve"
+    - "Curve.transform 必须满足 0 映射到 0、1 映射到 1，否则断言失败"
+  pitfalls:
+    - "以为 reverseCurve 会把曲线方向倒过来，实际只是反向播放时采用的映射"
+    - "在 curve 变化后没有重建 CurvedAnimation，仍沿用旧实例"
+followups:
+  - "Curves.easeIn 与 easeOut 在 push、pop 转场中如何配对使用？"
+source:
+  url: https://api.flutter.dev/flutter/animation/CurvedAnimation-class.html
+  title: "CurvedAnimation class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

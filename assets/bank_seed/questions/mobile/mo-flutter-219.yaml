@@ -1,0 +1,26 @@
+id: mo-flutter-219
+title: "InheritedModel 如何只重建关心某个字段的后代？"
+topics: [flutter, widgets, state]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "InheritedModel 在 InheritedWidget 之上增加 aspect，依赖方通过 InheritedModel.inheritFrom 声明自己关心哪个 aspect。数据变化时 updateShouldNotifyDependent 只对命中的依赖者返回 true，从而跳过无关后代的重建。它适合共享对象内部字段彼此独立、更新频率差异大的场景。"
+  keyPoints:
+    - "inheritFrom 需要显式传入 aspect，才会建立带条件的依赖"
+    - "updateShouldNotifyDependent 根据 aspect 决定某个依赖者是否重建"
+    - "aspect 由开发者定义，通常用枚举或字符串常量表达"
+    - "继承的 widget 本身仍须不可变，数据变化要换新实例"
+  pitfalls:
+    - "调用 inheritFrom 时漏传 aspect，退化成全量依赖"
+    - "在 updateShouldNotifyDependent 里做重计算，帧内成本反而更高"
+followups:
+  - "InheritedModel 与拆成多个 InheritedWidget 相比各有什么取舍？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/InheritedModel-class.html
+  title: "InheritedModel class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

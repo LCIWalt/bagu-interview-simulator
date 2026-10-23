@@ -1,0 +1,27 @@
+id: mo-flutter-268
+title: "Android 预测性返回手势下，Flutter 页面如何正确响应？"
+topics: [flutter, android, navigation]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 13+ 的预测性返回会在用户滑动时提前展示返回动画，应用需要在 manifest 中声明支持，并按系统契约处理返回回调。Flutter 侧用 PopScope 控制是否允许 pop，Add-to-App 的 FlutterFragment 可以开启自动处理。混合栈中要确保原生和 Flutter 只有一方消费返回事件。"
+  keyPoints:
+    - "在 AndroidManifest 中开启 enableOnBackInvokedCallback 才能获得预测性返回"
+    - "PopScope 的 canPop 决定是否拦截，onPopInvokedWithResult 处理拦截后的动作"
+    - "FlutterFragment 可设置 shouldAutomaticallyHandleOnBackPressed 自动转发"
+    - "手势取消时不应真正 pop，也不应触发页面退出副作用"
+  pitfalls:
+    - "原生和 Flutter 都处理返回，一次手势退了两层"
+    - "在返回回调里再次调用 Navigator.pop，造成递归或双 pop"
+followups:
+  - "预测性返回动画期间如何暂停视频或动画？"
+  - "如何测试预测性返回的取消路径？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/android/predictive-back"
+  title: "Add the predictive back gesture"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

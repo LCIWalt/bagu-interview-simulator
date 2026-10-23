@@ -1,0 +1,27 @@
+id: mo-flutter-294
+title: "Flutter 应用进入 iOS 后台后，定时器与网络请求还能继续吗？"
+topics: [flutter, ios, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "iOS 应用进入后台后很快会被挂起，Dart 定时器、动画和普通网络请求都不会可靠继续；需要有限后台执行时，用 beginBackgroundTask 申请一段时间，或使用 BGTaskScheduler、后台 URLSession 等系统机制。Flutter 侧应把关键工作设计成可恢复的幂等任务，而不是依赖长驻后台。"
+  keyPoints:
+    - "挂起后 Dart isolate 停止调度，Timer 不会按墙钟继续执行"
+    - "beginBackgroundTask 只争取有限时间，到期前必须调用 endBackgroundTask"
+    - "可延迟的长任务用 BGTaskScheduler，下载用后台 URLSession"
+    - "回到前台后要重放未完成任务并校验数据一致性"
+  pitfalls:
+    - "以为后台仍能维持 WebSocket 长连接"
+    - "后台任务过期后继续写文件，导致数据损坏"
+followups:
+  - "Flutter 插件如何封装 BGTaskScheduler？"
+  - "如何测试后台恢复与任务过期路径？"
+source:
+  url: "https://developer.apple.com/documentation/uikit/uiapplication/1623031-beginbackgroundtask"
+  title: "beginBackgroundTask(expirationHandler:)"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,27 @@
+id: mo-flutter-281
+title: "Federated plugin 中 app-facing 包与平台实现包如何分工？"
+topics: [flutter, plugins, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Federated plugin 把对外 API 放在 app-facing 包，把接口契约放在 platform interface 包，各平台实现拆成独立包；app-facing 包通过 endorsed 实现或用户显式依赖来选择具体平台实现。这样平台实现可以独立发版，也允许第三方提供替代实现。"
+  keyPoints:
+    - "platform interface 包定义抽象 API，供 app-facing 与各实现包依赖"
+    - "app-facing 包在 plugin 声明中用 default_package 指定 endorsed 实现"
+    - "非 endorsed 实现需要用户在 pubspec 中显式添加依赖"
+    - "各实现包独立版本与 CI，避免一个平台阻塞全部发版"
+  pitfalls:
+    - "在 app-facing 包直接 import 某个平台实现，失去可替换性"
+    - "platform interface 混入平台相关代码，无法被所有平台依赖"
+followups:
+  - "endorsed 与 non-endorsed 实现的解析顺序是什么？"
+  - "如何避免 platform interface 的破坏性变更？"
+source:
+  url: "https://docs.flutter.dev/packages-and-plugins/developing-packages"
+  title: "Developing packages & plugins"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

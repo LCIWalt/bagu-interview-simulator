@@ -1,0 +1,26 @@
+id: mo-flutter-343
+title: "项目：冷启动直接进详情页，返回栈应该如何构建？"
+topics: [flutter, routing]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "深链冷启动时应用没有历史栈，如果只 push 详情页，返回会直接退出应用或被系统带到桌面。正确做法是把深链解析为一条完整路径（首页 → 列表 → 详情），用 go 建立声明式栈，或让路由层为缺失的父级自动补栈。同时要处理未登录、目标已删除等无法到达的情况，给出可解释的兜底页面。"
+  keyPoints:
+    - "深链应映射为完整路径，而不是单个页面"
+    - "用 go 重建栈，push 只用于栈内前进"
+    - "父级参数缺失时按 id 重新拉取或降级到列表页"
+    - "无法处理的链接落到兜底页，而不是白屏"
+  pitfalls:
+    - "直接 push 详情页，返回键行为与用户预期不符"
+    - "处理深链时假定用户已登录，未登录场景空指针或崩溃"
+followups:
+  - "Android 与 iOS 的冷启动深链在回调时机上有什么差异？"
+source:
+  url: https://docs.flutter.dev/ui/navigation/deep-linking
+  title: "Deep linking"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

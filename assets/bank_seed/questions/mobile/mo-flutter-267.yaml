@@ -1,0 +1,27 @@
+id: mo-flutter-267
+title: "iOS 嵌入 FlutterViewController 时，谁负责它的创建与销毁？"
+topics: [flutter, add-to-app, ios]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FlutterViewController 可以由代码或 Storyboard 创建，也可以绑定一个已缓存的 FlutterEngine；控制器持有引擎的视图与 messenger，但引擎的生命周期可以比控制器更长。通道 handler 应随引擎初始化注册一次，避免每次页面出现都重复绑定。销毁控制器不等于销毁引擎，共享引擎需要显式管理。"
+  keyPoints:
+    - "用 FlutterEngine 初始化 FlutterViewController，可把引擎与页面生命周期分离"
+    - "通道在引擎层注册一次，页面只负责订阅和展示"
+    - "控制器销毁后引擎仍可复用，但必须保证没有残留的页面回调"
+    - "原生导航返回 Flutter 页面时，要同步引擎的导航状态"
+  pitfalls:
+    - "每次 push 都新建 FlutterEngine，内存和启动开销暴涨"
+    - "在 viewDidDisappear 里销毁共享引擎，导致返回后白屏"
+followups:
+  - "如何让 FlutterViewController 支持原生侧滑返回手势？"
+  - "引擎复用后，如何清理上一页面注册的通道 handler？"
+source:
+  url: "https://docs.flutter.dev/add-to-app/ios/add-flutter-screen"
+  title: "Add a Flutter screen to an iOS app"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-339
+title: "core/shared 目录不断膨胀，跨 feature 复用代码该放哪？"
+topics: [flutter, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "shared 膨胀通常是因为把「暂时被两个 feature 用到」的代码直接丢进去，缺少归属判断。判断标准是它是否与业务无关：纯工具、设计 token、网络客户端留在 core；带业务语义的模型即使被多个 feature 使用，也应归属某个领域 feature 并由其他 feature 依赖其公开接口，或上提为独立的 domain 包。"
+  keyPoints:
+    - "core 只放与业务无关的基础设施与设计系统"
+    - "共享业务模型必须有明确归属，避免无主的 common/model"
+    - "依赖方向单向：feature 依赖 core，core 不反向依赖 feature"
+    - "定期审计引用数，只有一个使用者的代码应下沉回 feature"
+  pitfalls:
+    - "把 shared 当垃圾桶，最终变成谁都依赖的上帝模块"
+    - "为消除重复强行抽象，把两个不相干的流程耦合在一起"
+followups:
+  - "如何判断两个 feature 里的同名模型该合并还是分开？"
+source:
+  url: https://docs.flutter.dev/app-architecture/guide
+  title: "Guide to app architecture"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

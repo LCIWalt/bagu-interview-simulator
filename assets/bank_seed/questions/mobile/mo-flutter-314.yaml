@@ -1,0 +1,27 @@
+id: mo-flutter-314
+title: "DevTools 的 CPU Profiler 采样结果该如何读？"
+topics: [flutter, devtools, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "DevTools 的 CPU Profiler 通过周期性采样 Dart 调用栈来估算热点，只在 profile 或 release 模式下有意义。它给出的是统计分布而非精确耗时，需要结合线程标签与火焰图判断问题出在 UI 线程还是 Raster 线程。"
+  keyPoints:
+    - "采样 profiler 的占比是统计值，采样时长越长越可信"
+    - "profile 模式下 JIT 已关闭，更接近线上表现"
+    - "按 UI、Raster、IO 线程拆分调用栈"
+    - "用 bottom-up 找自身耗时，用火焰图看调用链"
+  pitfalls:
+    - "在 debug 模式采样，断言与 JIT 让结果失真"
+    - "把采样占比直接当成优化后的收益预期"
+followups:
+  - "自顶向下与自底向上两种视图分别适合回答什么问题？"
+  - "采样看不到的短任务该如何定位？"
+source:
+  url: https://docs.flutter.dev/tools/devtools/cpu-profiler
+  title: "CPU Profiler"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

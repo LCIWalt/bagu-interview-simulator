@@ -1,0 +1,26 @@
+id: mo-flutter-241
+title: "Riverpod 的 autoDispose 什么时候回收状态？"
+topics: [flutter, riverpod, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "autoDispose 的 provider 在失去最后一个监听者后销毁自身状态，下次读取会重新执行创建逻辑。这能把页面级状态的生命周期绑定到页面，避免退出后残留。需要跨页面保留时，可以用 ref.keepAlive 或在 provider 上关闭 autoDispose。"
+  keyPoints:
+    - "监听者数量归零后触发销毁，而不是在下一帧立刻销毁"
+    - "再次 watch 会重新执行 provider 的创建函数"
+    - "ref.keepAlive 返回的链接可调用 close 恢复自动销毁"
+    - "代码生成写法里 autoDispose 是默认行为，可用 keepAlive 选项关闭"
+  pitfalls:
+    - "在 autoDispose provider 里缓存必须长期保留的数据"
+    - "以为没有 widget 监听就等于立刻销毁，忽略了其他监听者"
+followups:
+  - "如何验证一个 provider 确实被回收了？"
+source:
+  url: https://riverpod.dev/docs/concepts2/auto_dispose
+  title: "AutoDispose"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

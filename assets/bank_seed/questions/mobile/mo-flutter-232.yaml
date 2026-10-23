@@ -1,0 +1,26 @@
+id: mo-flutter-232
+title: "compute 为什么不能传闭包？"
+topics: [flutter, isolate, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "compute 会在新 isolate 中执行传入的回调，而 isolate 之间只能传可序列化的消息，函数本身必须能被独立入口定位。因此回调必须是顶层函数或静态方法，闭包捕获的变量不会被带过去。参数与返回值也要满足发送规则，否则运行时才报错。"
+  keyPoints:
+    - "回调必须是顶层或静态函数，不能捕获局部变量"
+    - "参数与返回值需可跨 isolate 发送，普通对象要能序列化"
+    - "每次调用都会 spawn 一个新 isolate，有明显启动成本"
+    - "Web 平台没有 isolate，compute 会退化为同线程执行"
+  pitfalls:
+    - "传实例方法或闭包，直到运行时才报错"
+    - "在回调里访问 UI 对象或 BuildContext"
+followups:
+  - "需要传复杂配置时，怎样组织参数才安全？"
+source:
+  url: https://api.flutter.dev/flutter/foundation/compute.html
+  title: "compute function"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

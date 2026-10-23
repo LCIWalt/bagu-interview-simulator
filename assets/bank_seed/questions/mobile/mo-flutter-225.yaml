@@ -1,0 +1,26 @@
+id: mo-flutter-225
+title: "await 之后再用 context，有哪些安全写法？"
+topics: [flutter, async, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "跨过 await 后页面可能已被弹出，原来的 BuildContext 不再挂载，直接调用 Navigator.of 或 showDialog 会抛异常。安全做法是在 await 前取出需要的对象（NavigatorState、ScaffoldMessenger），或在 await 后先判断 mounted 与 context.mounted。linter 的 use_build_context_synchronously 正是在检查这类问题。"
+  keyPoints:
+    - "await 前缓存 Navigator.of(context)、ScaffoldMessenger.of(context) 等句柄"
+    - "State 内用 mounted，拿不到 State 时用 context.mounted"
+    - "判断与使用之间不要再插入 await，否则判断会失效"
+    - "把 UI 副作用集中到一处，失败路径同样检查挂载状态"
+  pitfalls:
+    - "认为加了 mounted 判断就绝对安全，判断后再次 await 又用 context"
+    - "在 catch 块里直接 showSnackBar，而此时页面已销毁"
+followups:
+  - "context.mounted 与 State.mounted 的语义差别是什么？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/BuildContext/mounted.html
+  title: "BuildContext.mounted"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

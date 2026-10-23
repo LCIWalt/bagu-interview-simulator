@@ -1,0 +1,26 @@
+id: mo-flutter-235
+title: "长驻 Isolate 的 SendPort 握手怎么做？"
+topics: [flutter, isolate, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Isolate.spawn 只能通过一条初始消息把主 isolate 的 SendPort 传给子 isolate，子 isolate 需要创建自己的 ReceivePort，并把它的 SendPort 回传，双方才能双向通信。握手完成后主 isolate 保存远端端口，用消息协议区分请求、响应与错误。销毁时要关闭端口并 kill isolate。"
+  keyPoints:
+    - "主 isolate 建 ReceivePort，把 sendPort 作为 spawn 的首条消息"
+    - "子 isolate 回传自己的 SendPort，主 isolate 在监听中保存"
+    - "用消息类型字段或密封类区分请求、结果与错误"
+    - "结束时 close 端口并调用 isolate.kill，避免进程内残留"
+  pitfalls:
+    - "只传数据不回传端口，主 isolate 无法主动发消息"
+    - "忘记处理 isolate 的 onError 与 onExit，任务崩溃后无人知晓"
+followups:
+  - "如何为这个协议做请求超时与重试？"
+source:
+  url: https://api.flutter.dev/flutter/dart-isolate/ReceivePort-class.html
+  title: "ReceivePort class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

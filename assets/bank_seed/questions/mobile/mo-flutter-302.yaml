@@ -1,0 +1,27 @@
+id: mo-flutter-302
+title: "RenderRepaintBoundary.toImage 截图为什么会阻塞，如何避免？"
+topics: [flutter, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "RenderRepaintBoundary.toImage 把该边界当前的 Layer 渲染成 ui.Image，常用于截图与分享。它依赖 GPU 光栅化，toByteData 还会把像素读回 CPU，放在主线程高频调用会直接造成卡顿。"
+  keyPoints:
+    - "目标必须是 RepaintBoundary，否则拿到的是更大范围的画面"
+    - "toImage 的 pixelRatio 决定输出分辨率与内存占用"
+    - "toByteData 会触发 GPU 回读，压缩与上传不要占用 UI isolate"
+    - "用完及时 dispose ui.Image，避免原生内存滞留"
+  pitfalls:
+    - "在 build 或每帧回调里截图，造成持续掉帧"
+    - "忽略 pixelRatio，按 3x 输出大图导致内存飙升"
+followups:
+  - "截图时如何确保当前帧的内容已经绘制完成？"
+  - "长截图与普通截图在实现上有什么差别？"
+source:
+  url: https://api.flutter.dev/flutter/rendering/RenderRepaintBoundary/toImage.html
+  title: "RenderRepaintBoundary.toImage method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

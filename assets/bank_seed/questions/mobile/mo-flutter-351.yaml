@@ -1,0 +1,26 @@
+id: mo-flutter-351
+title: "跟随系统与用户手动选择深色模式，该如何实现？"
+topics: [flutter, theming, state]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "MaterialApp 的 themeMode 决定使用 theme、darkTheme 还是跟随平台亮度，取值为 system、light、dark。用户选择需要持久化并在启动时读回，system 模式下平台亮度变化会触发依赖者重建，无需自己监听。切换时用 MaterialApp 自带的主题动画或 AnimatedTheme 过渡，避免整页闪白。"
+  keyPoints:
+    - "themeMode 三态配合 theme 与 darkTheme 使用"
+    - "用户偏好持久化，并在首帧前读回以避免闪烁"
+    - "system 模式下平台亮度变化会自动触发重建"
+    - "主题切换用动画过渡，跨页面保持一致"
+  pitfalls:
+    - "自己监听亮度又设置固定 themeMode，两者互相冲突"
+    - "启动后再异步读取偏好，首帧先亮后暗"
+followups:
+  - "如何让 Web 与桌面端也正确响应系统主题变化？"
+source:
+  url: https://api.flutter.dev/flutter/material/ThemeMode.html
+  title: "ThemeMode enum"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

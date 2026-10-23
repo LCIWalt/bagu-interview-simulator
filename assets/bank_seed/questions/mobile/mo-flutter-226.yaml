@@ -1,0 +1,26 @@
+id: mo-flutter-226
+title: "Builder 为什么能切断 InheritedWidget 的重建传播？"
+topics: [flutter, widgets, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "在 build 中读取 Theme.of、MediaQuery.sizeOf 这类 InheritedWidget 时，依赖会注册在调用方的 Element 上，值变化时该 Element 会整体重建。Builder 会插入一个新的 Element 和 BuildContext，把依赖注册下沉到 Builder 自身，外层不再被标脏。它适合把只有局部需要的继承数据读取隔离出来，成本比新写一个 StatelessWidget 更低。"
+  keyPoints:
+    - "依赖注册在真正调用 dependOnInheritedWidgetOfExactType 的 Element 上"
+    - "Builder 的 builder 收到新的 context，依赖记在 Builder 的 Element"
+    - "外层不读取该 InheritedWidget，就不会因它变化而重建"
+    - "与抽独立 StatelessWidget 效果类似，Builder 省去一个类"
+  pitfalls:
+    - "外层仍读取同一个 InheritedWidget，隔离失效"
+    - "以为 Builder 会缓存子树，父级重建时 child 仍会重建"
+followups:
+  - "Builder 与抽一个 StatelessWidget 相比该如何选？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/Builder-class.html
+  title: "Builder class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

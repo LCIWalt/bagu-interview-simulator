@@ -1,0 +1,26 @@
+id: mo-flutter-336
+title: "domain 层可以 import Flutter 吗？"
+topics: [flutter, architecture, testing]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "domain 层承载实体、用例与仓库接口，应当只依赖 Dart 核心库和项目内的纯 Dart 类型，不 import flutter/material 或插件 SDK，这样用例可以直接用 dart test 运行。一旦把 Color、BuildContext、Widget 放进领域模型，业务规则就和 UI 生命周期绑死，测试也必须启动 Flutter 绑定。展示所需的类型留在 presentation，由 UI 自行派生。"
+  keyPoints:
+    - "domain 只依赖 dart 核心库与自身抽象，可被纯 Dart 单测覆盖"
+    - "仓库接口定义在 domain，实现放在 data 并依赖具体技术"
+    - "Color、BuildContext、Widget 等 UI 类型只出现在 presentation"
+    - "需要跨层传递的展示信息用领域语义建模，不要直接传 Widget"
+  pitfalls:
+    - "在实体里放 Color 或 IconData，让 domain 间接依赖 Flutter"
+    - "把 repository 接口与实现写在同一文件，测试仍要拉起插件"
+followups:
+  - "领域模型需要本地化文案时，应该由哪一层负责？"
+source:
+  url: https://docs.flutter.dev/app-architecture/concepts
+  title: "Architecture concepts"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

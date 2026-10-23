@@ -1,0 +1,27 @@
+id: mo-flutter-256
+title: "Pigeon 为什么能减少平台通道的手写胶水与类型错误？"
+topics: [flutter, platform-channel, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Pigeon 从 Dart 侧的 @HostApi/@FlutterApi 定义生成 Dart、Kotlin/Java、Swift/Objective-C 的强类型接口，方法名、参数和返回值不再依赖手写字符串。HostApi 由原生实现供 Dart 调用，FlutterApi 反向由 Dart 实现供原生调用。它省掉胶水代码与 codec 细节，但不会改变通道的线程模型。"
+  keyPoints:
+    - "接口定义是单一事实来源，改签名后各端生成代码在编译期暴露不匹配"
+    - "HostApi 生成 Dart 调用端与原生抽象类，FlutterApi 生成反向回调"
+    - "生成代码内部仍走 BasicMessageChannel，自定义类型需可序列化"
+    - "生成文件应提交仓库并在 CI 中重新生成校验，避免手改被覆盖"
+  pitfalls:
+    - "生成后直接手改，下一次生成被覆盖"
+    - "以为 Pigeon 会把原生回调自动切回 UI 线程"
+followups:
+  - "Pigeon 的同步方法与 @async 方法在原生端分别如何实现？"
+  - "Pigeon 对泛型、嵌套类和枚举的支持边界是什么？"
+source:
+  url: "https://docs.flutter.dev/platform-integration/platform-channels#pigeon"
+  title: "Writing custom platform-specific code"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

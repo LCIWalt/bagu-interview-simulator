@@ -1,0 +1,26 @@
+id: mo-flutter-190
+title: "ScrollPhysics 的 parent 链如何组合出「iOS 回弹 + 始终可滚」？"
+topics: [flutter, scrolling, gestures]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ScrollPhysics 通过 parent 串成责任链，子类可以先改写行为再委托给父级；例如 BouncingScrollPhysics 负责回弹，AlwaysScrollableScrollPhysics 保证内容不足一屏也能拖动。组合顺序会影响 shouldAcceptUserOffset 与边界模拟的结果。"
+  keyPoints:
+    - "parent 为 null 时使用平台默认物理效果，通常由 ScrollConfiguration 决定"
+    - "AlwaysScrollableScrollPhysics 让内容不足一屏时仍可滚动，常配合下拉刷新"
+    - "BouncingScrollPhysics 在边界继续施加阻尼，ClampingScrollPhysics 则直接停住"
+    - "applyPhysicsToUserOffset 与 createBallisticSimulation 是常见的扩展点"
+  pitfalls:
+    - "只关注回弹效果，忽略 shouldAcceptUserOffset 决定内容不足一屏时能否拖动"
+    - "以为设置 physics 就能改变所有平台，忽略 ScrollConfiguration 的作用范围"
+followups:
+  - "如何让某个页面单独使用 iOS 风格回弹而不影响全局？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ScrollPhysics-class.html
+  title: "ScrollPhysics class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

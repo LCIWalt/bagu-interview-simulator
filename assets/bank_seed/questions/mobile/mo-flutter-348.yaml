@@ -1,0 +1,26 @@
+id: mo-flutter-348
+title: "ARB 里的 plural 与 select 该怎么写才不出错？"
+topics: [flutter, i18n]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ARB 使用 ICU MessageFormat，复数写作 {count, plural, =0{...} one{...} other{...}}，由 locale 决定选用哪个类别；select 则按枚举值分支。占位符必须在 @key 元数据里声明类型与示例，生成器才能校验，翻译端也不容易漏分支。中文没有单复数变化，但 other 分支仍然必填，英语等语言则要覆盖 one。"
+  keyPoints:
+    - "plural 的类别由 locale 决定，other 是必填兜底"
+    - "select 的每个 case 都要有对应分支，避免运行时缺文案"
+    - "占位符在 @key 中声明 type 与 examples，便于校验与翻译"
+    - "数字与单位交给 intl 格式化，不要拼进句子"
+  pitfalls:
+    - "自己写 count == 1 判断，在俄语、阿拉伯语等语言下错误"
+    - "只写 one 与 other，漏掉 =0 或 few 等特殊分支"
+followups:
+  - "如何在 CI 中检查 ARB 的占位符是否与模板一致？"
+source:
+  url: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
+  title: "Internationalizing Flutter apps"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

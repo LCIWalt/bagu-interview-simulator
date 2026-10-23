@@ -1,0 +1,27 @@
+id: mo-flutter-299
+title: "keepAlive 与 addAutomaticKeepAlives 的代价是什么？"
+topics: [flutter, performance, scrolling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AutomaticKeepAliveClientMixin 让滑出视口的 item 继续留在 Element 树中，从而保留滚动位置、输入内容等状态。代价是这些 item 的 Element、RenderObject 与图片都不会被回收，长列表全部开启会显著抬高内存。"
+  keyPoints:
+    - "wantKeepAlive 为 true 时框架用 KeepAlive 保住该 child"
+    - "addAutomaticKeepAlives 默认开启，会为每个 item 包一层保活逻辑"
+    - "保活只影响是否被回收，item 仍可能因数据变化而重建"
+    - "只在确实需要保留状态的少量 item 上开启"
+  pitfalls:
+    - "给信息流所有 item 开启 keepAlive，内存随浏览深度持续上涨"
+    - "把 keepAlive 当成性能优化，它通常增加而非减少开销"
+followups:
+  - "KeepAlive 的 item 还会参与 paint 与 hitTest 吗？"
+  - "除了 keepAlive，还有哪些方式保留滚动位置与输入状态？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/AutomaticKeepAliveClientMixin-mixin.html
+  title: "AutomaticKeepAliveClientMixin"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-212
+title: "隐式动画在连续快速变更时为什么会「追不上」目标值？"
+topics: [flutter, animation, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "隐式动画在目标值变化时会把 tween 起点重设为当前动画值，然后让 controller 从 0 重新 forward；因此每次变更都会重置进度与曲线。变更频率接近或高于动画时长时，动画永远走不完，看起来就像追不上。"
+  keyPoints:
+    - "didUpdateWidget 中比较新旧目标值，变化时重设 tween.begin 并重启 controller"
+    - "每次重启都从曲线起点开始，视觉上可能出现速度突变"
+    - "高频变更应合并目标值，或改用显式的 SpringSimulation"
+    - "单纯缩短 duration 不能解决频繁重启带来的抖动"
+  pitfalls:
+    - "在滚动回调里每帧修改 AnimatedContainer 的目标值"
+    - "以为隐式动画会自动排队，实际是直接覆盖目标"
+followups:
+  - "TweenAnimationBuilder 与 AnimatedContainer 的重启行为一致吗？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/ImplicitlyAnimatedWidgetState-class.html
+  title: "ImplicitlyAnimatedWidgetState class - Flutter API"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

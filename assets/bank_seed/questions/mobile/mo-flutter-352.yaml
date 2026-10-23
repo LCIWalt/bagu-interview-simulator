@@ -1,0 +1,26 @@
+id: mo-flutter-352
+title: "深色模式下品牌色和图片为什么会显得刺眼？"
+topics: [flutter, theming]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Material 3 的深色主题不是简单反色：surface 会按 elevation 叠加色调提亮，品牌色也需要为深色背景提供饱和度更低或亮度更高的变体，直接把亮色品牌色铺满会过亮。图片应准备深色变体，或用 ColorFiltered 加叠加层降低亮度。阴影在深色下几乎不可见，应改用 surface 层级与描边表达层次。"
+  keyPoints:
+    - "为深色模式准备单独的品牌色变体，而不是复用亮色值"
+    - "用 ColorScheme.fromSeed 指定 dark brightness 生成协调色板"
+    - "深色下用 surface 容器与描边替代阴影表达层级"
+    - "图片准备 dark 变体，或叠加半透明遮罩控制亮度"
+  pitfalls:
+    - "直接把 Colors.white 当文字色，忽略对比度与整体色调"
+    - "在深色背景上继续用黑色阴影，层次完全丢失"
+followups:
+  - "如何用工具检查深色模式下的对比度是否达标？"
+source:
+  url: https://api.flutter.dev/flutter/material/ColorScheme/ColorScheme.fromSeed.html
+  title: "ColorScheme.fromSeed constructor"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

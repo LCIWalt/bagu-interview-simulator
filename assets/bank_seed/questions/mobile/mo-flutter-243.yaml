@@ -1,0 +1,26 @@
+id: mo-flutter-243
+title: "ref.invalidate 与 ref.refresh 的区别"
+topics: [flutter, riverpod, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "invalidate 只是把 provider 标记为需要重算，若有监听者会在之后重建，本身立即返回；refresh 等价于 invalidate 之后立刻读取，返回新的值，对异步 provider 返回 Future。两者都会让依赖该 provider 的下游一起失效。选择取决于调用方是否需要等待新值。"
+  keyPoints:
+    - "invalidate 同步返回 void，重算时机由框架调度"
+    - "refresh 返回新的 state，异步 provider 返回 Future"
+    - "失效会沿依赖图传播到下游 provider"
+    - "对 family 实例要传对应参数，整体失效则传 family 本身"
+  pitfalls:
+    - "在 build 中调用 refresh，造成重建循环"
+    - "以为 invalidate 会保留旧值直到新值到达"
+followups:
+  - "想让 UI 在刷新期间继续显示旧数据，应该怎么做？"
+source:
+  url: https://riverpod.dev/docs/concepts2/refs
+  title: "Refs"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

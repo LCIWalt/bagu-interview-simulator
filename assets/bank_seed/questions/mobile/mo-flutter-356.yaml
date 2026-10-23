@@ -1,0 +1,26 @@
+id: mo-flutter-356
+title: "切后台时如何避免敏感页面出现在任务切换器里？"
+topics: [flutter, security, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "应用进入 inactive 时系统会截取当前界面用于任务切换器快照，金融类页面需要在此刻遮罩。Flutter 侧可监听 AppLifecycleState.inactive 插入不透明遮罩，但快照时机与平台有关，更可靠的是原生方案：Android 用 FLAG_SECURE 禁止截屏与最近任务预览，iOS 在 applicationWillResignActive 时加模糊视图。FLAG_SECURE 会让用户也无法截屏，需要产品确认。"
+  keyPoints:
+    - "inactive 回调里立刻显示遮罩，resumed 时移除"
+    - "Android FLAG_SECURE 同时阻止截屏与最近任务快照"
+    - "iOS 在 willResignActive 加模糊层，didBecomeActive 移除"
+    - "遮罩需覆盖全屏，且不依赖异步资源加载"
+  pitfalls:
+    - "只在 paused 时遮罩，此时任务切换器快照已经拍完"
+    - "以为 Flutter 层的遮罩能阻止系统截屏"
+followups:
+  - "只对部分页面启用 FLAG_SECURE，在 Flutter 中如何实现？"
+source:
+  url: https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeAppLifecycleState.html
+  title: "didChangeAppLifecycleState method"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

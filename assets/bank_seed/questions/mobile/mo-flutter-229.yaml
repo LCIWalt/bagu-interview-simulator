@@ -1,0 +1,26 @@
+id: mo-flutter-229
+title: "StreamSubscription 的 pause 与 cancel 差别在哪？"
+topics: [flutter, stream, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "pause 只是暂停向该订阅者投递事件，数据会在底层缓冲，resume 后继续；cancel 则永久解除订阅并释放资源。对单订阅流，pause 会把生产者也拖慢，形成背压；对 broadcast 流，暂停的监听者各自缓冲，缓冲无上限时可能吃满内存。页面隐藏用 pause，页面销毁必须 cancel。"
+  keyPoints:
+    - "pause 可传 Future 实现定时恢复，resume 立即恢复投递"
+    - "cancel 返回 Future 表示清理完成，dispose 中通常不等待"
+    - "单订阅流的 pause 会传导到上游，是真正的背压"
+    - "broadcast 流不会为慢消费者丢事件，缓冲可能持续增长"
+  pitfalls:
+    - "在 dispose 里只 pause 不 cancel，订阅与上游资源继续存活"
+    - "以为 pause 会丢弃暂停期间产生的事件"
+followups:
+  - "需要在暂停期间丢弃旧事件时应该怎么做？"
+source:
+  url: https://api.flutter.dev/flutter/dart-async/StreamSubscription-class.html
+  title: "StreamSubscription class"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

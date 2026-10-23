@@ -1,0 +1,27 @@
+id: mo-flutter-326
+title: "构建报错「cannot tree shake icons」，该怎么处理？"
+topics: [flutter, build, app-size]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Flutter 构建时默认会扫描常量 IconData，只保留实际用到的字形，从而大幅缩小图标字体。若代码里出现非常量构造的 IconData，构建会报错并提示关闭该优化，此时应改为常量或换用图片与 SVG。"
+  keyPoints:
+    - "默认开启，按常量 IconData 的 codePoint 裁剪字体"
+    - "非常量 IconData 让工具无法确定字形集合"
+    - "可用 --no-tree-shake-icons 兜底，但会打包完整字体"
+    - "服务端下发图标时应改用资源图或自定义子集字体"
+  pitfalls:
+    - "为绕过报错直接关闭裁剪，体积明显变大"
+    - "用变量拼出 IconData 却在本地侥幸构建成功"
+followups:
+  - "运行时根据名称选择图标，怎样做才能保留下发能力？"
+  - "除了图标字体，还有哪些资源默认不会被裁剪？"
+source:
+  url: https://docs.flutter.dev/perf/app-size
+  title: "Measuring your app's size"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22

@@ -1,0 +1,26 @@
+id: mo-flutter-217
+title: "项目：把散落的 setState 迁移到统一状态层"
+topics: [flutter, state-management, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "迁移应先按共享范围与变更频率给状态分组，再逐页替换，而不是一次性重写。可行路径是先用 ChangeNotifier 或 Notifier 抽出领域状态，保留旧接口做适配层，用 feature flag 灰度，最后删除 setState 分支。每一步都要有 widget 测试锁住加载、空、错误、成功四条路径。"
+  keyPoints:
+    - "先列状态清单：谁持有、谁读、谁写、变化频率如何"
+    - "用适配层包住旧接口，逐页替换并保持测试常绿"
+    - "迁移顺序从叶子页面到全局共享，降低回滚成本"
+    - "用 widget 测试锁定四条 UI 路径，防止行为漂移"
+  pitfalls:
+    - "一次性重写整个状态层，回归范围不可控"
+    - "迁移时顺手改 UI 和路由，出了问题无法归因"
+followups:
+  - "如何证明迁移后重建次数确实减少？"
+source:
+  url: https://docs.flutter.dev/data-and-backend/state-mgmt/options
+  title: "State management options"
+  license: CC-BY-4.0
+  retrievedAt: 2026-10-22
+status: community
+updatedAt: 2026-10-22
