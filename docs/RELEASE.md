@@ -51,3 +51,38 @@ bundle id 使用占位值 `com.mockmate.mockmate`；签名团队请在 Xcode 中
 - `.github/workflows/ci.yml`：analyze / format / test + macOS/iOS/Android 构建。
 - `.github/workflows/eval.yml`：手动触发校准评测（需 `SCORER_API_KEY`）。
 - `.github/workflows/release.yml`：打 tag 产出 macOS/Android 未签名产物（无 Secret 时可跳过签名）。
+
+## GitHub Release
+
+仓库的 `.github/workflows/release.yml` 会在推送 `v*` tag 时：
+
+1. macOS runner 构建 ad-hoc DMG
+2. Ubuntu runner 构建 `--split-per-abi` 的三个 APK
+3. `publish` job 创建 GitHub Release，并附上 DMG 与 APK
+
+发布步骤：
+
+```bash
+# 1. 修改 pubspec.yaml 的 version（例如 0.5.0+2）并提交
+git add pubspec.yaml
+git commit -m "chore: bump version to 0.5.0+2"
+git push
+
+# 2. 打 tag 并推送（会触发 Release workflow）
+git tag -a v0.5.0 -m "MockMate v0.5.0"
+git push origin v0.5.0
+```
+
+然后在 GitHub → Actions 看 `Release artifacts`；成功后 Releases 页面会出现
+`v0.5.0`，包含：
+
+- `MockMate-0.5.0.dmg`
+- `app-arm64-v8a-release.apk`
+- `app-armeabi-v7a-release.apk`
+- `app-x86_64-release.apk`
+
+注意：
+
+- Android 当前使用 debug 签名，适合自用/侧载；上架 Play 前必须配置自己的 keystore。
+- iOS 没有 IPA，只有源码；真机需要用自己的 Team 在 Xcode 签名（7 天免费证书）。
+- `workflow_dispatch` 只跑构建并上传 Actions Artifacts，不会创建 Release；Release 必须由 `v*` tag 触发。
