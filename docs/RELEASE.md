@@ -36,7 +36,14 @@ bash tool/build_ios_device.sh <你的设备UDID> com.mockmate.mockmate
 ```
 
 脚本把 DerivedData 放到 `.toolchain/DerivedData`，并把 Flutter 配置/遥测目录移到工作区，
-然后 `xcodebuild` 签名、`devicectl` 安装并启动。已验证设备 iPhone（iOS 26.5.2），
+然后 `xcodebuild` 签名、`devicectl` 安装并启动。
+
+如果本机 Xcode 未登录 Apple ID，自动签名会报 `No Accounts`；请先在
+Xcode → Settings → Accounts 登录，并在 Runner target 选择 Team。也可以临时指定团队：
+
+```bash
+IOS_DEVELOPMENT_TEAM=<你的TeamID> bash tool/build_ios_device.sh <UDID> com.mockmate.mockmate
+```已验证设备 iPhone（iOS 26.5.2），
 bundle id 使用占位值 `com.mockmate.mockmate`；签名团队请在 Xcode 中选择你自己的 Team。
 
 普通 Terminal.app 中也可以直接 `flutter run -d <udid>`；DSH/沙箱终端建议用上面的脚本。

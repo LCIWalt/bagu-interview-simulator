@@ -18,6 +18,7 @@ export FLUTTER_SUPPRESS_ANALYTICS=true
 mkdir -p "$XDG_CONFIG_HOME"
 
 DERIVED="$PWD/.toolchain/DerivedData"
+TEAM="${IOS_DEVELOPMENT_TEAM:-}"
 APP="$DERIVED/Build/Products/Release-iphoneos/Runner.app"
 
 echo "==> Building for $DEVICE (DerivedData: $DERIVED)"
@@ -28,6 +29,7 @@ xcodebuild \
   -destination "id=$DEVICE" \
   -derivedDataPath "$DERIVED" \
   -allowProvisioningUpdates \
+  ${TEAM:+DEVELOPMENT_TEAM="$TEAM"} \
   build
 
 echo "==> Installing $BUNDLE_ID"
