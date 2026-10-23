@@ -63,20 +63,20 @@ bundle id 使用占位值 `com.mockmate.mockmate`；签名团队请在 Xcode 中
 发布步骤：
 
 ```bash
-# 1. 修改 pubspec.yaml 的 version（例如 0.5.0+2）并提交
+# 1. 修改 pubspec.yaml 的 version（例如 0.1.0+1）并提交
 git add pubspec.yaml
-git commit -m "chore: bump version to 0.5.0+2"
+git commit -m "chore: bump version to 0.1.0+1"
 git push
 
 # 2. 打 tag 并推送（会触发 Release workflow）
-git tag -a v0.5.0 -m "MockMate v0.5.0"
-git push origin v0.5.0
+git tag -a v0.1.0 -m "MockMate v0.1.0"
+git push origin v0.1.0
 ```
 
 然后在 GitHub → Actions 看 `Release artifacts`；成功后 Releases 页面会出现
-`v0.5.0`，包含：
+`v0.1.0`，包含：
 
-- `MockMate-0.5.0.dmg`
+- `MockMate-0.1.0.dmg`
 - `app-arm64-v8a-release.apk`
 - `app-armeabi-v7a-release.apk`
 - `app-x86_64-release.apk`
