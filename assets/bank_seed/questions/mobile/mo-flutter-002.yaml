@@ -1,5 +1,5 @@
 id: mo-flutter-002
-title: "Flutter: State management"
+title: "Flutter: async gap 后如何安全使用 BuildContext"
 topics: [flutter, async, lifecycle]
 role: mobile
 level: mid
@@ -19,7 +19,7 @@ followups:
   - "如何避免 async 回调里的 setState after dispose？"
 source:
   url: https://docs.flutter.dev/get-started/fundamentals/state-management
-  title: "Flutter: State management"
+  title: "Flutter: async gap 后如何安全使用 BuildContext"
   license: CC-BY-4.0
   retrievedAt: 2026-10-22
 status: community

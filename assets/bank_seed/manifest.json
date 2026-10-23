@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "bankVersion": "2026.10.6",
   "minAppVersion": "0.5.0",
-  "generatedAt": "2026-10-23T11:24:34.872151Z",
+  "generatedAt": "2026-10-23T11:28:07.786094Z",
   "gitCommit": "seed",
   "counts": {
     "questions": 728,
@@ -1256,8 +1256,8 @@
     },
     {
       "path": "questions/mobile/mo-flutter-002.yaml",
-      "sha256": "80dcb2ff3047a18564a40a286753d24ce42c2eb68371f66e5f877c1512621019",
-      "bytes": 974
+      "sha256": "269a71db3751eded3888d281e30e64e03a0602ba688512320efa7847081f1a55",
+      "bytes": 1030
     },
     {
       "path": "questions/mobile/mo-flutter-003.yaml",
@@ -1941,8 +1941,8 @@
     },
     {
       "path": "questions/mobile/mo-flutter-233.yaml",
-      "sha256": "194373bdd6646847721c6d712db0e74a6acb9cfc2d6b8a182dd6f6e01ff05db1",
-      "bytes": 1263
+      "sha256": "fc0a34b848353241b17ce26ba5810f05846c4ed5b1f4c70bc4f7a5856d263cc7",
+      "bytes": 1211
     },
     {
       "path": "questions/mobile/mo-flutter-234.yaml",

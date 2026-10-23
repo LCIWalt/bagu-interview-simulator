@@ -1,25 +1,25 @@
 id: mo-flutter-233
-title: "Isolate.run 与 compute 该如何选？"
+title: "Flutter 里如何判断一段计算该不该放进 isolate？"
 topics: [flutter, isolate, performance]
 role: mobile
 level: senior
 difficulty: 3
 type: knowledge
 answer:
-  summary: "Isolate.run 接收一个无参闭包并在新 isolate 中执行，结果通过 Future 返回，适合一次性、需要捕获多个变量的任务。compute 要求顶层或静态函数、只能传一个参数，但属于 Flutter foundation，在 Web 上有降级行为。两者都是一次性 isolate，常驻任务应改用 Isolate.spawn。"
+  summary: "先看这段计算是否会造成可感知的 UI 卡顿：通常只有几十毫秒以上、且输入输出可发送的纯计算才值得开 isolate。isolate 启动和消息拷贝都有成本，小任务放进 isolate 往往更慢；图片解码、大 JSON 解析、压缩等才适合。"
   keyPoints:
-    - "Isolate.run 支持闭包，捕获的变量会被复制到新 isolate"
-    - "compute 只能传单个参数，需自行打包成 record 或类"
-    - "两者都在任务结束后销毁 isolate，频繁调用有启动开销"
-    - "长生命周期或需要双向通信时用 Isolate.spawn 加 SendPort"
+    - "先测量主 isolate 上的耗时，而不是凭感觉拆分"
+    - "输入输出必须可发送，避免把 BuildContext、平台对象带进 isolate"
+    - "任务越小，isolate 启动与拷贝的固定成本占比越高"
+    - "频繁任务应复用 worker isolate，而不是每次 Isolate.run"
   pitfalls:
-    - "在 Isolate.run 的闭包里捕获 BuildContext 或超大对象"
-    - "对很小的计算也开 isolate，启动成本高于计算本身"
+    - "把很小的字符串处理也丢进 isolate，反而增加延迟"
+    - "在 isolate 中访问 UI、插件或全局可变状态"
 followups:
-  - "什么时候应该复用同一个 worker isolate？"
+  - "如何衡量 isolate 方案是否真的降低了 jank？"
 source:
-  url: https://api.flutter.dev/flutter/dart-isolate/Isolate/run.html
-  title: "Isolate.run"
+  url: https://docs.flutter.dev/perf/isolates
+  title: "Isolates | Flutter"
   license: CC-BY-4.0
   retrievedAt: 2026-10-22
 status: community
