@@ -1,0 +1,26 @@
+id: mo-flutter-484
+title: "hitTestChildren 返回 false 后，父节点还会继续命中自己吗？"
+topics: [flutter, hit-testing, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "默认的 RenderBox.hitTest 用或运算组合子节点与自身的命中结果，子节点全没命中时还会继续询问 hitTestSelf。两者都为 false 时该节点返回 false，命中测试会继续尝试同层更靠后的兄弟节点。"
+  keyPoints:
+    - "hitTestChildren 与 hitTestSelf 是或关系，任一为 true 就加入结果并返回 true"
+    - "返回 false 表示该子树不消费这次指针，测试继续向同层后续节点推进"
+    - "兄弟节点的测试顺序通常是逆序，后绘制的内容先被命中"
+    - "返回 true 会终止该分支的继续查找，路径按加入顺序排列"
+  pitfalls:
+    - "重写 hitTest 时无条件返回 true，整个页面只剩最上层能响应"
+    - "在 hitTestChildren 里对每个子节点都返回 true，重叠区域永远命中第一个"
+  followups:
+    - "命中测试路径的顺序与事件派发方向是什么关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-088
+title: "Android: 电量消耗分析与 Battery Historian"
+topics: [android, battery, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Battery Historian 把 bugreport 转成时间线，能直观看到唤醒、网络、GPS、CPU 和充电状态，从而判断耗电来自应用还是系统。应用自身可以用 Energy Profiler 按组件看 CPU、网络和传感器开销。"
+  keyPoints:
+    - "用 bugreport 加 Battery Historian 看 wakelock、job、alarm 与 radio 状态"
+    - "Energy Profiler 按组件拆分 CPU、网络、GPS 的能耗"
+    - "重点关注后台唤醒次数、长连接心跳频率与定位请求密度"
+    - "对比不同版本和场景的耗电曲线，保持测试条件一致"
+  pitfalls:
+    - "只看耗电百分比，不看使用时长和具体场景，结论容易失真"
+    - "忽略测试设备差异和系统后台活动的干扰"
+followups:
+  - "如何判断耗电主要来自应用还是系统？"
+  - "JobScheduler 与 AlarmManager 的耗电差异体现在哪？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

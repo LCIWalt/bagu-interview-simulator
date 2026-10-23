@@ -1,0 +1,26 @@
+id: mo-flutter-402
+title: "StatefulBuilder 的 setState 与 State.setState 有什么不同？"
+topics: [flutter, widgets, state]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "StatefulBuilder 在 builder 中提供一个局部 StateSetter，调用后只重建 builder 覆盖的子树，不会触发外层 State 的整个 build。它适合对话框、底部弹层这类只需要局部刷新的场景，但不提供 initState、dispose 等完整生命周期。"
+  keyPoints:
+    - "builder 的第二个参数是 StateSetter，作用域仅限该子树"
+    - "局部 setState 只标脏 StatefulBuilder 自己的 Element"
+    - "StatefulBuilder 没有可重写的生命周期方法"
+    - "需要资源管理或跨 build 状态时，仍应使用 StatefulWidget"
+  pitfalls:
+    - "把 StateSetter 存到外部长期持有，组件销毁后调用会异常"
+    - "在 builder 外修改状态，界面不会自动刷新"
+followups:
+  - "StatefulBuilder 与 Builder 的区别是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

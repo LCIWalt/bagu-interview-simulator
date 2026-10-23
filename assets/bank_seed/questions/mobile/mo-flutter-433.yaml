@@ -1,0 +1,26 @@
+id: mo-flutter-433
+title: "防抖只解决了频率，旧响应覆盖新结果怎么办？"
+topics: [flutter, async, concurrency]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "防抖减少请求数，但先发的慢请求仍可能后到并覆盖新结果。需要给每次请求编号或带上查询标识，回包时只接受最新一次；更彻底的是取消上一次请求，让旧结果根本没有机会写回。"
+  keyPoints:
+    - "用递增 requestId 标记请求，回包时比对当前值"
+    - "取消旧请求比丢弃旧响应更省资源"
+    - "状态更新要同时校验请求标识与页面存活"
+    - "把最新查询条件与结果一起存储，避免错配"
+  pitfalls:
+    - "只比较关键词字符串，重复搜索同一词时仍会错乱"
+    - "在 finally 里无条件关闭 loading，旧请求提前结束新请求的加载态"
+followups:
+  - "请求序号方案在分页加载场景要注意什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

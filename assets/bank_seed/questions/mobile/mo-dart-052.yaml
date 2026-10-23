@@ -1,0 +1,26 @@
+id: mo-dart-052
+title: "NativeCallable：把 Dart 函数交给 C 调用的线程约束"
+topics: [dart, ffi, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "NativeCallable.listener 把 Dart 函数暴露成 C 回调，调用会被投递到创建它的 isolate 的事件循环，因此可以从任意原生线程安全触发；但它只能返回 void，且用完必须 close。同步的 NativeCallable.isolateLocal 则只能在所属 isolate 的线程上调用。"
+  keyPoints:
+    - "listener 回调异步投递到创建它的 isolate，可跨线程调用"
+    - "isolateLocal 同步执行，但必须由同一 isolate 的线程触发"
+    - "回调参数与返回值仅限原生可表示类型，不能直接传 Dart 对象"
+    - "不再需要回调时必须 close，否则原生句柄与内存持续泄漏"
+  pitfalls:
+    - "在原生工作线程直接调用 isolateLocal 回调，行为未定义"
+    - "忘记 close，长时间运行后句柄数量持续增长"
+  followups:
+    - "为什么 NativeCallable.listener 的回调返回值只能是 void？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

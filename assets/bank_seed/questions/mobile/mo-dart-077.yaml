@@ -1,0 +1,27 @@
+id: mo-dart-077
+title: "未 await 的 Future 错误为何变成未捕获异常"
+topics: [dart, async, error-handling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "没有被 await 或 catchError 的 Future 失败时，错误会进入当前 Zone 的未捕获错误处理，在 Flutter 中通常被打印并上报。它不会打断同步流程，调用方也无法用外层 try/catch 捕获。对故意不等待的 Future 应显式标记 unawaited 并配套兜底。"
+  keyPoints:
+    - "未处理的 Future 错误在微任务阶段上报给 Zone"
+    - "错误不会同步抛出，外层 try/catch 捕获不到"
+    - "unawaited 只表达意图，不处理错误"
+    - "Flutter 可用 PlatformDispatcher.onError 统一兜底"
+  pitfalls:
+    - "async 函数里漏写 await，错误变成全局异常"
+    - "catchError 返回错误对象，污染 Future 的类型"
+followups:
+  - "Future.error 多久之后会被判定为未处理？"
+  - "如何保证 fire-and-forget 任务也有错误日志？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

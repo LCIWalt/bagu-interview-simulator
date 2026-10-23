@@ -1,0 +1,27 @@
+id: mo-flutter-510
+title: "Add-to-App 选源码集成还是 AAR/XCFramework 产物集成？"
+topics: [flutter, add-to-app, build]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "源码集成把 Flutter 模块作为 Gradle 子项目或本地 pod 引入，改动即时可见，适合与原生团队并行开发；产物集成用 flutter build aar 或 build ios-framework 产出二进制，宿主不依赖 Flutter SDK，CI 更快、版本更可控。团队边界清晰后应尽早切到产物集成。"
+  keyPoints:
+    - "源码集成依赖 Flutter SDK 与本地路径，宿主构建机也必须装 Flutter"
+    - "flutter build aar 产出 debug、profile、release 三类仓库，按构建类型依赖"
+    - "iOS 用 flutter build ios-framework 产出 XCFramework，注意静态与动态的选择"
+    - "产物集成要固定 Flutter 版本与产物版本，并纳入宿主 CI 缓存"
+  pitfalls:
+    - "产物集成后忘记同步 Dart 代码变更，出现改了没生效"
+    - "debug 与 release 产物混用，导致断言行为与性能特征不一致"
+followups:
+  - "产物集成下如何调试 Dart 代码？"
+  - "AAR 里的 Flutter 引擎体积如何按 ABI 裁剪？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

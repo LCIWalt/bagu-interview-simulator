@@ -1,0 +1,27 @@
+id: mo-android-081
+title: "Android: Android Studio Profiler 的 CPU 采样与追踪"
+topics: [android, profiler, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "CPU Profiler 提供 sampled 与 instrumented 两种记录方式：采样按固定间隔抓调用栈、开销低但可能漏掉短函数，插桩记录每次进出、精确但会放大耗时。实际排查通常先用采样找热点，再对可疑区间做 method tracing 或 systrace 验证。"
+  keyPoints:
+    - "Sample 模式按间隔采样调用栈，适合长时间运行和初步定位"
+    - "Instrumented 模式记录每次方法进出，精确但开销大，不宜长时间开启"
+    - "Call Chart 看时序、Flame Chart 看占比、Top Down 看聚合耗时"
+    - "与 Perfetto/systrace 交叉验证，避免只看到 Java 层而漏掉 native 与渲染"
+  pitfalls:
+    - "在 debuggable 包上测性能并直接下结论，数据和线上差距很大"
+    - "把 Profiler 自身的采集开销算进应用耗时"
+followups:
+  - "采样模式和插桩模式分别适合什么排查目标？"
+  - "为什么 release 包不能随意 attach CPU Profiler？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

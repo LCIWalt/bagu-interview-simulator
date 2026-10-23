@@ -1,0 +1,26 @@
+id: mo-flutter-392
+title: "同一个 Widget 实例可以同时挂在两处吗？"
+topics: [flutter, widgets, state]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Widget 是不可变配置，不持有 Element 或 State，同一个实例可以被多处 inflate，各自生成独立的 Element 与 State。const 构造的 Widget 在树中复用同一实例很常见，唯一例外是带 GlobalKey 的 Widget，同一个 key 不能同时对应两个活动 Element。"
+  keyPoints:
+    - "Widget 只描述配置，不持有 Element 与 State"
+    - "同一实例挂到两处会创建两个 Element 与两份 State"
+    - "const Widget 被多个位置引用是正常且推荐的"
+    - "GlobalKey 要求全局唯一，同一实例不能同时出现在两处"
+  pitfalls:
+    - "以为复用同一个 Widget 实例能共享 State"
+    - "把带 GlobalKey 的 Widget 同时挂到两处，触发 duplicate key"
+followups:
+  - "为什么同一个 Widget 实例在不同位置会有不同 State？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

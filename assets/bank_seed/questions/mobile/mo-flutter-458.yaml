@@ -1,0 +1,26 @@
+id: mo-flutter-458
+title: "relayoutBoundary 是怎么确定的，parentUsesSize 在其中起什么作用？"
+topics: [flutter, layout, renderobject]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "relayoutBoundary 是 markNeedsLayout 向上冒泡的终点，脏标记一旦到达边界就停下，由 flushLayout 直接重排该子树。是否成为边界取决于父级是否使用子尺寸、子节点是否 sizedByParent、约束是否 tight，以及有没有父节点。"
+  keyPoints:
+    - "给子节点传 parentUsesSize: false 时，子节点自成 relayout boundary，尺寸变化不再通知父级"
+    - "sizedByParent 为 true 的节点尺寸只由约束决定，同样可以成为边界"
+    - "tight 约束下尺寸不可能变化，也会被当作重排边界"
+    - "非边界节点标脏时会把脏标记转交给父级，直到遇到最近的边界"
+  pitfalls:
+    - "传了 parentUsesSize: false 却仍在父级里读 child.size，父级布局不会随子节点更新"
+    - "以为 RepaintBoundary 同时是重排边界，重绘边界与重排边界是两个独立概念"
+  followups:
+    - "如何用 debugDumpRenderTree 观察节点与 relayoutBoundary 的关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

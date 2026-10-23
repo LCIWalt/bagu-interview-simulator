@@ -1,0 +1,27 @@
+id: mo-flutter-559
+title: "--dart-define-from-file 适合放什么，不适合放什么？"
+topics: [flutter, ci, configuration]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "它把 JSON 文件中的键值编译进产物，适合放非敏感的差异化配置，例如域名、渠道、功能开关与第三方公开 appKey。不适合放密钥，因为值仍然可以从产物中提取，dart-define 不等于加密。配置文件本身不应提交敏感内容，CI 中由 secret 动态生成。"
+  keyPoints:
+    - "编译期注入的键值等同公开信息，只放非敏感配置"
+    - "代码中用 const String.fromEnvironment 读取，保证可被 tree shaking"
+    - "每个 flavor 一份配置文件，由 CI 从 secret 生成"
+    - "真正的密钥走后端下发或安全存储，不放进 define 文件"
+  pitfalls:
+    - "把签名密码或 API secret 写进 define 文件并提交"
+    - "所有 flavor 共用同一份 define 文件，测试域名被打进生产包"
+followups:
+  - "dart-define 的值会出现在哪个构建产物里？"
+  - "如何让本地开发与 CI 使用同一套配置键名？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

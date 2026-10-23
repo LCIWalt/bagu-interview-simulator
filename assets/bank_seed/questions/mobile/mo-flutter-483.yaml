@@ -1,0 +1,26 @@
+id: mo-flutter-483
+title: "RenderBox.hitTest 中 hitTestSelf 与 HitTestBehavior 是什么关系？"
+topics: [flutter, hit-testing, gestures]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "RenderBox 默认先测子节点，再问自己是否被命中，hitTestSelf 决定自身是否算命中。带行为的代理盒把 HitTestBehavior 映射成三种策略：deferToChild 只靠子节点，opaque 自己也算命中，translucent 无论是否命中都把自己加入结果。"
+  keyPoints:
+    - "默认实现先在 size 内判断位置，再依次调用 hitTestChildren 与 hitTestSelf"
+    - "opaque 让 hitTestSelf 返回 true，空白区域也能接住事件"
+    - "translucent 不改变 hitTestSelf，但仍把自身加入结果，让父级能收到事件"
+    - "deferToChild 完全依赖子节点，子节点没命中就不会出现在路径里"
+  pitfalls:
+    - "用 opaque 包住整块区域，结果吞掉了下层所有点击"
+    - "以为 translucent 会让子节点也命中，实际只影响自身是否进入路径"
+  followups:
+    - "AbsorbPointer 与 IgnorePointer 分别对应哪种行为？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

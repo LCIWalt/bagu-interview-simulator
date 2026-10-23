@@ -1,0 +1,26 @@
+id: mo-flutter-492
+title: "ImageCache 的字节上限被撑满后会发生什么？"
+topics: [flutter, image, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ImageCache 同时受条目数与字节数限制，超限时按最近使用情况淘汰非活跃条目。仍被 ImageStream 监听的图片属于活跃对象，不会被直接淘汰，所以长生命周期的监听会让内存持续偏高。"
+  keyPoints:
+    - "默认上限是 maximumSize 条目数与 maximumSizeBytes 字节数，任一超限都会触发清理"
+    - "淘汰优先发生在没有被监听、可以重新解码的缓存条目上"
+    - "活跃图片会被保留，直到最后一个监听者移除"
+    - "被淘汰后再次使用同一 ImageProvider 会重新解码"
+  pitfalls:
+    - "以为调大 maximumSizeBytes 就能解决 OOM，实际只是推迟了峰值"
+    - "页面销毁时不移除 ImageStreamListener，活跃图片一直无法淘汰"
+  followups:
+    - "evict 与 clear 分别适合什么场景？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

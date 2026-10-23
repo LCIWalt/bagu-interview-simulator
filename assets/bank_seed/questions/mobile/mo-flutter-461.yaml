@@ -1,0 +1,26 @@
+id: mo-flutter-461
+title: "Layer 的 addToScene 与 SceneBuilder 的 push/pop 如何对应树结构？"
+topics: [flutter, layer, compositing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Layer 树在每帧末尾通过 buildScene 转成引擎可消费的 Scene：每个图层把自己的内容追加给 SceneBuilder，容器图层用 push 与 pop 把子树包进一个作用域。push 与 pop 必须严格配对，否则构建 Scene 时会断言失败。"
+  keyPoints:
+    - "buildScene 内部调用 addToScene，最后执行 SceneBuilder.build 得到 Scene"
+    - "OffsetLayer、TransformLayer、ClipRectLayer 分别用 pushOffset、pushTransform、pushClipRect 包住子树"
+    - "PictureLayer 用 addPicture 把录制好的 Picture 交给构建器"
+    - "子图层的排列顺序就是绘制顺序，后加入的图层画在上面"
+  pitfalls:
+    - "addToScene 里少写一次 pop，debug 下断言、release 下表现为画面错乱"
+    - "以为每帧 buildScene 都会重新光栅化，实际未标脏的图层可以复用上一帧结果"
+  followups:
+    - "SceneBuilder 的 pushOpacity 与 OpacityLayer 是同一件事吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

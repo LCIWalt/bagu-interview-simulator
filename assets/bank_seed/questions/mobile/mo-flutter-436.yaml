@@ -1,0 +1,26 @@
+id: mo-flutter-436
+title: "传入的 Stream 变了，StreamBuilder 为什么还显示旧快照？"
+topics: [flutter, stream, widgets]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StreamBuilder 在 didUpdateWidget 里换订阅，但会保留上一份 AsyncSnapshot，直到新流发出事件才更新；如果新流迟迟不发事件，界面就一直停在旧数据。需要显式重置状态，比如换 key、重建 Widget，或在新流首帧前给出占位。"
+  keyPoints:
+    - "换流只重新订阅，不清空已有 snapshot"
+    - "换流后 connectionState 先变 none 再 waiting，data 仍是旧值"
+    - "用 ValueKey 强制重建可拿到干净状态"
+    - "更稳妥的是在上层管理流与数据，只把值传给展示层"
+  pitfalls:
+    - "切换用户后沿用旧快照，短暂显示上一个用户的数据"
+    - "用 hasData 判断加载态，旧数据让新流的加载态不出现"
+followups:
+  - "StreamBuilder 与 FutureBuilder 在换源时的行为一致吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "Flutter 客户端面经：异步编程与状态管理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

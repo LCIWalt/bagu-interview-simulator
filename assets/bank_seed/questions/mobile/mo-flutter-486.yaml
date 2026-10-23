@@ -1,0 +1,26 @@
+id: mo-flutter-486
+title: "SemanticsNode 的 rect 与 globalTransform 有什么区别？"
+topics: [flutter, semantics, accessibility]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "rect 是节点在自身局部坐标系里的边界，transform 描述它相对父语义节点的变换，globalTransform 则是从根一路乘下来的结果。读屏软件用全局坐标画焦点框，所以绘制层改了位置却不更新语义，就会出现焦点框错位。"
+  keyPoints:
+    - "rect 使用局部坐标，尺寸通常来自渲染对象上报的语义矩形"
+    - "transform 是相对父节点的矩阵，globalTransform 由祖先链逐级相乘得到"
+    - "焦点框与手势落点都依赖全局坐标，局部 rect 不能直接使用"
+    - "getSemanticsData 会把语义属性与几何信息一起打包，用于变更比较"
+  pitfalls:
+    - "用 Transform 做动画却不触发语义更新，焦点框停在旧位置"
+    - "把局部 rect 直接当屏幕坐标上报，多级嵌套后偏移明显"
+  followups:
+    - "语义节点的 sortKey 会影响读屏的遍历顺序吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

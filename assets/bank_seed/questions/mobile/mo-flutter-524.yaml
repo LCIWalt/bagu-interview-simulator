@@ -1,0 +1,27 @@
+id: mo-flutter-524
+title: "macOS 沙盒下，Flutter 桌面应用读写文件为什么会失败？"
+topics: [flutter, desktop, macos]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "开启 App Sandbox 后，应用默认只能访问容器目录与用户显式选择的文件，直接拼绝对路径读写会被拒。需要在 entitlements 里声明能力并通过系统文件选择器获得授权，持久访问则要保存安全作用域书签，才能在重启后继续访问。"
+  keyPoints:
+    - "沙盒应用默认只能写容器内的 Application Support、Caches 等目录"
+    - "访问容器外文件需 user-selected read/write 权限，并由 NSOpenPanel 授权"
+    - "持久访问要保存 security-scoped bookmark，使用时 startAccessing 并配对 stop"
+    - "DebugProfile 与 Release 的 entitlements 要分别检查，别只改一个"
+  pitfalls:
+    - "用 path_provider 拿到容器路径就以为能访问任意 Downloads 路径"
+    - "保存绝对路径而不保存书签，重启后权限失效"
+followups:
+  - "公证（notarization）与沙盒是什么关系？"
+  - "Flutter 桌面如何调起系统文件选择器并拿到安全作用域 URL？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

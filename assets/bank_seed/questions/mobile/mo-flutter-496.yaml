@@ -1,0 +1,27 @@
+id: mo-flutter-496
+title: "平台通道一次能传多大的数据？大文件为什么不该走 MethodChannel？"
+topics: [flutter, platform-channel, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "标准编解码器没有明确的单条消息上限，但整条消息要在 Dart 堆和原生侧各编码一份，峰值内存约为数据量的数倍，编解码还发生在 UI 线程与平台主线程上。传几十 MB 的 Uint8List 很容易造成掉帧甚至 OOM。大文件应传路径或文件描述符，让原生直接读写。"
+  keyPoints:
+    - "StandardMessageCodec 会把整条消息编码成一块 ByteData，双方各持一份，没有流式分片"
+    - "编码解码同步执行，大 payload 直接占用 UI 线程与平台主线程的时间片"
+    - "大文件传绝对路径、content:// URI 或已打开的 fd，让原生侧自己读写"
+    - "必须内联传输时用分块加背压，而不是一次性 invokeMethod"
+  pitfalls:
+    - "把图片或视频转 base64 塞进通道，体积膨胀约三分之一还多一次编解码"
+    - "在 iOS 主线程拼装超大 ByteData，触发 watchdog 或内存峰值崩溃"
+followups:
+  - "PlatformView 传纹理与通道传字节，成本差别在哪里？"
+  - "Android 上通过 content:// 把文件交给插件，读权限该如何授予？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

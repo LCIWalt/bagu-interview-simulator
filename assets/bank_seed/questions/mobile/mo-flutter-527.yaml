@@ -1,0 +1,27 @@
+id: mo-flutter-527
+title: "联邦插件要给 platform interface 加参数，怎样不破坏下游？"
+topics: [flutter, plugins, versioning]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "platform interface 是插件与各平台实现之间的契约，直接给抽象方法加必选参数会让所有已发布的实现包编译失败。应优先新增带默认实现的方法或可选参数，确需破坏时发大版本并给出迁移期，同时用接口包的版本约束锁住兼容范围。"
+  keyPoints:
+    - "对外抽象方法新增必选参数是破坏性变更，所有实现包都要同步发版"
+    - "优先新增带默认实现的方法或可选参数，保持旧实现可编译"
+    - "platform_interface 与各实现包用 ^ 版本约束，避免实现包跨大版本被误解析"
+    - "破坏性变更走大版本，并在 CHANGELOG 给出迁移步骤"
+  pitfalls:
+    - "只发实现包不发 interface 包，下游解析到不兼容组合"
+    - "在 interface 里引用 Flutter，导致纯 Dart 测试无法运行"
+followups:
+  - "如何用 mock platform 实现测试 app-facing 包？"
+  - "联邦插件的 endorsement 是怎么生效的？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-448
+title: "微任务里抛出的异常，会中断后续微任务吗？"
+topics: [dart, event-loop, error-handling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "不会。微任务队列逐个执行，某个微任务抛出的未捕获错误会交给 Zone 的错误处理，队列继续清空；只有错误处理器自身再抛错，才会影响后续流程。但这不意味着可以放任错误，测试与线上都需要统一上报。"
+  keyPoints:
+    - "微任务之间相互独立，前一个失败不阻塞后一个"
+    - "未捕获错误进入当前 Zone 的 handleUncaughtError"
+    - "根 Zone 无处理器时错误会打印并可能终止进程"
+    - "测试中 flushMicrotasks 会暴露这些错误"
+  pitfalls:
+    - "依赖后续微任务一定执行，忽略错误处理导致的半完成状态"
+    - "在错误处理器里再次抛错，掩盖原始堆栈"
+followups:
+  - "Zone 的 handleUncaughtError 与 runZonedGuarded 的关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

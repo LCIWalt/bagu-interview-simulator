@@ -1,0 +1,27 @@
+id: mo-flutter-543
+title: "恢复数据格式升级后，旧快照反序列化失败怎么办？"
+topics: [flutter, state-restoration, migration]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "系统恢复的快照可能来自旧版本，字段增删或枚举改名都会让 fromJson 抛错。稳妥做法是给快照带 schema 版本，逐版本迁移，无法识别或损坏的数据整体丢弃并回退默认状态。恢复失败绝不能让应用起不来。"
+  keyPoints:
+    - "快照写入时附带 schemaVersion，读取时先比较再决定迁移路径"
+    - "迁移函数逐版本升级，缺失字段用默认值补齐"
+    - "未知或损坏数据丢弃并上报，回退到默认状态而不是抛异常"
+    - "枚举解析提供 unknown 兜底，避免新增值导致旧客户端崩溃"
+  pitfalls:
+    - "用 as 强转字段，类型变化时直接抛 TypeError"
+    - "迁移逻辑假设字段一定存在，遇到旧快照就空指针"
+followups:
+  - "迁移应该在上报前还是上报后执行，如何避免重复迁移？"
+  - "快照损坏时是否需要提示用户重新进入页面？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

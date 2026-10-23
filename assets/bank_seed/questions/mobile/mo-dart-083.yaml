@@ -1,0 +1,27 @@
+id: mo-dart-083
+title: "Isolate 池的负载均衡与任务超时"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "长驻 isolate 池能摊薄反复 spawn 的成本，但需要处理任务分配、结果匹配与超时。简单轮询在任务耗时不均时会造成部分 worker 排队，按空闲状态调度更均衡。任务超时后要终止并替换 worker，避免一个坏任务拖住整个池。"
+  keyPoints:
+    - "池化复用 isolate，减少反复启动的开销"
+    - "按空闲状态分配任务比轮询更均衡"
+    - "每个任务携带 id，用于匹配乱序返回的结果"
+    - "超时任务需 kill 对应 isolate 并重建 worker"
+  pitfalls:
+    - "worker 已崩溃仍继续向它投递任务"
+    - "只按队列长度扩容，忽略单任务耗时差异"
+followups:
+  - "如何优雅关闭 isolate 池并等待在途任务？"
+  - "任务结果很大时如何避免回传拷贝开销？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

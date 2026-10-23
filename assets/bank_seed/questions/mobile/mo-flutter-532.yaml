@@ -1,0 +1,27 @@
+id: mo-flutter-532
+title: "插件同时支持 Android 与 iOS，原生侧单测该怎么写？"
+topics: [flutter, plugins, testing]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "原生侧单测要脱离 Flutter 运行时，把通道调用抽象成可注入的接口，用 JUnit 或 XCTest 直接测业务逻辑；Dart 侧则用 TestDefaultBinaryMessenger 模拟原生回复，覆盖成功、错误与未实现三种路径。两端都测，才能避免只靠集成测试兜底。"
+  keyPoints:
+    - "Android 用 JUnit 加 mock 的 MethodCallHandler 验证参数解析与错误码"
+    - "iOS 用 XCTest 直接调用插件方法，注入假的 FlutterResult 断言回调"
+    - "Dart 侧用 TestDefaultBinaryMessenger.setMockMethodCallHandler 模拟平台"
+    - "测试要覆盖 PlatformException、MissingPluginException 与空结果"
+  pitfalls:
+    - "只测 happy path，错误码拼写与 details 结构没人校验"
+    - "在单测里启动真实引擎，慢且不稳定"
+followups:
+  - "如何测试 EventChannel 的 onListen 与 onCancel？"
+  - "原生侧如何验证线程切换正确？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

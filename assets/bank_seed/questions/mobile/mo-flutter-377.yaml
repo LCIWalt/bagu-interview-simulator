@@ -1,0 +1,26 @@
+id: mo-flutter-377
+title: "dependOnInheritedWidgetOfExactType 与 getInheritedWidgetOfExactType 有什么区别？"
+topics: [flutter, inherited-widget, dependencies]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "dependOn 版本会把当前 Element 注册为依赖者，InheritedWidget 更新时该 Element 会被标脏重建；get 版本只读取最近的实例，不注册依赖。前者适合 build 中读取会变化的数据，后者适合一次性取值或不允许建立依赖的时机。"
+  keyPoints:
+    - "dependOn 把依赖记录到当前 Element 的依赖表，并返回最近的 InheritedWidget"
+    - "get 只沿已有的继承映射查找，不修改依赖表"
+    - "InheritedElement 通知时只标脏登记过的后代，get 的调用方不会被通知"
+    - "dependOn 的 aspect 参数供 InheritedModel 区分同一数据的不同方面"
+  pitfalls:
+    - "在 initState 中调用 dependOn，触发框架的时机断言"
+    - "用 get 读取会变化的数据，值变了界面不会重建"
+followups:
+  - "InheritedModel 如何利用 aspect 做到按字段重建？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

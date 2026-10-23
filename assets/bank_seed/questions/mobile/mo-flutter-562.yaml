@@ -1,0 +1,27 @@
+id: mo-flutter-562
+title: "Play App Signing 下，上传密钥和应用签名密钥有什么区别？"
+topics: [flutter, android, release]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "启用 Play App Signing 后，Google 保管应用签名密钥并负责对分发产物重签，开发者只用自己的上传密钥给 AAB 签名。上传密钥泄露可以申请重置，应用签名密钥泄露则影响所有已安装用户。因此上传密钥要进 CI secret，绝不能提交到仓库。"
+  keyPoints:
+    - "上传密钥只用于给 AAB 签名，商店用应用签名密钥重签后分发"
+    - "上传密钥可重置或轮换，应用签名密钥由商店托管"
+    - "keystore 与密码通过 CI secret 注入，不落盘不进仓库"
+    - "本地调试与发布使用不同签名，避免把发布密钥分发给所有人"
+  pitfalls:
+    - "把上传密钥当成最终签名密钥，混淆了两者的职责"
+    - "丢失上传密钥后不知道可以走重置流程，误以为要换包名"
+followups:
+  - "首次上传后还能更换应用签名密钥吗？"
+  - "CI 上如何安全地把 keystore 还原到临时目录？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

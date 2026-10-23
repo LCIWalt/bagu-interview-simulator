@@ -1,0 +1,27 @@
+id: mo-flutter-501
+title: "dart:ffi 的 Struct 字段顺序与对齐，为什么会和 C 侧对不上？"
+topics: [flutter, ffi, native]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FFI 结构体按声明顺序布局，并遵循平台 ABI 的对齐规则插入 padding；字段类型宽度选错、漏算 padding，或 C 侧用了 packed 属性，都会让 sizeOf 与真实偏移不一致。接入前应把 Dart 侧的布局与 C 侧 sizeof、offsetof 对齐，最好由同一份头文件生成绑定。"
+  keyPoints:
+    - "Struct 只允许 native 类型字段，声明顺序即内存顺序，不按名称匹配"
+    - "默认按 ABI 对齐，字段间可能有隐式 padding，跨 32 位与 64 位要分别验证"
+    - "C 侧 packed 结构需在 Dart 侧用 @Packed 声明，否则布局不一致"
+    - "用 C 侧导出的 sizeof、offsetof 探针函数对照 Dart 的 sizeOf 与实际字段读写"
+  pitfalls:
+    - "用 Int 代替 Int64 或 Long，在 32 位 Android 上宽度不一致"
+    - "结构体里放指针却按值传递，导致读到无效内存"
+followups:
+  - "Union 在 dart:ffi 中如何声明与读取？"
+  - "如何用 ffigen 从头文件自动生成绑定并保持同步？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

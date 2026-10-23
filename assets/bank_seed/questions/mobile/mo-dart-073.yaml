@@ -1,0 +1,27 @@
+id: mo-dart-073
+title: "Timer.periodic 的漂移与后台节流"
+topics: [dart, timer, event-loop]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Timer.periodic 只保证相邻回调至少间隔设定时长，回调自身耗时会让周期不断后移。应用进入后台后，系统可能冻结或节流计时器，回到前台也不会补发所有错过的事件。对时间敏感的逻辑应基于时间戳校准，而不是累加 tick 次数。"
+  keyPoints:
+    - "周期计时依赖事件循环调度，回调耗时会累积漂移"
+    - "后台状态下 iOS 与 Android 都可能冻结或节流 Timer"
+    - "恢复前台后错过的事件不会逐个补发"
+    - "用 DateTime 差值计算下一次触发时间以校准"
+  pitfalls:
+    - "把 tick 计数当作真实经过时间"
+    - "依赖 Timer 在后台做精确倒计时"
+followups:
+  - "页面不可见时如何安全暂停周期任务？"
+  - "如何实现一个不漂移的每秒计时器？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-547
+title: "安全存储每次读都很慢，如何做分层缓存？"
+topics: [flutter, security, performance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Keychain 与 Keystore 走系统加密服务，频繁读取会有明显延迟，放在请求链路上会拖慢每一次调用。合理做法是内存缓存加安全存储持久化，启动时一次性读取必要项，写入时同步更新缓存。还要处理缓存失效，例如进程重启、登出与生物识别变更。"
+  keyPoints:
+    - "启动时批量读取必要密钥到内存，请求链路只读内存"
+    - "写入走安全存储成功后再更新缓存，避免缓存与持久层不一致"
+    - "进程重启与登出时清空缓存，防止旧凭证残留"
+    - "大 blob 用数据密钥加密后存普通存储，数据密钥本身放安全存储"
+  pitfalls:
+    - "把 token 缓存在全局变量却在登出时忘记清理"
+    - "每次请求都同步读 Keychain，阻塞 UI 线程并放大延迟"
+followups:
+  - "应用切后台再回来，内存缓存需要失效吗？"
+  - "生物识别失败时安全存储的读取行为是什么？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

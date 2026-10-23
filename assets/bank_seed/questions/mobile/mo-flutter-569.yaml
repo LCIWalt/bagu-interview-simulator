@@ -1,0 +1,27 @@
+id: mo-flutter-569
+title: "项目：如何用契约测试防止 fake 与真实实现漂移？"
+topics: [flutter, testing, architecture]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "fake 写多了会与真实实现行为分叉，测试全绿但线上一接就错。做法是为接口抽一组共享的行为用例，让 fake 与真实实现跑同一套断言，覆盖错误码、空数据与超时。HTTP 层再用录制回放校验序列化映射。"
+  keyPoints:
+    - "为接口定义共享测试套件，fake 与真实实现都跑同一套用例"
+    - "把错误码、空数据、超时与重试纳入契约范围"
+    - "HTTP 层用录制回放校验请求构造与响应解析"
+    - "契约变更时同步更新 fake，CI 中两者必须同时通过"
+  pitfalls:
+    - "只测 happy path，fake 与真实在错误分支上完全不一致"
+    - "契约测试依赖真实网络，导致不稳定且无法离线运行"
+followups:
+  - "录制回放的数据如何脱敏并保持可维护？"
+  - "契约测试应该放在单元层还是集成层？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

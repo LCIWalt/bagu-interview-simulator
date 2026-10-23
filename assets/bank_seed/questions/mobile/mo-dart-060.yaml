@@ -1,0 +1,27 @@
+id: mo-dart-060
+title: "微任务饥饿：长任务如何让出事件循环"
+topics: [dart, event-loop, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "事件循环每轮先清空整个 microtask 队列，再处理一个 event，因此 microtask 不清空就轮不到渲染与 IO。递归 scheduleMicrotask 或 then 里无限续约，会让 UI 完全卡死。把长任务拆成小块，并用 Timer.run 或 Future.delayed 让出到 event queue，才能插入帧回调与平台消息。"
+  keyPoints:
+    - "每轮事件循环先清空 microtask，再取一个 event 任务"
+    - "microtask 递归会持续占用同一轮，event 与渲染被饿死"
+    - "Timer.run 与 Future.delayed 走 event queue，可让出执行权"
+    - "分片处理应按时间预算切片，而不是固定条数"
+  pitfalls:
+    - "以为 await Future.delayed(Duration.zero) 一定能等到下一帧"
+    - "在 microtask 中做重计算，仍然阻塞首帧渲染"
+followups:
+  - "为什么 Future.delayed(Duration.zero) 比 scheduleMicrotask 更适合让出？"
+  - "如何用 SchedulerBinding 在帧回调后继续分片任务？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-468
+title: "FragmentProgram 的 uniform 数据是怎么从 Dart 传到 shader 的？"
+topics: [flutter, shader, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FragmentProgram 从 asset 加载构建期编译好的 shader，调用 fragmentShader 得到可写的 FragmentShader。uniform 按声明顺序线性编号，setFloat 的索引是浮点槽位而不是 uniform 序号，写入后在绘制时整块上传。"
+  keyPoints:
+    - "shader 文件要在 pubspec 的 flutter/shaders 段声明，运行期用 FragmentProgram.fromAsset 加载"
+    - "vec2 占两个浮点槽，vec4 占四个，mat4 占十六个，索引按槽位累加"
+    - "setFloat 越界在 debug 下会断言，release 下写入无效或数据错位"
+    - "FragmentShader 与 FragmentProgram 都持有原生资源，用完需要 dispose"
+  pitfalls:
+    - "按 uniform 个数而不是浮点槽位算索引，vec 类型一多就全错"
+    - "每帧新建 FragmentProgram，重复加载把 UI 线程拖慢"
+  followups:
+    - "时间、分辨率这类每帧变化的 uniform 应该怎么传才不抖动？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

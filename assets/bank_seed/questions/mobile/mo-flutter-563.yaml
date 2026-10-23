@@ -1,0 +1,27 @@
+id: mo-flutter-563
+title: "分阶段发布进行到一半发现问题，怎么止损？"
+topics: [flutter, release, monitoring]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "第一步是暂停放量而不是继续观察，先阻断新增影响面。然后判断问题能否通过服务端开关或配置回滚解决，因为客户端无法回滚已安装版本。止损决策要基于分版本、分渠道的崩溃率、ANR 与核心转化指标，而不是全局平均值。"
+  keyPoints:
+    - "发现异常立即暂停放量，优先阻断影响面扩大"
+    - "优先用服务端开关或配置回滚，客户端发版是最后手段"
+    - "按版本、渠道、机型看指标，避免全局平均掩盖问题"
+    - "保留上一版本可用的服务端兼容，便于降级"
+  pitfalls:
+    - "指望发新版本修复线上问题，期间用户持续受影响"
+    - "灰度只看全局指标，问题被大盘稀释而未触发告警"
+followups:
+  - "暂停放量后已升级用户如何降级？"
+  - "什么指标应该作为自动止损的触发条件？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

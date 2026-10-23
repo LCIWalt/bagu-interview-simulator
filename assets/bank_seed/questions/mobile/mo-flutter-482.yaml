@@ -1,0 +1,26 @@
+id: mo-flutter-482
+title: "命中测试里的 transform 是怎么累积起来的？"
+topics: [flutter, hit-testing, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "父节点在测试子节点之前，要把指针位置换算到子节点坐标系，并把这段变换记录进 HitTestEntry。最终路径上的每个 entry 都带着从自身到根的一系列变换，事件派发时再反向换算回局部坐标。"
+  keyPoints:
+    - "addWithPaintTransform 会先用逆矩阵把位置变换到子坐标系，再执行子节点测试"
+    - "测试成功时 entry 记录从子节点到父级的变换，逐层累积成完整链路"
+    - "事件派发用 entry.transform 把全局坐标还原成该节点的局部坐标"
+    - "addWithPaintOffset 是只有平移时的简化版本"
+  pitfalls:
+    - "手写 hitTest 只做位置判断却不记录变换，命中后事件坐标全错"
+    - "变换方向搞反，旋转或缩放过的子树点击位置偏移"
+  followups:
+    - "为什么命中测试要先逆变换位置，而不是变换子节点的边界？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

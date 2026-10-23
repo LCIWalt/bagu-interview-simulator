@@ -1,0 +1,26 @@
+id: mo-flutter-379
+title: "为什么在 initState 里调用 Theme.of(context) 会报错？"
+topics: [flutter, state-lifecycle, inherited-widget]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Theme.of 会通过 dependOnInheritedWidgetOfExactType 注册依赖，而 initState 期间 State 还处于 created 阶段，框架不允许此时建立继承依赖。需要读取主题相关数据时应放到 didChangeDependencies，它会在 initState 之后以及依赖变化时调用。"
+  keyPoints:
+    - "initState 阶段 State 生命周期仍是 created，dependOn 会触发断言"
+    - "didChangeDependencies 在 initState 之后、首次 build 之前执行"
+    - "依赖的 InheritedWidget 变化时，didChangeDependencies 会再次执行"
+    - "只读取一次而不订阅时，可用 getInheritedWidgetOfExactType 或后移逻辑"
+  pitfalls:
+    - "把 Theme.of 的结果缓存到 initState 的字段，主题切换后不会更新"
+    - "在 didChangeDependencies 里无条件重复发起请求或订阅"
+followups:
+  - "didChangeDependencies 与 build 的调用顺序是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

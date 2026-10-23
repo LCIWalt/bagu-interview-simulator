@@ -1,0 +1,27 @@
+id: mo-android-094
+title: "Android: 灰度发布与分阶段放量"
+topics: [android, release, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "灰度发布按设备、用户或渠道分批放量，每一阶段都要观察崩溃率、ANR 和核心转化指标，达到阈值才继续。配套的服务端开关和回滚预案必须提前就绪，否则出问题只能等下一次发版。"
+  keyPoints:
+    - "按比例分阶段放量，每阶段观察崩溃率、ANR、启动耗时与核心转化"
+    - "用服务端配置或应用内开关控制新功能，支持按版本、机型定向"
+    - "预先定义回滚阈值、责任人和停止放量的操作路径"
+    - "灰度人群随机且可对照，避免渠道或机型分布造成偏差"
+  pitfalls:
+    - "只按版本号灰度，忽略机型和系统版本的分布差异"
+    - "没有回滚开关，出问题只能重新发版"
+followups:
+  - "灰度期间如何设计指标对比才能排除干扰？"
+  - "应用内开关与服务端配置如何保持一致？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

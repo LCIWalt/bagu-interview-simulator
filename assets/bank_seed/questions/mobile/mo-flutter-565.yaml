@@ -1,0 +1,27 @@
+id: mo-flutter-565
+title: "崩溃率突然上升，怎么判断是版本、设备还是系统问题？"
+topics: [flutter, monitoring, release]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "先确认口径：崩溃率的分母是会话还是用户，是否按堆栈去重，采集 SDK 本身是否异常。然后按版本、机型、OS 版本、渠道与页面多维下钻，对比发布时间线与配置变更记录。同版本同机型集中通常是兼容性问题，全机型同时上升更像服务端下发或依赖升级导致。"
+  keyPoints:
+    - "先固定崩溃率口径与去重规则，再看趋势"
+    - "按版本、机型、OS、页面与渠道多维下钻定位影响面"
+    - "对照发布、配置与开关变更的时间线"
+    - "关注首次出现版本与受影响用户数，而不只看总量"
+  pitfalls:
+    - "把采集 SDK 自身故障当成真实崩溃上涨"
+    - "只看崩溃总量而不看比率，用户增长时误判"
+followups:
+  - "如何区分 Dart 异常与原生崩溃的责任方？"
+  - "崩溃率告警阈值应该按什么维度设置？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

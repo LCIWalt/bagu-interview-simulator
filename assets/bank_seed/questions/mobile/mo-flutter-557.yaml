@@ -1,0 +1,27 @@
+id: mo-flutter-557
+title: "同一台设备同时装 dev 与 prod 包，要注意哪些标识？"
+topics: [flutter, flavors, release]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "两个包要共存，首先必须区分 applicationId 或 bundle id，否则安装时会互相覆盖。随之而来的 URL scheme、推送配置、Keychain access group 与文件目录也要隔离，否则会出现深链跳错包、数据串台。显示名称与图标也应可区分，避免误点。"
+  keyPoints:
+    - "applicationId 与 bundle id 按环境加后缀，保证可共存"
+    - "URL scheme 与 Universal Links 每个环境独立，避免深链跳错包"
+    - "Keychain access group、SharedPreferences 前缀与文件目录隔离"
+    - "推送证书、App Group 与第三方 SDK 的 appKey 分开配置"
+  pitfalls:
+    - "只改应用显示名不改包名，安装时互相覆盖"
+    - "两个 flavor 共用同一个 URL scheme，调试时打开错误的包"
+followups:
+  - "Android 上如何让两个 flavor 共享部分签名配置？"
+  - "推送在同一设备上的多包注册会有什么问题？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

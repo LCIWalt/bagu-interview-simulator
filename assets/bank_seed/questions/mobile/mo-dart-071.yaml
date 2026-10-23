@@ -1,0 +1,27 @@
+id: mo-dart-071
+title: "Dart 没有共享内存锁：用消息传递做互斥"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 的 isolate 各自拥有独立堆，不共享可变内存，因此不存在传统意义上的互斥锁。共享状态要么收敛到单个 isolate，要么完全通过消息传递协调。跨 isolate 的“锁”通常转化为单一所有者模型，由所有者串行处理请求，从而避免竞态。"
+  keyPoints:
+    - "isolate 之间不共享对象，消息传递是拷贝或转移"
+    - "把共享资源交给单一所有者 isolate 串行访问"
+    - "请求-响应消息天然形成先后顺序"
+    - "需要原子性的复合操作应封装成一条消息"
+  pitfalls:
+    - "以为对象传给另一个 isolate 后两边看到同一份数据"
+    - "多个 isolate 同时写同一文件却没有协调"
+followups:
+  - "TransferableTypedData 转移后原 isolate 还能读吗？"
+  - "单一所有者 isolate 成为瓶颈时如何扩展？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

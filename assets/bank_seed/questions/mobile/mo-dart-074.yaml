@@ -1,0 +1,27 @@
+id: mo-dart-074
+title: "Timer.cancel 与 Future.delayed 的取消失效"
+topics: [dart, timer, performance]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Timer 可以被 cancel，取消后回调不再执行；Future.delayed 没有取消接口，只能靠标志位忽略结果。页面销毁时未取消的 Timer 会持有闭包，可能阻止对象回收。封装可取消的延迟任务时，应返回可取消句柄而不是裸 Future。"
+  keyPoints:
+    - "Timer.cancel 后回调不再触发，底层计时被移除"
+    - "Future.delayed 无法取消，只能丢弃最终结果"
+    - "未取消的 Timer 持有闭包，可能造成对象泄漏"
+    - "可取消延时可用 Completer 加 Timer 自行封装"
+  pitfalls:
+    - "dispose 时只置空引用却不 cancel Timer"
+    - "用 Future.delayed 做防抖，旧任务仍会执行"
+followups:
+  - "取消延迟任务时如何同时完成等待方？"
+  - "Timer 与 Future.delayed 在事件队列中的优先级一样吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

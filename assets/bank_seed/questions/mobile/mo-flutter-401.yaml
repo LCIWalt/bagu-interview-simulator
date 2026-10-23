@@ -1,0 +1,26 @@
+id: mo-flutter-401
+title: "把 Widget 抽成函数和抽成独立 Widget 类，差别在哪里？"
+topics: [flutter, widgets, composition]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "函数返回的 Widget 本身只是普通配置，函数不会形成新的 Element 边界，因此没有独立生命周期；独立 Widget 类会生成自己的 Element，可用 const 构造、key 与 DevTools 定位。简单语法糖可以用函数，涉及状态、订阅或复用测试的组合应抽成类。"
+  keyPoints:
+    - "函数本身没有独立的 Element 边界，也没有 initState 与 dispose"
+    - "独立 Widget 类可用 const 构造，父级重建时可跳过更新"
+    - "类有类型与 key，便于框架复用、测试与 DevTools 定位"
+    - "函数适合很薄的语法糖，复杂组合应抽类"
+  pitfalls:
+    - "想在函数组件内部订阅或释放资源，却没有自己的生命周期挂载点"
+    - "为性能盲目抽类却不加 const，重建行为没有本质变化"
+followups:
+  - "StatelessWidget 的 build 与普通函数调用在 Element 层面差在哪？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

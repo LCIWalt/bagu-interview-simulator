@@ -1,0 +1,26 @@
+id: mo-dart-054
+title: "类型推断：var、final 与泛型实参的推断顺序"
+topics: [dart, type-inference, language]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 先根据初始化表达式推断局部变量的静态类型，再把上下文类型向下传给构造调用与集合字面量；泛型实参先由实参位置推断，无法唯一确定时回退到上界。显式标注能提前暴露错误，但过度标注也可能与推断结果冲突。"
+  keyPoints:
+    - "var 与 final 都由初始化表达式推断静态类型，之后不可改变"
+    - "集合字面量在有上下文类型时按上下文推断元素类型"
+    - "泛型方法先推断类型参数，再检查实参是否满足上界"
+    - "推断失败时回退到上界，常见结果是 Object? 或 dynamic"
+  pitfalls:
+    - "写成 var list = []，得到 List<dynamic>，丢掉元素类型检查"
+    - "依赖推断写超长链式调用，报错位置离真正的问题很远"
+  followups:
+    - "向下推断（downwards inference）在构造函数参数中如何生效？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

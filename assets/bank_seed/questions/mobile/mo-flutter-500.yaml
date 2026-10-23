@@ -1,0 +1,27 @@
+id: mo-flutter-500
+title: "Pigeon 的自定义类型能嵌套吗，空安全与集合映射要注意什么？"
+topics: [flutter, pigeon, codegen]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Pigeon 支持在定义文件里声明数据类、枚举、List/Map 以及它们的嵌套组合，生成器会为各端递归生成模型与编解码。但泛型只能落在受支持的具体类型上，可空性会映射成 Kotlin/Java 的可空注解与 Swift 的 Optional。跨版本增删字段时，要提前约定旧版本端的兼容行为。"
+  keyPoints:
+    - "数据类字段可以是另一数据类、枚举或 List/Map，生成器会递归处理"
+    - "Dart 的可空标记会映射到 Kotlin/Java 可空类型与 Swift Optional，非空字段收到 null 会失败"
+    - "枚举新增值要考虑旧版本端能否识别，跨版本不要随意复用序号"
+    - "生成的 Dart 类实现了值相等，可直接用于状态比较，但不要依赖字段声明顺序"
+  pitfalls:
+    - "手改生成文件后再执行生成，改动被覆盖，应只改 Pigeon 定义"
+    - "Map 的 key 用自定义对象，编解码并不支持"
+followups:
+  - "Pigeon 支持把多个 host API 拆分到不同文件吗？"
+  - "如何为 Pigeon 生成的接口写 mock 做单测？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

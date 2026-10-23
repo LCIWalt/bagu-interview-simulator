@@ -1,0 +1,26 @@
+id: mo-flutter-396
+title: "ModalRoute.of(context) 能拿到哪些信息，什么时候会返回 null？"
+topics: [flutter, navigator, routes]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ModalRoute.of 沿 Element 向上查找最近的 ModalRoute，可读取 settings、动画、isCurrent 等路由状态。它要求 context 位于该路由的子树内，在 Navigator 之上、路由之外或已卸载的 context 上调用会得到 null。"
+  keyPoints:
+    - "返回最近的 ModalRoute，普通页面与对话框都属于 ModalRoute"
+    - "可读取 settings.arguments、animation、secondaryAnimation"
+    - "isCurrent 表示路由是否位于栈顶且未被遮挡"
+    - "它通过 InheritedModel 依赖 _ModalScopeStatus，相关状态变化会触发重建"
+  pitfalls:
+    - "在 Navigator 之上的 context 调用，拿到 null"
+    - "把 ModalRoute 缓存到 State 字段，路由替换后引用失效"
+followups:
+  - "为什么在对话框里读到的 ModalRoute 不是底层页面路由？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-516
+title: "singleTop 下深链热启动，为什么 onNewIntent 里的路由没生效？"
+topics: [flutter, deep-link, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "热启动时 Activity 被复用，新 Intent 通过 onNewIntent 到达，若没有调用 setIntent 更新，后续 getIntent 读到的仍是旧数据；同时 Flutter 侧可能已经在运行，需要把新路由推给现有导航栈而不是重新初始化。启动模式与 taskAffinity 配错还会产生重复实例。"
+  keyPoints:
+    - "onNewIntent 后调用 setIntent(intent)，保证后续读取到最新深链"
+    - "热启动要走向现有引擎推路由的路径，不能假设 main 会再跑一次"
+    - "launchMode 与 intent-filter 的组合决定是复用还是新建实例"
+    - "Flutter 侧用 pushRouteInformation 或自定义通道接收热启动深链，避免重建整个栈"
+  pitfalls:
+    - "只处理 getIntent 不处理 onNewIntent，热启动深链静默丢失"
+    - "每次深链都重建 FlutterEngine，页面栈与状态被清空"
+followups:
+  - "singleTask 与 singleTop 对深链行为的具体差异？"
+  - "如何在 Flutter 侧去重同一深链的重复投递？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

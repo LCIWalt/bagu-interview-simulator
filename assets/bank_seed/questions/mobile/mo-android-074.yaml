@@ -1,0 +1,27 @@
+id: mo-android-074
+title: "Android: 启动任务编排与 DAG 依赖"
+topics: [android, performance, startup]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "启动初始化往往被写成 Application 里的一长串同步调用，实际任务之间存在明确依赖，可以拆成 DAG 后按拓扑分层并发执行。关键是识别首帧必须完成的锚点任务，把非关键任务延迟到首帧之后，并对每个任务设置线程约束、超时与失败降级。"
+  keyPoints:
+    - "把初始化拆成有输入输出的任务，声明主线程/IO/CPU 约束以及依赖关系"
+    - "按拓扑分层并发，优先保证锚点任务在首帧前完成"
+    - "低优先级任务用 IdleHandler 或首帧回调延后，避免和渲染抢 CPU"
+    - "每个任务打 trace 并上报耗时，防止新增依赖悄悄拉长关键路径"
+  pitfalls:
+    - "把所有任务一次性丢进线程池，锁竞争和 CPU 抢占反而让启动更慢"
+    - "让本有前后依赖的任务并发执行，出现读到未初始化配置的空指针"
+followups:
+  - "某个任务失败时应该阻塞启动还是降级继续？"
+  - "多进程应用如何保证每个进程只做自己需要的初始化？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

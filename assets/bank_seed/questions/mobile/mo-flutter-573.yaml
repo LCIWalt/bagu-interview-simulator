@@ -1,0 +1,27 @@
+id: mo-flutter-573
+title: "项目：接手遗留模块，如何先加测试再改？"
+topics: [flutter, testing, maintainability]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "遗留代码往往不可测，第一步不是重构而是 characterization test：先把现有行为（包括怪行为）固化成基线。然后从无依赖的纯逻辑切入，用接缝把 IO 抽到接口后面，每次小步重构后跑基线。这样能在行为不变的前提下逐步改善结构。"
+  keyPoints:
+    - "先写基线测试锁定现状行为，包括看起来奇怪的逻辑"
+    - "从纯函数与数据转换切入，逐步扩展到有依赖的路径"
+    - "用接口或注入制造接缝，把 IO 与全局状态替换掉"
+    - "每次小步重构后跑基线，小提交便于回滚"
+  pitfalls:
+    - "先大重构再补测试，无法判断行为是否被改变"
+    - "把现有 bug 当正确行为永久固化，且不标注待确认"
+followups:
+  - "现有行为明显是 bug 时，基线测试该怎么写？"
+  - "如何衡量重构过程中测试覆盖率的真实提升？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

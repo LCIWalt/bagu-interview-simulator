@@ -1,0 +1,26 @@
+id: mo-flutter-478
+title: "Simulation 的 tolerance 在什么时候决定动画结束？"
+topics: [flutter, animation, physics]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "AnimationController 在每帧把 elapsed 交给 Simulation，用 isDone 判断是否停止。isDone 依赖 tolerance 中的速度与距离阈值，阈值过松会提前停住，过紧则长时间在目标附近微动。"
+  keyPoints:
+    - "Tolerance 包含 distance、velocity 与 time 三个阈值"
+    - "速度低于 velocity 阈值且位置足够接近目标时，模拟被视为结束"
+    - "模拟结束的那一帧，控制器按模拟算出的位置收敛并完成对应的 future"
+    - "阈值过紧会让动画多跑很多帧，持续申请新帧"
+  pitfalls:
+    - "把 velocity 阈值设成 0，模拟永远认为还在运动"
+    - "用默认 tolerance 处理超大位移的模拟，结束位置与预期差出可见距离"
+  followups:
+    - "distance 与 velocity 阈值分别对应多大的视觉误差？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

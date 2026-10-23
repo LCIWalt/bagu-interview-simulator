@@ -1,0 +1,26 @@
+id: mo-flutter-429
+title: "Future.any 拿到第一个结果后，其它 Future 会停下吗？"
+topics: [dart, async, concurrency]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "不会。Future.any 只是返回最先完成者的结果，其余 Future 继续执行，副作用照常发生，也无法通过它取消。若任务有写文件、发请求等副作用，应显式传入取消令牌，而不是依赖 Future.any 提前结束。"
+  keyPoints:
+    - "Future.any 返回首个完成的结果，无论成功或失败"
+    - "其余 Future 不被取消，仍会跑完并产生副作用"
+    - "失败也算完成，先失败会直接让 Future.any 报错"
+    - "需要真正停止任务必须依赖可取消的实现"
+  pitfalls:
+    - "用 Future.any 做超时控制，以为慢请求被终止"
+    - "忽略先失败的分支，把 TimeoutException 当成业务错误"
+followups:
+  - "Future.any 传入空列表会返回什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-082
+title: "Android: Perfetto trace 的抓取与 SQL 分析"
+topics: [android, perfetto, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Perfetto 是系统级 tracing 工具，能同时看到应用主线程、RenderThread、系统调度和频率状态。抓取时配置 atrace 分类与足够的 buffer，抓完后用 trace processor 的 SQL 对 slice、counter、thread_state 做聚合，才能从海量切片里定位长帧和关键路径。"
+  keyPoints:
+    - "配置 atrace 分类（gfx、view、am、wm、sched、freq）与合适的 buffer 大小"
+    - "用 slice 表按 name 聚合耗时，找长帧与启动关键路径"
+    - "结合 thread_state 区分 Runnable 等待、IO 阻塞与 CPU 抢占"
+    - "加 Trace.beginSection 或 atrace 自定义埋点，命名稳定便于统计"
+  pitfalls:
+    - "buffer 配得太小导致关键切片被覆盖，或抓取过久引入额外开销"
+    - "只看平均耗时，忽略 P95/P99 长尾与偶发卡顿"
+followups:
+  - "如何统计一帧内主线程各阶段的耗时占比？"
+  - "thread_state 中的 D 状态通常说明什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

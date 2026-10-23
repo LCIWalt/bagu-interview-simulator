@@ -1,0 +1,26 @@
+id: mo-flutter-425
+title: "Isolate.exit 为什么能零拷贝送回结果，和 send 有何区别？"
+topics: [dart, isolate, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Isolate.exit(port, result) 在终止当前 isolate 的同时把 result 交给端口，实现上可以转移整个 isolate 的堆所有权，省掉一次深拷贝；普通 SendPort.send 需要复制消息，大对象成本明显。它适合一次性计算的收尾，不适合还要继续运行的 isolate。"
+  keyPoints:
+    - "Isolate.exit 终止当前 isolate 并发送最后一个消息"
+    - "实现可转移堆所有权，避免大结果的复制开销"
+    - "必须持有主 isolate 传入的 SendPort，且只能调用一次"
+    - "调用后当前 isolate 的后续代码不再执行"
+  pitfalls:
+    - "在 exit 之后还写日志或清理逻辑，永远不会执行"
+    - "把 exit 当普通 send 用在长驻 isolate 上，直接把自己杀死"
+followups:
+  - "TransferableTypedData 与 Isolate.exit 的零拷贝机制有何不同？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-android-063
+title: "Android: Compose 中 AndroidView 的互操作陷阱"
+topics: [android, compose, interoperability]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "AndroidView 把传统 View 嵌入 Compose：factory 只在首次组合时创建 View，之后每次重组只执行 update。Compose 的重组频率远高于 View 的属性更新需求，在 factory 里读状态或在 update 里重建视图，都会造成不刷新或性能问题。"
+  keyPoints:
+    - "factory 仅在首次组合时调用，View 创建、监听器注册与初始配置应放在这里"
+    - "update 在每次重组后调用，只做幂等且轻量的属性同步"
+    - "需要在 factory 中读取的状态应通过参数传入，而不是直接在 lambda 中读取"
+    - "双向同步用 mutableStateOf 桥接，并设置防护避免更新回环"
+  pitfalls:
+    - "在 factory 中读取 State，状态变化后 View 得不到更新"
+    - "在 update 中重建 adapter 或反复 addView，导致闪烁与重复监听"
+followups:
+  - "如何在 Compose 中正确反注册 AndroidView 添加的监听器？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

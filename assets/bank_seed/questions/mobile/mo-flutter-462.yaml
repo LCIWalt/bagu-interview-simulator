@@ -1,0 +1,26 @@
+id: mo-flutter-462
+title: "Layer.needsAddToScene 标记省掉了哪些重复工作？"
+topics: [flutter, layer, compositing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "图层通过 needsAddToScene 告诉引擎自己以及祖先容器需要重新参与本帧的 Scene 构建，没有变化的图层可以沿用上一帧已提交的结果。PictureLayer 的 picture 被替换、容器增删子层或属性变化时，都会打上这个标记并向上传播。"
+  keyPoints:
+    - "markNeedsAddToScene 会把标记冒泡到父容器，遇到已经标脏的祖先就停下"
+    - "PictureLayer 重新录制并替换 picture 后，会触发自身的 needsAddToScene"
+    - "容器层增删子层，或改变裁剪、透明度等属性，同样需要重新提交"
+    - "未标脏的子图层在构建 Scene 时可以被引擎复用，避免重复上传与重建"
+  pitfalls:
+    - "直接改图层字段绕过 setter，标记没打上，画面停在旧状态"
+    - "每帧重建整个图层子树，让增量提交完全失效"
+  followups:
+    - "PictureLayer 里的 Picture 什么时候会被释放？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

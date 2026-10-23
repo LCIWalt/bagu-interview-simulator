@@ -1,0 +1,27 @@
+id: mo-flutter-499
+title: "Pigeon 生成的方法默认跑在哪个线程，@async 与 TaskQueue 改变了什么？"
+topics: [flutter, pigeon, threading]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Pigeon 底层仍是 BasicMessageChannel，收到的调用默认在平台主线程执行，Android 是主 Looper，iOS 是主队列，耗时逻辑会直接卡住原生 UI。Android 可用 @TaskQueue 指定串行后台线程，iOS 可用 @async 让生成的 handler 在后台队列执行，但回调 result 的线程约束仍要自己保证。"
+  keyPoints:
+    - "默认在平台主线程执行，Dart 侧 await 并不会把原生 handler 挪到后台"
+    - "Android 用 @TaskQueue(TaskQueueType.serialBackgroundThread) 串行化到后台线程"
+    - "iOS 的 @async 把 handler 派发到后台队列，适合会阻塞的同步 API"
+    - "无论哪种方式 result 只能回调一次，跨线程回传要遵守生成代码的队列要求"
+  pitfalls:
+    - "在默认 handler 里做磁盘读写或加解密，造成原生主线程卡顿甚至 ANR"
+    - "后台线程里直接访问只能在主线程使用的 UIKit 或 View 对象"
+followups:
+  - "TaskQueue 的串行队列和 Dart 侧自己开 Isolate 有什么取舍？"
+  - "Pigeon 生成的 Flutter API 在 Dart 侧回调，跑在哪个 isolate？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

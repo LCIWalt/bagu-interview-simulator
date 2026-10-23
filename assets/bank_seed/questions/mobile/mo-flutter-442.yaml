@@ -1,0 +1,26 @@
+id: mo-flutter-442
+title: "Future.ignore 与 catchError 吞异常有什么本质区别？"
+topics: [dart, async, error-handling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ignore 直接标记该 Future 的结果与错误都不再需要，阻止未处理错误上报；catchError 返回一个新的 Future，可以转换、记录或恢复错误。前者是明确放弃，后者是处理链的一环。"
+  keyPoints:
+    - "ignore 返回 void，不产生新的结果 Future"
+    - "catchError 返回 Future，可继续链式处理"
+    - "ignore 后原 Future 的错误不会进 Zone 的错误处理"
+    - "需要记录日志时不能用 ignore，应显式 catch"
+  pitfalls:
+    - "用 catchError 返回 null 冒充成功，破坏非空类型契约"
+    - "在 catchError 里不判断错误类型，把所有异常当网络错误"
+followups:
+  - "catchError 的 test 参数用来做什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

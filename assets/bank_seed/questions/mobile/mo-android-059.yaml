@@ -1,0 +1,27 @@
+id: mo-android-059
+title: "Android: Choreographer 与掉帧监控"
+topics: [android, performance, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Choreographer 在每帧 vsync 到来时按优先级回调输入、动画、遍历与提交，View 的 measure、layout、draw 就挂在 TRAVERSAL 回调上。一帧内主线程要同时处理消息、输入与绘制，任何一段超时都会挤占绘制预算并造成掉帧。"
+  keyPoints:
+    - "postFrameCallback 在下一帧 vsync 回调，用相邻两帧的时间差可估算帧耗时"
+    - "主线程消息、输入、动画、布局绘制共享同一帧预算，锁等待与 IO 会直接推迟绘制"
+    - "掉帧监控常结合 Choreographer 与系统侧帧数据，区分应用卡顿与合成阶段卡顿"
+    - "硬件加速与 RenderThread 让绘制异步化，主线程快不代表最终帧率达标"
+  pitfalls:
+    - "只看主线程耗时下结论，忽略 RenderThread 与 GPU 侧的渲染阻塞"
+    - "在监控回调里做重活或频繁 dump，本身成为新的卡顿源"
+followups:
+  - "JankStats 判定一帧为 jank 的依据是什么？"
+  - "为什么 debug 包的帧率数据不能直接代表 release 表现？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

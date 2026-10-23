@@ -1,0 +1,26 @@
+id: mo-flutter-466
+title: "Impeller 已经预编译着色器，为什么还会有首帧卡顿？"
+topics: [flutter, impeller, shader]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Impeller 在构建期把着色器编译成后端可用的产物，消除了 Skia 时代运行期编译 SkSL 的抖动。但管线对象仍要在首次遇到新的混合模式、纹理格式或滤镜组合时创建，驱动层的管线编译与资源上传依旧可能造成一次性卡顿。"
+  keyPoints:
+    - "着色器源码在构建期由 Impeller 工具链预编译，运行期不再编译 SkSL"
+    - "每个独特的渲染状态组合对应一个管线对象，首次使用时才创建并缓存"
+    - "驱动层的管线编译与纹理上传发生在真正使用该效果的那一帧"
+    - "减少独特的滤镜与混合组合，比反复预热更能稳定首帧耗时"
+  pitfalls:
+    - "沿用 SkSL 预热的思路去预热 Impeller，实际没有对应机制"
+    - "在首帧同时启用多个不同的模糊与混合效果，把管线创建集中到一帧"
+  followups:
+    - "如何用 timeline 事件区分 UI 线程耗时与 raster 线程耗时？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

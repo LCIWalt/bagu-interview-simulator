@@ -1,0 +1,26 @@
+id: mo-android-060
+title: "Android: Compose 状态提升与单向数据流"
+topics: [android, compose, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "状态提升把 state 从可组合项内部上移到调用方，由父级持有并通过值与回调下发，让子组件变成无状态、可复用、可测试的纯 UI。配合单向数据流，事件向上传递、状态向下流动，避免同一份数据出现多个副本。"
+  keyPoints:
+    - "无状态可组合项只接收 value 与 onValueChange 一类的回调，不自己 remember 业务状态"
+    - "状态应放在读取它的最高共同父级，既避免副本过多，也避免过度提升扩大重组范围"
+    - "需要跨配置变更或进程重建时用 rememberSaveable 或 ViewModel 承载状态"
+    - "事件通过 lambda 向上传递，子组件不直接修改外部的可变对象"
+  pitfalls:
+    - "每个子组件各自 remember 一份状态，父子之间数据不同步"
+    - "把整个 ViewModel 传进叶子组件，扩大重组与耦合，破坏可测试性"
+followups:
+  - "如何判断状态提升的层级是否合适？提升过高会带来什么问题？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

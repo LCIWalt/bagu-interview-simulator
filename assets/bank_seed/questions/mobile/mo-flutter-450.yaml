@@ -1,0 +1,26 @@
+id: mo-flutter-450
+title: "ReceivePort 忘记 close 会泄漏什么？"
+topics: [dart, isolate, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ReceivePort 持有原生端口与消息队列，未 close 时端口持续存在，isolate 也可能因为仍有活跃端口而无法正常退出，形成资源与内存泄漏。订阅的 cancel 只停止回调，不会关闭端口，必须在收尾时显式 close。"
+  keyPoints:
+    - "ReceivePort 是原生资源，需要显式 close"
+    - "close 会关闭对应 SendPort，后续 send 无效"
+    - "StreamSubscription.cancel 不等于 port.close"
+    - "端口保持打开会阻止 isolate 自然结束"
+  pitfalls:
+    - "在异常分支提前 return，跳过 close"
+    - "close 后继续用旧 SendPort 发送，消息静默丢失"
+followups:
+  - "ReceivePort.close 之后 listen 的流会收到 done 吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

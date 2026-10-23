@@ -1,0 +1,27 @@
+id: mo-dart-070
+title: "用信号量限制并发 Isolate 数量"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "批量解析或图片处理如果每个任务都 spawn 一个 isolate，内存与调度开销会迅速压垮应用。常见做法是用计数信号量把并发度限制在 CPU 核数附近，其余任务排队等待配额。配额必须在成功和失败路径都归还，否则队列会永久卡死。"
+  keyPoints:
+    - "并发度通常取 Platform.numberOfProcessors 附近"
+    - "信号量用 Completer 队列实现 acquire 与 release"
+    - "release 放在 finally，异常路径也要归还"
+    - "长驻 worker 池可复用 isolate，摊薄 spawn 成本"
+  pitfalls:
+    - "按任务数无上限 spawn isolate，导致内存暴涨"
+    - "异常路径忘记 release，等待队列永久阻塞"
+followups:
+  - "长驻 worker 崩溃后如何替换并重投任务？"
+  - "并发度设为核数一定最优吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

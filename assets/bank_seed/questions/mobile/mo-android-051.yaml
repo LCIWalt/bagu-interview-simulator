@@ -1,0 +1,26 @@
+id: mo-android-051
+title: "Android: PendingIntent 的可变性与安全风险"
+topics: [android, intent, security]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "PendingIntent 是一份委托凭证，系统在执行时以创建者的身份和权限行事，因此它的 Intent 内容一旦可被第三方修改就可能造成越权。Android 12 起必须显式声明 FLAG_IMMUTABLE 或 FLAG_MUTABLE，绝大多数场景应使用不可变版本。"
+  keyPoints:
+    - "FLAG_IMMUTABLE 冻结内部 Intent，接收方无法改写 extras 或 action"
+    - "FLAG_MUTABLE 只在系统需要回填数据时使用，例如通知的直接回复与选择器"
+    - "相同 requestCode 与等价 Intent 会复用已有 PendingIntent，需用唯一标识区分"
+    - "基础 Intent 应显式指定包名或组件，避免被其他应用的同名过滤器截获"
+  pitfalls:
+    - "用隐式 Intent 构造可变 PendingIntent，第三方填入恶意 extras 后借权限执行"
+    - "requestCode 固定不变，多条通知共用同一个 PendingIntent 导致数据串台"
+followups:
+  - "通知直接回复为什么必须使用可变 PendingIntent，如何限制其可写范围？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

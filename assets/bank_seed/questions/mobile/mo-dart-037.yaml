@@ -1,0 +1,26 @@
+id: mo-dart-037
+title: "extension type：零开销包装与表示类型"
+topics: [dart, extension, type-system]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "extension type 在编译期提供独立的静态类型，运行时与表示类型是同一个对象，不会额外分配。它适合给 String、int 加语义约束，例如用户 ID 与订单 ID 不可互相赋值；但默认不暴露表示类型的成员，需要显式转发。"
+  keyPoints:
+    - "extension type UserId(int value) 运行时仍是 int，零额外开销"
+    - "不 implements 表示类型时，外部无法直接调用其原有成员"
+    - "可定义 getter、方法与运算符，但不能声明实例字段"
+    - "类型检查是静态的，强转仍可绕过，不能替代运行时校验"
+  pitfalls:
+    - "以为 extension type 能防止伪造，as 强转依旧能破坏约束"
+    - "序列化时忘记显式拆包，把包装类型直接丢给 JSON 编码器"
+  followups:
+    - "extension type 与 wrapper class 在性能和 API 约束上如何取舍？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

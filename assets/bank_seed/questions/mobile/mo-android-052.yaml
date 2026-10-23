@@ -1,0 +1,27 @@
+id: mo-android-052
+title: "Android: Activity Result API 与结果回调"
+topics: [android, activity, api]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "registerForActivityResult 把启动动作与结果回调绑定到 LifecycleOwner，回调按注册顺序分发，进程重建后仍能恢复到正确的回调，替代了已废弃的 startActivityForResult 与 onActivityResult。注册必须发生在初始化阶段，不能在点击事件里临时进行。"
+  keyPoints:
+    - "注册需在 STARTED 之前完成，否则创建时抛 IllegalStateException"
+    - "结果按 launcher 注册顺序分发，不再依赖 requestCode 手工 switch"
+    - "系统在进程重建后会重新投递未消费的结果，配合 SavedStateHandle 可完整恢复"
+    - "Fragment 之间传递结果用 Fragment Result API，不要直接持有对方引用"
+  pitfalls:
+    - "在按钮点击回调里调用 registerForActivityResult，触发生命周期状态检查崩溃"
+    - "认为进程被杀后结果必然丢失，忽略系统对 pending result 的保存与重投"
+followups:
+  - "Activity Result API 在进程重建后是如何恢复未返回结果的？"
+  - "多个 launcher 注册同一 contract 时，结果如何保证不串台？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

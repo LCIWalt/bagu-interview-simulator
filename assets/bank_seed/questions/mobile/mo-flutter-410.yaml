@@ -1,0 +1,26 @@
+id: mo-flutter-410
+title: "ChangeNotifierProvider 的 lazy 与 dispose 如何影响生命周期？"
+topics: [flutter, provider, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ChangeNotifierProvider 默认 lazy 为 true，create 延迟到第一次读取时执行；lazy 为 false 则在挂载时立即创建。Provider 在自身卸载时会 dispose 由 create 创建的 notifier，而 .value 传入的外部实例不会被自动 dispose。"
+  keyPoints:
+    - "lazy 为 true 时 create 在首次读取时执行，可推迟昂贵初始化"
+    - "lazy 为 false 时在 Provider 挂载阶段就创建 notifier"
+    - "create 创建的对象由 Provider 负责 dispose，.value 传入的不会"
+    - "dispose 参数可以覆盖默认清理逻辑，但要自行保证幂等"
+  pitfalls:
+    - "用 .value 传入外部 notifier 却以为 Provider 会负责 dispose"
+    - "异步回调里继续 notify 已 dispose 的 notifier，触发使用后销毁错误"
+followups:
+  - "lazy:false 适合什么场景？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-528
+title: "项目：插件引入的原生依赖和宿主冲突，两端怎么解？"
+topics: [flutter, plugins, native-build]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "Android 侧冲突多表现为同一库的多个版本、重复类或传递依赖的 minSdk 不一致，可用 exclude、resolutionStrategy 或依赖约束收敛；iOS 侧常见的是同一 pod 被不同插件以不同版本或静态、动态方式引入。要先用依赖树定位来源，再决定排除还是升级。"
+  keyPoints:
+    - "Android 用 ./gradlew :app:dependencies 查冲突来源，再 exclude 或强制版本"
+    - "重复类与 Manifest 合并失败要看 merger 报告，而不是盲目加 packagingOptions"
+    - "iOS 用 pod install 输出与 Podfile.lock 定位版本分歧，必要时在 Podfile 里锁定"
+    - "静态库与动态库混用会触发 use_frameworks! 相关问题，需统一链接方式"
+  pitfalls:
+    - "全局强制某个版本，掩盖了插件对 API 的真实不兼容"
+    - "只在 debug 验证，release 的 R8 裁剪后才暴露缺失类"
+followups:
+  - "Gradle 的 dependency constraint 与 force 有什么区别？"
+  - "CocoaPods 的 modular headers 什么时候必须开？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

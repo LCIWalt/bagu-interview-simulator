@@ -1,0 +1,27 @@
+id: mo-dart-082
+title: "热路径上的 await 成本与同步快路径"
+topics: [dart, async, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "每次 await 都会注册续体并调度 microtask，即使 Future 已完成也有固定开销。在每帧执行的热路径上大量 await 小 Future，会放大调度成本并增加延迟。能同步完成的计算应保持同步，异步边界只放在真正需要 IO 的地方。"
+  keyPoints:
+    - "await 已完成的 Future 仍会产生 microtask 调度"
+    - "热路径上的细碎 await 会累积成可观的耗时"
+    - "纯计算不应为统一风格而包成 Future"
+    - "先用 profile 确认瓶颈，再决定是否异步化"
+  pitfalls:
+    - "把所有函数改成 async 以追求风格统一"
+    - "用 Future.value 包装纯计算，增加无谓调度"
+followups:
+  - "sync* 与 async* 在迭代开销上有什么区别？"
+  - "如何定位一帧内过多的微任务？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-087
+title: "Android: 弱网下的请求重试与幂等"
+topics: [android, network, reliability]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "弱网重试要先区分错误类型：超时、连接重置、5xx 可以退避重试，4xx 通常不该重试。写请求必须带幂等键由服务端去重，否则一次超时重试就可能造成重复下单或重复扣款。"
+  keyPoints:
+    - "指数退避加随机抖动，限制最大次数与总时长，尊重 Retry-After"
+    - "只对幂等方法自动重试，写操作依赖幂等键在服务端去重"
+    - "区分连接失败与请求已发出但响应超时，后者重试风险最高"
+    - "重试要与页面生命周期和取消信号绑定，退出后不再继续"
+  pitfalls:
+    - "对所有失败一律重试，弱网下成倍放大服务端压力"
+    - "用相同请求重试支付或下单，造成重复扣款"
+followups:
+  - "如何判断一个请求是否已经到达服务端？"
+  - "重试策略应该怎样和熔断、限流配合？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

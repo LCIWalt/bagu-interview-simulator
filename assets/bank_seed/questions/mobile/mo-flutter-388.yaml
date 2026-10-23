@@ -1,0 +1,26 @@
+id: mo-flutter-388
+title: "为什么不该在 build 方法里创建 AnimationController 或订阅流？"
+topics: [flutter, state-lifecycle, resources]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "build 会因父级重建、主题变化、setState 等原因反复执行，在其中创建 AnimationController、StreamSubscription 或 Timer 会产生大量未释放对象。这类资源应在 initState 创建、dispose 释放，build 只负责根据当前状态描述界面。"
+  keyPoints:
+    - "build 可能在短时间内多次执行，不能假设只调用一次"
+    - "AnimationController 需要 vsync 与 dispose，适合在 initState 建立"
+    - "StreamSubscription、Timer、监听器都应在 dispose 中成对清理"
+    - "需要随 Widget 参数重建的资源，放到 didUpdateWidget 处理"
+  pitfalls:
+    - "在 build 里 addListener 却不 remove，页面退出后仍在回调"
+    - "把 controller 存在局部变量里，dispose 时无法访问"
+followups:
+  - "didUpdateWidget 中重建 controller 要注意哪些顺序？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

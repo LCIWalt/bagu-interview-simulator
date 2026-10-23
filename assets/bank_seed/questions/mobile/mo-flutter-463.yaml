@@ -1,0 +1,26 @@
+id: mo-flutter-463
+title: "什么样的图层会被光栅缓存命中？"
+topics: [flutter, rastercache, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "光栅缓存把重复出现、内容稳定、复杂度足够的图层提前栅格化成纹理，之后直接贴图而不必重跑绘制指令。命中与否由图层类型、复杂度提示、跨帧稳定性与访问次数共同决定，缓存本身也占用显存。"
+  keyPoints:
+    - "参与缓存的是 PictureLayer 这类可缓存图层，容器层本身不会被整体缓存"
+    - "绘制指令足够多或被标记为复杂时，引擎才认为值得缓存"
+    - "图层内容与变换要在多帧内保持稳定，才有机会被重复命中"
+    - "同一图层需要跨帧被访问到一定次数，缓存才会真正建立"
+  pitfalls:
+    - "把频繁变化的动画内容标成复杂图层，缓存刚建立就失效，反而更慢"
+    - "大量缓存条目挤占显存，低端机更容易出现纹理分配失败"
+  followups:
+    - "isComplex 与 willChange 两个提示分别影响什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-080
+title: "Android: 内存泄漏的现场取证与 heap dump 分析"
+topics: [android, memory, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "内存泄漏的定位依赖 heap dump：先按 retained size 排序找到可疑对象，再沿 shortest path to GC root 找到真正持有者。LeakCanary 适合在 debug 自动检测 Activity/Fragment 泄漏，线上则需要限频、裁剪和脱敏后再上报。"
+  keyPoints:
+    - "在 Activity/Fragment destroy 后或内存水位升高时触发 dump，时机决定能否抓到现场"
+    - "按 retained size 排序，沿 GC root 引用链确认是谁延长了生命周期"
+    - "常见根因是静态集合、单例、线程/Handler、未注销监听器和匿名内部类"
+    - "线上 dump 要裁剪、脱敏、限制频率，避免采集动作本身触发二次 OOM"
+  pitfalls:
+    - "dump 前不主动 GC，把可回收的缓存对象误判成泄漏"
+    - "只看 shallow size，忽略一个对象拖住整棵视图树的 retained size"
+followups:
+  - "LeakCanary 判断对象泄漏的完整流程是什么？"
+  - "线上做 heap dump 如何控制开销与合规风险？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

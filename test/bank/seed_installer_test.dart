@@ -18,12 +18,12 @@ void main() {
 
     expect(await installer.installIfNeeded(), isTrue);
     final count = await repo.countQuestions();
-    expect(count, greaterThanOrEqualTo(428));
+    expect(count, greaterThanOrEqualTo(728));
 
-    final results = await repo.search(const QuestionQuery(limit: 500));
+    final results = await repo.search(const QuestionQuery(limit: 1000));
     expect(results, hasLength(count));
     expect(results.any((Question q) => q.id == 'be-go-001'), isTrue);
-    expect((await repo.installed())?.bankVersion, '2026.10.5');
+    expect((await repo.installed())?.bankVersion, '2026.10.6');
 
     expect(await installer.installIfNeeded(), isFalse);
     expect(await repo.countQuestions(), count);

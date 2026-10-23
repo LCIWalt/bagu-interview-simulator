@@ -1,0 +1,26 @@
+id: mo-android-049
+title: "Android: taskAffinity 与任务栈归属"
+topics: [android, tasks, activity]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "taskAffinity 表示 Activity 期望归属的任务栈，默认取应用包名；仅声明 affinity 并不会改变行为，只有配合 FLAG_ACTIVITY_NEW_TASK 或 allowTaskReparenting 才会真正影响入栈。多任务栈场景下的返回键路径、Recents 卡片归属都由它决定。"
+  keyPoints:
+    - "默认 affinity 等于包名，相同 affinity 的 Activity 倾向于进入同一个任务栈"
+    - "NEW_TASK 启动时优先查找 affinity 匹配的已有任务，找不到才创建新任务"
+    - "allowTaskReparenting 允许 Activity 在所属 affinity 的任务被唤起时迁移过去"
+    - "android:taskAffinity 设为空串可让 Activity 不继承包名，避免误入主任务栈"
+  pitfalls:
+    - "只改 taskAffinity 就期望新建任务栈，缺少 NEW_TASK 时行为不会变化"
+    - "多任务栈导致返回路径与预期不符，用户按返回直接退出应用而非回到上一页"
+followups:
+  - "documentLaunchMode 在多窗口与多实例场景下如何与 taskAffinity 配合？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

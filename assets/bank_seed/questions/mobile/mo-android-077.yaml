@@ -1,0 +1,27 @@
+id: mo-android-077
+title: "Android: ViewStub 与延迟 inflate"
+topics: [android, view, performance]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "ViewStub 是一个不参与测量绘制的占位视图，只有 inflate 时才创建真实布局并从父容器中移除。它适合错误页、空态、低频弹层这类首屏不一定出现的区域，可以推迟布局解析和对象创建的成本。"
+  keyPoints:
+    - "ViewStub 本身宽高为 0、不绘制，inflate 一次后从父布局移除"
+    - "调用 inflate() 或 setVisibility(VISIBLE) 触发，前者可以直接拿到根 View"
+    - "与 include + GONE 对比，后者在加载布局时就已经付出创建成本"
+    - "结构差异大的场景可以直接动态 addView，比预留 ViewStub 更灵活"
+  pitfalls:
+    - "inflate 之后继续持有 ViewStub 引用并访问，得到空引用或异常"
+    - "把首屏必然展示的内容放进 ViewStub，多出一次布局请求反而更慢"
+followups:
+  - "ViewStub 与 View.GONE 的成本差异具体在哪？"
+  - "重复调用 ViewStub.inflate() 会发生什么？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

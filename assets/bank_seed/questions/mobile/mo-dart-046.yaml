@@ -1,0 +1,26 @@
+id: mo-dart-046
+title: "闭包捕获：循环变量与 for-in 的绑定差异"
+topics: [dart, closures, scope]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 闭包按引用捕获所在作用域的变量，而不是捕获当时的值。C 风格 for 的循环变量整个循环只有一份，延迟执行的回调都会读到最终值；for-in 每轮创建新的变量绑定，闭包能拿到当次元素。"
+  keyPoints:
+    - "闭包捕获变量本身，变量的后续修改对闭包可见"
+    - "for (var i = 0; ...) 的 i 在循环外只有一份，所有回调共享"
+    - "for-in 每轮绑定新的循环变量，回调各自捕获当次值"
+    - "需在 for 中固定值时，可在循环体内声明局部变量或经参数传入"
+  pitfalls:
+    - "在 for 循环里注册回调，运行后全部输出同一个最终值"
+    - "以为闭包持有的是快照，之后修改变量不会影响已注册回调"
+  followups:
+    - "为什么在循环体内写 final i = i 能修复捕获问题？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-495
+title: "同一个 MethodChannel 名注册到多个 FlutterEngine 上，会互相串消息吗？"
+topics: [flutter, platform-channel, engine]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "MethodChannel 的身份由名字和创建时传入的 BinaryMessenger 共同决定，并不是全局单例。每个 FlutterEngine 有自己的 DartExecutor 与 messenger，同名 channel 在不同引擎上彼此隔离，调用不会串台。插件注册到错误的引擎时，Dart 侧只会得到 MissingPluginException。"
+  keyPoints:
+    - "MethodChannel 构造时必须传入 BinaryMessenger，名字只是同一 messenger 内的路由键"
+    - "FlutterEngine 各自持有 DartExecutor 与 messenger，同名 channel 跨引擎互不影响"
+    - "Add-to-App 多引擎场景要让插件在目标引擎上注册，否则表现为 MissingPluginException"
+    - "只有挂在同一引擎上的调用才共用 handler，插件实例与监听器也随之共享"
+  pitfalls:
+    - "把 channel 当全局单例缓存，引擎销毁后仍用旧 messenger 发消息"
+    - "以为换个 channel 名就能隔离多引擎业务，实际仍要按引擎注册 handler"
+followups:
+  - "FlutterEngineGroup 孵化出的引擎，插件注册是自动继承还是各注册各的？"
+  - "如何为一个只跑后台逻辑、没有 FlutterView 的引擎注册插件？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

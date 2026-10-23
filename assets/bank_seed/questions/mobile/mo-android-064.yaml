@@ -1,0 +1,27 @@
+id: mo-android-064
+title: "Android: 进程优先级、oom_adj 与 LMK"
+topics: [android, process, memory]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "系统按进程当前承担的角色分配 oom_adj 分数，前台进程分数最低、最不容易被杀，空进程分数最高、最先被回收。内存不足时 Low Memory Killer 从高分往低分回收，应用只能通过减少常驻组件与后台负载来间接影响自己的位置。"
+  keyPoints:
+    - "前台进程持有用户正在交互的 Activity 或前台服务，优先级最高"
+    - "可见进程、服务进程、缓存进程依次降级，空进程最先被 LMK 回收"
+    - "oom_adj 由系统根据组件状态动态调整，应用没有接口直接设置"
+    - "缓存进程被回收后用户返回时需要冷启动，状态恢复依赖持久化与 saved state"
+  pitfalls:
+    - "用空进程或播放无声音频试图保活，既无效又增加耗电与系统负担"
+    - "把关键任务放在随时会被回收的后台进程中，未做落盘与重试"
+followups:
+  - "为什么前台服务也不能保证进程不被杀？"
+  - "LMK 与 Android 低内存设备上的 lmkd 是什么关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

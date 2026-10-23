@@ -1,0 +1,26 @@
+id: mo-dart-036
+title: "mixin 的 on 约束与同名成员冲突解决"
+topics: [dart, mixin, oop]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "mixin 用 on 子句声明宿主上界，从而能在内部安全调用该类型的成员；with 列表按线性化顺序叠加，同名成员由后混入的覆盖先混入的。mixin 内的 super 调用会沿着这条线性化链找到前一个实现。"
+  keyPoints:
+    - "on 子句限定可混入的宿主类型，mixin 内部可访问该上界成员"
+    - "多个 mixin 提供同名方法时，with 列表中靠后的优先"
+    - "mixin 内的 super 调用指向线性化链上的前一个实现"
+    - "mixin 可声明抽象成员，由宿主类负责实现"
+  pitfalls:
+    - "把 mixin 当接口用，忽略 on 约束后访问宿主成员直接编译失败"
+    - "多个 mixin 覆盖同一成员却不调用 super，静默丢掉前序逻辑"
+  followups:
+    - "mixin class 与普通 mixin 在使用上有什么区别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-407
+title: "RouteAware 如何感知页面 push、pop 与重新可见？"
+topics: [flutter, lifecycle, navigator]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "RouteAware 通过 RouteObserver 订阅某个路由，路由被 push、pop、被新页面覆盖或重新露出时分别收到 didPush、didPop、didPushNext、didPopNext。它适合在页面重新可见时刷新数据、暂停视频或统计停留时长。"
+  keyPoints:
+    - "RouteObserver 必须注册到 navigatorObservers 才能收到事件"
+    - "didPushNext 表示有更上层路由覆盖，didPopNext 表示重新露出"
+    - "订阅通常在 didChangeDependencies 中完成，此时 ModalRoute 可用"
+    - "dispose 中要 unsubscribe，避免观察者持有已销毁对象"
+  pitfalls:
+    - "在 initState 里订阅，ModalRoute 还无法通过依赖查找获得"
+    - "只处理 didPopNext 却忘记取消订阅，页面销毁后仍被回调"
+followups:
+  - "RouteAware 与 NavigatorObserver 的职责差异是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

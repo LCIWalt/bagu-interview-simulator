@@ -1,0 +1,26 @@
+id: mo-dart-042
+title: "int 与 double：VM 与 Web 上的数值语义差异"
+topics: [dart, numbers, type-system]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart VM 的 int 是 64 位有符号整数，溢出会静默回绕；编译到 JavaScript 时 int 与 double 都退化为 JS number，安全整数上限只有 2^53-1。位运算在 dart2js 下按 32 位处理，因此跨平台代码不能依赖位宽与溢出行为。"
+  keyPoints:
+    - "VM 上 int 固定 64 位，加减溢出静默回绕而不报错"
+    - "Web 上 int 由 double 表示，超过 2^53-1 会丢精度"
+    - "位运算在 dart2js 下按 32 位语义执行，结果可能与 VM 不同"
+    - "需要任意精度整数时使用 BigInt，而不是依赖 int 位宽"
+  pitfalls:
+    - "用 int 存雪花 ID 或微秒时间戳，Web 端被静默截断"
+    - "依赖溢出做哈希或掩码，同一份代码两端结果不一致"
+  followups:
+    - "为什么 JSON 里的大整数在 Flutter Web 上容易被截断？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

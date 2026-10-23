@@ -1,0 +1,26 @@
+id: mo-flutter-446
+title: "StreamSink 只 add 不 close，会发生什么？"
+topics: [dart, stream, lifecycle]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "下游永远等不到 onDone：await for 不会结束，StreamBuilder 会一直停在等待态，依赖完成信号释放的资源也不会回收。close 会让监听者收到 onDone，是流协议里必须履行的收尾。"
+  keyPoints:
+    - "close 才会让监听者收到 onDone"
+    - "不 close 时 await for 永久挂起"
+    - "close 后监听者结束订阅，不再收到事件"
+    - "Sink 应由创建方负责关闭，消费方不能假设流会自己结束"
+  pitfalls:
+    - "在 error 分支直接 return，忘记 close"
+    - "把 close 交给消费方，生产方以为流会自动结束"
+followups:
+  - "StreamController.close 返回的 Future 什么时候完成？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-507
+title: "项目：PlatformView 放进滚动列表后闪烁、跟手差，怎么排查？"
+topics: [flutter, platform-view, scrolling]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "VirtualDisplay 模式下原生 View 的绘制与 Flutter 帧不同步，滚动时纹理内容会晚一帧，表现为内容追不上列表；Hybrid Composition 虽有独立 Surface，滚动中的位置更新与 Surface 合成也可能错位。要从模式选择、复用方式与滚动期间的内容更新频率三方面一起处理。"
+  keyPoints:
+    - "VirtualDisplay 的绘制是异步的，滚动位移先到、原生内容后到，形成一帧滞后"
+    - "列表快速滚动时频繁创建与销毁 PlatformView，会放大卡顿与闪烁"
+    - "优先用 TLHC 或 HC 改善跟手性，并给 PlatformView 外包 RepaintBoundary"
+    - "滚动期间暂停原生侧高频重绘，停止后再同步一次状态"
+  pitfalls:
+    - "用 opacity 或 transform 动画包裹 PlatformView，触发额外合成甚至失效"
+    - "在 itemBuilder 里每次重建 controller，导致原生 View 反复创建"
+followups:
+  - "如何量化 PlatformView 在滚动中的掉帧？"
+  - "PlatformView 的缓存复用有哪些可行做法？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

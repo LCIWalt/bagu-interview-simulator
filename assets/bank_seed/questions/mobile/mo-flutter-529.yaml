@@ -1,0 +1,27 @@
+id: mo-flutter-529
+title: "插件把 AGP、Kotlin、Gradle 版本写高，宿主构建失败怎么办？"
+topics: [flutter, plugins, android-build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "插件工程的 AGP、Gradle 或 Kotlin 版本若高于宿主，或用了宿主未开启的编译选项，宿主同步阶段就会失败。插件应尽量贴近 Flutter 模板支持的最低版本，并把仅自身需要的配置写在自己的 build.gradle 里，不要假设宿主已经配置。"
+  keyPoints:
+    - "插件声明的 AGP 与 Gradle 版本不应超过当前 Flutter 模板支持的范围"
+    - "namespace、compileSdk 与 Java、Kotlin 目标版本要与宿主兼容"
+    - "Kotlin 版本不一致会导致 metadata 版本报错，必要时在宿主统一抬高"
+    - "新增依赖前先确认不会强制升级宿主的构建工具链"
+  pitfalls:
+    - "在插件里用最新 AGP 试验特性，所有下游被迫升级"
+    - "把 compileSdk 写死成高于宿主，合并时直接失败"
+followups:
+  - "如何为一个长期不维护的插件打补丁并本地覆盖？"
+  - "Flutter 的 plugin_ffi 与普通插件在构建配置上有什么不同？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

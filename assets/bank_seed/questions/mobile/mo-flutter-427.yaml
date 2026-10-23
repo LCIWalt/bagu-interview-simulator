@@ -1,0 +1,26 @@
+id: mo-flutter-427
+title: "Dart 没有内置锁，异步临界区如何串行化？"
+topics: [dart, concurrency, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 单线程不代表没有竞态：多个 async 任务在 await 点交错，仍可能同时进入同一段逻辑。可以用 package:synchronized 的 Lock 或基于 Completer 的等待队列把临界区串行化，并确保异常路径也释放锁。"
+  keyPoints:
+    - "竞态来自 await 处的交错，而非多线程抢占"
+    - "Lock.synchronized 把临界区包成串行执行的 Future"
+    - "手写锁要维护等待队列并用 try/finally 释放"
+    - "锁的粒度应覆盖共享状态的读改写全过程"
+  pitfalls:
+    - "只锁写不锁读，读到中间态"
+    - "持锁期间 await 一个又需要同一把锁的操作，造成死锁"
+followups:
+  - "单 isolate 内已经串行执行，为什么还需要锁？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

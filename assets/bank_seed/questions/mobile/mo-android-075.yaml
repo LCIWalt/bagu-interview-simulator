@@ -1,0 +1,27 @@
+id: mo-android-075
+title: "Android: 过度绘制与渲染管线耗时"
+topics: [android, performance, rendering]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "同一像素在一帧里被重复绘制会增加 GPU 填充压力，常见来源是不可见背景、层叠卡片、半透明遮罩和大圆角裁剪。排查时先用开发者选项的过度绘制调试与 GPU 渲染模式分析，再用 Perfetto 看主线程 buildDisplayList 和 RenderThread 的实际耗时。"
+  keyPoints:
+    - "每帧分 CPU 侧构建 DisplayList 与 GPU 侧栅格化，任一阶段超预算都会掉帧"
+    - "移除不可见背景、用 clipRect 限制绘制区域，减少 alpha 与圆角裁剪叠加"
+    - "GPU 渲染模式分析看 draw 阶段，Perfetto 看 RenderThread 与合成耗时"
+    - "大面积半透明、阴影和离屏层会触发额外合成与显存占用"
+  pitfalls:
+    - "把过度绘制当成掉帧的唯一原因，忽略主线程自身耗时"
+    - "为了优化随手给 View 加 hardware layer，反而增加显存和合成开销"
+followups:
+  - "hardware layer 在什么场景下才真正有效？"
+  - "如何判断掉帧发生在主线程还是 RenderThread？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

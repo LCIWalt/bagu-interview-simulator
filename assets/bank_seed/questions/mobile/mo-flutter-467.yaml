@@ -1,0 +1,26 @@
+id: mo-flutter-467
+title: "回退到 Skia 后，哪些行为和之前不一样？"
+topics: [flutter, impeller, skia]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "可以通过运行参数或平台配置关闭 Impeller，让应用回到 Skia 渲染。回退后 SkSL 运行期编译与预热机制重新生效，部分滤镜、混合与抗锯齿细节的光栅结果也会变化，性能特征需要重新测。"
+  keyPoints:
+    - "flutter run 可用 --no-enable-impeller，Android 走 manifest meta-data，iOS 走 Info.plist 开关"
+    - "Skia 下可以用 SkSL 预热包缓解首次编译卡顿，Impeller 不消费这类产物"
+    - "模糊、裁剪与混合模式的实现路径不同，像素级结果可能存在细微差异"
+    - "回退是排障手段，长期方案仍是定位具体不兼容的绘制场景"
+  pitfalls:
+    - "以为关掉 Impeller 就一定更快，实际在中低端机上可能更慢"
+    - "golden 测试没有区分渲染后端，CI 与本地结果对不上"
+  followups:
+    - "如何在 CI 上分别覆盖两个渲染后端？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

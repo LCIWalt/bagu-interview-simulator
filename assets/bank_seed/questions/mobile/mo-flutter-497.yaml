@@ -1,0 +1,27 @@
+id: mo-flutter-497
+title: "原生调用 Dart 的 setMethodCallHandler 不生效，通常踩了哪些坑？"
+topics: [flutter, platform-channel, isolate]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "setMethodCallHandler 只对注册它的那个 isolate 的 messenger 生效，同一 channel 后设置还会覆盖先设置；handler 必须在原生发起调用之前注册完成。后台 isolate 注册的 handler 收不到主 isolate 的消息，未注册时原生侧只会收到 notImplemented 回复。"
+  keyPoints:
+    - "handler 绑定在注册它的 isolate 的 messenger 上，跨 isolate 不共享"
+    - "同一 channel 重复 setMethodCallHandler 是覆盖而不是追加，注意插件与业务抢注册"
+    - "handler 必须对每个 call 恰好 reply 一次，漏回或回两次都会让原生侧挂起或报错"
+    - "注册时机要早于原生 invokeMethod，通常在引擎配置完成、runApp 之前"
+  pitfalls:
+    - "页面 dispose 后仍保留 handler，引擎销毁时未清理导致原生回调悬空"
+    - "handler 里做耗时同步操作，阻塞 UI isolate 的消息处理"
+followups:
+  - "如何在测试里模拟原生向 Dart 发起的调用？"
+  - "handler 抛出异常时，原生侧收到的是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

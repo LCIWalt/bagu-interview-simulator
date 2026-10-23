@@ -1,0 +1,26 @@
+id: mo-flutter-474
+title: "AnimationController.unbounded 适合什么场景？"
+topics: [flutter, animation, controller]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "unbounded 构造把上下界设为无穷，value 可以随手势或物理模拟自由变化，不再被限制在 0 到 1。它没有默认 duration，调用 forward、reverse 这类依赖时长的方法时必须显式给 duration，或者改用模拟器驱动。"
+  keyPoints:
+    - "unbounded 的上下界是负无穷与正无穷，value 不再被夹在 0 到 1"
+    - "duration 为 null 时，forward、reverse、repeat 需要显式时长参数"
+    - "animateWith 与 fling 由 Simulation 决定结束时间，不依赖 duration"
+    - "常用于跟手拖拽、可超出范围的回弹与自定义物理曲线"
+  pitfalls:
+    - "沿用有界思维在 0 到 1 上做插值，unbounded 的值域让动画直接跑飞"
+    - "忘记 unbounded 控制器也要 dispose，Ticker 一直挂在 vsync 上"
+  followups:
+    - "unbounded 控制器如何配合 ScrollPhysics 做回弹？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

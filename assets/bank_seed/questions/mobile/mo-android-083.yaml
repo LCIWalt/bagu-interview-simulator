@@ -1,0 +1,27 @@
+id: mo-android-083
+title: "Android: Macrobenchmark 度量启动与帧率"
+topics: [android, performance, testing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Macrobenchmark 从应用外部驱动启动和滚动，能输出启动耗时与逐帧数据，比手工掐表更可复现。它要求固定编译模式、设备状态和迭代次数，否则不同版本之间的数据没有可比性。"
+  keyPoints:
+    - "用 StartupTimingMetric 测 timeToInitialDisplay 与 timeToFullDisplay"
+    - "用 FrameTimingMetric 看 frameDurationCpuMs 与 frameOverrunMs 的分布"
+    - "固定 CompilationMode（None/Partial/Full）并在报告中注明"
+    - "多次迭代取中位数，设备固定、飞行模式、清理后台进程"
+  pitfalls:
+    - "在 debuggable 包或未固定编译模式下采样，结论不可用于对比"
+    - "只报平均帧率，掩盖卡顿帧比例和长尾"
+followups:
+  - "TTID 与 TTFD 分别衡量什么？"
+  - "如何把 Macrobenchmark 接入 CI 做性能回归门禁？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

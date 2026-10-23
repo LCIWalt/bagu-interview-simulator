@@ -1,0 +1,27 @@
+id: mo-flutter-539
+title: "go_router 的 redirect 为什么会来回跳转，如何终止？"
+topics: [flutter, routing, go-router]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "redirect 在每次导航时都会重新求值，如果 A 要求去 B、B 又要求回 A，就会形成重定向环。终止的关键是让目标路由的 redirect 在条件已满足时返回 null，并保证所有守卫读取同一份权威状态。go_router 的重定向次数超过 redirectLimit 后会抛异常，而不是无限循环。"
+  keyPoints:
+    - "redirect 内先判断当前 location，已处于目标路由时返回 null"
+    - "所有守卫共享同一份认证/引导状态，避免中途被异步刷新成相反值"
+    - "路由路径用常量或枚举集中管理，避免字符串拼写差异导致条件不命中"
+    - "理解 redirectLimit 的默认值与超限后的异常行为，便于定位环"
+  pitfalls:
+    - "在 redirect 里 await 刷新登录态，导致每次导航都触发状态变化"
+    - "登录页自身也要求登录，未登录用户被反复重定向"
+followups:
+  - "refreshListenable 在什么时机触发重新求值？"
+  - "把 redirectLimit 调大能解决问题吗，风险是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

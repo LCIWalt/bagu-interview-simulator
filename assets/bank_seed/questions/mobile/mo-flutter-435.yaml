@@ -1,0 +1,26 @@
+id: mo-flutter-435
+title: "StreamBuilder 的 initialData 与 hasData 判定有哪些坑？"
+topics: [flutter, stream, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "initialData 让 snapshot 在首个事件前就有数据，因此 hasData 会立刻为 true，但它不代表流已经发出过事件。判断加载状态应看 connectionState，而不是只看 hasData，否则会把占位数据当成真实结果。"
+  keyPoints:
+    - "initialData 只填充 snapshot.data，不改变 connectionState"
+    - "hasData 等价于 data 非空，与是否收到事件无关"
+    - "首个事件到达前 connectionState 为 waiting"
+    - "流结束也没有数据时状态为 done，hasData 仍取决于 data 是否为空"
+  pitfalls:
+    - "用 hasData 判断空列表，初始占位数据让空态判断失真"
+    - "initialData 传可变对象，后续被原地修改导致快照失真"
+followups:
+  - "initialData 与流首个事件的数据类型不一致会怎样？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "Flutter 客户端面经：异步编程与状态管理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

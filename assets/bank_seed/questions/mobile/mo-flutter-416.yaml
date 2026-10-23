@@ -1,0 +1,26 @@
+id: mo-flutter-416
+title: "await 一个已完成的 Future，后续代码会立刻执行吗？"
+topics: [dart, async, event-loop]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "不会。await 的语义是挂起当前 async 函数并把后续代码注册为回调；即使 Future 已经完成，恢复执行也要排进微任务队列。所以 await 永远是一次异步让出，不会同步穿透。"
+  keyPoints:
+    - "await 先求值表达式再挂起函数，恢复一定经过微任务"
+    - "已完成的 Future 只是让恢复更早排队，不是同步继续"
+    - "连续 await 已完成的 Future 仍会产生多个微任务轮次"
+    - "需要同步取值时应直接读结果，而不是 await"
+  pitfalls:
+    - "以为 await 已完成的 Future 不让出，按同步顺序写初始化逻辑"
+    - "在 build 或 initState 里 await 后假设同一帧内完成"
+followups:
+  - "async 函数体从调用到第一个 await 之间是同步执行的吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

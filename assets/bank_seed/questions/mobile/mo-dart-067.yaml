@@ -1,0 +1,27 @@
+id: mo-dart-067
+title: "Isolate.spawn 的启动握手与 Isolate.exit"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Isolate.spawn 接收顶层或静态函数与一条初始消息，新 isolate 通常通过这条消息拿到主 isolate 的 SendPort 回传结果。主 isolate 用 ReceivePort 接收并在完成后关闭。Isolate.exit 能把最终结果作为退出消息一次性发出，省去额外拷贝与显式握手。"
+  keyPoints:
+    - "入口函数必须是顶层或静态函数，不能捕获闭包"
+    - "初始消息常用来传递主 isolate 的 SendPort"
+    - "Isolate.exit(result) 将结果作为退出消息发送"
+    - "启动失败与运行错误可通过 onError、onExit 观察"
+  pitfalls:
+    - "传入捕获了 BuildContext 的闭包，导致启动失败"
+    - "忘记 close ReceivePort，isolate 无法自然退出"
+followups:
+  - "errorsAreFatal 设为 false 后错误如何送达？"
+  - "Isolate.exit 与普通消息发送在拷贝上有什么差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

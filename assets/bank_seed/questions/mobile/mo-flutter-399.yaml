@@ -1,0 +1,26 @@
+id: mo-flutter-399
+title: "OverlayPortal 相比手动插 OverlayEntry 有什么优势？"
+topics: [flutter, overlay, widgets]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "OverlayPortal 把浮层的生命周期绑定到宿主 Widget，宿主卸载时自动移除对应 OverlayEntry，避免手动管理泄漏。它用 OverlayPortalController 控制显隐，浮层在 Element 树上仍位于宿主之下，可以继续依赖宿主上方的 InheritedWidget。"
+  keyPoints:
+    - "通过 OverlayPortalController 的 show、hide、toggle 管理浮层"
+    - "宿主卸载时自动移除 OverlayEntry，不需要手动 remove"
+    - "浮层 Element 仍位于宿主之下，可依赖宿主上方的 InheritedWidget"
+    - "默认挂到最近的 Overlay，targetsRootOverlay 可改为根 Overlay"
+  pitfalls:
+    - "在 build 中调用 controller.show，触发构建期断言"
+    - "以为浮层完整继承宿主的 MediaQuery，实际 padding 与 viewInsets 会被 Overlay 数据覆盖"
+followups:
+  - "OverlayPortal 与 showDialog 的适用场景有什么不同？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

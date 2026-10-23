@@ -1,0 +1,27 @@
+id: mo-flutter-511
+title: "FlutterFragment 与 FlutterActivity 该如何选，生命周期差在哪？"
+topics: [flutter, add-to-app, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FlutterActivity 适合整页 Flutter、由 Flutter 主导导航的场景，生命周期与引擎绑定简单；FlutterFragment 适合把 Flutter 作为原生页面的一部分或参与原生导航，需要处理 Fragment 的 attach、detach、配置变更与引擎归属。选择取决于页面边界，而不是个人偏好。"
+  keyPoints:
+    - "FlutterActivity 默认随 Activity 创建与销毁引擎，配置变更可声明不重建"
+    - "FlutterFragment 要显式指定引擎或让框架托管，attach 时才与引擎关联"
+    - "Fragment 被 replace 后是否销毁引擎，取决于是否使用缓存引擎"
+    - "原生导航栈里混用两者时，返回键与转场动画要统一处理"
+  pitfalls:
+    - "在 Fragment 里直接 new FlutterEngine 又不销毁，切换页面后引擎泄漏"
+    - "配置变更后 Fragment 重建，重复注册插件导致行为异常"
+followups:
+  - "FlutterFragment 复用一个已缓存的引擎时，谁负责销毁它？"
+  - "FlutterFragment 与 FlutterActivity 的转场如何保持一致？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

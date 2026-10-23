@@ -1,0 +1,27 @@
+id: mo-flutter-574
+title: "API 要废弃时，如何做迁移期兼容？"
+topics: [flutter, maintainability, api-design]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "直接删除公开 API 会让下游编译失败，尤其在多包协作时。应该用 Deprecated 标注并给出替代写法与截止版本，保留至少一个发布周期的兼容层。changelog 与迁移指南要同步更新，内部包还可以用 lint 阻止新增调用。"
+  keyPoints:
+    - "用 Deprecated 注解并写清替代 API 与移除版本"
+    - "保留一个发布周期的兼容实现，内部转发到新 API"
+    - "changelog 与迁移指南同步说明改动与操作步骤"
+    - "内部用 lint 或 CI 检查阻止新增对废弃 API 的调用"
+  pitfalls:
+    - "只标 deprecated 不写替代方案，调用方无从迁移"
+    - "在 patch 版本里直接删除公开 API，造成下游编译失败"
+followups:
+  - "兼容层保留多久比较合理？"
+  - "如何处理废弃 API 上的安全漏洞修复？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

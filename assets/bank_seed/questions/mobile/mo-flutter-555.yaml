@@ -1,0 +1,27 @@
+id: mo-flutter-555
+title: "本地缓存的结构变了，旧数据怎么处理？"
+topics: [flutter, offline-first, storage]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "缓存也是持久化数据，字段改名或类型变化会让反序列化失败。需要给缓存条目带 schema 版本，选择小步迁移或按 key 前缀整体失效重建。迁移要能处理部分损坏，单条解析失败只丢该条，而不是清空整个库。"
+  keyPoints:
+    - "缓存条目携带 schemaVersion，读取时决定是否需要迁移"
+    - "小改动做逐版本迁移，结构大改直接按命名空间整体失效"
+    - "单条解析失败只丢弃该条并记录，不要清库"
+    - "迁移与版本检查在首次读取前执行一次，避免重复跑"
+  pitfalls:
+    - "用 try-catch 吞掉解析错误返回 null，页面直接空白"
+    - "升级后不 bump 版本，继续按旧结构读取并写入脏数据"
+followups:
+  - "缓存迁移需要和数据库迁移共用一套版本号吗？"
+  - "整体失效时如何避免用户瞬间流量打到服务端？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

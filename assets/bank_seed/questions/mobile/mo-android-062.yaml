@@ -1,0 +1,27 @@
+id: mo-android-062
+title: "Android: repeatOnLifecycle 与 collectAsStateWithLifecycle"
+topics: [android, compose, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "在后台继续收集冷流会白耗资源，甚至触发不必要的请求与数据库查询。repeatOnLifecycle 让收集随生命周期在 STARTED 时启动、离开时取消，collectAsStateWithLifecycle 则是 Compose 侧的同款封装，把 Flow 转成随生命周期启停的 State。"
+  keyPoints:
+    - "repeatOnLifecycle(STARTED) 进入 STARTED 时启动协程块，低于该状态时取消整块协程"
+    - "直接在 lifecycleScope.launch 中 collect 不会随生命周期暂停，后台仍在接收"
+    - "collectAsStateWithLifecycle 来自 lifecycle-runtime-compose，优于裸 collectAsState"
+    - "配置变更后 ViewModel 中的 StateFlow 保留，新界面重新订阅即可拿到最新值"
+  pitfalls:
+    - "用 launchWhenStarted 收集，它只挂起协程并不取消上游，资源仍在占用"
+    - "在 Compose 中用 collectAsState 收集带副作用的流，退到后台后副作用继续执行"
+followups:
+  - "StateFlow 与 SharedFlow 配合 repeatOnLifecycle 时行为有什么不同？"
+  - "为什么 repeatOnLifecycle 比 launchWhenStarted 更适合处理一次性事件？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

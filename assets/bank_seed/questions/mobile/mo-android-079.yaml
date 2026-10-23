@@ -1,0 +1,27 @@
+id: mo-android-079
+title: "Android: Compose 重组计数与性能剖析"
+topics: [android, compose, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "重组次数多不一定慢，单次重组里做重活才是常见问题，因此既要看次数也要看单帧耗时。Layout Inspector 能显示 recomposition counts，Perfetto 能看到 composition 与 recomposition 的 trace slice，两者结合可以区分状态读取范围过大和列表项过重。"
+  keyPoints:
+    - "Layout Inspector 显示 recomposition counts 与跳过次数，按 composable 定位"
+    - "用自定义 Modifier.Node 或 drawWithContent 统计绘制，避免 composed 每次重组创建"
+    - "把状态读取下沉到最小 composable，缩小失效范围"
+    - "Perfetto 中查看 Compose 相关 trace，确认单帧重组耗时是否超预算"
+  pitfalls:
+    - "在 composable 里打日志统计重组，日志 IO 本身拖慢帧"
+    - "只盯重组次数，不看每次重组内部的耗时操作"
+followups:
+  - "如何准确统计单个 composable 的重组次数？"
+  - "derivedStateOf 在什么场景下能减少无效重组？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

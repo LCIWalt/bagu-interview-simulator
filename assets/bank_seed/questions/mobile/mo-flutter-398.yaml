@@ -1,0 +1,26 @@
+id: mo-flutter-398
+title: "Overlay 与 OverlayEntry 的插入、层级与移除要注意什么？"
+topics: [flutter, overlay, navigator]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Overlay 是按顺序堆叠 Entry 的 Stack，后插入的 Entry 显示在上层，Navigator 的每个路由也以 OverlayEntry 形式挂载。手动插入的 Entry 需要自己 remove 并 dispose，否则会一直留在树上；层级由插入位置决定，不能直接修改已有 Entry 的顺序。"
+  keyPoints:
+    - "OverlayEntry 通过 insert 加入，remove 后还要 dispose"
+    - "后插入的 Entry 位于上层，opaque 为 true 会跳过下方 Entry 的构建"
+    - "maintainState 决定 Entry 不可见时是否保留子树状态"
+    - "Navigator 的每个 Route 都对应一个 OverlayEntry"
+  pitfalls:
+    - "remove 后继续调用 markNeedsBuild，触发已卸载断言"
+    - "在 build 中直接 insert，导致每次重建都新增一个 Entry"
+followups:
+  - "OverlayEntry 的 opaque 与 maintainState 如何影响性能？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

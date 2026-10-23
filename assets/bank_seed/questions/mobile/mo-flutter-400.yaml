@@ -1,0 +1,26 @@
+id: mo-flutter-400
+title: "showDialog 的 context 该用哪个，useRootNavigator 为什么通常为 true？"
+topics: [flutter, navigator, dialog]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "showDialog 需要一个位于 Navigator 之下、仍然有效的 context，并默认通过 useRootNavigator 把对话框推到根 Navigator。这样对话框能覆盖整个应用，而不是被嵌套 Navigator 限制在某个 Tab 区域内；同时它会捕获调用处的主题并带到对话框。"
+  keyPoints:
+    - "context 必须能通过 Navigator.of 找到 Navigator，且不能已卸载"
+    - "useRootNavigator 默认 true，对话框挂到根 Navigator 之上"
+    - "InheritedTheme.capture 会把调用处主题带到对话框路由"
+    - "showDialog 返回 Future，关闭时可通过 pop 传回结果"
+  pitfalls:
+    - "用已经 dispose 的 context 调用 showDialog，触发断言"
+    - "在嵌套 Navigator 中一律用根导航，返回栈与预期不符"
+followups:
+  - "对话框关闭后如何把结果返回给调用方？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

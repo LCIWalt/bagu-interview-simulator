@@ -1,0 +1,26 @@
+id: mo-flutter-390
+title: "GlobalKey 跨父级移动 Element 时，框架如何保留 State？"
+topics: [flutter, key, element]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "同一 GlobalKey 的 Widget 出现在新父级下时，旧 Element 先被 deactivate 放进非活动列表，新位置再通过注册表找回它并 activate 到新父级。Element 与 State 都没有销毁，所以状态得以保留，但新位置的约束会触发重新布局。"
+  keyPoints:
+    - "旧位置更新时 Element 被 deactivate，进入 BuildOwner 的非活动列表"
+    - "新位置挂载时通过 GlobalKey 注册表找回旧 Element"
+    - "activate 把 Element 重新挂到新父级并恢复继承依赖"
+    - "State 与 RenderObject 保留，但新约束会触发重新布局"
+  pitfalls:
+    - "以为移动后 State 会重新 initState，实际不会"
+    - "移动前后 Widget 类型不一致，GlobalKey 也无法直接复用"
+followups:
+  - "GlobalKey 移动 Element 的成本主要来自哪里？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-542
+title: "restoreState 里为什么不能做异步 IO？"
+topics: [flutter, state-restoration, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "RestorationMixin 的 restoreState 在挂载阶段同步调用，职责是把 restorationData 还原成内存状态，此时不能 await，也不能触发导航或 setState。需要 IO 的恢复应该只还原一个 id 或请求参数，再在首帧之后异步加载并展示加载态。还要区分恢复路径与正常首次创建的初始化路径，避免重复初始化。"
+  keyPoints:
+    - "restoreState 同步执行，只做轻量反序列化与字段赋值"
+    - "IO 类恢复只还原 id 或查询参数，数据在首帧后异步加载"
+    - "恢复路径要跳过仅适用于首次创建的初始化逻辑，防止重复请求"
+    - "写入 restorationData 的内容要小且可序列化，避免快照膨胀"
+  pitfalls:
+    - "在 restoreState 里调用 setState 或发起导航，触发框架断言"
+    - "把大对象或不可序列化的对象塞进 restorationData"
+followups:
+  - "restorationData 的写入时机是什么，能手动触发吗？"
+  - "恢复失败时如何安全回退到默认状态？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-560
+title: "项目：如何把 CI 上的 Flutter 构建时间压下来？"
+topics: [flutter, ci, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "先测量再优化，把 checkout、依赖安装、代码生成、编译、测试分段计时，找出真正的瓶颈。常见收益来自依赖缓存、Gradle 与 CocoaPods 缓存、只跑受影响测试以及任务分片并行。盲目加缓存有时反而更慢，需要看命中率。"
+  keyPoints:
+    - "分段计时定位瓶颈，优先处理占比最大的阶段"
+    - "缓存 pub、Gradle、CocoaPods，缓存 key 包含 lock 文件哈希"
+    - "构建与测试分片并行，缩短关键路径"
+    - "PR 只跑受影响模块，全量回归放到主干或定时任务"
+  pitfalls:
+    - "缓存 key 不含 lock 文件，命中过期依赖导致诡异失败"
+    - "缓存下载比构建还慢，却没有监控命中率"
+followups:
+  - "如何判断缓存是否真的生效？"
+  - "分片并行后，失败重试与日志聚合如何处理？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-389
+title: "GlobalKey 的注册表如何发现重复 key，重复时会怎样？"
+topics: [flutter, key, global-key]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "GlobalKey 通过 BuildOwner 的全局注册表维护 key 到 Element 的映射，Element 激活时登记、卸载时注销。同一个 key 同时对应两个活动 Element 时，debug 下会触发 duplicate GlobalKey 断言；release 下断言消失，问题可能变成静默覆盖。"
+  keyPoints:
+    - "注册表由 BuildOwner 维护，记录每个 GlobalKey 当前对应的 Element"
+    - "Element 激活时登记，卸载时只有仍指向自己才注销"
+    - "同一 key 对应两个活动 Element 时，debug 下触发重复 key 错误"
+    - "GlobalKey 必须在整个应用中唯一，而不是只在兄弟节点间唯一"
+  pitfalls:
+    - "在列表项里复用同一个 GlobalKey，插入或滚动时撞车"
+    - "以为 release 下也会报错，重复 key 可能静默覆盖"
+followups:
+  - "为什么同一个 GlobalKey 不能在两个页面同时使用？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

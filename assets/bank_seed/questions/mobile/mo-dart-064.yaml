@@ -1,0 +1,27 @@
+id: mo-dart-064
+title: "StreamSubscription 的 pause/resume 与背压传导"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "pause 会暂停向当前订阅者派发事件，事件在流内部排队，resume 后按原顺序补发。对单订阅流，暂停会向上游传导，例如文件流停止读取；广播流的暂停只影响该订阅者。缓冲没有天然上限，长时间暂停可能让内存持续增长。"
+  keyPoints:
+    - "pause 只影响该订阅，事件在内部缓冲而非丢弃"
+    - "单订阅流的 pause 会传导到上游数据源"
+    - "resume 按原顺序补发缓冲事件，不会合并"
+    - "cancel 会丢弃缓冲并释放上游资源"
+  pitfalls:
+    - "以为 pause 会停止定时器或跳过事件"
+    - "长时间 pause 且上游高速产出，导致内存增长"
+followups:
+  - "pause 与 cancel 在资源释放上的区别是什么？"
+  - "如何给可暂停的流设置缓冲上限？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

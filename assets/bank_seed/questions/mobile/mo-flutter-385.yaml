@@ -1,0 +1,26 @@
+id: mo-flutter-385
+title: "setState 的回调为什么不能写成 async？"
+topics: [flutter, state-lifecycle, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "setState 的回调应该是同步的 VoidCallback，框架在回调返回后立即标脏；如果传入 async 函数，它会返回 Future，debug 下会直接断言。即使绕过断言，await 之后的状态修改也不在本次同步标脏的范围内。"
+  keyPoints:
+    - "回调签名是 VoidCallback，debug 下返回 Future 会触发断言"
+    - "async 回调在第一个 await 处让出，后续代码在 Future 完成后继续"
+    - "await 之后 Element 可能已卸载，需要先检查 mounted"
+    - "正确做法是先取数据，再用同步回调只修改状态"
+  pitfalls:
+    - "在 async 回调里 await 后直接 setState，页面已 dispose 导致异常"
+    - "认为 setState 会等待异步逻辑完成后再重建"
+followups:
+  - "mounted 为 false 时调用 setState 会发生什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

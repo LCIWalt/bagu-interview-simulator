@@ -1,0 +1,26 @@
+id: mo-flutter-489
+title: "TextPainter.getBoxesForSelection 如何支撑选区与高亮？"
+topics: [flutter, text, selection]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "getBoxesForSelection 把一段文本偏移区间转换成若干矩形，跨行选择会得到多个盒子。它依赖已完成的布局与正确的 textDirection，返回的是 TextPainter 局部坐标，需要再叠加绘制偏移。"
+  keyPoints:
+    - "入参是 TextSelection，偏移基于整段文本的扁平索引"
+    - "返回值是 TextBox 列表，跨行时每行至少一个盒子"
+    - "boxHeightStyle 与 boxWidthStyle 控制盒子的高度与宽度取整方式"
+    - "结果坐标相对 TextPainter 原点，绘制时要加上组件位置"
+  pitfalls:
+    - "把 RichText 里嵌套 span 的局部偏移直接当全局偏移用"
+    - "布局宽度与实际渲染宽度不一致，高亮框与文字错位"
+  followups:
+    - "自定义文本选区的控制柄位置该怎么算？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

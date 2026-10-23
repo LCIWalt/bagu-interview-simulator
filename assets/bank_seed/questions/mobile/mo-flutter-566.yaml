@@ -1,0 +1,27 @@
+id: mo-flutter-566
+title: "非致命错误太多，如何分组才有助定位？"
+topics: [flutter, monitoring, observability]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "非致命错误的数量远大于崩溃，逐条上报既贵又无法排序。必须按指纹聚合：异常类型、规范化后的 message 与关键业务栈帧；指纹要剥离 id、时间、路径等变量，否则每个实例都自成一类。再按版本与页面看趋势和影响用户数。"
+  keyPoints:
+    - "指纹由异常类型、规范化 message 与业务栈帧组成"
+    - "剥离变量与用户数据后再计算指纹，保证同类错误合并"
+    - "按版本、页面聚合，关注影响用户数而不只是次数"
+    - "设置阈值告警并定期清理长期无增长的指纹"
+  pitfalls:
+    - "直接把 message 原文当指纹，参数不同就分裂成上千组"
+    - "所有错误塞进同一个 bucket，无法判断优先级"
+followups:
+  - "如何在不泄露隐私的前提下保留定位信息？"
+  - "采样上报与全量计数应该如何配合？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-522
+title: "自定义 scheme 与 Universal Links 同时存在，跳转该以谁为准？"
+topics: [flutter, deep-link, app-links]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Universal Links 在已安装且校验通过时由系统直接打开 App，自定义 scheme 没有归属校验、任何 App 都可声明，容易被劫持。常见做法是 https 链接作为对外入口，scheme 仅用于内部兜底或未安装时的降级，并在两端统一解析成同一套路由。"
+  keyPoints:
+    - "https 链接由系统按域名归属匹配，安全性高于任意 App 都能注册的 scheme"
+    - "scheme 跳转前无法可靠检测是否安装，失败时页面会停在空白或报错"
+    - "两条入口要在 Dart 侧归一化成同一路由模型，避免参数解析分叉"
+    - "Android 用 App Links 的 autoVerify 保证域名归属，iOS 用 Associated Domains"
+  pitfalls:
+    - "把 scheme 当主入口，被其他应用抢注后跳到陌生页面"
+    - "两套链接各自拼参数，出现大小写或编码不一致的重复页面"
+followups:
+  - "未安装 App 时，https 链接如何优雅降级到下载页？"
+  - "如何防止深链把用户带到未授权页面？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-459
+title: "RenderObject 重绘时，上一帧的 OffsetLayer 是怎么被复用的？"
+topics: [flutter, painting, layer]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "重绘边界节点在绘制时由 PaintingContext.repaintCompositedChild 单独起一个上下文，并复用节点上挂着的 OffsetLayer，只重新录制子树内容。非边界节点则直接画进父级的 PictureLayer，不会产生新图层。"
+  keyPoints:
+    - "复用的 OffsetLayer 会先清空子层，再把新录制的子层挂回去"
+    - "图层类型或属性不匹配时，updateCompositedLayer 会替换成新图层，旧图层被丢弃"
+    - "markNeedsPaint 向上冒泡到最近的 repaint boundary，边界之上的兄弟节点不会重绘"
+    - "只改 OffsetLayer 的偏移或 TransformLayer 的矩阵时，可以移动内容而不重新录制 picture"
+  pitfalls:
+    - "认为加了 RepaintBoundary 就一定更快，边界过多会让合成与显存开销上升"
+    - "在 paint 里做布局或读取子节点尺寸，重绘时序错乱并可能触发断言"
+  followups:
+    - "PaintingContext 的 estimatedBounds 用在什么地方？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

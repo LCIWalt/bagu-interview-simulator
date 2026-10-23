@@ -1,0 +1,27 @@
+id: mo-flutter-571
+title: "项目：如何为多语言和深色模式维护 golden 矩阵？"
+topics: [flutter, testing, golden-test]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "语言乘主题乘文本缩放会让 golden 数量爆炸，维护成本远超收益。应该只对关键组件与关键页面建矩阵，固定字体、尺寸、locale 与 textScaler，并用参数化测试生成用例。基准图必须在固定环境生成，否则渲染差异会造成持续误报。"
+  keyPoints:
+    - "只对稳定且关键 UI 建矩阵，不为每个页面所有语言拍照"
+    - "固定字体、设备尺寸、locale 与 textScaler，减少无关差异"
+    - "参数化生成用例，命名包含语言、主题与缩放维度"
+    - "基准图在固定容器与字体环境中生成，并与 CI 保持一致"
+  pitfalls:
+    - "把所有页面所有语言都拍一遍，维护成本失控"
+    - "在本机生成基准图，CI 字体不同导致长期失败"
+followups:
+  - "golden 失败时如何快速判断是预期变更还是回归？"
+  - "如何处理带网络图片或动画的组件？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

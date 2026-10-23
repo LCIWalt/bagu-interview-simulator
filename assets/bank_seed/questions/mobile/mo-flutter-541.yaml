@@ -1,0 +1,27 @@
+id: mo-flutter-541
+title: "用户没装 App 时点分享链接，安装后如何还原目标页？"
+topics: [flutter, deep-link, attribution]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "这类场景需要 deferred deep link：落地页记录安装指纹或由归因 SDK 关联，首次启动时向服务端换取待处理深链。兑换接口应使用一次性 token 并绑定本次安装，客户端消费成功后立即清除，避免每次启动都重复跳转。未登录时先暂存，登录完成后再执行跳转。"
+  keyPoints:
+    - "首启时用安装指纹或归因回调换取 pending link，而不是在首帧同步等待"
+    - "兑换 token 一次性且绑定安装，防止把 A 用户的链接发给 B"
+    - "本地持久化待处理深链，消费成功后清除并记录已处理标记"
+    - "未登录时暂存深链，登录完成后再跳转，避免丢失目标页"
+  pitfalls:
+    - "在首帧同步阻塞等待归因网络请求，拉长冷启动甚至超时白屏"
+    - "pending link 消费后不清除，导致每次启动都跳同一个页面"
+followups:
+  - "归因失败时应该降级到首页还是提示用户？"
+  - "如何防止深链被用于诱导跳转到敏感页面？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-457
+title: "flushCompositingBits 为什么必须单独占一趟？"
+topics: [flutter, rendering, compositing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "合成位决定一个渲染对象是否需要独立图层，它取决于自身是否重绘边界、是否需要合成，以及子树里有没有需要图层的节点。这些信息只有在布局结束后才稳定，所以 flushCompositingBits 被夹在 layout 与 paint 之间单独执行。"
+  keyPoints:
+    - "needsCompositing 由自身 isRepaintBoundary、alwaysNeedsCompositing 与子节点结果共同决定"
+    - "布局可能增删或移动子节点，合成位必须等布局结束后再计算"
+    - "更新时递归先处理子节点，再把结果汇总到父节点，保证父节点看到最新值"
+    - "合成位变化会把原本画进父级 PictureLayer 的内容，改为在子节点里新开图层"
+  pitfalls:
+    - "在 layout 阶段读取 needsCompositing，拿到的是上一帧的结果"
+    - "以为重绘边界只是性能提示，忽略它会真实改变图层结构"
+  followups:
+    - "alwaysNeedsCompositing 在哪些组件上为 true？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

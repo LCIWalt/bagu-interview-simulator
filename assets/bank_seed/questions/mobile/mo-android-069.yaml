@@ -1,0 +1,26 @@
+id: mo-android-069
+title: "Android: DataStore 与 SharedPreferences 的取舍"
+topics: [android, storage, coroutines]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "DataStore 基于协程与 Flow 提供异步、事务性的键值或 Proto 存储，读取不阻塞主线程，写入串行执行且失败时不产生半更新状态。它适合替代 SharedPreferences 存放配置，但不适合高频大写入、复杂查询或多进程共享。"
+  keyPoints:
+    - "Preferences DataStore 以 Flow 暴露数据，天然支持异步读取与变更通知"
+    - "写入通过 updateData 串行化，避免并发写互相覆盖"
+    - "Proto DataStore 用 protobuf schema 提供类型安全，适合结构化配置"
+    - "同一进程内应保持单实例，重复创建会因文件锁抛异常"
+  pitfalls:
+    - "期望 DataStore 解决跨进程共享，实际它并不支持多进程访问"
+    - "在主线程用 runBlocking 读取 DataStore，把异步优势又抵消掉"
+followups:
+  - "DataStore 写入失败时异常如何传播，调用方应如何重试？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

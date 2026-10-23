@@ -1,0 +1,26 @@
+id: mo-android-053
+title: "Android: startService 与 bindService 的生命周期差异"
+topics: [android, service, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "startService 启动的服务独立于调用方存在，需要 stopSelf 或 stopService 才会结束；bindService 建立客户端与服务端的连接，最后一个客户端解绑后服务被销毁。同一个服务可以同时处于启动与绑定状态，只有两种状态都结束后系统才会真正停止它。"
+  keyPoints:
+    - "仅启动时 onCreate 只执行一次，onStartCommand 每次 startService 都会回调"
+    - "绑定流程为 onCreate、onBind，解绑触发 onUnbind，无其他引用时再 onDestroy"
+    - "同时启动并绑定时，需 stopService 且所有连接都解绑，服务才销毁"
+    - "onStartCommand 的返回值决定进程被杀后是否重建服务以及是否重投 Intent"
+  pitfalls:
+    - "调用 bindService 后忘记 unBindService，导致 ServiceConnection 泄漏甚至崩溃"
+    - "以为每次 startService 都会走 onCreate，忽略 onStartCommand 才是重入入口"
+followups:
+  - "客户端进程崩溃后，绑定连接会怎样被系统清理？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

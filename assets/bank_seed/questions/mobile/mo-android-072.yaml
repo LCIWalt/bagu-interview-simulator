@@ -1,0 +1,26 @@
+id: mo-android-072
+title: "Android: 精确闹钟与 SCHEDULE_EXACT_ALARM 限制"
+topics: [android, background, alarm]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Android 12 起 setExact 与 setAlarmClock 需要 SCHEDULE_EXACT_ALARM 或 USE_EXACT_ALARM 权限，前者可被用户撤销，后者只对闹钟日历类应用开放。普通定时任务应优先用 WorkManager 或 setAndAllowWhileIdle，避免为了一点精度牺牲电量与合规。"
+  keyPoints:
+    - "setExactAndAllowWhileIdle 可在 Doze 下触发，但系统仍限制触发频率"
+    - "SCHEDULE_EXACT_ALARM 需引导用户到设置页授权，USE_EXACT_ALARM 有应用类别限制"
+    - "闹钟在应用被强制停止后会被清除，设备重启后需要重新注册"
+    - "触发时间不保证毫秒级精确，系统会做批量对齐以节省电量"
+  pitfalls:
+    - "用精确闹钟做轮询或心跳，既耗电又容易被系统限制"
+    - "认为 setRepeating 精确可靠，实际从 API 19 起已被改为不精确"
+followups:
+  - "Doze 与 App Standby 分别如何影响闹钟与后台任务的触发？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

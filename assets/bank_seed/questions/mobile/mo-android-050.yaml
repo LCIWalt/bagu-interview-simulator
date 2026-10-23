@@ -1,0 +1,27 @@
+id: mo-android-050
+title: "Android: 隐式 Intent 的匹配规则与过滤器"
+topics: [android, intent, components]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "隐式 Intent 通过 action、category、data 三类信息匹配 intent-filter：action 是任一匹配，category 要求 Intent 中出现的每一项都存在于过滤器，data 则按 scheme、host、path 与 mimeType 组合校验。命中多个应用时系统弹出选择器，所以应用内部跳转最好显式指定组件。"
+  keyPoints:
+    - "action 只要与过滤器任意一项相同即通过，过滤器未声明 action 时只能匹配不带 action 的 Intent"
+    - "Intent 中的每个 category 都必须出现在过滤器里，CATEGORY_DEFAULT 由 startActivity 隐式加入"
+    - "data 拆成 scheme、host、port、path 与 mimeType 分别匹配，scheme 与 mimeType 会相互约束"
+    - "用 PackageManager.resolveActivity 预检可解析性，避免 ActivityNotFoundException"
+  pitfalls:
+    - "以为过滤器里写了多个 action 就要同时满足，实际是任一满足即可"
+    - "依赖隐式 Intent 启动内部页面，被其他应用注册同名过滤器后弹出选择器"
+followups:
+  - "Android 12 对带 intent-filter 的组件在 android:exported 上有什么强制要求？"
+  - "多个应用命中同一隐式 Intent 时，系统按什么顺序决定默认应用？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

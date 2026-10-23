@@ -1,0 +1,27 @@
+id: mo-flutter-551
+title: "线上日志该用什么级别策略，才不至于被淹没？"
+topics: [flutter, logging, observability]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "日志级别表达的是处理优先级，不是详细程度：error 应该可行动，warning 表示可恢复异常，info 记录关键状态迁移。高频路径必须采样或限流，且采样决策应在产生日志处完成。release 包中裁掉 debug 级别，避免无意义开销。"
+  keyPoints:
+    - "团队统一各级别语义，error 必须对应可行动的告警"
+    - "高频日志按 key 采样或限流，避免费用与噪音失控"
+    - "error 先按指纹聚合再计数，防止同一异常刷屏"
+    - "release 构建裁掉 debug 日志，保留结构化字段便于检索"
+  pitfalls:
+    - "把用户每次操作都打成 info，导致日志量与费用暴涨"
+    - "在循环或帧回调里打日志，直接影响性能"
+followups:
+  - "采样率变化后如何保证趋势仍然可比？"
+  - "结构化日志与普通字符串日志该如何取舍？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

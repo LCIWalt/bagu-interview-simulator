@@ -1,0 +1,26 @@
+id: mo-flutter-447
+title: "Completer.sync 与默认 Completer 的回调时机差在哪？"
+topics: [dart, async, event-loop]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "默认 Completer 在 complete 后把监听回调排进微任务，调用方不会在 complete 栈内被重入；Completer.sync 会同步调用监听者，省一次调度但容易造成重入与栈溢出。除非明确需要同步语义，否则应使用默认实现。"
+  keyPoints:
+    - "默认 complete 通过微任务通知监听者"
+    - "Completer.sync 在 complete 调用栈内直接执行回调"
+    - "同步回调可能重入尚未完成的初始化逻辑"
+    - "链式 then 在 sync 模式下也会同步展开"
+  pitfalls:
+    - "用 Completer.sync 实现锁，回调里再次加锁时死锁"
+    - "在同步回调里抛错，错误冒泡到调用 complete 的位置"
+followups:
+  - "Future.sync 与 Completer.sync 是同一类同步语义吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

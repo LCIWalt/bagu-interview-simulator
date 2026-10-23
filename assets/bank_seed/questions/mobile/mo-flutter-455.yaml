@@ -1,0 +1,26 @@
+id: mo-flutter-455
+title: "PipelineOwner 由谁持有，一次 flush 的顺序由什么保证？"
+topics: [flutter, rendering, pipelineowner]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "PipelineOwner 是渲染管线里脏节点队列的持有者，负责收集需要 layout、paint、semantics 的 RenderObject，并在帧回调里统一处理。它由 RendererBinding 为每个视图创建并 attach 到 RenderView，RenderObject 在 attach 时继承同一个 owner。一次 drawFrame 固定按布局、合成位、绘制、语义的顺序推进，不会交叉执行。"
+  keyPoints:
+    - "PipelineOwner 维护 nodesNeedingLayout、nodesNeedingPaint、nodesNeedingSemantics 三类队列，attach 到根节点后成为整棵渲染树的 owner"
+    - "RenderObject.attach 时把 owner 逐级下传，detach 时清空，所以 owner 为 null 表示该节点没有参与渲染"
+    - "flushLayout 会先按深度排序再调用 layoutWithoutResize，保证父节点先于子节点重排"
+    - "requestVisualUpdate 只在确实有脏节点且当前没有待调度帧时，才向 SchedulerBinding 申请一帧"
+  pitfalls:
+    - "在 flushLayout 过程中再次标脏，以为本轮会被处理，实际要等下一帧"
+    - "自己 new 一个 PipelineOwner 却没有 attach 根节点，脏节点永远不会进入队列"
+  followups:
+    - "多视图场景下，每个 FlutterView 的 PipelineOwner 是独立的吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

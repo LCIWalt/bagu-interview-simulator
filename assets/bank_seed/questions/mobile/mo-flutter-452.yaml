@@ -1,0 +1,26 @@
+id: mo-flutter-452
+title: "先创建 Future 再 await，为什么就变成并行了？"
+topics: [dart, async, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "await 只等待某个 Future 完成，不会阻止其它 Future 已经开始的工作；先把多个 Future 创建出来再逐个 await，它们的 IO 已在并发进行，总耗时接近最慢的一个。若 await 完再创建下一个，才是串行。"
+  keyPoints:
+    - "Future 在创建时就开始执行，await 只是等待"
+    - "先创建后 await 让多个 IO 重叠"
+    - "串行 await 的总耗时是各任务之和"
+    - "并发写同一状态时仍需保证顺序或加锁"
+  pitfalls:
+    - "把耗时的同步计算放进 async 函数，误以为已经并行"
+    - "并发发起后逐个 await，前一个失败导致后面的结果被丢弃"
+followups:
+  - "Future.wait 与先创建后 await 在错误处理上有何不同？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

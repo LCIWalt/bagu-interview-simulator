@@ -1,0 +1,26 @@
+id: mo-flutter-422
+title: "周期性任务该用 Stream.periodic 还是 Timer.periodic？"
+topics: [dart, stream, timer]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Stream.periodic 是惰性的：有监听者才开始计时，取消订阅即停止，适合把周期事件当数据流消费。Timer.periodic 创建后立即开始、必须手动 cancel，且与消费者生命周期无关，适合不依赖订阅者的后台动作。"
+  keyPoints:
+    - "Stream.periodic 在首个监听时启动，随订阅取消而停止"
+    - "Timer.periodic 创建后立即计时，需要显式 cancel"
+    - "Stream.periodic 的事件计数可作为参数生成值"
+    - "两者都不保证精确间隔，回调耗时会累积漂移"
+  pitfalls:
+    - "用 Timer.periodic 刷新 UI，页面销毁后仍在跑并访问已释放状态"
+    - "期待 Stream.periodic 对齐整秒，忽略首次延迟"
+followups:
+  - "Timer.periodic 的回调执行时间超过周期会怎样？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-091
+title: "Android: 数据库批量写入与事务优化"
+topics: [android, room, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "逐条 insert 会让每条语句各自成为一个事务，journal 与 fsync 开销被成倍放大。把批量插入包在单个事务里、使用预编译语句并开启 WAL，通常能带来数量级的吞吐提升。"
+  keyPoints:
+    - "批量插入放在同一事务中，减少 journal 与 fsync 次数"
+    - "Room 用带列表参数的 @Insert 或 DAO 批量方法，避免循环单条写入"
+    - "开启 WAL 提升读写并发，同时关注 checkpoint 与 WAL 文件增长"
+    - "索引会增加写放大，大批量导入可先关索引再重建"
+  pitfalls:
+    - "在循环里逐条开事务或逐条 commit"
+    - "一次写入几十万条不分批，长事务阻塞其他读写并撑大 WAL"
+followups:
+  - "WAL 模式下读操作会看到未提交的数据吗？"
+  - "Room 的 upsert 如何做批量更新？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-432
+title: "debounce 的 Timer 为什么不能只存在局部变量里？"
+topics: [flutter, timer, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "局部 Timer 在函数返回后就失去了引用，无法在下次输入时取消，之前的定时器照常触发，等于每次输入都发一次请求。必须把 Timer 存成字段，每次重建前 cancel，并在 dispose 里再取消一次。"
+  keyPoints:
+    - "debounce 依赖取消上一次定时器，必须有稳定引用"
+    - "字段持有 Timer 才能在连续输入时 cancel 并重置"
+    - "dispose 中取消，避免页面销毁后回调仍执行"
+    - "等待时间应集中配置，避免每个调用点写死"
+  pitfalls:
+    - "在 build 里创建 Timer，每次重建都多一个待触发任务"
+    - "只 cancel 不置空，误判仍有待执行任务"
+followups:
+  - "debounce 与 throttle 在搜索场景下如何取舍？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-android-093
+title: "Android: ANR 监控与 traces 文件解析"
+topics: [android, anr, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ANR 发生时系统会把各线程堆栈写入 traces 文件，但线上应用通常读不到，需要借助 bugreport、系统上报或自建 watchdog 提前发现主线程卡死。分析时要同时看主线程状态、锁持有者和系统 CPU 负载，才能区分死锁、慢 IO 与调度问题。"
+  keyPoints:
+    - "traces 文件包含各线程堆栈与锁信息，线上读取受限，常用 bugreport 或 watchdog 替代"
+    - "看主线程处于 blocked、waiting 还是正在执行耗时调用"
+    - "结合 CPU 负载与 iowait，区分死锁、慢 IO 和锁竞争"
+    - "自建 watchdog 周期性采样主线程，超过阈值再上报，控制误报"
+  pitfalls:
+    - "只抓主线程堆栈，忽略 binder 等待和锁持有线程"
+    - "watchdog 阈值设得太短，把正常长任务误判成 ANR"
+followups:
+  - "输入型、广播型、服务型 ANR 分别怎么定位？"
+  - "如何区分应用卡死和系统调度导致的假 ANR？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

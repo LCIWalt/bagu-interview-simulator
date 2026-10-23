@@ -1,0 +1,27 @@
+id: mo-dart-079
+title: "取消 StreamSubscription 后 finally 还会执行吗"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "取消订阅会停止后续事件并触发上游的 onCancel；async* 生成器在取消时会在下一个 yield 处抛出，从而进入 finally 执行清理。cancel 返回的 Future 完成才代表资源真正释放完毕。依赖清理完成的逻辑必须 await 这个 Future 再继续。"
+  keyPoints:
+    - "cancel 后不再派发事件，内部缓冲被丢弃"
+    - "async* 的 finally 在取消时执行"
+    - "cancel 返回 Future，完成表示清理结束"
+    - "StreamController 的 onCancel 可用于释放上游资源"
+  pitfalls:
+    - "调用 cancel 后不等待，立刻复用底层资源"
+    - "在 finally 中 await 长耗时操作，拖慢取消"
+followups:
+  - "为什么取消 async* 生成器要等到下一个 yield？"
+  - "如何保证页面退出时所有订阅都已释放？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-android-061
+title: "Android: derivedStateOf 与 snapshotFlow 的适用场景"
+topics: [android, compose, state]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "derivedStateOf 把多个 State 派生成新状态，只有派生结果变化时才通知读取方，适合输入频繁但结果稀疏的场景。snapshotFlow 把快照读取转成 Flow，用于把状态变化接到协程侧的副作用上，是两种不同方向的桥接工具。"
+  keyPoints:
+    - "derivedStateOf 在依赖的 State 变化时重算，但结果相等时不会触发下游重组"
+    - "典型场景是列表是否为空、按钮是否可用这类由多个状态推导出的布尔值"
+    - "snapshotFlow 只在读取的 State 变化时发射，并默认按相等性去重"
+    - "snapshotFlow 是冷流，必须在 LaunchedEffect 等协程作用域中收集"
+  pitfalls:
+    - "对一次性简单计算滥用 derivedStateOf，多一层缓存与比较反而更慢"
+    - "在 Composable 函数体中直接创建并 collect snapshotFlow，每次重组都重复订阅"
+followups:
+  - "derivedStateOf 与 remember(key) 加计算在性能和语义上有什么差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

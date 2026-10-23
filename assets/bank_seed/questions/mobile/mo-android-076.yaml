@@ -1,0 +1,27 @@
+id: mo-android-076
+title: "Android: 布局层级扁平化与 ConstraintLayout"
+topics: [android, view, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "布局层级每深一层，measure 和 layout 的递归调用就多一层，嵌套 LinearLayout 的 weight 还会触发二次测量。用 ConstraintLayout 把层级压平、用 merge 去掉多余根节点，通常能直接减少首帧的测量耗时。"
+  keyPoints:
+    - "用 ConstraintLayout 扁平化深层嵌套，减少 measure/layout 递归次数"
+    - "merge 减少根节点，include 复用布局但要避免重复 inflate"
+    - "避免 wrap_content 与 weight 组合导致的二次测量"
+    - "用 Layout Inspector 查看层级深度与每个节点的测量耗时"
+  pitfalls:
+    - "为了扁平化堆过多约束和 Guideline，求解成本反而上升"
+    - "认为 ConstraintLayout 一定更快，简单单行布局未必优于 LinearLayout"
+followups:
+  - "RelativeLayout 为什么可能对子 View 测量两次？"
+  - "Compose 普及后还需要关心 View 层级深度吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

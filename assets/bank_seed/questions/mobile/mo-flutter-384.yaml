@@ -1,0 +1,26 @@
+id: mo-flutter-384
+title: "State 对象是什么时候创建的，createState 会被调用几次？"
+topics: [flutter, state-lifecycle, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StatefulElement 在构造时调用一次 widget.createState 创建 State 并完成绑定；此后父级重建只触发 didUpdateWidget 和 build，不会再次 createState。只有 Element 被销毁后重新创建，才会产生新的 State。"
+  keyPoints:
+    - "createState 在 StatefulElement 构造阶段调用，每个 Element 一次"
+    - "State 与 Element 一一对应，生命周期跟随 Element"
+    - "父级重建走 update，不会重新 createState"
+    - "GlobalKey 复用旧 Element 时，State 也随之一并保留"
+  pitfalls:
+    - "在 createState 里访问 context，此时 State 还没有可用的 Element"
+    - "以为 createState 每次 build 都会执行，把昂贵初始化放进去"
+followups:
+  - "createState 与 initState 之间还发生了什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

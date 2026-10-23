@@ -1,0 +1,26 @@
+id: mo-dart-039
+title: "base、final、interface、sealed：类修饰符的继承约束"
+topics: [dart, sealed, oop]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 3 用类修饰符控制跨库继承：base 要求子类继续标记 base，final 禁止库外继承与实现，interface 只能实现不能继承，sealed 隐式 abstract 且所有直接子类必须同库。它们约束的是库外使用，同库内规则并不相同。"
+  keyPoints:
+    - "base 类可被继承，但子类必须同样标记 base、final 或 sealed"
+    - "final 类在库外既不能 extends 也不能 implements"
+    - "interface 类只能 implements，不能 extends"
+    - "sealed 类隐式 abstract，直接子类必须声明在同一库中"
+  pitfalls:
+    - "给需要被 mock 或继承扩展的类加 final，测试里无法覆写"
+    - "把 sealed 的子类放到别的库，编译直接失败且报错位置不直观"
+  followups:
+    - "sealed 与 abstract 在穷尽性检查上的差别是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

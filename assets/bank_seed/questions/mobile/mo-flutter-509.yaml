@@ -1,0 +1,27 @@
+id: mo-flutter-509
+title: "PlatformView 的 controller 与 viewId 该如何配对释放？"
+topics: [flutter, platform-view, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "每个 PlatformView 由原生侧创建并分配唯一 viewId，Dart 侧 controller 在 dispose 时通过通道通知原生销毁对应 View；只 dispose controller 而不触发原生销毁，或复用已释放的 viewId，都会造成原生 View 泄漏或崩溃。controller 的生命周期应与 State 对齐。"
+  keyPoints:
+    - "viewId 由创建时分配，必须原样带回销毁调用，不能自行复用"
+    - "在 State.dispose 里 dispose controller，确保原生 View 被移除"
+    - "onPlatformViewCreated 可能晚于 build，回调里要判断 mounted"
+    - "热重载或页面重建时旧 controller 必须先释放，避免同一 id 重复注册"
+  pitfalls:
+    - "把 controller 存成全局单例，页面退出后原生 View 一直存活"
+    - "在 build 里创建 controller，每次重建都新建一个原生 View"
+followups:
+  - "Android 侧如何确认 PlatformView 已被正确销毁？"
+  - "混合栈下页面被原生覆盖时，PlatformView 需要暂停渲染吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

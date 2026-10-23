@@ -1,0 +1,26 @@
+id: mo-flutter-420
+title: "Dart Stream 没有内建背压，消费慢时数据堆在哪？"
+topics: [dart, stream, backpressure]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart Stream 是推模型，pause 只保证不再向监听者派发，事件仍会在控制器或订阅层排队，生产端不理会 pause 就会持续堆积内存。真正的背压要靠协议让消费者回传消费能力，或在 pause 时暂停上游、合并或丢弃中间数据。"
+  keyPoints:
+    - "pause 停止派发而非停止生产，缓冲区仍会增长"
+    - "单订阅流 pause 会向上游传播，async* 生成器在 yield 处暂停"
+    - "广播流 pause 只影响该订阅者，源流继续生产"
+    - "需要可控内存时用有界队列、批量拉取或丢弃策略"
+  pitfalls:
+    - "以为调用了 pause 就不会 OOM"
+    - "在广播流上做逐条慢消费，误以为上游会等自己"
+followups:
+  - "async* 生成器在 pause 时具体停在哪一行？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

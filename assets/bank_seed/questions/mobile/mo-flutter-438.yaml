@@ -1,0 +1,26 @@
+id: mo-flutter-438
+title: "Stream 里抛错后流就结束了吗？cancelOnError 改变了什么？"
+topics: [dart, stream, error-handling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "错误事件不必然终止流：控制器可以继续 add，订阅者也会继续收到后续事件。cancelOnError 为 true 时，订阅在首个错误后自动取消，源流的 onCancel 被触发；默认 false，错误只是普通事件。"
+  keyPoints:
+    - "错误是流上的一种事件，与 done 是两回事"
+    - "cancelOnError 为 true 时首个错误触发订阅取消"
+    - "默认 false，流可以继续发数据直到 close"
+    - "未提供 onError 时错误会抛给 Zone，可能中断监听"
+  pitfalls:
+    - "认为 addError 等于 close，后续 add 的数据丢失"
+    - "开启 cancelOnError 后仍期待收到流的剩余数据"
+followups:
+  - "StreamBuilder 遇到错误事件后还能恢复吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

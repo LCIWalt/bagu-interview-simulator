@@ -1,0 +1,27 @@
+id: mo-android-090
+title: "Android: 存储 I/O 性能与 fsync 代价"
+topics: [android, storage, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "小文件随机写和频繁 fsync 是移动端存储的主要成本，fsync 会把页缓存刷到磁盘，单次延迟可能达到毫秒级。批量合并写、顺序追加、异步落盘能显著降低主线程阻塞和耗电。"
+  keyPoints:
+    - "fsync 负责把数据真正刷盘，避免每条记录都触发一次"
+    - "用 BufferedOutputStream 或批量写合并小 IO，减少 syscall 次数"
+    - "大文件用分块流式处理或 mmap，避免一次性读入内存"
+    - "区分内部存储与外部存储，后者还受 MediaProvider 和权限影响"
+  pitfalls:
+    - "在主线程执行 SharedPreferences.commit 或数据库写入"
+    - "认为 apply 异步就完全没有 IO 成本，忽略落盘和启动时的加载"
+followups:
+  - "SharedPreferences 的 apply 在什么时机真正落盘？"
+  - "怎样测量一次 fsync 的实际耗时？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-415
+title: "Future() 与 Future.microtask 都会异步执行，差别在哪？"
+topics: [dart, event-loop, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Future() 内部通过 Timer.run 把回调排进 event queue，Future.microtask 则排进 microtask queue；同一次事件循环里微任务先于事件执行。Future.sync 在调用栈内同步执行回调，只有回调抛错时才把错误装进 Future。"
+  keyPoints:
+    - "Future(...) 走事件队列，要等当前事件与所有微任务清空"
+    - "Future.microtask 走微任务队列，仍在当前事件末尾执行"
+    - "Future.sync 立即同步执行，返回值包装成已完成的 Future"
+    - "三者差别是调度位置与执行时机，不是完成值的类型"
+  pitfalls:
+    - "用 Future() 做必须在下一次绘制前完成的状态清理，结果晚了一帧"
+    - "在微任务里无限递归，饿死事件队列与渲染"
+followups:
+  - "Future.sync 的回调抛异常时，调用方还能同步捕获吗？"
+  - "scheduleMicrotask 与 Future.microtask 有区别吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

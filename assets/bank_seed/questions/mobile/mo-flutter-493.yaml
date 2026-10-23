@@ -1,0 +1,26 @@
+id: mo-flutter-493
+title: "ImageFiltered 与 ColorFiltered 的合成开销差在哪？"
+topics: [flutter, compositing, filter]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "两者都通过独立图层在合成阶段处理子树，但作用点不同。ColorFiltered 只改像素颜色，不改变绘制范围；ImageFiltered 可以做模糊、位移等改变像素位置的效果，往往需要扩大边界甚至离屏渲染。"
+  keyPoints:
+    - "ColorFiltered 使用 ColorFilterLayer，按颜色矩阵或混合模式改写像素"
+    - "ImageFiltered 使用 ImageFilterLayer，滤镜可以改变像素位置与边界"
+    - "模糊类滤镜需要采样周围像素，绘制范围要向外扩张"
+    - "滤镜作用在子树整体上，子节点越多，离屏与采样成本越高"
+  pitfalls:
+    - "给整屏包一层模糊做背景，导致每帧一次大尺寸离屏"
+    - "以为 ColorFiltered 也会改变布局边界，实际只影响颜色"
+  followups:
+    - "如何限制滤镜图层的实际作用范围？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

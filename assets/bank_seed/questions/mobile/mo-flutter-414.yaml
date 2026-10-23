@@ -1,0 +1,26 @@
+id: mo-flutter-414
+title: "MaterialApp 如何解析 theme、darkTheme 与 themeMode？"
+topics: [flutter, theme, material]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "MaterialApp 根据 themeMode 与平台亮度选择主题：dark 模式优先 darkTheme，system 模式跟随 platformBrightness，缺失时回退到 theme。选中的 ThemeData 会通过 AnimatedTheme 下发给整棵路由树，并在亮度或高对比度变化时重新解析。"
+  keyPoints:
+    - "themeMode 默认 system，根据 MediaQuery.platformBrightnessOf 选择亮暗"
+    - "darkTheme 为空时即使处于暗色模式也会回退到 theme"
+    - "MaterialApp 支持 highContrastTheme 与 highContrastDarkTheme 分支"
+    - "主题变化包在 AnimatedTheme 中，按 themeAnimationDuration 过渡"
+  pitfalls:
+    - "darkTheme 的 brightness 与 ThemeMode.dark 不一致，颜色计算错乱"
+    - "把 themeMode 状态放在 MaterialApp 之下读取，切换时根部不重建"
+followups:
+  - "如何让用户选择持久化并覆盖系统主题？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

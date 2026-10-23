@@ -1,0 +1,26 @@
+id: mo-dart-049
+title: "注解与运行时元数据：反射可用性边界"
+topics: [dart, metadata, reflection]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 的注解只是附加在声明上的常量对象，语言本身不会执行它们，必须由代码生成或反射工具读取。AOT 与 Flutter 会裁剪未使用的元数据，因此运行时能否拿到注解取决于是否有反射支持以及编译选项。"
+  keyPoints:
+    - "注解实参必须是常量表达式，支持位置参数与命名参数"
+    - "注解本身不产生行为，需要 build_runner 或 mirrors 消费"
+    - "dart:mirrors 不支持 AOT，Flutter 中基本不可用"
+    - "主流做法是 source_gen 在编译期读取注解并生成静态代码"
+  pitfalls:
+    - "加了注解却没跑 build_runner，生成代码缺失导致编译失败"
+    - "在 release 包里依赖运行时反射读注解，行为与 debug 不一致"
+  followups:
+    - "build_runner 生成代码相比运行时反射有哪些优势与代价？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

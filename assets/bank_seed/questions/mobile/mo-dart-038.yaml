@@ -1,0 +1,26 @@
+id: mo-dart-038
+title: "switch 表达式与 when guard：把分支写成表达式"
+topics: [dart, patterns, syntax]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Dart 3 的 switch 表达式直接产出值，case 支持模式匹配与 when 守卫条件，省掉中间变量和 break。分支体是表达式而非语句块，且对 enum、sealed 类型必须穷尽，否则编译报错。"
+  keyPoints:
+    - "switch 表达式用 => 返回分支值，不存在 fallthrough"
+    - "when 子句在模式匹配成功后追加布尔条件"
+    - "多个模式可用逻辑或组合，共享同一个分支体"
+    - "对 enum 或 sealed 类型，缺少分支会直接编译失败"
+  pitfalls:
+    - "把语句 switch 的贯穿习惯带进来，表达式分支不允许贯穿"
+    - "在 when 条件里写副作用，求值次数与顺序难以预期"
+  followups:
+    - "逻辑或模式中绑定的变量在分支体里作用域如何限定？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

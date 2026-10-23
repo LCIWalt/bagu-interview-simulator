@@ -1,0 +1,26 @@
+id: mo-flutter-485
+title: "语义树是什么时候被刷新与构建的？"
+topics: [flutter, semantics, accessibility]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "语义更新由 PipelineOwner 统一收集，在绘制与合成之后通过 flushSemantics 处理脏节点。默认只有系统开启无障碍服务或代码持有 SemanticsHandle 时，才会真正构建语义树，否则这部分工作被跳过。"
+  keyPoints:
+    - "标脏的语义节点进入 nodesNeedingSemantics 队列，由 flushSemantics 统一处理"
+    - "flushSemantics 在合成之后调用，保证语义位置与最终画面一致"
+    - "semanticsEnabled 为 false 时不会生成语义树，也不会产生这部分开销"
+    - "ensureSemantics 返回的句柄存在期间，语义树会持续构建"
+  pitfalls:
+    - "在动画中途读取语义节点位置，拿到的是上一帧合成后的结果"
+    - "以为 release 包不构建语义树，开启读屏后开销照样存在"
+  followups:
+    - "为什么语义更新要放在绘制之后，而不是布局之后？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

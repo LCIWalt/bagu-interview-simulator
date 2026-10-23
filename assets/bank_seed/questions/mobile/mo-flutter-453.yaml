@@ -1,0 +1,26 @@
+id: mo-flutter-453
+title: "fakeAsync 的 elapse 如何同时驱动 Timer 与 Future？"
+topics: [dart, testing, async]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "fakeAsync 用虚拟时钟替换 Zone 内的 Timer 与微任务调度，elapse 推进时间并按到期顺序触发定时器与微任务；它不会真正等待，所以测试是确定性的。网络、文件等真实 IO 不受虚拟时钟控制，需要配合 fake 或 mock。"
+  keyPoints:
+    - "elapse 推进虚拟时间，触发到期 Timer 与其中的微任务"
+    - "flushMicrotasks 只清微任务，不推进时间"
+    - "在 fakeAsync 区域内创建的 Timer 才受控"
+    - "真实 IO 与平台通道不受虚拟时钟影响"
+  pitfalls:
+    - "在 fakeAsync 外用 async/await 等真实延迟，测试仍然慢"
+    - "忘记 flushMicrotasks，断言早于回调执行"
+followups:
+  - "fakeAsync 与 WidgetTester.pump 如何配合？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

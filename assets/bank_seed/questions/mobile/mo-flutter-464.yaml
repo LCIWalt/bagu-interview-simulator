@@ -1,0 +1,26 @@
+id: mo-flutter-464
+title: "光栅缓存的条目为什么会失效或被淘汰？"
+topics: [flutter, rastercache, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "缓存条目以图层身份和变换矩阵为键，图层重录、变换改变都会让旧条目不再命中；显存吃紧时引擎还会按使用情况淘汰条目。失效只是退回实时绘制，淘汰则要重新栅格化并重新分配纹理。"
+  keyPoints:
+    - "缓存键包含图层标识与当前变换矩阵，缩放或旋转变化就会换键"
+    - "图层重新录制后，旧纹理不再代表当前内容，必须重新生成"
+    - "缓存容量有上限，长期不被访问的条目会被优先淘汰"
+    - "淘汰后再次命中需要重新栅格化，表现为一次性的掉帧"
+  pitfalls:
+    - "对整屏做持续缩放的动画，矩阵每帧变化导致缓存几乎全部失效"
+    - "把命中率低都归因于引擎，忽略图层本身正在被每帧重建"
+  followups:
+    - "为什么滚动中的列表与静止页面的缓存命中情况不同？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

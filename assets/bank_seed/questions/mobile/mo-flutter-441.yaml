@@ -1,0 +1,26 @@
+id: mo-flutter-441
+title: "unawaited 只是消掉 lint 吗？错误最后去了哪里？"
+topics: [dart, async, error-handling]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "unawaited 只是显式声明不等待这个 Future，让 unawaited_futures 之类的 lint 不再报警，它不会挂任何错误处理。Future 抛错且无人监听时，错误会交给当前 Zone 的未捕获错误处理，在 Flutter 中通常表现为控制台报错甚至崩溃上报。"
+  keyPoints:
+    - "unawaited 是标记，不改变 Future 的执行与错误传播"
+    - "错误进入 Zone 的 handleUncaughtError，而不是被吞掉"
+    - "确实不关心结果时，应同时加 catchError 或 ignore"
+    - "测试中未处理的异步错误会让用例失败"
+  pitfalls:
+    - "用 unawaited 包住可能失败的写操作，线上静默失败"
+    - "既 unawaited 又 catchError，重复处理同一错误"
+followups:
+  - "Future.ignore 与 unawaited 的区别是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

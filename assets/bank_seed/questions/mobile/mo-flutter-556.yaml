@@ -1,0 +1,27 @@
+id: mo-flutter-556
+title: "离线写入冲突：整体覆盖还是字段级合并？"
+topics: [flutter, offline-first, sync]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "last-write-wins 实现简单，但并发修改会互相覆盖，丢失其中一方的字段变更。字段级合并或 CRDT 能保留更多信息，代价是需要版本号、字段级 dirty 标记与确定的合并规则。选择取决于业务：计数用增量，关键单据必要时把冲突暴露给用户。"
+  keyPoints:
+    - "每条记录带版本号或 updatedAt，服务端做权威合并"
+    - "区分字段级 dirty 与整条 dirty，避免无关字段被一并覆盖"
+    - "计数类字段用增量同步，不要传绝对值"
+    - "无法自动合并时显式提示用户选择，而不是静默丢弃"
+  pitfalls:
+    - "用客户端本地时间比较新旧，时钟漂移导致旧数据覆盖新数据"
+    - "合并时把删除当成空值，导致已删除记录被复活"
+followups:
+  - "服务端合并失败时客户端应该如何重放？"
+  - "CRDT 在移动端的存储与体积成本如何评估？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

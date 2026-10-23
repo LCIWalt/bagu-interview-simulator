@@ -1,0 +1,27 @@
+id: mo-dart-068
+title: "ReceivePort.close 之后消息会丢在哪里"
+topics: [dart, isolate, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ReceivePort 是 isolate 间消息的接收端，close 之后不再接收新消息，已排队的消息也可能被丢弃。向已关闭端口对应的 SendPort 发送不会抛错，而是静默失败，因此协议层必须自行约定关闭时机。通常由端口持有方在收到完成信号后再关闭。"
+  keyPoints:
+    - "ReceivePort 同时暴露 Stream 与对应 SendPort"
+    - "close 后发往该 SendPort 的消息不会送达"
+    - "端口关闭不会自动通知对端，需要协议约定"
+    - "同一 SendPort 可被多个 isolate 持有并发送"
+  pitfalls:
+    - "任务结束立刻 close，丢掉最后一条完成消息"
+    - "缓存已关闭端口的 SendPort 并继续复用"
+followups:
+  - "如何设计请求-响应协议避免端口泄漏？"
+  - "多个 isolate 向同一端口发送时顺序如何保证？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

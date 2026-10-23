@@ -1,0 +1,27 @@
+id: mo-flutter-523
+title: "深链参数直接拿来跳转，会带来哪些安全问题？"
+topics: [flutter, deep-link, security]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "深链是外部可控输入，参数里的目标页、URL、金额、token 都不能直接信任；未校验的开放跳转可被用来钓鱼，未授权页面也可能被越权直达。要在解析层做白名单与登录态校验，把外部链接当成不可信数据处理。"
+  keyPoints:
+    - "目标路由用白名单映射，禁止把参数直接当作任意路由名"
+    - "跳转前校验登录态与资源归属，未授权时先走登录再回跳"
+    - "二次跳转的外链域名要校验，避免开放重定向"
+    - "参数做长度、类型与编码校验，异常时落到安全兜底页"
+  pitfalls:
+    - "把深链里的 url 参数直接交给 WebView 打开"
+    - "登录后无条件回跳原始参数，绕过权限检查"
+followups:
+  - "如何设计一个可测试的深链解析与鉴权流程？"
+  - "App Links 校验失败时，攻击者能伪造链接吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

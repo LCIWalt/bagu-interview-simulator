@@ -1,0 +1,26 @@
+id: mo-flutter-479
+title: "GestureArenaTeam 如何让多个 recognizer 共享一次胜利？"
+topics: [flutter, gestures, arena]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "GestureArenaTeam 把多个 recognizer 编成一组，它们在竞技场里作为一个整体参与竞争，胜出后再由队长决定把这次手势交给谁。没有指定队长时，组内第一个声明胜利的成员拿走手势。"
+  keyPoints:
+    - "recognizer 构造时传入 team 参数即可加入队伍，加入后不能再改队伍"
+    - "队长通过 GestureArenaTeam.captain 指定，必须是实现了 GestureArenaMember 的对象"
+    - "组内任一成员在竞技场中胜出，队长获得决定最终接收者的机会"
+    - "没有队长时，组内第一个 accept 的成员成为赢家"
+  pitfalls:
+    - "以为 team 会让所有成员同时收到事件，实际只有最终赢家拿到"
+    - "在 recognizer 已加入竞技场后更换 team，运行期直接断言"
+  followups:
+    - "滑动组件里如何用 team 协调水平与垂直拖拽？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

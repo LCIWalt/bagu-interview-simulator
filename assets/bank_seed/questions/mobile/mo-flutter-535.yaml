@@ -1,0 +1,27 @@
+id: mo-flutter-535
+title: "两个 feature 需要互相调用，除了直接 import 还能怎么做？"
+topics: [flutter, architecture, decoupling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "跨 feature 直接 import 会把两个编译单元绑死，且容易演变成循环依赖。更可控的做法是先把共享模型与接口下沉到独立层，再由组装层注入实现，只有真正一对多的广播才用事件总线。判断标准是依赖方向始终单向、每个 feature 能脱离对方单独测试。"
+  keyPoints:
+    - "能下沉到共享层的模型与接口优先下沉，feature 只依赖抽象而不认识对方实现"
+    - "调用方在构造时注入回调或接口，把编译期依赖变成运行期装配"
+    - "事件总线只用于一对多且允许丢失的广播，事件定义要带命名空间与版本"
+    - "用依赖图检查或自定义 lint 守住 import 边界，而不是只靠团队约定"
+  pitfalls:
+    - "把事件总线当万能解，链路难以追踪且监听顺序没有保证"
+    - "为了解耦复制一份模型，两份定义很快漂移并出现字段不一致"
+followups:
+  - "如何在 CI 里自动检测 feature 之间的非法 import？"
+  - "出现循环依赖时，应该先拆接口还是先拆数据模型？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

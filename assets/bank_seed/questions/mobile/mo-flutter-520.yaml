@@ -1,0 +1,27 @@
+id: mo-flutter-520
+title: "项目：权限回调返回时 Activity 被重建，结果为什么会丢？"
+topics: [flutter, permissions, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: project
+answer:
+  summary: "权限对话框可能触发配置变更或进程回收，回调到达时原来的 Activity 或插件实例已不在，挂起的请求就无人接收。插件要用稳定的请求码与可恢复的挂起表，或在回调里重新绑定当前 Activity，避免把结果投递给已销毁对象。"
+  keyPoints:
+    - "请求码要唯一且可重建，不能依赖对象自增 id 在重建后仍然有效"
+    - "回调到达时先检查 Activity 与引擎是否仍存活，再派发结果"
+    - "低内存下进程可能被杀，恢复后应重新查询实际权限状态"
+    - "不要只在内存里保存 pending result，必要时落盘或改为状态查询"
+  pitfalls:
+    - "把 Activity 强引用存进静态 map，配置变更后泄漏旧 Activity"
+    - "假设 onRequestPermissionsResult 一定回到发起请求的那个实例"
+followups:
+  - "Android 的 ActivityResultRegistry 如何帮助恢复挂起请求？"
+  - "权限结果丢失时，如何做到用户无感重试？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

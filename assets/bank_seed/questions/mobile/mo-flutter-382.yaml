@@ -1,0 +1,26 @@
+id: mo-flutter-382
+title: "ComponentElement 与 RenderObjectElement 的构建流程有什么不同？"
+topics: [flutter, element, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ComponentElement 不直接产出 RenderObject，它通过 build 返回子 Widget，再由子 Element 继续向下，最终由 RenderObjectElement 创建渲染对象。RenderObjectElement 在 mount 时创建并挂载 RenderObject，在 update 时把新配置写入已有对象。"
+  keyPoints:
+    - "ComponentElement 的 build 返回 Widget，自身不参与布局和绘制"
+    - "RenderObjectElement.mount 调用 createRenderObject 并 attach 到渲染树"
+    - "RenderObjectElement.update 复用 RenderObject，并调用 updateRenderObject 同步配置"
+    - "MultiChildRenderObjectElement 还负责维护子 RenderObject 的顺序与插入"
+  pitfalls:
+    - "在 ComponentElement 上读 renderObject，拿到的是后代而非自身"
+    - "以为 Widget 类型不变就不用同步配置，RenderObject 仍需要 update"
+followups:
+  - "StatelessElement 与 StatefulElement 分别继承自哪类 Element？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-393
+title: "Navigator 的 pages API 与 onDidRemovePage 如何配合？"
+topics: [flutter, navigator, routing]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "pages 把路由栈声明为不可变列表，Navigator 根据新旧列表差异执行 push、pop 与 replace；onDidRemovePage 在页面被移除后回调，用来同步清理业务侧的路由状态。它替代了已废弃的 onPopPage，让返回手势与声明式列表保持一致。"
+  keyPoints:
+    - "pages 列表描述期望的栈，框架 diff 后生成对应导航操作"
+    - "Page 的 key 决定身份，key 变化会被视为新页面"
+    - "onDidRemovePage 在页面移除后触发，业务需在下次 build 去掉该 Page"
+    - "onPopPage 已废弃，新代码应使用 onDidRemovePage"
+  pitfalls:
+    - "在 onDidRemovePage 里不同步 pages，列表与真实栈反复打架"
+    - "用 index 当 Page key，插入页面时整段路由被替换"
+followups:
+  - "声明式路由下如何拦截返回并决定是否真的移除页面？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

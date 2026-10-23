@@ -1,0 +1,26 @@
+id: mo-dart-055
+title: "typedef 与函数类型：把回调签名抽成类型"
+topics: [dart, typedef, functions]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "typedef 为函数类型起别名，可用于字段、参数与返回值，让回调签名可复用也更可读。Dart 2.13 起 typedef 也能给非函数类型起别名，但别名不会创建新类型，赋值兼容性仍按底层类型判断。"
+  keyPoints:
+    - "函数 typedef 用返回值与参数列表的语法声明别名"
+    - "typedef 只是别名，运行时不产生新类型或额外包装"
+    - "泛型 typedef 可带类型参数，在使用处实例化"
+    - "is 检查与重载解析都按被别名的底层类型进行"
+  pitfalls:
+    - "以为 typedef 能阻止签名不兼容的函数被赋值"
+    - "多个库各写一份同名 typedef，跨库混用后难以统一"
+  followups:
+    - "typedef 与 extension type 在类型安全上的差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

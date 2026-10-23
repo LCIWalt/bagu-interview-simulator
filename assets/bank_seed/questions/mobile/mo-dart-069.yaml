@@ -1,0 +1,27 @@
+id: mo-dart-069
+title: "compute 为什么只接受顶层函数"
+topics: [dart, isolate, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "compute 本质上是 Isolate.run 的封装，只接受顶层或静态函数和一条可发送的消息。带捕获的闭包引用了主 isolate 的对象，无法整体跨 isolate 传递，因此回调里不能直接使用 UI 状态或 BuildContext。参数与返回值也必须满足可发送约束，否则运行时报错。"
+  keyPoints:
+    - "入口必须是顶层或静态函数，不能是捕获上下文的闭包"
+    - "只支持单参数与单返回值，多参数需封装成对象"
+    - "返回值会完整拷贝回主 isolate，大对象成本高"
+    - "Flutter Web 上 compute 退化为同 isolate 执行"
+  pitfalls:
+    - "把 BuildContext 或数据库连接传进 compute"
+    - "以为 Web 平台上 compute 也是真并发"
+followups:
+  - "compute 与 Isolate.run 在错误传播上有什么差异？"
+  - "如何把多个参数安全地传给 compute？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

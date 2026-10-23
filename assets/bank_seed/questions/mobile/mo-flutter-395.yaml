@@ -1,0 +1,26 @@
+id: mo-flutter-395
+title: "Navigator.push 返回的 Future 什么时候完成，结果如何传回？"
+topics: [flutter, navigator, routing]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "push 返回的 Future 在对应路由完成时结束，完成值来自 pop 传入的 result；路由被 remove 或替换时也会完成，避免调用方永久等待。用户手势返回通常以 null 完成，因此使用结果前要处理空值。"
+  keyPoints:
+    - "Future 在 Route.didComplete 时完成，值来自 pop 的 result"
+    - "pop 可以传任意对象，类型由 push<T> 的泛型约束"
+    - "系统返回手势通常以 null 完成"
+    - "removeRoute 同样会完成 Future，可携带 result"
+  pitfalls:
+    - "不判断 null 就直接使用返回值，手势返回时崩溃"
+    - "在 await 之后不检查 mounted 就 setState"
+followups:
+  - "pushReplacement 时旧路由的 Future 会怎样结束？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

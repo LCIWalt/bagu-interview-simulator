@@ -1,0 +1,26 @@
+id: mo-flutter-472
+title: "Ticker 的 isActive、isTicking 与 shouldScheduleTick 分别表示什么？"
+topics: [flutter, animation, ticker]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "isActive 表示 Ticker 已经 start 且尚未 stop，isTicking 表示当前已经排了一次帧回调，shouldScheduleTick 则综合了是否活跃、是否静音与是否已排程。理解三者差别，才能解释为什么页面不可见时动画仍在活跃状态却不推进。"
+  keyPoints:
+    - "isActive 由 TickerFuture 是否还存在决定，start 后为 true，stop 后为 false"
+    - "isTicking 只在存在待执行的帧回调时为 true，回调开始时被清空"
+    - "muted 只阻止调度，不会把 isActive 置为 false"
+    - "shouldScheduleTick 要求活跃、未静音，且当前没有已排程的回调"
+  pitfalls:
+    - "用 isActive 判断动画是否在动，页面被 TickerMode 静音后判断失效"
+    - "自己 new Ticker 后忘记 dispose，State 销毁后仍在调度帧"
+  followups:
+    - "TickerFuture.orCancel 在 Ticker 被销毁时会怎样？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

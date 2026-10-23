@@ -1,0 +1,27 @@
+id: mo-flutter-561
+title: "CI 上如何用矩阵覆盖多个 Flutter 版本与平台？"
+topics: [flutter, ci, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "只测一个 Flutter 版本会漏掉最低支持版本或最新 stable 的兼容问题。用矩阵同时覆盖最低与最新版本，再按平台组合，但矩阵过大会拖慢反馈。合理分层是 PR 只跑关键组合，定时任务跑全量矩阵。"
+  keyPoints:
+    - "明确最低支持版本与最新 stable 两个锚点，二者都要测"
+    - "矩阵按版本乘平台组合，用 include/exclude 裁剪无意义组合"
+    - "缓存按 Flutter 版本分 key，避免跨版本串用"
+    - "PR 跑关键子集，定时任务跑全量矩阵"
+  pitfalls:
+    - "矩阵里全部使用 latest，最低版本从未被验证"
+    - "缓存跨版本共用，出现莫名其妙的编译错误"
+followups:
+  - "最低支持版本应该由什么决定？"
+  - "矩阵失败时如何区分代码问题与基础设施抖动？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-dart-075
+title: "Zone.values 与异步上下文传递"
+topics: [dart, zone, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Zone 保存一组 values，runZoned 时通过 zoneValues 注入，子 Zone 会继承父级值并可在 fork 时覆盖。异步回调在注册它的 Zone 中执行，因此 traceId、依赖容器等上下文可以沿 await 链传递。Zone 不会跨 isolate，跨 isolate 时必须显式放进消息。"
+  keyPoints:
+    - "zoneValues 在 runZoned 时注入，子 Zone 继承父级"
+    - "fork 可覆盖单个值而不影响父 Zone"
+    - "异步回调在注册它的 Zone 中运行"
+    - "Zone 不跨 isolate，上下文需显式随消息传递"
+  pitfalls:
+    - "以为全局变量能按请求自动隔离"
+    - "在错误的 Zone 中读取，得到 null 或旧值"
+followups:
+  - "Zone.current 与 Zone.root 是什么关系？"
+  - "如何保证日志中的 traceId 不串请求？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

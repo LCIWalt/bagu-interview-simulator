@@ -1,0 +1,27 @@
+id: mo-flutter-519
+title: "iOS 的“仅选中的照片”和临时通知权限，代码上怎么区分？"
+topics: [flutter, permissions, ios]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "照片权限有 limited 状态，用户只授权部分资源，读取相册时要按可用资源处理并允许用户再次修改选择；通知有 provisional 授权，消息静默投递到通知中心，不代表用户明确允许弹窗。两者都不能用简单的 authorized 与 denied 二元判断。"
+  keyPoints:
+    - "PHAuthorizationStatus.limited 需要显式处理，只展示用户选中的资源"
+    - "limited 状态下应提供管理可选择照片的入口，调用系统的选择器"
+    - "通知的 provisional 授权允许静默投递，用户可在通知中心升级为明确允许"
+    - "权限状态变化要重新查询，不能一直缓存首次结果"
+  pitfalls:
+    - "把 limited 当成 denied，直接隐藏相册入口"
+    - "把 provisional 当成正式授权，据此判断推送可达率"
+followups:
+  - "iOS 14+ 的精确位置与模糊位置如何在业务上降级？"
+  - "相册选择器 PHPicker 为什么可以完全不需要相册权限？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

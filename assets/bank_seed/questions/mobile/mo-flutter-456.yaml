@@ -1,0 +1,26 @@
+id: mo-flutter-456
+title: "Canvas.drawVertices 能做什么，blendMode 在和谁混合？"
+topics: [flutter, canvas, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "drawVertices 把一批顶点、可选的顶点颜色与纹理坐标交给 GPU，一次调用画出大量三角形，适合网格渐变、粒子与自定义几何。它的 blendMode 描述顶点颜色与 Paint 自身颜色或着色器之间的混合方式，而不是与画布已有内容的混合。"
+  keyPoints:
+    - "positions 是必填的顶点坐标数组，colors 与 textureCoordinates 一旦提供就必须与 positions 等长"
+    - "indices 决定图元连接顺序，数量要符合 VertexMode，triangles 每三个索引构成一个三角形"
+    - "blendMode 只在同时提供顶点颜色与 Paint 颜色或着色器时才可感知，常用 modulate 让两者相乘"
+    - "顶点数据每帧重建会产生分配与上传开销，静态几何应缓存 Vertices，动态数据用 Vertices.raw 直接传 Float32List"
+  pitfalls:
+    - "把 drawVertices 的 blendMode 当成画布混合模式，实际那由 Paint.blendMode 决定"
+    - "每个粒子都新建一个 Vertices 且不 dispose，UI 线程与原生内存一起被拖垮"
+  followups:
+    - "drawAtlas 与 drawVertices 各自适合什么场景？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

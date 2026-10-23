@@ -1,0 +1,26 @@
+id: mo-dart-058
+title: "noSuchMethod 与动态转发：兜底还是设计债"
+topics: [dart, dynamic, oop]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "对 dynamic 目标调用不存在的方法，或类声明了 noSuchMethod 却未实现所请求成员时，会走 noSuchMethod 转发。它可实现代理与 mock，但绕过静态检查、丢失补全，把错误从编译期推迟到运行期。"
+  keyPoints:
+    - "noSuchMethod 只在静态类型为 dynamic 或成员确实缺失时触发"
+    - "覆写 noSuchMethod 可拿到 Invocation，实现动态代理"
+    - "类声明 noSuchMethod 时通常还要 implements 对应接口以通过静态检查"
+    - "Object 已有成员的调用不会走 noSuchMethod，必须显式实现"
+  pitfalls:
+    - "用 noSuchMethod 兜底吞掉拼写错误，失败被静默转成 null"
+    - "在热路径依赖动态转发，带来额外查找且无法内联优化"
+  followups:
+    - "package:mockito 的 noSuchMethod 模式如何生成 mock 对象？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

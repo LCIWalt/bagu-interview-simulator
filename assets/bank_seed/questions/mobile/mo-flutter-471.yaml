@@ -1,0 +1,26 @@
+id: mo-flutter-471
+title: "SingleTickerProviderStateMixin 与 TickerProviderStateMixin 该怎么选？"
+topics: [flutter, animation, ticker]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "两者都为 State 提供 Ticker，并在 TickerMode 变化时统一静音。Single 版本只允许创建一个 Ticker，实现更轻；需要驱动多个 AnimationController 时，必须使用 TickerProviderStateMixin。"
+  keyPoints:
+    - "Single 版本内部只保存一个 Ticker，第二次 createTicker 会断言失败"
+    - "TickerProviderStateMixin 维护 Ticker 集合，数量随控制器增长"
+    - "两者都会在 TickerMode 关闭时静音，避免不可见页面继续驱动动画"
+    - "mixin 不负责释放控制器，AnimationController 仍要在 dispose 里处理"
+  pitfalls:
+    - "一个 State 里放两个控制器却用 Single 版本，运行到创建第二个时才崩"
+    - "以为 mixin 会帮忙 dispose 控制器，导致 Ticker 泄漏与断言"
+  followups:
+    - "TickerMode 关闭时，正在播放的动画会停在原地吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

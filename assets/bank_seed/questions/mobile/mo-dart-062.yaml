@@ -1,0 +1,27 @@
+id: mo-dart-062
+title: "单订阅流与广播流：第二次 listen 为什么抛错"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "普通 Stream 是单订阅流，内部只维护一个订阅者及其暂停状态，第二次 listen 会抛出 Bad state 异常。广播流通过 StreamController.broadcast 或 asBroadcastStream 创建，支持多个监听者，但不缓存历史事件。选择哪种流取决于是否需要回放以及是否存在多个消费者。"
+  keyPoints:
+    - "单订阅流只允许一个监听者，重复 listen 抛 StateError"
+    - "广播流可多监听，但晚到的监听者收不到历史事件"
+    - "asBroadcastStream 把单订阅流转为广播，源流只被订阅一次"
+    - "广播流的 onListen 在首个监听者加入时触发"
+  pitfalls:
+    - "在 build 中重复 listen 同一个单订阅流"
+    - "用广播流替代状态缓存，新页面拿不到当前值"
+followups:
+  - "StreamController.broadcast 的 onCancel 何时触发？"
+  - "如何给广播流补一份最新值给新订阅者？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

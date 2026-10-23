@@ -1,0 +1,26 @@
+id: mo-flutter-440
+title: "如何用 Zone 传递请求级上下文而不污染全局？"
+topics: [dart, zone, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "用 runZoned 或 Zone.current.fork 注入 zoneValues，异步回调会继承创建时的 Zone，从而读到同一份上下文。它天然按调用链隔离，不需要全局变量，但跨 isolate、跨平台线程不会自动传递，需要在边界显式带过去。"
+  keyPoints:
+    - "zoneValues 随 Zone 继承，异步回调读到同一份值"
+    - "不同请求各自 fork，互不覆盖"
+    - "isolate 与原生线程不共享 Zone，需显式传递"
+    - "读取用 Zone.current[key]，并提供缺省值"
+  pitfalls:
+    - "把可变对象放进 zoneValues，仍会被并发修改"
+    - "在顶层缓存 Zone.current，后续请求拿到旧上下文"
+followups:
+  - "Zone 的 errorZone 与 fork 出的子 Zone 有什么关系？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-546
+title: "日期、数字和货币为什么要用 intl 而不是手写格式化？"
+topics: [flutter, i18n, formatting]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "时区、夏令时、日历体系、千分位、货币小数位与符号位置都随 locale 变化，手写拼接几乎必然出错。intl 的 DateFormat 与 NumberFormat 基于 locale 数据，能正确处理这些差异。使用前记得初始化日期格式所需的 locale 数据。"
+  keyPoints:
+    - "DateFormat 传入 locale 与显式 pattern，展示层不要硬编码 yyyy-MM-dd"
+    - "NumberFormat.currency 指定货币符号与小数位，避免手写保留两位"
+    - "展示用本地时区，传输与存储统一用 UTC 或时间戳"
+    - "通过 initializeDateFormatting 加载 locale 数据，避免运行时报错"
+  pitfalls:
+    - "直接用 DateTime.toString 展示给用户，格式不可控且不带时区语义"
+    - "把 UTC 时间当本地时间展示，出现固定时差"
+followups:
+  - "用户切换语言后已格式化的字符串如何刷新？"
+  - "货币换算与格式化应该由客户端还是服务端负责？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

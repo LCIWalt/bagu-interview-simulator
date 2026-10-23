@@ -1,0 +1,27 @@
+id: mo-flutter-544
+title: "带变量和富文本的文案，ARB 里该怎么组织？"
+topics: [flutter, i18n, l10n]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "不要用字符串拼接把变量塞进句子，不同语言的语序和格变化会让结果读不通。ARB 用 placeholder 声明变量名、类型与示例，整句交给翻译；富文本则先用占位符占位，再在代码里按索引切分 TextSpan。给翻译者的描述要写清变量含义与长度限制。"
+  keyPoints:
+    - "用 placeholder 声明变量名、类型与示例值，而不是在代码里拼字符串"
+    - "整句翻译，不把句子拆成多段分别翻译后再拼接"
+    - "富文本用占位符占位，再按索引切分 TextSpan 并挂手势"
+    - "复数、性别等用 ICU plural/select，不要用 if 分支写多套文案"
+  pitfalls:
+    - "把句子拆段拼接，翻译后语序错乱或缺少空格"
+    - "对用户输入不做转义就放进占位符，造成富文本注入"
+followups:
+  - "带链接的文案如何保证无障碍读屏顺序正确？"
+  - "placeholder 的类型声明对生成代码有什么影响？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

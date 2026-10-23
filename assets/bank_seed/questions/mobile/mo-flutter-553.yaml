@@ -1,0 +1,27 @@
+id: mo-flutter-553
+title: "重试下单为什么必须带幂等键？"
+topics: [flutter, network, idempotency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "请求超时不代表服务端没有执行，盲目重试可能重复创建订单。客户端应为一次业务操作生成稳定的幂等键，重试时复用同一个键，由服务端按键去重并返回首次结果。键的生命周期要覆盖整个重试链，并与用户、业务实体绑定。"
+  keyPoints:
+    - "幂等键在用户触发操作时生成一次，后续重试复用"
+    - "服务端持久化键与处理结果，重复请求返回同一结果"
+    - "只有超时与 5xx 才重试，4xx 通常不应重试"
+    - "键与用户、业务类型绑定，避免跨场景碰撞"
+  pitfalls:
+    - "每次重试都重新生成键，等于完全没有幂等"
+    - "键只存在内存中，进程被杀后重试又创建一单"
+followups:
+  - "服务端幂等记录应该保留多久？"
+  - "客户端生成键与服务端下发键，哪种更可靠？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

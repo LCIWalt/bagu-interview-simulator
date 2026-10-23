@@ -1,0 +1,26 @@
+id: mo-flutter-443
+title: "async* 生成器是什么时候开始执行的，yield 暂停了什么？"
+topics: [dart, stream, async]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "async* 函数体在首次被监听时才启动，而不是调用时；每次 yield 会把事件交给订阅者并挂起生成器，直到下游请求下一个事件或被暂停。取消订阅会让生成器在下一个恢复点终止并执行 finally。"
+  keyPoints:
+    - "调用 async* 只创建 Stream，不执行函数体"
+    - "listen 之后才开始运行，事件按需拉取"
+    - "yield 挂起生成器，恢复由订阅者的消费节奏决定"
+    - "生成器内的异常会以错误事件结束流"
+  pitfalls:
+    - "在 async* 外做副作用初始化，以为调用时已执行"
+    - "在生成器里 yield 后继续做耗时同步计算，阻塞事件派发"
+followups:
+  - "sync* 生成的 Iterable 也是惰性的吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

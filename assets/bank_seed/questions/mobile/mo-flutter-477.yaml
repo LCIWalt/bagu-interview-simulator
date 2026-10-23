@@ -1,0 +1,26 @@
+id: mo-flutter-477
+title: "FrictionSimulation 与 ClampingScrollSimulation 的模型差在哪？"
+topics: [flutter, physics, scrolling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FrictionSimulation 用指数衰减的速度模型描述惯性，位置会一直趋近某个极限，没有边界概念。ClampingScrollSimulation 复刻 Android 的 fling 行为，会算出总滑行距离并在边界处停住，因此更适合钳制式滚动。"
+  keyPoints:
+    - "FrictionSimulation 由 drag 系数控制速度衰减，位置是速度对时间的积分"
+    - "ClampingScrollSimulation 依据初速度与摩擦系数推算滑行距离与时长"
+    - "两者都实现 Simulation 接口，通过 x 与 dx 提供位置和速度"
+    - "是否越界回弹，由 ScrollPhysics 选择哪种模拟器决定"
+  pitfalls:
+    - "把 FrictionSimulation 直接用于列表滚动，松手后位置越过内容边界"
+    - "自定义 physics 时忽略 tolerance，模拟迟迟不结束导致持续调度帧"
+  followups:
+    - "BouncingScrollSimulation 与这两者的差别是什么？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

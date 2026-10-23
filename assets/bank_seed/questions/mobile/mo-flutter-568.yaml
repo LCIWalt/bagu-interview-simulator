@@ -1,0 +1,27 @@
+id: mo-flutter-568
+title: "私有 pub 源与 path 依赖在团队协作里有哪些坑？"
+topics: [flutter, packages, tooling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "path 依赖方便本地联调，但 CI 和其他同事机器上没有相同目录时会直接解析失败。私有源需要凭据，凭据不能写进 pubspec，也不能出现在 CI 日志里。团队应统一使用版本约束加受控私有源，本地联调再用 dependency_overrides 临时覆盖。"
+  keyPoints:
+    - "提交到主干的 pubspec 使用版本约束，path 依赖只用于本地临时联调"
+    - "私有源凭据通过环境变量或 pub token 注入，不写进仓库"
+    - "CI 需配置相同的源与凭据，否则解析结果与本地不一致"
+    - "用 lock 文件保证可复现，升级依赖走独立 PR"
+  pitfalls:
+    - "把 path 依赖提交到主干，CI 直接解析失败"
+    - "把 token 写进 pubspec 或打印到 CI 日志"
+followups:
+  - "dependency_overrides 在 CI 上会覆盖 lock 文件吗？"
+  - "私有源不可用时，构建应该如何降级？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

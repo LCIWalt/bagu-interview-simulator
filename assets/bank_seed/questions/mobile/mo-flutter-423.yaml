@@ -1,0 +1,26 @@
+id: mo-flutter-423
+title: "await for 里 break，底层的订阅会被取消吗？"
+topics: [dart, stream, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "会。await for 会把循环编译成带订阅的异步迭代，break、return 或抛出异常离开循环时都会取消订阅，并等待 cancel 完成。因此源的 onCancel 会执行，但清理是异步的，不要假设 break 后资源立刻释放。"
+  keyPoints:
+    - "break、return、throw 退出 await for 都会取消订阅"
+    - "取消会等待 cancel 返回的 Future，退出可能晚一拍"
+    - "流以错误结束时，await for 会把错误抛到循环处"
+    - "需要保留订阅继续消费时，应改用 listen"
+  pitfalls:
+    - "在 break 后立刻复用被 onCancel 释放的资源"
+    - "用 await for 消费广播流，多个消费者互相抢事件"
+followups:
+  - "await for 中 continue 会影响订阅吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

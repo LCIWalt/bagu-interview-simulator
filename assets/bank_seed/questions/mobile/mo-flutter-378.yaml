@@ -1,0 +1,26 @@
+id: mo-flutter-378
+title: "InheritedWidget 的 updateShouldNotify 返回 false 一定安全吗？"
+topics: [flutter, inherited-widget, rebuild]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "updateShouldNotify 只决定依赖者是否因这次 InheritedWidget 更新而立刻重建，并不改变子树能读到的新值。返回 false 时依赖者会继续显示旧内容，直到因其他原因重建；因此只有确认后代无需即时响应时才能返回 false。"
+  keyPoints:
+    - "返回 true 会把所有依赖者标脏，返回 false 则跳过这次通知"
+    - "比较字段应覆盖后代实际读取的内容，漏掉字段就会产生陈旧 UI"
+    - "child 写成 const 只影响子树复用，不会阻止依赖者被通知"
+    - "高频变化的数据应拆成独立 InheritedWidget，缩小一次通知的范围"
+  pitfalls:
+    - "只比较对象引用而不比较字段，内部可变对象变化后漏通知"
+    - "以为返回 false 只是少一次重建，实际依赖者会一直停留在旧值"
+followups:
+  - "InheritedNotifier 是如何替代手写 updateShouldNotify 的？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

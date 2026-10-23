@@ -1,0 +1,26 @@
+id: mo-flutter-412
+title: "MediaQuery 的数据从哪里来，嵌套 MediaQuery 覆盖要注意什么？"
+topics: [flutter, media-query, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "根 MediaQuery 由 View 通过 MediaQuery.fromView 根据 FlutterView 构造，包含尺寸、像素密度、安全区、键盘 insets 与平台亮度等。嵌套 MediaQuery 会整体替换数据而不是合并，因此通常要用 copyWith 基于当前值修改。"
+  keyPoints:
+    - "根 MediaQuery 由 View 从 FlutterView 的数据生成"
+    - "MediaQueryData 包含 size、devicePixelRatio、padding、viewInsets 等字段"
+    - "嵌套 MediaQuery 使用新 data 整体替换，不会自动合并"
+    - "局部覆盖应写 MediaQuery(data: MediaQuery.of(context).copyWith(...))"
+  pitfalls:
+    - "嵌套时只传 size，丢掉 padding 与 viewInsets，导致 SafeArea 失效"
+    - "为了拿一个字段而用 MediaQuery.of，键盘弹出时整棵 Widget 都跟着重建"
+followups:
+  - "MediaQuery.sizeOf 与 MediaQuery.of 的重建范围有何不同？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

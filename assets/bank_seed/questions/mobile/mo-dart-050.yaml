@@ -1,0 +1,26 @@
+id: mo-dart-050
+title: "dart:mirrors 在 AOT 下不可用及替代方案"
+topics: [dart, mirrors, aot]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "dart:mirrors 只在 Dart VM 的 JIT 环境下可用，AOT 编译（包括 Flutter release）不支持，因为反射需要保留大量类型与符号信息，会阻碍 tree shaking。依赖反射的序列化、依赖注入在移动端应改为代码生成或显式注册表。"
+  keyPoints:
+    - "mirrors 依赖运行时保留的元数据，AOT 编译会裁掉这些信息"
+    - "Flutter 的 debug 与 release 在符号保留上行为不同，不可假设一致"
+    - "替代方案是 source_gen/build_runner 生成静态注册与序列化代码"
+    - "轻量场景可用 Symbol 加显式注册表，避免全量反射"
+  pitfalls:
+    - "在 Flutter 项目中直接 import dart:mirrors，编译期即报不支持"
+    - "靠反射动态调用，release 下符号被裁剪导致 NoSuchMethodError"
+  followups:
+    - "为什么反射会阻碍 tree shaking 并增大包体积？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

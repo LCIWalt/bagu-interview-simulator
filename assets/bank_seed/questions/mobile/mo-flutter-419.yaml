@@ -1,0 +1,26 @@
+id: mo-flutter-419
+title: "StreamController 的四个生命周期回调分别该做什么？"
+topics: [dart, stream, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "onListen 在第一个监听者订阅时触发，适合按需启动数据源；onPause 与 onResume 跟随订阅者暂停恢复，可用来节流生产；onCancel 在最后一个监听者取消时触发，负责释放定时器、端口等资源。四者成对使用，才能让控制器的生命周期与消费者一致。"
+  keyPoints:
+    - "onListen 在首个监听者订阅时触发，用于懒启动"
+    - "onPause 与 onResume 反映背压，可暂停上游生产"
+    - "onCancel 在最后一个订阅取消时触发，做资源回收"
+    - "close 会让监听者收到 onDone，但不替代 onCancel 的清理职责"
+  pitfalls:
+    - "在 onListen 里重复启动定时器，热重载后出现多份数据源"
+    - "把资源释放只写在 onCancel，忽略 close 路径导致泄漏"
+followups:
+  - "单订阅控制器在监听者取消后还能再次 listen 吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

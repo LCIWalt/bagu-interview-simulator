@@ -1,0 +1,26 @@
+id: mo-flutter-476
+title: "SpringDescription.withDampingRatio 的 ratio 取 1 意味着什么？"
+topics: [flutter, animation, physics]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "withDampingRatio 用阻尼比描述弹簧，内部按质量与刚度换算出 damping。ratio 等于 1 是临界阻尼，系统最快回到目标且不过冲；小于 1 会来回振荡，大于 1 则变慢且没有回弹。"
+  keyPoints:
+    - "ratio 是无量纲阻尼比，damping 由 ratio 乘 2 乘根号下 mass 乘 stiffness 得到"
+    - "ratio 等于 1 时正好临界阻尼，收敛最快且没有过冲"
+    - "ratio 小于 1 为欠阻尼，值越小振荡越明显"
+    - "ratio 大于 1 为过阻尼，单调靠近目标但耗时更长"
+  pitfalls:
+    - "把 ratio 当成阻尼绝对值，换了 mass 之后手感完全不同"
+    - "想要回弹却把 ratio 设到 1 以上，怎么调都不过冲"
+  followups:
+    - "iOS 风格的回弹通常取多大的 ratio？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

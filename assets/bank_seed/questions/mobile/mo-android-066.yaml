@@ -1,0 +1,27 @@
+id: mo-android-066
+title: "Android: Bitmap 内存占用与采样复用"
+topics: [android, bitmap, memory]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Bitmap 的像素数据存放在 native 堆，内存约为宽乘高乘每像素字节数，ARGB_8888 每像素 4 字节。加载大图应先只读尺寸、按目标大小计算 inSampleSize，再考虑像素格式与 inBitmap 复用，避免峰值内存超出堆上限。"
+  keyPoints:
+    - "先用 inJustDecodeBounds 只解析尺寸，再按目标宽高计算 2 的幂次 inSampleSize"
+    - "ARGB_8888 每像素 4 字节，RGB_565 减半但丢失透明度并降低色深"
+    - "inBitmap 复用已释放的像素内存，要求尺寸与格式兼容并注意版本差异"
+    - "解码与缩放放在子线程，主线程只做最终绑定与显示"
+  pitfalls:
+    - "直接解码原图再缩放，峰值内存远超最终需要"
+    - "以为调用 recycle 就立即释放，忽略仍有绘制或缓存持有该 Bitmap"
+followups:
+  - "为什么 inSampleSize 通常取 2 的幂次而不是精确比例？"
+  - "Bitmap 内存从 Java 堆迁移到 native 堆后，OOM 的判定发生了什么变化？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

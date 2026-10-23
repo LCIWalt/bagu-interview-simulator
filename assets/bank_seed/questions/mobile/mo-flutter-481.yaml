@@ -1,0 +1,26 @@
+id: mo-flutter-481
+title: "PointerRouter 的按指针路由与全局路由有什么区别？"
+topics: [flutter, gestures, pointer]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "PointerRouter 维护指针事件的路由表，recognizer 拿到 pointer 后按 id 注册回调，只接收该指针的后续事件。全局路由则收到所有指针事件，适合做全局监听，但要注意回调期间不要改动路由表。"
+  keyPoints:
+    - "addRoute 以 pointer 为键注册，addGlobalRoute 对所有指针生效"
+    - "route 按事件里的 pointer 找到对应回调并派发，命中测试路径之外也要经过它"
+    - "recognizer 通常在 addAllowedPointer 时注册，在结束或 dispose 时移除"
+    - "回调执行期间修改路由表会触发并发修改错误，需要延后处理"
+  pitfalls:
+    - "在路由回调里直接 addRoute 或 removeRoute，遍历时崩溃"
+    - "注册了路由却在手势结束后不清理，长时间使用后路由表膨胀"
+  followups:
+    - "PointerRouter 与 GestureArenaManager 的职责如何分工？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

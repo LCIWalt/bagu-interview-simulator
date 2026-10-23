@@ -1,0 +1,27 @@
+id: mo-android-086
+title: "Android: HTTP 连接复用与 DNS 优化"
+topics: [android, network, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "移动网络下 TCP 与 TLS 握手往往比传输本身更贵，OkHttp 的连接池和 HTTP/2 多路复用可以显著减少重复握手。DNS 解析慢或失败会直接拉长首包时间，需要预解析、缓存和失败重试配合。"
+  keyPoints:
+    - "连接池按 host 复用连接，keep-alive 时长与最大空闲连接数要匹配并发"
+    - "HTTP/2 在同一条连接上多路复用，减少握手但受流控与队头阻塞影响"
+    - "DNS 预解析、HttpDns 与失败重试要处理 TTL 和调度成本"
+    - "用 OkHttp EventListener 打点 connect、TLS、TTFB，按阶段定位耗时"
+  pitfalls:
+    - "每个请求 new 一个 OkHttpClient，连接池和线程池全部失效"
+    - "盲目开启 HTTP/2 或压缩，忽略服务端和中间代理是否支持"
+followups:
+  - "OkHttp 连接池的清理与复用策略是怎样的？"
+  - "HTTP/2 下为什么仍可能出现队头阻塞？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

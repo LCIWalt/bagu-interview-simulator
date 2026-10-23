@@ -1,0 +1,27 @@
+id: mo-flutter-572
+title: "integration_test 如何隔离后端，避免依赖真实服务？"
+topics: [flutter, testing, integration-test]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "真机集成测试直接连真实后端会不稳定，还会污染数据。应该通过启动参数切换 baseUrl，或注入 fake 网络层，让测试跑在本地 mock server 上。系统权限弹窗可用 adb 或 simctl 预授权，避免测试被弹窗阻塞。"
+  keyPoints:
+    - "通过 dart-define 或启动参数把 baseUrl 指向测试服务"
+    - "测试内启动本地 mock server 或注入 fake client，控制响应"
+    - "使用固定测试账号与清理钩子，保证用例可重复"
+    - "系统权限用 adb/simctl 预授权，减少弹窗干扰"
+  pitfalls:
+    - "集成测试直接打预发或生产库，造成脏数据"
+    - "用固定 sleep 等待网络，应该等待 UI 条件而非时间"
+followups:
+  - "mock server 如何处理流式响应与超时场景？"
+  - "多设备并行时，测试数据如何避免互相干扰？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

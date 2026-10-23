@@ -1,0 +1,27 @@
+id: mo-flutter-537
+title: "懒加载的单例在什么时候初始化，失败了怎么重试？"
+topics: [flutter, dependency-injection, lifecycle]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "懒加载把初始化推迟到首次读取，但 Dart 的 late final 只保证赋值一次，初始化抛错后变量仍处于未初始化状态，后续访问会抛 LateInitializationError。异步依赖更稳妥的做法是缓存 Future，失败时清空缓存以便重试，并把并发首次访问合并成同一个 Future。触发点应可预测，避免落在首帧关键路径上。"
+  keyPoints:
+    - "同步依赖可用 late final，但要接受初始化失败后无法自动重试的语义"
+    - "异步依赖缓存 Future，失败时清空缓存并暴露可重试的错误状态"
+    - "并发首次访问要合并为同一个 Future，避免重复初始化与竞态"
+    - "重初始化不要放在首帧关键路径，必要时延后到首帧之后或首次使用时"
+  pitfalls:
+    - "初始化异常没有捕获，UI 永久停在 loading 且无重试入口"
+    - "两个页面同时首次访问，触发两次初始化并互相覆盖状态"
+followups:
+  - "late 变量在初始化抛错后再次读取会发生什么？"
+  - "依赖初始化失败时，应该阻塞整个应用启动还是降级部分功能？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

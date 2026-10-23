@@ -1,0 +1,26 @@
+id: mo-flutter-426
+title: "compute 在 Web 上并不会新开线程，代码要为此注意什么？"
+topics: [flutter, isolate, web]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Web 平台没有 dart:isolate 的真正并发，compute 会退化为在当前 isolate 上调用回调，重计算依旧阻塞 UI。因此不能把 compute 当作 Web 端的性能优化，CPU 密集任务要改成增量计算、Web Worker 或放到服务端。"
+  keyPoints:
+    - "Web 上 compute 不创建新 isolate，回调仍在主线程执行"
+    - "阻塞主线程的重计算在 Web 上仍会卡住渲染"
+    - "依赖 isolate 端口或共享状态的代码在 Web 上不可用"
+    - "跨平台库应把 compute 当可选优化而非正确性依赖"
+  pitfalls:
+    - "用 compute 包住大计算后在 Web 上仍掉帧，却查不到原因"
+    - "在 compute 回调里访问插件或平台通道，在多个平台都可能失败"
+followups:
+  - "Flutter Web 上还有哪些 dart:isolate API 不可用？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "Flutter 客户端面试：线程模型与性能优化"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

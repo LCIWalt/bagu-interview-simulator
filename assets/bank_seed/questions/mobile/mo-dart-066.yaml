@@ -1,0 +1,27 @@
+id: mo-dart-066
+title: "Stream.eventTransformed 与 EventSink 的转发顺序"
+topics: [dart, stream, async]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Stream.eventTransformed 用 EventSink 适配旧式转换器，每个订阅都会创建独立的 sink 实例。实现必须把 add、addError、close 按原顺序转发给下游，addStream 未完成前不能插入其他事件。错误若被吞掉，下游会误以为流一直正常。"
+  keyPoints:
+    - "eventTransformed 为每个订阅创建独立 sink 实例"
+    - "sink 需要转发 add、addError 与 close 三类调用"
+    - "addStream 未完成前调用 add 会抛 StateError"
+    - "close 要在挂起事件排空后再关闭下游"
+  pitfalls:
+    - "在 sink 中忽略 addError，导致上游错误静默丢失"
+    - "忘记转发 close，下游永远收不到 onDone"
+followups:
+  - "StreamTransformer.fromHandlers 与 eventTransformed 如何取舍？"
+  - "转换器中如何实现有状态的去重？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

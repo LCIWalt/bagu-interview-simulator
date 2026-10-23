@@ -1,0 +1,27 @@
+id: mo-android-084
+title: "Android: StrictMode 的检测项与上线策略"
+topics: [android, performance, debugging]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "StrictMode 能在主线程发生磁盘读写、网络访问或资源未关闭时给出报告，是发现隐性 IO 的低成本手段。常见做法是 debug 包用 penaltyDeath 尽早暴露，release 包只记录并聚合上报，避免把检测变成新的崩溃源。"
+  keyPoints:
+    - "ThreadPolicy 覆盖 diskRead/diskWrite/network 与自定义 slow call"
+    - "VmPolicy 检测 SQLite、Closeable 与 Activity 实例泄漏"
+    - "debug 用 penaltyDeath 快速暴露，release 用 penaltyLog 加自建上报"
+    - "结合 dropBox 或自定义 report 聚合堆栈，按版本观察趋势"
+  pitfalls:
+    - "线上直接开启 penaltyDeath，检测到问题就崩溃，拉高崩溃率"
+    - "把 StrictMode 报告当噪音，忽略被 try/catch 掩盖的主线程 IO"
+followups:
+  - "StrictMode 能检测哪些类型的资源泄漏？"
+  - "为什么有些主线程 IO 不会被 StrictMode 报告？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

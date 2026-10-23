@@ -1,0 +1,27 @@
+id: mo-flutter-550
+title: "崩溃上报的 breadcrumb 如何避免带出用户隐私？"
+topics: [flutter, monitoring, privacy]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "breadcrumb 与自定义键值最容易把手机号、token、页面参数原样带进第三方 SDK。过滤应该统一在进入 SDK 之前完成，而不是让每个调用点各自记住脱敏。还应关闭自动采集的请求体与完整 URL，用户标识使用内部 id。"
+  keyPoints:
+    - "在 SDK 入口统一做 redact，调用点不再各自处理"
+    - "URL 去掉 query 或对敏感参数打码，禁止上报请求与响应 body"
+    - "用户标识用内部 id 或哈希，不用手机号、邮箱与身份证"
+    - "异常 message 与堆栈同样要过滤，防止拼接了用户输入"
+  pitfalls:
+    - "只脱敏日志正文，忘了 breadcrumb 与 custom keys 两条通道"
+    - "把异常 message 直接拼进用户输入，随崩溃一起上报"
+followups:
+  - "如何验证脱敏规则覆盖了所有上报通道？"
+  - "崩溃 SDK 的自动采集项应该默认关闭哪些？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

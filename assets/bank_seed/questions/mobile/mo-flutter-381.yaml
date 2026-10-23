@@ -1,0 +1,26 @@
+id: mo-flutter-381
+title: "Widget、Element、RenderObject 三棵树各自负责什么？"
+topics: [flutter, framework, rendering]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Widget 是不可变的配置描述，Element 是可变的树节点，负责生命周期、依赖与复用，RenderObject 负责布局、绘制和命中测试。更新时新 Widget 驱动 Element 复用或重建，RenderObjectElement 再把配置写入 RenderObject。"
+  keyPoints:
+    - "Widget 只是配置，重建成本低，可以频繁创建"
+    - "Element 持有 State 与依赖关系，是复用和生命周期的载体"
+    - "RenderObject 承担约束计算、布局、绘制与命中测试"
+    - "只有 RenderObjectElement 会创建 RenderObject，组合节点不会"
+  pitfalls:
+    - "把 BuildContext 当成 Widget 缓存，跨帧比较得到错误结论"
+    - "以为每个 Widget 都有对应 RenderObject，组合 Widget 并不创建"
+followups:
+  - "为什么说 Element 树才是框架真正稳定的骨架？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

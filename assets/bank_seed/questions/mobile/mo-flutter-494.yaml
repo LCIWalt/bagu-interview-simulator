@@ -1,0 +1,26 @@
+id: mo-flutter-494
+title: "Hero 的 transitionOnUserGestures 打开后会发生什么？"
+topics: [flutter, animation, navigation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "默认 Hero 只在路由 push 与 pop 的转场里飞行；打开 transitionOnUserGestures 后，iOS 的侧滑返回手势进行中也会启动 Hero 飞行。手势取消时飞行要回退到起始位置，因此两端的 tag 与尺寸必须始终可用。"
+  keyPoints:
+    - "该属性默认为 false，只在编程式转场中飞行"
+    - "开启后，用户手势驱动的返回也会触发 Hero 过渡"
+    - "手势取消时飞行需要反向回到起点，不能只处理完成态"
+    - "依赖 Cupertino 风格的返回手势与 HeroController 的协作"
+  pitfalls:
+    - "在手势中途销毁目标页，飞行找不到落点直接跳变"
+    - "同一路由里多个 Hero 共用 tag，手势转场时行为不确定"
+  followups:
+    - "手势取消时 Hero 的飞行是如何反向收尾的？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

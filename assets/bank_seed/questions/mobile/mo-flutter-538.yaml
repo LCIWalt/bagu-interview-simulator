@@ -1,0 +1,27 @@
+id: mo-flutter-538
+title: "包体积预算怎么在 CI 上做成门禁？"
+topics: [flutter, ci, release]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "体积门禁的第一步是固定测量口径：release 构建、按 ABI 拆分、明确是否包含调试符号，否则数字没有可比性。然后在 CI 中对比基线与本次产物，用绝对值和百分比双阈值触发告警，并保留产物以便定位增长来源。门禁应该先观察一段时间再转为阻断，避免正常波动误杀。"
+  keyPoints:
+    - "固定构建命令、flavor 与产物口径，保证每次测量可比"
+    - "同时记录总体积与分项，包括资源、字体、so 与 Dart AOT 产物"
+    - "阈值用绝对值加百分比双条件，并区分告警与阻断"
+    - "上传产物与体积报告，便于对比定位是哪次提交引入增长"
+  pitfalls:
+    - "在 debug 构建上量体积，数字与用户实际下载量完全无关"
+    - "只比较 APK 而忽略 AAB 按设备拆分后的实际下载体积"
+followups:
+  - "如何定位是哪个资源或依赖导致体积增长？"
+  - "体积预算应该按页面还是按整个应用来定？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

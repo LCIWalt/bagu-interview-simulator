@@ -1,0 +1,26 @@
+id: mo-dart-044
+title: "Iterable 与 Iterator：一次性遍历与重新迭代"
+topics: [dart, iterable, iterator]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Iterable 是对元素序列的描述，每次调用 iterator 都产生新的游标，因此可以反复遍历；Iterator 是有状态的前进游标，moveNext 走完就返回 false 且不会自动复位。把 Iterator 当集合缓存下来复用，第二次只能拿到空结果。"
+  keyPoints:
+    - "Iterable 可多次调用 iterator()，每次得到独立游标"
+    - "Iterator 有状态，遍历结束后不会复位"
+    - "first、length、toList 等终端操作会各自触发一次遍历"
+    - "map、where 等惰性操作返回新 Iterable，不立即计算"
+  pitfalls:
+    - "把同一个 iterator 交给多个消费者，第二次读到空序列"
+    - "对惰性 Iterable 反复做 length 与遍历，重复计算"
+  followups:
+    - "单订阅 Stream 与 Iterable 在可重复消费上的差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

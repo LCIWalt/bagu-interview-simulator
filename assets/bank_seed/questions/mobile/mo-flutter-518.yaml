@@ -1,0 +1,27 @@
+id: mo-flutter-518
+title: "用户勾选“不再询问”后，Android 权限流程该怎么收尾？"
+topics: [flutter, permissions, android]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 上连续拒绝后系统不再弹窗，requestPermissions 会立刻返回 denied，此时必须引导用户去设置页手动开启，并解释原因。用 shouldShowRequestPermissionRationale 区分首次拒绝与永久拒绝并不可靠，还要结合自己记录的“是否请求过”。"
+  keyPoints:
+    - "shouldShowRequestPermissionRationale 为 false 且未授权，可能是首次也可能是永久拒绝"
+    - "记录是否已请求过，才能区分首次与永久拒绝"
+    - "永久拒绝时跳应用设置页，返回后重新检查权限而不是假设已授权"
+    - "设置页返回用 ActivityResult 或生命周期回调触发复查"
+  pitfalls:
+    - "永久拒绝后仍反复 requestPermissions，用户毫无反馈"
+    - "跳设置页后不复查状态，UI 与真实权限不一致"
+followups:
+  - "Android 11 的一次性权限在应用退后台后会自动撤销吗？"
+  - "如何为权限流程写可测试的状态机？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-525
+title: "桌面端多显示器与不同缩放比例，窗口尺寸该怎么算？"
+topics: [flutter, desktop, windowing]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "桌面窗口的位置与大小在不同显示器、不同 DPI 下含义不同，物理像素、逻辑像素与缩放因子需要互相换算，跨屏拖动时 DPI 还会变化。保存窗口状态要同时记录显示器标识与缩放后的逻辑尺寸，恢复时校验是否仍在可见区域。"
+  keyPoints:
+    - "Flutter 的 logicalSize 受 devicePixelRatio 影响，跨屏拖动时可能变化"
+    - "窗口位置用屏幕坐标保存，恢复前要检查目标显示器是否仍存在"
+    - "多屏 DPI 不同会让同一逻辑尺寸对应不同物理像素，像素断言要小心"
+    - "显示器热插拔要监听并重新约束窗口，避免窗口落在屏幕外"
+  pitfalls:
+    - "只保存物理像素尺寸，换到高 DPI 屏后窗口巨大或极小"
+    - "恢复位置时不做可见性校验，窗口出现在已拔掉的显示器上"
+followups:
+  - "如何监听显示器数量与缩放变化？"
+  - "多窗口应用如何为每个窗口分别持久化状态？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

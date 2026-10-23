@@ -1,0 +1,27 @@
+id: mo-flutter-545
+title: "如何发现漏翻与占位符不一致，并卡在 CI 里？"
+topics: [flutter, i18n, ci]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "gen-l10n 只保证模板能生成代码，缺失的翻译会静默回退到默认语言，用户看到中英混杂才发现。需要在 CI 中对比各语言 ARB 与模板的 key 集合、placeholder 名称与类型，并检查空值与未使用 key。允许显式标记待翻译，而不是静默缺失。"
+  keyPoints:
+    - "对比所有 ARB 与模板的 key 集合，缺失即失败"
+    - "校验同名 placeholder 在各语言中的名称与类型一致"
+    - "检测空字符串、仅空白与未使用的 key，避免死文案堆积"
+    - "待翻译项用显式标记并带 issue 链接，而不是留空"
+  pitfalls:
+    - "依赖运行时回退，直到用户截图才发现漏翻"
+    - "合并冲突后丢 key，代码仍能编译但界面显示默认语言"
+followups:
+  - "如何在 PR 阶段只检查被改动的 ARB 文件？"
+  - "翻译文案长度变化导致的布局问题，能在 CI 里提前发现吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

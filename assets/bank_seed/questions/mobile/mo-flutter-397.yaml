@@ -1,0 +1,26 @@
+id: mo-flutter-397
+title: "命名路由 onGenerateRoute 与 onUnknownRoute 的职责如何划分？"
+topics: [flutter, navigator, routing]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "onGenerateRoute 按 RouteSettings 为命名路由构造页面，适合集中处理参数解析与页面组装；onUnknownRoute 只在 onGenerateRoute 返回 null 时兜底，通常指向错误页。若 onGenerateRoute 直接抛错，onUnknownRoute 不会接管。"
+  keyPoints:
+    - "pushNamed 先查 routes 表，再调用 onGenerateRoute"
+    - "onGenerateRoute 返回 null 表示未匹配，交给 onUnknownRoute"
+    - "arguments 需要自行解析与校验，框架不做类型检查"
+    - "onUnknownRoute 必须返回有效路由，否则导航断言失败"
+  pitfalls:
+    - "在 onGenerateRoute 里对未知名称抛异常，兜底页永远不生效"
+    - "直接把 arguments 强转成目标类型，深链传参缺失时崩溃"
+followups:
+  - "声明式路由与命名路由混用时要注意什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

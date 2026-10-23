@@ -1,0 +1,27 @@
+id: mo-flutter-558
+title: "怎么保证测试环境的配置不会被打进生产包？"
+topics: [flutter, flavors, ci]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "靠人记住切换 flavor 并不可靠，配置错误往往在发布后才被发现。做法是把环境配置从编译参数注入，在 CI 中对 release 产物断言域名、开关与日志级别，并让应用在启动时校验自身配置。敏感配置不进版本库，代码中不保留指向测试环境的默认值。"
+  keyPoints:
+    - "环境配置通过 --dart-define 注入，不在代码里留默认测试值"
+    - "CI 在 release 构建后断言 baseUrl、开关与日志级别"
+    - "敏感配置由 CI secret 提供，不写入仓库"
+    - "应用启动时校验配置，命中测试环境直接失败或告警"
+  pitfalls:
+    - "代码里把 baseUrl 默认成测试域名，忘了切就上线"
+    - "用 debug 开关控制生产行为，release 下行为不一致"
+followups:
+  - "如何在不重新发版的情况下修正配置错误？"
+  - "配置校验失败时应该崩溃还是降级到安全模式？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

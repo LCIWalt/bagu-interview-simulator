@@ -1,0 +1,26 @@
+id: mo-flutter-428
+title: "一次发出上百个请求，如何限制并发数？"
+topics: [dart, async, concurrency]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "用信号量或 package:pool 的 Pool 控制同时运行的任务数，任务完成后释放配额再启动下一个，不要用 Future.wait 一次性全部发起。还需要为每个任务单独处理错误，避免一个失败让整批结果作废。"
+  keyPoints:
+    - "Pool(limit).withResource 自动占用与释放配额"
+    - "也可用 Completer 队列手写信号量"
+    - "并发上限要结合连接池与服务端限流一起定"
+    - "每个任务内部 catch，汇总时区分成功与失败"
+  pitfalls:
+    - "用 Future.wait 直接发几百个请求，触发连接数上限或风控"
+    - "任务抛错后没有释放信号量，后续任务永久等待"
+followups:
+  - "并发限制与请求重试应该如何配合？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-409
+title: "Provider 的 watch、read、select 分别在什么场景使用？"
+topics: [flutter, provider, state]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "watch 建立依赖，值变化时重建当前 Widget；read 只取一次，不订阅，适合回调和事件处理；select 只订阅选择函数返回的那一部分，返回值相等时跳过重建。build 中读取会变化的数据用 watch 或 select，事件回调里用 read。"
+  keyPoints:
+    - "context.watch<T>() 等价于 listen:true，会随值变化重建"
+    - "context.read<T>() 不注册依赖，不能在 build 中替代 watch"
+    - "context.select<T, R>() 只在 R 变化时重建，比较使用 =="
+    - "选择函数应是纯函数，返回稳定且粒度足够小的值"
+  pitfalls:
+    - "在 initState 中调用 watch，依赖注册时机不允许"
+    - "select 每次返回新列表或新对象，等于退化成 watch"
+followups:
+  - "select 的选择函数为什么要保持纯函数？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

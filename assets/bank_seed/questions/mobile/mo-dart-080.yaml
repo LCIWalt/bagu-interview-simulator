@@ -1,0 +1,27 @@
+id: mo-dart-080
+title: "Stream 背压：消费过慢时丢弃还是缓冲"
+topics: [dart, stream, backpressure]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart Stream 默认通过 pause 与 resume 把消费速度传回上游，尊重背压的源在暂停期间应停止产出。传感器、网络包等不可暂停的源则需要显式丢弃或采样，否则缓冲会无界增长。背压策略应在设计流时确定，并记录丢弃计数以便观测。"
+  keyPoints:
+    - "pause 与 resume 是 Stream 的背压信号"
+    - "尊重背压的上游在暂停期间停止产出"
+    - "不可暂停的源需要显式丢弃、采样或限流"
+    - "缓冲区应有上限，并暴露丢弃计数"
+  pitfalls:
+    - "用无界缓冲掩盖消费过慢的问题"
+    - "以为 await for 会自动丢弃处理不过来的事件"
+followups:
+  - "如何实现一个只保留最新值的流？"
+  - "背压丢失时如何从监控上发现？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

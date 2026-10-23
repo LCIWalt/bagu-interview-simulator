@@ -1,0 +1,26 @@
+id: mo-flutter-469
+title: "setImageSampler 的索引与采样坐标要注意什么？"
+topics: [flutter, shader, image]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "sampler 在 shader 里按声明顺序单独编号，用 setImageSampler 绑定一个已解码的 ui.Image，与浮点 uniform 的编号互不影响。采样使用归一化坐标，纹理的过滤与重复方式由 shader 里的声明和图片本身决定。"
+  keyPoints:
+    - "sampler2D 的索引按声明顺序从 0 开始，和 uniform 浮点槽位是两套编号"
+    - "绑定的必须是已完成解码的 ui.Image，已 dispose 的图片会报错"
+    - "采样坐标是 0 到 1 的归一化值，需要按图片尺寸换算像素坐标"
+    - "图像内容变化时要重新 setImageSampler，只改 uniform 不会更新纹理"
+  pitfalls:
+    - "把 sampler 索引当成 uniform 索引传，采样到错误纹理甚至越界"
+    - "在 shader 里用像素坐标直接采样，图片被裁切或平铺"
+  followups:
+    - "同一张图片绑定到多个 sampler 会带来额外开销吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

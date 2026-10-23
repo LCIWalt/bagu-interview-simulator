@@ -1,0 +1,27 @@
+id: mo-flutter-533
+title: "在 iOS 后台线程直接调用 FlutterMethodChannel 会怎样？"
+topics: [flutter, platform-channel, threading]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "FlutterMethodChannel 的发送必须发生在平台线程，iOS 上就是主线程，在后台队列直接 invokeMethod 会触发断言或行为未定义；常见于网络、数据库回调里直接回传结果。应切回主线程再发送，或使用插件提供的线程安全封装。"
+  keyPoints:
+    - "通道消息的发送端必须与引擎的平台线程一致，iOS 上是主线程"
+    - "后台回调先 dispatch 到 main queue，再调用 channel 方法"
+    - "Dart 侧收到消息总在 UI isolate，原生线程模型对 Dart 不可见"
+    - "耗时逻辑留在后台线程，只把结果切回主线程发送"
+  pitfalls:
+    - "在 URLSession 完成回调里直接 invokeMethod，偶发崩溃难以复现"
+    - "为了线程安全给整个 handler 加锁，反而把主线程拖慢"
+followups:
+  - "Android 上是否也存在同样的线程约束？"
+  - "如何封装一个线程安全的通道发送工具？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

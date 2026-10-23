@@ -1,0 +1,27 @@
+id: mo-android-085
+title: "Android: R8 资源压缩与 shrinkResources 误删"
+topics: [android, r8, build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "shrinkResources 依赖 R8 的引用分析删除未被引用的资源，必须与 minifyEnabled 同时开启才生效。通过 getIdentifier、字符串拼接或反射使用的资源不会被静态分析识别，需要 keep.xml 或 tools:keep 显式保留。"
+  keyPoints:
+    - "shrinkResources 只有和 minifyEnabled 一起开启才会真正执行"
+    - "动态资源名（getIdentifier、拼接字符串）必须显式 keep"
+    - "res/raw/keep.xml 支持 tools:keep 与 shrinkMode 精细控制"
+    - "查看资源压缩报告，核对被删除清单是否符合预期"
+  pitfalls:
+    - "只开 minify 不开 shrinkResources，以为资源也一起被压缩了"
+    - "用全量 keep 规则保底，等于把资源压缩关掉"
+followups:
+  - "getIdentifier 为什么会导致资源被误删？"
+  - "如何在 CI 中验证资源压缩没有误删？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

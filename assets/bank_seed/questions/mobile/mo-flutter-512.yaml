@@ -1,0 +1,27 @@
+id: mo-flutter-512
+title: "复用缓存的 FlutterEngine 后，initialRoute 为什么不起作用？"
+topics: [flutter, add-to-app, navigation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "initialRoute 只在引擎首次执行 Dart 入口时生效，缓存引擎已经跑过 main，后续 attach 的页面会直接沿用当前导航栈。要进入指定页面，应在 attach 后用 pushRoute 或让 Dart 侧暴露一个路由方法；同时注意多个宿主页面共享同一栈会互相影响。"
+  keyPoints:
+    - "initialRoute 是引擎启动参数，引擎已运行时设置不会重新走路由"
+    - "缓存引擎的导航栈在宿主页面间共享，attach 前要决定是否清栈"
+    - "用 pushRoute、pushRouteInformation 或自定义通道让 Dart 侧跳转更可控"
+    - "需要独立栈时考虑新引擎或 FlutterEngineGroup，而不是复用"
+  pitfalls:
+    - "以为传入不同 initialRoute 就能开多个互不影响的页面"
+    - "在引擎未 attach 时 pushRoute，路由信息被丢弃或延后处理"
+followups:
+  - "如何让缓存引擎在每次 attach 时回到首页？"
+  - "iOS 上 FlutterViewController 与缓存引擎的 attach 顺序是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

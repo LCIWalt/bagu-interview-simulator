@@ -1,0 +1,27 @@
+id: mo-dart-076
+title: "ZoneSpecification 拦截 Timer 与 microtask"
+topics: [dart, zone, timer]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ZoneSpecification 可以拦截 scheduleMicrotask、createTimer、print 与 handleUncaughtError 等回调，用来统一做日志、耗时统计和错误上报。自定义实现必须委托给父 Zone，否则异步任务根本不会执行。它适合框架层埋点，不应在业务代码中大量叠加。"
+  keyPoints:
+    - "可拦截 microtask、Timer、print 与未捕获错误"
+    - "自定义实现中必须调用父 Zone 的对应方法"
+    - "fork 出的子 Zone 共享同一套 specification"
+    - "拦截会给每次调度增加开销，热路径需评估"
+  pitfalls:
+    - "拦截 createTimer 后忘记委托，定时器全部失效"
+    - "在 handleUncaughtError 中再次抛错，造成递归"
+followups:
+  - "runZonedGuarded 与自定义 handleUncaughtError 如何配合？"
+  - "如何用 Zone 统计异步任务耗时？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

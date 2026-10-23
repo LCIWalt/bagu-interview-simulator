@@ -1,0 +1,27 @@
+id: mo-flutter-530
+title: "插件实现 ActivityAware，attach 与 detach 时该做什么？"
+topics: [flutter, plugins, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ActivityAware 让插件拿到 Activity 与 ActivityPluginBinding，用于注册权限、ActivityResult 与生命周期回调；必须在 onDetachedFromActivity 里反注册，否则 Activity 销毁后回调仍指向旧实例。配置变更会触发 detach 与 reattach，插件要能重复进入而不重复注册。"
+  keyPoints:
+    - "onAttachedToActivity 里保存 binding 并注册 ActivityResultListener"
+    - "onDetachedFromActivityForConfigChanges 与 onDetachedFromActivity 要区分处理"
+    - "所有 listener、receiver、handler 在 detach 时反注册，避免泄漏"
+    - "attach 可能多次发生，注册逻辑要幂等"
+  pitfalls:
+    - "把 Activity 存成强引用字段，旋转后泄漏旧 Activity"
+    - "在 attach 里重复 addListener，回调被触发多次"
+followups:
+  - "ActivityAware 与 FlutterPlugin 的 onAttachedToEngine 顺序关系？"
+  - "没有 Activity 时（如后台引擎）权限请求该怎么处理？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

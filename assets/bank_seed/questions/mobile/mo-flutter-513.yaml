@@ -1,0 +1,27 @@
+id: mo-flutter-513
+title: "iOS 上预热 FlutterEngine，插件注册应该放在什么时机？"
+topics: [flutter, add-to-app, ios]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "预热引擎要在 run 之前完成插件注册，否则首次打开页面时通道不存在；注册通过 GeneratedPluginRegistrant 完成，重复注册会让插件被多次挂载。预热还会拉长启动阶段的驻留内存，需要权衡首屏速度与后台占用。"
+  keyPoints:
+    - "FlutterEngine.run 之前调用 GeneratedPluginRegistrant.register(with: engine)"
+    - "同一引擎重复注册插件会导致监听器重复挂载，注册逻辑要幂等"
+    - "预热引擎常驻内存，低内存设备上要考虑按需释放"
+    - "引擎与 FlutterViewController 解耦后，谁创建谁负责 destroy"
+  pitfalls:
+    - "在 viewDidLoad 里才注册插件，首次调用通道时 MissingPluginException"
+    - "预热多个引擎却不复用，内存翻倍且启动收益有限"
+followups:
+  - "如何验证插件在引擎上确实注册成功？"
+  - "iOS 收到内存警告时该不该销毁预热引擎？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

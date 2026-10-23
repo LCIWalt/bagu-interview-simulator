@@ -1,0 +1,26 @@
+id: mo-dart-045
+title: "可变对象作为 Map key 的哈希失效"
+topics: [dart, equality, collections]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "HashMap 先用 hashCode 定位桶、再用 == 确认，key 的哈希值必须在整个生命周期内稳定。可变对象作为 key 后修改字段，哈希值跟着变化，条目留在旧桶里再也找不到，也无法 remove，形成逻辑上的内存泄漏。"
+  keyPoints:
+    - "查找依赖 hashCode 定位加 == 确认，两者必须保持一致"
+    - "key 的字段可变会导致哈希变化，原条目变成不可达"
+    - "String、int 等不可变类型适合做 key，自定义类应设计为不可变"
+    - "确实需要可变 key 时改用 identity 语义，或保存稳定的 id"
+  pitfalls:
+    - "用实体对象当 key，更新字段后 remove 与 containsKey 全部失败"
+    - "只重写 == 不重写 hashCode，相等对象散落在不同桶"
+  followups:
+    - "IdentityHashMap 与普通 HashMap 的适用场景差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-380
+title: "Element 的 activate 与 deactivate 分别在什么场景触发？"
+topics: [flutter, element, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "deactivate 在 Element 从树中暂时移除时调用，此时 State 与子节点仍在，只是进入非活动状态；activate 在它被重新挂回树时调用，恢复依赖并标记重建。GlobalKey 驱动的跨父级移动正是走 deactivate 再 activate 的路径。"
+  keyPoints:
+    - "deactivate 会移除依赖、从父级摘除并进入 BuildOwner 的非活动列表"
+    - "activate 重新绑定父级、恢复继承映射并调用 markNeedsBuild"
+    - "StatefulElement 会同步调用 State.deactivate 与 State.activate"
+    - "只有最终没有被重新插入的 Element 才会进入 unmount 并 dispose"
+  pitfalls:
+    - "在 deactivate 里释放昂贵资源，GlobalKey 复用时又得重新创建"
+    - "以为 deactivate 后 State 已销毁，继续访问 context 或发起重建"
+followups:
+  - "GlobalKey 重挂载时框架如何决定复用旧 Element？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-490
+title: "如何在运行时用 FontLoader 加载字体并避免首帧闪动？"
+topics: [flutter, fonts, assets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "FontLoader 把字体字节注册进引擎，让运行期下载的字体也能参与排版。它没有字体族名参数，族名来自字体文件内部，所以 TextStyle.fontFamily 必须与字体自带的名字一致，否则会静默回退到系统字体。"
+  keyPoints:
+    - "addFont 接收 Future<ByteData>，可以多次添加同一族的不同字重"
+    - "load 返回的 future 完成后字体才可用于排版，runApp 前 await 能避免首帧闪动"
+    - "字体族名取自文件内部，TextStyle.fontFamily 必须与之匹配"
+    - "加载失败不会中断启动，文本会静默使用回退字体"
+  pitfalls:
+    - "在 build 里发起加载却不等待，首帧仍是系统字体"
+    - "把字重当成独立族名，注册后粗体仍然回退"
+  followups:
+    - "字体文件缺失字形时，如何确认最终用了哪个回退字体？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

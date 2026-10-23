@@ -1,0 +1,26 @@
+id: mo-dart-043
+title: "SplayTreeMap 与 LinkedHashMap：有序映射的选择"
+topics: [dart, collections, data-structures]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "默认的 Map 是 LinkedHashMap，按插入顺序迭代，查找均摊 O(1)；SplayTreeMap 按 key 排序存储，支持 firstKey、lastKey 与范围查询，单次操作均摊 O(log n)。需要稳定输出顺序选前者，需要按 key 有序检索选后者。"
+  keyPoints:
+    - "LinkedHashMap 保持插入顺序，删除后重新插入会移到末尾"
+    - "SplayTreeMap 依赖 Comparable 或构造时传入的比较器"
+    - "SplayTreeMap 提供 firstKey、lastKey 与有序 keys 视图"
+    - "HashMap 不保证迭代顺序，只在纯查找场景追求吞吐"
+  pitfalls:
+    - "把可变对象当 SplayTreeMap 的 key，修改后树结构失序"
+    - "以为默认 Map 会按 key 排序，序列化输出顺序不稳定"
+  followups:
+    - "如何让 Map 按 value 排序后再输出？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

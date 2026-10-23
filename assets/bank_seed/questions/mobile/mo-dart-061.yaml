@@ -1,0 +1,27 @@
+id: mo-dart-061
+title: "Future.any：首个完成的胜负与落败分支的错误"
+topics: [dart, async, future]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Future.any 返回第一个完成的 Future 的结果，成功或失败都算完成，其余分支继续执行且结果被忽略。落败分支若抛错，错误不会被 any 接管，可能变成 Zone 中的未捕获异常。使用时应给每个分支单独兜底，或改用 Future.wait 统一收集。"
+  keyPoints:
+    - "首个完成的分支决定 any 的结果，错误也同样胜出"
+    - "其余 Future 不会被取消，仍在后台消耗资源"
+    - "落败分支的错误需要各自 catchError 兜底"
+    - "多个分支返回类型不同时，结果类型会被放宽为共同父类"
+  pitfalls:
+    - "以为 any 返回后会取消其余请求"
+    - "忽略落败分支的未捕获错误，导致全局错误上报"
+followups:
+  - "Future.any 传入空列表会返回什么？"
+  - "竞速请求场景如何真正取消落败方？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-411
+title: "ProxyProvider 的依赖更新与重建顺序是怎样的？"
+topics: [flutter, provider, state]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "ProxyProvider 依赖上层 Provider 的值来计算并暴露派生值，上游变化时会重新执行 update，并通过 previous 传入上一次结果。它适合把多个来源组合成派生状态，但依赖链越长，重建顺序与影响范围越难追踪。"
+  keyPoints:
+    - "ProxyProvider<T, R> 的 update 接收 context、上游值和 previous"
+    - "上游 Provider 变化会触发重新计算，新结果再提供给下游"
+    - "update 返回 previous 可复用旧对象，避免下游无谓重建"
+    - "被依赖的 Provider 必须位于树上更高层，否则读取不到"
+  pitfalls:
+    - "update 每次都创建新对象，导致所有下游依赖者重建"
+    - "让两个 Provider 互相依赖，形成循环读取"
+followups:
+  - "ProxyProvider 与在 build 中直接组合两个 watch 值有何取舍？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

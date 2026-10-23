@@ -1,0 +1,27 @@
+id: mo-android-097
+title: "Android: 线上内存监控与 OOM 率"
+topics: [android, memory, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "线上内存监控不能只看平均值，要采集 Java 堆使用率、native 占用、GC 次数以及 OOM 与被杀死率，并按机型内存等级分桶看 P95/P99。采集本身要采样和聚合，避免高频读取或 dump 反而拖慢应用。"
+  keyPoints:
+    - "采集 Runtime 堆使用、Debug native heap、Activity 数量与 GC 次数"
+    - "按阶段和机型内存等级分桶，关注 P95/P99 与峰值而不是均值"
+    - "OOM 归因结合设备内存等级、前台时长与图片缓存策略"
+    - "采样聚合上报，避免频繁 dump 或大日志带来额外开销"
+  pitfalls:
+    - "只报平均内存，掩盖低内存机型上的崩溃集中问题"
+    - "直接依赖 Debug 指标，未考虑 release 下不可用或开销过大"
+followups:
+  - "如何区分 Java OOM 与 native OOM？"
+  - "线上怎样做低开销的内存水位监控？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

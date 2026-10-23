@@ -1,0 +1,26 @@
+id: mo-dart-041
+title: "构造函数：初始化列表、this 转发与 const 构造"
+topics: [dart, constructors, initialization]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "初始化列表在父类构造与构造函数体之前执行，适合给 final 字段赋值并做断言；this(...) 重定向到同类另一个构造函数，只能出现在初始化列表的位置。const 构造函数要求所有字段为 final，且实参在编译期可求值。"
+  keyPoints:
+    - "初始化列表先于父类构造和函数体执行"
+    - "final 字段必须在声明处、初始化列表或构造参数中完成赋值"
+    - "重定向构造使用 this(...)，不能再带初始化列表与函数体"
+    - "const 构造要求字段全为 final，调用处传入常量表达式"
+  pitfalls:
+    - "在初始化列表里访问 this，此时实例还未完成构造"
+    - "给重定向构造函数再写函数体，语法上直接不允许"
+  followups:
+    - "factory 构造函数与普通构造函数在返回对象上有什么不同？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

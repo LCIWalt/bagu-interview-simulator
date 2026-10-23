@@ -1,0 +1,26 @@
+id: mo-flutter-421
+title: "fromHandlers 里的 sink 为什么不能存起来延迟使用？"
+topics: [dart, stream]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "fromHandlers 传入的 sink 只在本次 handler 调用期间有效，存到字段里稍后 add 会把事件送到已经变化或已关闭的订阅上。转换器实例还可能被多个流、多次订阅共享，handler 里保存跨事件状态同样会串数据。"
+  keyPoints:
+    - "sink 只保证在当前 handler 调用期间可用"
+    - "省略 handler 时，数据、错误与 done 默认原样转发"
+    - "同一转换器可能被多个流共享，不能存跨事件状态"
+    - "需要每个流独立状态时用 StreamTransformer.fromBind"
+  pitfalls:
+    - "把 sink 存进字段，延迟 add 时事件跑到错误的订阅上"
+    - "在 handler 里累加共享计数器，多个监听者互相污染"
+followups:
+  - "fromBind 与 fromHandlers 的适用边界是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

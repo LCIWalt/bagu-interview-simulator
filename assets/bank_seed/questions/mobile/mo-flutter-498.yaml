@@ -1,0 +1,27 @@
+id: mo-flutter-498
+title: "EventChannel 的生产速度超过消费速度，背压该怎么做？"
+topics: [flutter, platform-channel, streams]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "EventChannel 没有内建的背压信号，原生 sink 只管往通道里塞，Dart 侧订阅再慢也会在通道和事件队列里堆积，最终表现为延迟越来越大或内存上涨。要在原生侧做有界队列与丢弃或合并策略，或者改成拉取式接口按需取数。"
+  keyPoints:
+    - "receiveBroadcastStream 的 pause 不会传播到原生，不能指望暂停订阅来限流"
+    - "原生侧用有界缓冲加丢弃最旧或最新，或按时间窗口合并高频事件"
+    - "事件带序号或时间戳，Dart 侧可检测丢包并触发全量拉取校正"
+    - "数据量大或需要确认时改用 MethodChannel 拉取，天然形成请求响应节流"
+  pitfalls:
+    - "在 onListen 里启动无限速的传感器或日志流，切后台也不停"
+    - "以为 broadcast stream 会丢弃无人监听的事件，实际监听期间仍全量排队"
+followups:
+  - "onCancel 之后原生事件源应该如何处理才不漏事件？"
+  - "如何给 EventChannel 加一个可观测的队列水位指标？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

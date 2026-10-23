@@ -1,0 +1,27 @@
+id: mo-flutter-552
+title: "重试的指数退避为什么必须加随机抖动？"
+topics: [flutter, network, reliability]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "服务端故障时，如果所有客户端按相同节奏重试，会在同一时刻形成同步冲击，把刚恢复的服务再次打垮。指数退避拉长间隔，随机抖动打散重试时刻，两者缺一不可。同时要设置最大延迟、总时长预算与最大次数，避免无限重试。"
+  keyPoints:
+    - "延迟按 base 乘以 2 的 n 次方增长，并叠加随机抖动"
+    - "设置最大延迟与整体重试预算，防止长尾请求堆积"
+    - "只对幂等且可重试的错误退避，参数错误不重试"
+    - "服务端返回 Retry-After 时优先遵循该值"
+  pitfalls:
+    - "固定间隔重试，故障时形成周期性尖峰"
+    - "在 UI 层用 sleep 同步等待，阻塞事件循环造成卡顿"
+followups:
+  - "抖动应该用 full jitter 还是 equal jitter，如何选？"
+  - "重试预算与请求总超时之间是什么关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

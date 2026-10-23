@@ -1,0 +1,26 @@
+id: mo-flutter-408
+title: "Provider 包底层是如何用 InheritedWidget 实现依赖注入的？"
+topics: [flutter, provider, inherited-widget]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Provider 把值放进一个私有的 InheritedWidget 作用域，读取时沿树找到最近的作用域并注册依赖；ChangeNotifierProvider 监听 notifyListeners，在通知时让依赖者重建。它没有额外的魔法，重建范围仍由依赖注册的位置决定。"
+  keyPoints:
+    - "Provider 的值存放在私有 InheritedWidget 中，of 沿树查找最近作用域"
+    - "listen 为 true 时注册依赖，为 false 时只读取不订阅"
+    - "ChangeNotifierProvider 监听 notifier，通知时标脏依赖它的 Element"
+    - "lazy 为 true 时 create 延迟到首次读取才执行"
+  pitfalls:
+    - "在 build 中用 listen:false 读取后直接渲染，notifier 变化不会重建"
+    - "把 Provider 建在页面内部却期望另一个路由读取，作用域并不覆盖"
+followups:
+  - "ChangeNotifierProvider 与 InheritedNotifier 的实现差异是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

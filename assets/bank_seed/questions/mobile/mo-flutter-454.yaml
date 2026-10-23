@@ -1,0 +1,26 @@
+id: mo-flutter-454
+title: "页面不可见时，轮询流应该暂停还是取消？"
+topics: [flutter, lifecycle, stream]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "短暂不可见（inactive、切换任务）适合暂停订阅，保留位置与已加载数据；长时间后台或页面销毁则应取消并释放资源。需要根据业务决定恢复时是否补拉，避免恢复瞬间并发多个请求。"
+  keyPoints:
+    - "inactive 或 paused 时暂停，resumed 时恢复并补拉一次"
+    - "dispose 时必须取消订阅，不能只暂停"
+    - "AppLifecycleListener 可集中管理前后台切换逻辑"
+    - "恢复时要防重入，避免同时触发轮询与手动刷新"
+  pitfalls:
+    - "只监听 resumed 不处理 paused，后台仍在轮询耗电"
+    - "暂停期间数据积压，恢复时一次性涌入造成卡顿"
+followups:
+  - "AppLifecycleState.hidden 在什么情况下会出现？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

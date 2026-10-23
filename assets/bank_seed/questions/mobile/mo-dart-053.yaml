@@ -1,0 +1,26 @@
+id: mo-dart-053
+title: "JIT 与 AOT：kernel、快照与启动性能"
+topics: [dart, jit, aot]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 源码先编译成 kernel 中间表示，JIT 在运行时按需编译并结合类型反馈优化，因此支持热重载；AOT 在构建期生成机器码快照，启动快、无 JIT 预热，但不能热重载也不支持 dart:mirrors。Flutter 的 debug 走 JIT，release 与 profile 走 AOT。"
+  keyPoints:
+    - "kernel 是前后端共用的中间表示，源文件先转成 .dill"
+    - "JIT 依赖运行时类型反馈做优化，支持热重载"
+    - "AOT 构建期生成机器码，启动时间与包体积更可控"
+    - "AOT 不支持 dart:mirrors，tree shaking 也更激进"
+  pitfalls:
+    - "在 release 包里期待热重载或运行时反射，这些能力根本不存在"
+    - "只在 debug 下测性能，JIT 与 AOT 的瓶颈分布完全不同"
+  followups:
+    - "为什么 AOT 下要更谨慎地使用 dynamic 调用？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

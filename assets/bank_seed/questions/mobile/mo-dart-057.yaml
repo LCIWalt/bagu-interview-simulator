@@ -1,0 +1,26 @@
+id: mo-dart-057
+title: "part 与 part of：库拆分和私有成员共享"
+topics: [dart, libraries, modularity]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "part 文件属于宿主库的一部分，可以共享私有成员，但必须在宿主库用 part 声明，并且自身不能有 import。现代 Dart 更推荐用库内多文件加 export/show 组织代码，part 主要留给代码生成产物。"
+  keyPoints:
+    - "part 文件与宿主库共享私有作用域，不能被单独 import"
+    - "part of 可用库名或 URI 指向宿主库"
+    - "part 文件不能声明自己的 import、export 或 part"
+    - "代码生成产物（如 .g.dart）常用 part 以便访问私有成员"
+  pitfalls:
+    - "用 part 拆业务模块，所有文件被绑进同一个库作用域"
+    - "part of 使用相对 URI，移动文件后引用断裂"
+  followups:
+    - "export 与 show/hide 如何控制库对外暴露的 API？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

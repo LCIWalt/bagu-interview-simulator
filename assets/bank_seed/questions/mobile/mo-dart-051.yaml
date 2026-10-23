@@ -1,0 +1,26 @@
+id: mo-dart-051
+title: "dart:ffi：Pointer 生命周期与原生内存所有权"
+topics: [dart, ffi, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Pointer 只是原生地址的包装，Dart GC 不管理 malloc/calloc 分配的内存，谁分配谁释放必须写进 API 契约。跨 FFI 边界传出的指针在调用返回后可能失效，被调用方若长期保存就会变成悬垂引用。"
+  keyPoints:
+    - "calloc/malloc 分配的内存必须显式 free，GC 不会代劳"
+    - "Pointer 不保证所指内存有效，悬垂指针会读写越界"
+    - "结构体用 @Native 与外部类型声明，注意对齐、大小与平台差异"
+    - "异步回调持有指针时，要确保原生侧生命周期覆盖整个使用期"
+  pitfalls:
+    - "free 之后继续通过 Pointer 读写，表现为崩溃或脏数据"
+    - "把 Dart 堆对象地址交给 C 长期保存，GC 移动或回收后失效"
+  followups:
+    - "NativeFinalizer 或 Arena 如何简化原生内存的释放？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

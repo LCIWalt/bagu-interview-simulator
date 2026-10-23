@@ -1,0 +1,27 @@
+id: mo-dart-072
+title: "用 Future 链实现单 isolate 内的异步互斥锁"
+topics: [dart, async, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "单 isolate 内没有抢占式线程，但多个异步流程交错仍会破坏临界区。可以用 Future 链实现互斥：把上一个操作的完成 Future 作为下一个的起点，形成串行队列。锁只保证进入顺序，临界区内长时间 await 会让其他任务无谓等待。"
+  keyPoints:
+    - "互斥锁用一条 Future 链串行化临界区"
+    - "acquire 返回的 Future 完成后才允许进入"
+    - "release 放在 finally，异常时也要推进队列"
+    - "锁不阻止其他事件插入，只保证临界区不重叠"
+  pitfalls:
+    - "在锁内 await 用户输入，长时间占用锁"
+    - "异常路径未 release，后续任务永久等待"
+followups:
+  - "可重入锁如何识别同一持有者？"
+  - "读写锁在单 isolate 下如何实现？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

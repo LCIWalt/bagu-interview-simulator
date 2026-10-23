@@ -1,0 +1,26 @@
+id: mo-dart-056
+title: "assert 与开发期校验：release 下失效的陷阱"
+topics: [dart, assertions, debugging]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "assert 只在开启断言时执行，开发与测试默认开启，AOT release 构建默认关闭并整段移除。它适合捕获不该发生的编程错误，不能用于用户输入校验或安全边界；断言失败抛 AssertionError，生产校验应改用显式检查与异常。"
+  keyPoints:
+    - "assert 在 release/AOT 构建中被移除，不能承载业务逻辑"
+    - "断言条件必须是布尔表达式，可附带一条消息"
+    - "assert 表达式里的副作用代码在 release 下不会执行"
+    - "对外部输入应使用 ArgumentError 或显式校验分支"
+  pitfalls:
+    - "用 assert 校验接口参数，release 下非法输入直接穿透"
+    - "在 assert 中调用有副作用的方法，调试与线上行为不一致"
+  followups:
+    - "如何在 CI 中确保测试运行时断言处于开启状态？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

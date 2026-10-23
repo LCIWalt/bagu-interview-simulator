@@ -1,0 +1,26 @@
+id: mo-flutter-403
+title: "LayoutBuilder 的 builder 里为什么不能依赖自身最终尺寸？"
+topics: [flutter, layout, widgets]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "LayoutBuilder 的 builder 在布局阶段执行，拿到的是父级传入的约束，自身最终尺寸要等它返回的子树测量完成才能确定。因此在 builder 内通过 context.size 读取到的可能是 null 或上一帧结果，不能用来决定本轮布局。"
+  keyPoints:
+    - "builder 在 layout 阶段调用，参数是父级约束而非最终尺寸"
+    - "自身尺寸由返回的子树与约束共同决定，builder 执行时还未产生"
+    - "context.size 在首帧布局中可能为 null，之后也可能滞后一帧"
+    - "需要子级实际尺寸时，应使用 post-frame 回调或自定义 RenderObject"
+  pitfalls:
+    - "在 builder 里用 context.size 计算布局，首帧直接空指针"
+    - "根据上一帧尺寸返回新约束，造成布局抖动或反复重建"
+followups:
+  - "如何根据子组件的实际尺寸反向决定父级布局？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

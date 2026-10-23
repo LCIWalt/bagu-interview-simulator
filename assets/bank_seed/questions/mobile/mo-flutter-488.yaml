@@ -1,0 +1,26 @@
+id: mo-flutter-488
+title: "TextPainter.computeLineMetrics 能拿到哪些排版信息？"
+topics: [flutter, text, typography]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "computeLineMetrics 在布局完成后返回每一行的度量，包括行高、基线、宽高与是否由硬换行结束。它适合做逐行动画、自定义光标与选区，但每次调用都会新建列表，不适合在 paint 里反复执行。"
+  keyPoints:
+    - "调用前必须完成 layout，否则会命中断言"
+    - "LineMetrics 提供 ascent、descent、height、width、left、baseline 与 hardBreak"
+    - "hardBreak 区分自动折行与显式换行，做逐行处理时很关键"
+    - "行度量按视觉行返回，一个段落里的软换行也会各占一条"
+  pitfalls:
+    - "在 build 阶段调用 computeLineMetrics，此时还没有布局结果"
+    - "每帧在 paint 里重新计算行度量，文本一长就成为瓶颈"
+  followups:
+    - "如何用行度量实现逐行淡入的文本动画？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

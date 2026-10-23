@@ -1,0 +1,27 @@
+id: mo-android-048
+title: "Android: 四种启动模式与 Intent Flag"
+topics: [android, activity, launch-mode]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "启动模式决定 Activity 实例是否复用、以及实例落在哪个任务栈：standard 每次新建，singleTop 只复用栈顶，singleTask 在目标任务栈内复用并清掉其上实例，singleInstance 独占一个任务栈。启动时传入的 Intent Flag 会覆盖清单里的部分行为，必须结合 taskAffinity 一起理解。"
+  keyPoints:
+    - "standard 每次启动都创建新实例并压入调用方所在任务栈，可重复存在多个副本"
+    - "singleTop 仅在目标已在栈顶时复用并回调 onNewIntent，不在栈顶仍会新建"
+    - "singleTask 在 affinity 匹配的任务栈中复用实例，并清空该实例之上的所有 Activity"
+    - "FLAG_ACTIVITY_NEW_TASK、CLEAR_TOP、SINGLE_TOP 可在启动时局部覆盖清单配置"
+  pitfalls:
+    - "认为 singleTask 一定新建任务栈，实际同 affinity 时会回到已有栈并触发清栈"
+    - "复用实例后忘记调用 setIntent，导致页面后续 getIntent 仍读到旧参数"
+followups:
+  - "onNewIntent 中为什么通常要调用 setIntent(intent)？"
+  - "singleTask 与 FLAG_ACTIVITY_CLEAR_TOP 的清栈行为有什么差别？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

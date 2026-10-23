@@ -1,0 +1,26 @@
+id: mo-flutter-431
+title: "Future.timeout 之后，原来的任务真的被取消了吗？"
+topics: [dart, async, timeout]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "没有。timeout 只是返回一个包装 Future，在超时后以 TimeoutException 完成，原 Future 继续执行，结果被丢弃。原任务的副作用与资源占用都还在，之后的结果不会再被使用，需要配合底层取消或客户端超时参数。"
+  keyPoints:
+    - "timeout 新建 Future，不改变原 Future 的执行"
+    - "超时后原结果被忽略，但副作用仍会发生"
+    - "onTimeout 返回的值或 Future 会接管最终结果"
+    - "超时后原任务的资源占用与副作用仍然存在"
+  pitfalls:
+    - "以为 timeout 能释放连接，实际连接仍被占用"
+    - "超时后重试同一操作，与原任务并发写同一份数据"
+followups:
+  - "timeout 之后原 Future 抛错会走哪里？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

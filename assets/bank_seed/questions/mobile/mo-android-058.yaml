@@ -1,0 +1,26 @@
+id: mo-android-058
+title: "Android: 多点触控与 GestureDetector"
+topics: [android, view, touch]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "多点触控依靠 MotionEvent 中的 pointer 区分手指：action 的低 8 位是 pointerIndex，高 8 位是事件类型，解析时要先 getActionMasked 再按需取 getActionIndex。GestureDetector 封装了点击、长按与滑动判定，但前提是调用方把完整的事件序列转发给它。"
+  keyPoints:
+    - "getActionMasked 去掉 pointer 位得到真实事件类型，getActionIndex 返回触发的指针下标"
+    - "pointerId 在手指按下期间保持稳定，pointerIndex 会随抬指重排，跟踪要用 id"
+    - "用 getX(index) 与 getY(index) 读取指定指针坐标，无参版本只读取 index 0"
+    - "GestureDetector 的 onScroll 需要 onDown 返回 true 才会收到后续事件"
+  pitfalls:
+    - "把 pointerIndex 当作手指的长期标识保存，抬指后索引变化导致跟踪错乱"
+    - "在 onTouchEvent 中不调用 super 或返回 false，GestureDetector 收不到完整序列"
+followups:
+  - "ScaleGestureDetector 与手势检测如何组合处理双指缩放？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

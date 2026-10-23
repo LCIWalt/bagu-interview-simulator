@@ -1,0 +1,27 @@
+id: mo-android-068
+title: "Android: SharedPreferences 的 apply、commit 与 ANR"
+topics: [android, storage, anr]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "commit 同步写盘并返回是否成功，apply 先更新内存再异步落盘，在主线程调用 commit 会阻塞等待磁盘 IO。首次获取 SharedPreferences 还要同步解析整个 XML，文件过大时既拖慢启动也可能触发 ANR。"
+  keyPoints:
+    - "apply 立即更新内存并异步写盘，适合绝大多数非关键配置"
+    - "commit 同步写入并返回布尔结果，只在必须确认写入成功时使用"
+    - "首次 getSharedPreferences 会同步读取并解析文件，应避免主线程加载大文件"
+    - "SharedPreferences 不保证多进程一致性，跨进程场景要换存储方案"
+  pitfalls:
+    - "在主线程调用 commit 写入大量数据，造成卡顿甚至 ANR"
+    - "把大 JSON 或长列表塞进 SharedPreferences，导致启动解析变慢"
+followups:
+  - "apply 的异步写盘在进程被杀时会不会丢数据？"
+  - "SharedPreferences 的 MODE_MULTI_PROCESS 为什么被废弃？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

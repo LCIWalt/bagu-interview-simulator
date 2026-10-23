@@ -1,0 +1,26 @@
+id: mo-dart-047
+title: "方法 tear-off：类型、相等性与隐式持有"
+topics: [dart, tear-off, functions]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "把方法或构造函数当值使用就是 tear-off，实例方法 tear-off 会绑定接收者，其类型是去掉 this 后的函数类型；构造函数 tear-off 的类型是返回该类实例的函数。同一实例同一方法的多次 tear-off 相等，可以安全用于比较和缓存。"
+  keyPoints:
+    - "obj.method 的类型是方法签名去掉接收者后的函数类型"
+    - "构造函数 tear-off 写作 Foo.new，可直接当工厂函数传递"
+    - "同一实例同一方法的多次 tear-off 满足 =="
+    - "静态方法与顶层函数的 tear-off 不绑定任何接收者"
+  pitfalls:
+    - "长期保存实例方法 tear-off，隐式持有对象导致无法回收"
+    - "以为每次 tear-off 都新建闭包，用 identical 判断得到 false"
+  followups:
+    - "tear-off 的相等性为什么对 Flutter 的回调比较有意义？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

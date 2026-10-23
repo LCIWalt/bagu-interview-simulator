@@ -1,0 +1,27 @@
+id: mo-android-078
+title: "Android: Compose 强跳过模式与编译器指标"
+topics: [android, compose, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "强跳过模式让不稳定参数也按实例相等性参与跳过判断，从而减少无谓重组，但它依赖对象引用稳定。Compose 编译器指标可以列出哪些 composable 可跳过、哪些类型被推断为 unstable，是定位重组问题的第一手材料。"
+  keyPoints:
+    - "强跳过对不稳定参数用引用相等比较，减少重组但要求实例不要每次重建"
+    - "MutableList、普通 data class 之外的类、捕获不稳定值的 lambda 容易变 unstable"
+    - "开启 Compose Compiler Metrics 查看 skippable/restartable 与 unstable class 报告"
+    - "@Stable/@Immutable 是对编译器的承诺，违反会导致状态变化后 UI 不刷新"
+  pitfalls:
+    - "为消除重组到处标注 @Stable，掩盖真实状态变化造成不更新"
+    - "在重组作用域里每次新建 lambda 或 Modifier，抵消跳过带来的收益"
+followups:
+  - "强跳过在哪些情况下反而会引入正确性问题？"
+  - "如何用 composition tracing 验证重组次数确实下降？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-394
+title: "NavigatorObserver 的 didPush、didPop、didReplace 分别能观测到什么？"
+topics: [flutter, navigator, routing]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "NavigatorObserver 挂在 Navigator 上，路由入栈、出栈、替换与移除时收到回调，常用于埋点、登录守卫和页面可见性统计。它只能观测已经发生的导航动作，不能阻止导航，拦截应放在 PopScope 或路由守卫里。"
+  keyPoints:
+    - "didPush 在路由入栈后调用，可拿到新路由与上一个路由"
+    - "didPop 在出栈时调用，previousRoute 可能为 null"
+    - "didReplace 用于 pushReplacement 等替换场景，新旧路由都可能为 null"
+    - "didRemove 在 removeRoute 时触发，与 pop 的语义不同"
+  pitfalls:
+    - "在 didPush 里做耗时操作，阻塞导航动画的首帧"
+    - "只监听 didPush 统计页面曝光，漏掉 replace 与 remove"
+followups:
+  - "如何用 NavigatorObserver 统计页面停留时长？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

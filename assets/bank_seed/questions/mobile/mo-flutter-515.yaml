@@ -1,0 +1,27 @@
+id: mo-flutter-515
+title: "FlutterEngine 什么时候该 destroy，谁负责解绑 Activity？"
+topics: [flutter, add-to-app, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "引擎的销毁责任跟随创建者：自建引擎要在宿主页面销毁时 destroy，缓存引擎则要显式清理缓存并 destroy，否则插件、通道 handler 与原生 View 都会滞留。destroy 前要确保 FlutterView 已经 detach，插件收到 onDetachedFromActivity 后再释放资源。"
+  keyPoints:
+    - "谁创建谁销毁，FlutterActivity 自建引擎默认随 Activity 销毁，缓存引擎由宿主管理"
+    - "destroy 会停止 Dart 执行并解绑插件，未 detach 的 View 可能先崩"
+    - "插件在 onDetachedFromActivity 里释放 Activity 引用，避免泄漏"
+    - "进程级单例里缓存引擎要提供明确清理入口，而不是等进程退出"
+  pitfalls:
+    - "Activity 销毁后仍从静态变量取引擎 attach 新页面，得到已销毁引擎"
+    - "只移除 FlutterView 不 destroy，Dart 定时器继续跑并持有资源"
+followups:
+  - "如何检测引擎是否已经被销毁？"
+  - "多引擎场景下，插件单例状态如何隔离？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

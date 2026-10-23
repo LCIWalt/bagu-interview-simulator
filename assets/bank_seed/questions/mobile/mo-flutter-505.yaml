@@ -1,0 +1,27 @@
+id: mo-flutter-505
+title: "一次耗时 200ms 的 FFI 调用，会阻塞谁？"
+topics: [flutter, ffi, isolates]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FFI 是同步调用，执行在发起它的 isolate 所在线程；在主 isolate 上调用就等于占住 UI 线程，这段时间既不 build 也不处理事件。要把长耗时原生调用挪到后台 Isolate，或让原生侧提供异步接口，完成后通过端口回传结果。"
+  keyPoints:
+    - "FFI 不经过平台通道，没有隐式线程切换，同步阻塞调用方"
+    - "主 isolate 被占住时，帧调度、手势与通道消息都会排队"
+    - "把调用放进 Isolate.run 或长驻 Isolate，原生库在进程内共享，全局状态要自己同步"
+    - "原生侧若自带线程池，暴露异步接口比在 Dart 侧硬扛更合适"
+  pitfalls:
+    - "以为 FFI 比 MethodChannel 快，就在 UI 线程做同步文件读写或加解密"
+    - "在后台 isolate 里回调 UI，忘记用端口把结果送回主 isolate"
+followups:
+  - "后台 isolate 打开同一个动态库，会重复加载吗？"
+  - "原生异步接口如何与 Dart 的 Future 对接并支持取消？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

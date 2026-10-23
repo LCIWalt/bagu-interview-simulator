@@ -1,0 +1,27 @@
+id: mo-android-055
+title: "Android: Measure、Layout、Draw 三阶段"
+topics: [android, view, rendering]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "ViewRootImpl.performTraversals 驱动一次遍历，依次完成 measure、layout、draw。measure 自顶向下用 MeasureSpec 传递尺寸约束，layout 由父容器确定每个子 View 的坐标，draw 再按背景、内容、子 View、装饰的顺序绘制。"
+  keyPoints:
+    - "MeasureSpec 由高 2 位 mode 与低 30 位 size 组成，对应 EXACTLY、AT_MOST、UNSPECIFIED 三种约束"
+    - "onMeasure 中必须调用 setMeasuredDimension 写入结果，否则测量结果不生效"
+    - "layout 阶段由父容器调用子 View 的 layout，getWidth 是布局后宽度，可能与测量值不同"
+    - "draw 顺序为背景、onDraw、dispatchDraw、前景与滚动条，可用 canvas 裁剪减少重绘"
+  pitfalls:
+    - "在 onMeasure 里读取 getWidth，此时布局尚未完成，拿到 0 或上一帧的旧值"
+    - "在 onDraw 中分配对象或做复杂计算，造成每帧 GC 与掉帧"
+followups:
+  - "为什么 onMeasure 在一次布局中可能被调用两次以上？"
+  - "getMeasuredWidth 与 getWidth 在什么情况下会不一致？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

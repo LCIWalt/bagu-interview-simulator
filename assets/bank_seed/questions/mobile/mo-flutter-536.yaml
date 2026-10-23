@@ -1,0 +1,27 @@
+id: mo-flutter-536
+title: "依赖的装配点应该放在哪里，为什么不该散落在 Widget 里？"
+topics: [flutter, dependency-injection, testing]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "装配点即 composition root，应该在 main 或 App 之上一次性创建对象图，再通过构造函数向下传递。这样依赖的生命周期清晰，测试可以在 pump 之前整体替换为 fake，按 flavor 切换实现也只需改这一处。在 Widget 内部 new 依赖会让测试被迫走真实实现。"
+  keyPoints:
+    - "在 main/App 层集中创建对象图，Widget 只接收已构造好的依赖"
+    - "按 flavor 或环境选择实现的分支只出现在装配点，不散落到业务代码"
+    - "测试在 pumpWidget 前替换 fake，保证每个测试拿到干净的依赖"
+    - "有状态依赖不要在 build 中创建，否则每次重建都会得到新实例"
+  pitfalls:
+    - "在 build 里创建 Repository，导致重建时状态丢失、连接泄漏"
+    - "把装配点做成上帝对象，所有无关配置都往里塞，最终无法单独测试"
+followups:
+  - "如何在测试中只替换对象图里的一个依赖，其余保持真实？"
+  - "装配点应该知道导航吗，路由注入通常放在哪一层？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

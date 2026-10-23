@@ -1,0 +1,26 @@
+id: mo-flutter-475
+title: "SpringSimulation 的 stiffness、damping、mass 如何影响手感？"
+topics: [flutter, animation, physics]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "弹簧模拟由质量、刚度与阻尼三个参数决定：刚度越大回正越快，阻尼越大振荡衰减越快，质量增大则整体变迟钝。三者共同决定系统是欠阻尼回弹、临界阻尼还是过阻尼。"
+  keyPoints:
+    - "stiffness 决定回复力大小，越大越快到目标，也更容易过冲"
+    - "damping 决定能量耗散速度，越小振荡次数越多"
+    - "mass 增大让加速度变小，动画显得更重更慢"
+    - "临界阻尼满足 damping 等于 2 乘以根号下 mass 乘 stiffness"
+  pitfalls:
+    - "只调 stiffness 追求速度，结果过冲明显且长时间停不下来"
+    - "忽略 tolerance，弹簧在目标附近反复抖动才被判为结束"
+  followups:
+    - "SpringDescription.withDampingRatio 与直接给 damping 是什么关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

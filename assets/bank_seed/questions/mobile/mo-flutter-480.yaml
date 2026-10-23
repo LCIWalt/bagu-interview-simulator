@@ -1,0 +1,26 @@
+id: mo-flutter-480
+title: "竞技场里的 sweep 与 hold 分别意味着什么？"
+topics: [flutter, gestures, arena]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "sweep 是强制收尾：关闭竞技场并按当前状态决出赢家，若还有多个成员，则第一个加入的获胜。hold 则是暂时扣住指针、推迟收尾，给还在判断的 recognizer 更多时间。"
+  keyPoints:
+    - "指针抬起时框架会对该指针执行 sweep，避免竞技场悬而不决"
+    - "sweep 时只剩一个成员则它直接获胜，仍有多个则按加入顺序取第一个"
+    - "hold 会阻止 sweep，直到对应指针被 release"
+    - "hold 与 release 必须按指针成对出现，否则竞技场一直不关闭"
+  pitfalls:
+    - "在 hold 期间又调用 sweep，提前定胜负导致手势被错误识别"
+    - "忘记 release，指针抬起后相关 recognizer 仍收不到结束回调"
+  followups:
+    - "哪些内置手势会用 hold 来延迟判定？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

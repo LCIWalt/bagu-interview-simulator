@@ -1,0 +1,27 @@
+id: mo-android-070
+title: "Android: FileProvider 与跨应用文件共享"
+topics: [android, storage, security]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 7.0 起禁止用 file:// URI 跨应用传递文件，必须通过 FileProvider 暴露为 content:// URI 并临时授权。可共享的目录要在 XML 中显式声明，读取权限通过 Intent flag 或 ClipData 授予。"
+  keyPoints:
+    - "FileProvider 把私有目录映射成 content URI，需在清单声明 provider 与 meta-data"
+    - "file_paths 中用 files-path、cache-path、external-path 等限定可共享范围"
+    - "接收方需要读权限时用 FLAG_GRANT_READ_URI_PERMISSION 或 ClipData 授予"
+    - "authorities 建议拼接 applicationId，避免不同变体或应用间冲突"
+  pitfalls:
+    - "把 root-path 暴露出去，导致整个私有目录可被读取"
+    - "忘记授予临时读权限，接收方打开时抛 SecurityException"
+followups:
+  - "FileProvider 的临时 URI 授权在什么时机失效？"
+  - "如何限制 FileProvider 只分享单个文件而不是整个目录？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

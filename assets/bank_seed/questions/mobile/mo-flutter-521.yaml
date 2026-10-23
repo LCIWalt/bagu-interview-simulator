@@ -1,0 +1,27 @@
+id: mo-flutter-521
+title: "Universal Links 明明配好了，为什么更新后突然失效？"
+topics: [flutter, deep-link, ios]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "iOS 会缓存 AASA 文件，并通过 Apple 的 CDN 获取，服务端更新后客户端不一定立刻生效；文件 Content-Type、跳转、appID 与环境域名不匹配都会被判为无效。排查要同时看服务端响应头、CDN 缓存与设备日志。"
+  keyPoints:
+    - "AASA 必须返回 application/json 且无重定向，路径为 /.well-known/apple-app-site-association"
+    - "Apple CDN 会缓存，更新后需要时间生效，测试时可用开发者模式绕过"
+    - "appID 是 TeamID.BundleID，开发与生产环境要分别声明"
+    - "用 Console 中 swcd 相关日志确认抓取与匹配结果"
+  pitfalls:
+    - "只改了 AASA 就指望立刻生效，反复重装仍命中旧缓存"
+    - "把通配符路径配得过宽，站内普通链接被 App 抢走"
+followups:
+  - "如何为同一域名配置多个 App 的 Universal Links？"
+  - "未安装 App 时如何把用户引导到 App Store 并保留上下文？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

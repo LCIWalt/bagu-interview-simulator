@@ -1,0 +1,26 @@
+id: mo-flutter-439
+title: "runZonedGuarded 捕获不到哪些错误？"
+topics: [dart, zone, error-handling]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "它只接管所在 Zone 内未被捕获的异步错误，框架层错误要先经 FlutterError.onError 转发，平台侧崩溃、其它 isolate 的错误以及被 catch 掉的错误都不在范围内。要覆盖完整，需要同时接入 FlutterError.onError、PlatformDispatcher.onError 与 isolate 的 onError。"
+  keyPoints:
+    - "Zone 只覆盖本 zone 派生的异步回调"
+    - "Flutter 框架异常默认进 FlutterError.onError，需显式转发"
+    - "平台原生崩溃与其他 isolate 的错误不经过该 zone"
+    - "runZonedGuarded 的 handler 自身不应再抛错"
+  pitfalls:
+    - "只包 runZonedGuarded 就以为能收集所有线上异常"
+    - "在 handler 里同步抛出，导致错误再次逃逸"
+followups:
+  - "PlatformDispatcher.onError 与 runZonedGuarded 的覆盖关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

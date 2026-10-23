@@ -1,0 +1,26 @@
+id: mo-flutter-444
+title: "取消 async* 流时，生成器里的 finally 会执行吗？"
+topics: [dart, stream, cancellation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "会执行，但不是立刻。取消订阅后生成器在下一个恢复点（yield 或 await 之后）继续运行并进入 finally，所以清理可能晚于 cancel 返回。需要确定性释放时，应把资源清理放在订阅方的 onCancel 或独立作用域里。"
+  keyPoints:
+    - "取消订阅会请求生成器终止，finally 仍会运行"
+    - "终止发生在下一个恢复点，不是同步立即"
+    - "生成器长时间 await 时，清理会被推迟"
+    - "finally 中不要再 yield 或依赖已取消的资源"
+  pitfalls:
+    - "依赖 finally 立刻关闭原生资源，出现短暂泄漏"
+    - "生成器在 finally 里再次 yield，导致取消流程异常"
+followups:
+  - "生成器里 catch 住异常会怎样影响流的结束？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

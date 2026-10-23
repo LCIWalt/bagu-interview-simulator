@@ -1,0 +1,26 @@
+id: mo-flutter-386
+title: "mounted 在什么时候变为 false，跨 await 后如何正确判断？"
+topics: [flutter, state-lifecycle, async]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "State.mounted 表示 State 是否仍关联着处于活动状态的 Element，Element 卸载后框架会把关联置空，mounted 随之变为 false。跨 await 后应先检查 mounted，再访问 context 或调用 setState，否则可能对已销毁的页面发起重建。"
+  keyPoints:
+    - "mounted 的实现是判断 State 内部的 _element 是否为空"
+    - "Element 卸载后 State 的 _element 被置空，mounted 变为 false"
+    - "await 后先 if (!mounted) return，再使用 context"
+    - "mounted 为 true 只代表未卸载，不代表当前处于前台或依赖仍有效"
+  pitfalls:
+    - "只判断 mounted 就安全使用 context，导航或祖先查找仍可能失败"
+    - "注册的回调没有在 dispose 中取消，销毁后仍会触发"
+followups:
+  - "为什么 mounted 为 true 时 context 仍可能不可用？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

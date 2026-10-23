@@ -1,0 +1,26 @@
+id: mo-android-056
+title: "Android: requestLayout 与 invalidate 的区别"
+topics: [android, view, rendering]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "invalidate 只标记需要重绘，下一帧走 draw 阶段；requestLayout 会沿父链上传并调度一次完整遍历，重新 measure 与 layout。两者触发范围不同，选错会带来多余布局或界面不刷新。"
+  keyPoints:
+    - "invalidate 适合内容变化而尺寸不变的场景，只触发 draw，不会重新测量"
+    - "requestLayout 设置 FORCE_LAYOUT 并向父容器传播，最终由 ViewRootImpl 调度遍历"
+    - "布局或绘制过程中发起的 requestLayout 会被延迟到当前遍历结束后处理"
+    - "子线程不能直接调用，需要 post 或 runOnUiThread 切回主线程"
+  pitfalls:
+    - "数据变化一律调用 requestLayout，尺寸未变时白白多一次测量与布局"
+    - "认为 invalidate 会同步立即重绘，实际要等下一个 vsync 到来"
+followups:
+  - "ViewRootImpl 的 scheduleTraversals 如何与 Choreographer 协作？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

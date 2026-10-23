@@ -1,0 +1,26 @@
+id: mo-android-071
+title: "Android: Android 13 通知运行时权限"
+topics: [android, permissions, notification]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Android 13 起 POST_NOTIFICATIONS 变成运行时权限，未授权时应用发不出通知。请求应放在有明确业务价值的时机，并同时检查通知渠道状态，用户拒绝或关闭渠道后要给出可恢复的引导。"
+  keyPoints:
+    - "在清单声明 POST_NOTIFICATIONS，用 RequestPermission contract 发起请求"
+    - "通知渠道从 Android 8.0 起独立控制，渠道被关闭时权限通过也发不出通知"
+    - "用户多次拒绝后系统不再弹窗，应引导到应用通知设置页"
+    - "前台服务通知同样受该权限影响，但服务本身仍可正常运行"
+  pitfalls:
+    - "应用一启动就弹权限框，授权率低且影响首屏体验"
+    - "只检查权限而忽略 areNotificationsEnabled 与渠道重要性"
+followups:
+  - "用户关闭某个通知渠道后，应用如何检测并引导恢复？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

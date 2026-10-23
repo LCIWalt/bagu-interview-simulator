@@ -1,0 +1,26 @@
+id: mo-flutter-417
+title: "API 该返回 T 还是 Future<T>？FutureOr 解决什么？"
+topics: [dart, async, api-design]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "FutureOr<T> 表示 T 或 Future<T>，让调用方既能同步拿到缓存值，也能拿到异步结果，统一用 await 即可兼容两种情况。它适合缓存命中、可短路计算的 API，不适合让实现在同步与异步之间随意切换。"
+  keyPoints:
+    - "FutureOr<T> 表示 T 或 Future<T>，await 对两种形态都成立"
+    - "同步返回可省掉一次微任务，适合命中缓存的快路径"
+    - "签名暴露 FutureOr 会把分支成本转移给所有调用方"
+    - "判断类型要用 is Future<T>，不要用 is T 去猜"
+  pitfalls:
+    - "在 async 函数里返回 FutureOr，误以为调用方拿到的还是 FutureOr"
+    - "同一 API 有时同步有时异步，导致调用顺序不可预测"
+followups:
+  - "在 async 函数中 return 一个 Future 会被自动展开吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

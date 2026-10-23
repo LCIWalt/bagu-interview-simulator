@@ -1,0 +1,27 @@
+id: mo-android-067
+title: "Android: 内存泄漏的常见模式与 LeakCanary 原理"
+topics: [android, memory, debugging]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "泄漏的本质是短生命周期对象被长生命周期对象强引用，常见于静态集合、非静态内部类、未反注册的监听器与未取消的线程。LeakCanary 在 Activity 销毁后建立弱引用并触发 GC，若对象仍存活就 dump 堆、分析最短强引用链来定位泄漏点。"
+  keyPoints:
+    - "静态集合、单例与 Application 级缓存持有 Activity 或 Fragment 是最常见的泄漏来源"
+    - "Handler、Runnable 等非静态内部类会隐式持有外部类引用，应改为静态类加弱引用"
+    - "广播、ContentObserver、传感器与回调监听必须在对应生命周期反注册"
+    - "LeakCanary 通过 WeakReference 加 GC 判定对象存活，再分析引用链找出持有者"
+  pitfalls:
+    - "只在页面退出时手动置空字段，忽略对象被静态容器间接持有"
+    - "把泄漏全部归因于第三方 SDK，不看引用链就到处加弱引用掩盖问题"
+followups:
+  - "为什么匿名内部类的 Runnable 比静态内部类更容易造成 Activity 泄漏？"
+  - "LeakCanary 在判断泄漏时如何避免把正常缓存误报为泄漏？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

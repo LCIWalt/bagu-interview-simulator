@@ -1,0 +1,27 @@
+id: mo-flutter-375
+title: "Element 的 mount、update、unmount 三个阶段分别做了什么？"
+topics: [flutter, element, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "mount 负责把新建的 Element 挂入树中并完成首次构建，update 在父级重建时接收新 Widget 并决定复用还是替换，unmount 则在真正移除时释放引用与资源。State 的 initState、didUpdateWidget、dispose 分别挂在这三个阶段上。"
+  keyPoints:
+    - "mount 会建立父子关系、登记 GlobalKey，并通过 _firstBuild 触发首次 build 或创建 RenderObject"
+    - "update 先替换 _widget，再按 Element 类型决定 rebuild 还是 updateRenderObject"
+    - "unmount 把 Element 标记为 defunct，清空 _widget、依赖与父引用，并注销 GlobalKey"
+    - "StatefulElement 在 unmount 中调用 State.dispose，deactivate 阶段不会销毁 State"
+  pitfalls:
+    - "把 deactivate 当成销毁，提前释放了稍后还可能被 GlobalKey 复用的资源"
+    - "以为父级每次 build 都会让子 Element 收到 update，Widget 实例相同时 updateChild 会直接复用"
+followups:
+  - "State 的 dispose 究竟在哪个阶段被调用？"
+  - "GlobalKey 重挂载时为什么不会走 unmount？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

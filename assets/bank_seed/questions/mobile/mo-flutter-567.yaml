@@ -1,0 +1,27 @@
+id: mo-flutter-567
+title: "依赖有 bug，该 fork 还是等上游修？"
+topics: [flutter, packages, maintenance]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "先评估影响面与上游活跃度：能通过适配层绕过或降级版本的，优先不 fork。确实阻塞发布时，可以短期 fork 或用 git 依赖锁定提交，但必须记录原因、上游 PR 与移除条件。fork 不维护同步点会越走越远，最终无法回到主线。"
+  keyPoints:
+    - "优先用适配层绕过或降级版本，避免引入分叉"
+    - "短期 fork 时锁定具体 commit，并记录原因与移除条件"
+    - "向上游提交 PR 并跟踪进度，定期同步上游变更"
+    - "dependency_overrides 只作临时手段，不进入主干长期状态"
+  pitfalls:
+    - "fork 后不记录同步点，逐渐与上游完全不兼容"
+    - "在 fork 里改业务代码，升级时冲突无法收敛"
+followups:
+  - "如何评估一个包是否值得长期维护 fork？"
+  - "fork 期间上游发了破坏性更新，如何合并？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

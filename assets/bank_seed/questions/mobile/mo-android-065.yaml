@@ -1,0 +1,26 @@
+id: mo-android-065
+title: "Android: onTrimMemory 的分级与缓存释放"
+topics: [android, memory, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "内存紧张时系统按进程当前状态回调不同级别的 onTrimMemory，提示应用释放可重建的缓存。级别从运行中内存偏低，到界面隐藏、进入后台 LRU 列表，再到即将被回收逐步加重，处理策略应与级别匹配。"
+  keyPoints:
+    - "TRIM_MEMORY_RUNNING_LOW 等运行中级别表示仍在前台，应释放非必要缓存"
+    - "TRIM_MEMORY_UI_HIDDEN 表示界面不可见，适合释放图片与临时对象"
+    - "TRIM_MEMORY_BACKGROUND 与 MODERATE 表示已进入 LRU 列表，应清空大部分缓存"
+    - "TRIM_MEMORY_COMPLETE 表示即将被回收，此时才写关键数据已经来不及"
+  pitfalls:
+    - "把关键数据落盘推迟到 onTrimMemory，进程可能在此之前就被杀死"
+    - "只在 Activity 中处理回调，忽略 Application.onTrimMemory 这个全局入口"
+followups:
+  - "onLowMemory 与 onTrimMemory 的触发条件和适用场景有什么不同？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

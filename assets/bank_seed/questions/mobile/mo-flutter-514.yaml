@@ -1,0 +1,27 @@
+id: mo-flutter-514
+title: "宿主如何判断 Flutter 首帧已经渲染，做好启动图交接？"
+topics: [flutter, add-to-app, startup]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "在原生侧监听 Flutter 视图的首帧渲染信号，在回调里移除启动图或执行转场，可以避免白屏或闪一下旧页面。只依赖 Activity onResume 或 iOS viewDidAppear 通常过早，那时首帧可能还没上屏。首帧回调里也不该再做重活。"
+  keyPoints:
+    - "Android 通过 FlutterView.addFlutterUiDisplayListener 等 onFlutterUiDisplayed"
+    - "iOS 可观察 FlutterView 的 isDisplayingFlutterUI，首帧前为 false"
+    - "移除启动图要保证只执行一次，避免重复动画或空指针"
+    - "首帧前的原生占位 UI 要与会话恢复后的真实页面尺寸一致"
+  pitfalls:
+    - "在 onCreate 就移除启动图，用户先看到白屏"
+    - "首帧回调里做重活，把耗时算进首帧时间"
+followups:
+  - "为什么 release 下首帧时间与 debug 差距很大？"
+  - "引擎预热后首帧回调还会触发吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

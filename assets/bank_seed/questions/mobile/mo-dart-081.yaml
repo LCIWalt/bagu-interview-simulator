@@ -1,0 +1,27 @@
+id: mo-dart-081
+title: "Stream.periodic 接 asyncMap 的并发叠加"
+topics: [dart, stream, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Stream.periodic 的事件进入 asyncMap 后，多个异步转换默认并发执行，不会等待上一个完成。完成顺序可能与事件顺序不一致，消费慢时事件还会持续堆积。需要串行时应改用 await for 或手动排队，并给异步转换设置并发上限。"
+  keyPoints:
+    - "asyncMap 的多个转换 Future 默认并发执行"
+    - "完成顺序不保证与事件到达顺序一致"
+    - "慢消费者会堆积待处理事件，放大内存压力"
+    - "串行化可用 await for 或显式任务队列"
+  pitfalls:
+    - "在 asyncMap 里发请求却不限制并发数"
+    - "以为 asyncMap 会天然保持处理顺序"
+followups:
+  - "如何给 asyncMap 增加并发上限？"
+  - "乱序完成时如何按原始顺序输出结果？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

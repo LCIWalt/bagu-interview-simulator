@@ -1,0 +1,26 @@
+id: mo-flutter-470
+title: "改了 .frag 文件后热重载为什么没有生效？"
+topics: [flutter, shader, tooling]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "shader 在构建期被编译成运行时产物，热重载只重新加载 Dart 代码，不会重新编译 shader 资源。要让改动生效需要重新构建并重启应用，同时确认 pubspec 的 shaders 声明与资源路径没有写错。"
+  keyPoints:
+    - "热重载不处理资源与 shader 编译，改 .frag 后画面仍是旧产物"
+    - "新增或改名 shader 文件要更新 pubspec 的 flutter/shaders 段并重新 pub get"
+    - "FragmentProgram.fromAsset 加载失败，通常是路径与声明不一致"
+    - "调试期可以只改 uniform 或采样逻辑，先确认数据通路正常"
+  pitfalls:
+    - "反复热重载排查 shader 逻辑，实际跑的一直是旧编译结果"
+    - "把 shader 放进 assets 而不是 shaders 段，构建时根本不会被编译"
+  followups:
+    - "如何在 CI 里验证 shader 能成功编译？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

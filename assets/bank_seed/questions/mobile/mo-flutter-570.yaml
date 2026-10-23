@@ -1,0 +1,27 @@
+id: mo-flutter-570
+title: "测试之间共享状态会带来哪些问题，如何隔离？"
+topics: [flutter, testing, isolation]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "单例、静态变量、全局容器与数据库文件在测试间复用，会让结果依赖执行顺序，出现单跑绿、全跑红。正确做法是每个测试重建依赖容器与临时存储，避免在 setUpAll 中创建可变状态。开启随机顺序执行能尽早暴露顺序依赖。"
+  keyPoints:
+    - "每个 test 新建依赖容器与存储，不跨用例复用可变对象"
+    - "临时目录或内存数据库按测试隔离，结束后清理"
+    - "避免 setUpAll 初始化可变单例，只放真正只读的准备工作"
+    - "随机化执行顺序，暴露隐藏的顺序依赖"
+  pitfalls:
+    - "setUpAll 里初始化全局单例，后续用例互相污染"
+    - "测试结束不关闭数据库、不 dispose 定时器，影响下一个用例"
+followups:
+  - "Widget 测试里如何保证每个用例的主题与 locale 干净？"
+  - "并行执行测试时，文件系统隔离要注意什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

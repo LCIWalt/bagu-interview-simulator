@@ -1,0 +1,26 @@
+id: mo-dart-048
+title: "自定义异常：继承 Exception 还是实现接口"
+topics: [dart, exceptions, api-design]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "Dart 没有受检异常，抛什么、抛给谁完全由 API 约定。库对外暴露的可预期失败通常实现 Exception 并携带结构化字段，程序缺陷用 Error 的子类（如 ArgumentError、StateError），两者都不该被无条件 catch 吞掉。"
+  keyPoints:
+    - "Exception 表示可预期的业务或 IO 失败，Error 表示程序缺陷"
+    - "自定义异常实现 Exception，并重写 toString 输出可诊断信息"
+    - "捕获时按具体类型分支，避免裸 catch 把 Error 一起吞掉"
+    - "跨 isolate 或平台通道传递时，异常需要可序列化的描述"
+  pitfalls:
+    - "catch 后只打日志不重抛，调用方误以为操作成功"
+    - "把 Error 当业务异常捕获后继续执行，掩盖真实缺陷"
+  followups:
+    - "on FormatException catch (e) 与裸 catch (e) 的捕获范围差异？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

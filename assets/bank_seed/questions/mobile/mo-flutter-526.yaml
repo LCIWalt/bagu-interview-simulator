@@ -1,0 +1,27 @@
+id: mo-flutter-526
+title: "桌面端想自绘标题栏，macOS 的红绿灯按钮怎么处理？"
+topics: [flutter, desktop, windowing]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "自绘标题栏需要把系统窗口装饰设为隐藏或透明，同时保留窗口拖动、双击最大化与红绿灯按钮的可点击区域。macOS 上还要处理红绿灯的位置与全屏时的隐藏逻辑，否则按钮会被自绘内容盖住或错位。"
+  keyPoints:
+    - "先用窗口插件把 titleBarStyle 设为 hidden，再自绘标题区域"
+    - "用 DragToMoveArea 或平台 API 保留拖动与双击标题栏最大化"
+    - "macOS 红绿灯的位置与内边距可配置，需给按钮留出安全区"
+    - "全屏或最大化时要切换自绘布局，避免标题栏重复或按钮丢失"
+  pitfalls:
+    - "直接把窗口设为无边框，结果无法拖动也无法关闭"
+    - "自绘按钮与系统红绿灯重叠，点击命中到错误目标"
+followups:
+  - "Windows 与 Linux 上自绘标题栏的差异在哪里？"
+  - "如何让标题栏在深色模式下跟随系统外观？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

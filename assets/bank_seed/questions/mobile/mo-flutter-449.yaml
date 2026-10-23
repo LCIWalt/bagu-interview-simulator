@@ -1,0 +1,26 @@
+id: mo-flutter-449
+title: "频繁调用 compute 的启动开销有多大，需要池化吗？"
+topics: [flutter, isolate, performance]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "每次 compute 都要新建 isolate、初始化运行时并复制消息，开销远高于一次普通函数调用，小任务频繁调用反而更慢。高频且可复用的任务应维持长驻 isolate 或 worker 池，用端口收发消息，并按需扩缩。"
+  keyPoints:
+    - "isolate 启动包含堆初始化与入口加载，成本在毫秒级"
+    - "消息传递需要拷贝，结果越大开销越明显"
+    - "小任务用 compute 往往不如直接执行"
+    - "长驻 worker 复用 isolate，适合高频任务"
+  pitfalls:
+    - "在滚动回调里逐帧 compute，造成更严重的卡顿"
+    - "池化后不限制队列长度，任务堆积同样拖垮内存"
+followups:
+  - "如何测量 isolate 启动与消息传递的真实开销？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "Flutter 客户端面试：线程模型与性能优化"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,26 @@
+id: mo-flutter-406
+title: "WidgetsBindingObserver 的 didChangeMetrics 与 didChangeLocales 分别在什么时候触发？"
+topics: [flutter, lifecycle, platform]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "didChangeMetrics 在窗口尺寸、像素密度、安全区或键盘 insets 变化时触发；didChangeLocales 在系统语言列表变化时触发。两者都通过 addObserver 注册，回调本身不携带完整新数据，需要从 View 或 PlatformDispatcher 读取。"
+  keyPoints:
+    - "didChangeMetrics 覆盖旋转、键盘弹出、窗口缩放与多窗口变化"
+    - "didChangeLocales 收到 Locale 列表，可能为 null"
+    - "回调不带 MediaQueryData，新值要从 View 或 PlatformDispatcher 读取"
+    - "注册与注销必须成对，通常在 initState 与 dispose 中完成"
+  pitfalls:
+    - "在 didChangeMetrics 里读 MediaQuery.of(context)，拿到的仍是旧值"
+    - "忘记 removeObserver，页面销毁后仍收到全局通知"
+followups:
+  - "键盘弹出时 viewInsets 变化走哪条通知链？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

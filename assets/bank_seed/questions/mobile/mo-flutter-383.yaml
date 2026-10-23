@@ -1,0 +1,26 @@
+id: mo-flutter-383
+title: "BuildOwner 与 buildScope 如何调度一帧中的重建？"
+topics: [flutter, framework, build]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "setState 不会立刻执行 build，而是把 Element 加入 BuildOwner 的脏列表并请求新帧。帧回调里的 buildScope 会按深度排序后依次重建脏 Element，构建过程中新增的脏节点会在同一轮继续被消费，避免父子顺序错乱。"
+  keyPoints:
+    - "scheduleBuildFor 把 Element 加入 _dirtyElements，并触发 onBuildScheduled 请求帧"
+    - "buildScope 先按 depth 排序，保证父级先于子级重建"
+    - "构建期间再次标脏会追加到列表，由循环继续处理"
+    - "一轮 buildScope 结束后清空脏列表，随后才进入布局与绘制"
+  pitfalls:
+    - "在 build 中同步调用 setState，触发构建期标脏断言"
+    - "以为每次 setState 都会单独渲染一帧，连续调用会被合并"
+followups:
+  - "为什么父 Element 的重建顺序要排在子 Element 之前？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经：安卓/移动端/客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

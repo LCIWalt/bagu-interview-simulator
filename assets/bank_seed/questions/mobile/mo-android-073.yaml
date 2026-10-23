@@ -1,0 +1,27 @@
+id: mo-android-073
+title: "Android: 启动窗口与 SplashScreen 适配"
+topics: [android, performance, startup]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "冷启动时系统会先绘制 starting window，此时应用进程可能还没起来，所以它只能显示主题背景和图标，不能承载业务内容。Android 12 起由 SplashScreen API 统一管理图标、背景与退出动画，通过 setKeepOnScreenCondition 控制退场时机，避免首帧未就绪时出现白屏或黑屏。"
+  keyPoints:
+    - "starting window 由 WindowManager 在进程启动前绘制，内容来自启动主题，不适合放业务视图"
+    - "Android 12+ 用 SplashScreen API，setKeepOnScreenCondition 等到首帧就绪再退出"
+    - "低版本通过 windowBackground 主题或独立启动 Activity 兼容，注意不要出现两段式闪屏"
+    - "闪屏展示期间可以并行初始化，但不能让首帧渲染等待所有启动任务"
+  pitfalls:
+    - "把启动页做成 Activity 再延迟跳转，多一次冷启动并放大白屏时间"
+    - "闪屏过早退出，RecyclerView 或首页数据还没准备好，用户看到空白帧"
+followups:
+  - "setKeepOnScreenCondition 与 OnPreDrawListener 应该如何取舍？"
+  - "怎样用 Perfetto 确认 starting window 的实际退场时机？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

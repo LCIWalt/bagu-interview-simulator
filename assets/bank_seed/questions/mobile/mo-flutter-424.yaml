@@ -1,0 +1,26 @@
+id: mo-flutter-424
+title: "启动一批 isolate 后，怎么判断全部结束并收集结果？"
+topics: [dart, isolate, concurrency]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "为每个 isolate 建独立 ReceivePort，或在共享结果端口上用完成计数；同时监听 onExit 端口判断退出，全部退出后关闭端口并 complete 汇总 Future。错误要通过 onError 端口单独收集，否则失败会被当成正常结束。"
+  keyPoints:
+    - "每个 isolate 一个结果端口最简单，避免消息归属歧义"
+    - "onExit 端口给出退出通知，可与结果端口配合计数"
+    - "onError 端口需显式设置，否则错误只打印不回流"
+    - "计数归零后关闭所有端口，再完成汇总的 Completer"
+  pitfalls:
+    - "只等结果消息不等退出，某个 isolate 静默死掉时永久挂起"
+    - "共享端口不携带任务 id，结果与任务对不上"
+followups:
+  - "Isolate.kill 之后 onExit 还会触发吗？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Flutter 面试复盘：Dart 异步、Isolate 与性能"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

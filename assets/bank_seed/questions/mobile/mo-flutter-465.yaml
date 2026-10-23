@@ -1,0 +1,26 @@
+id: mo-flutter-465
+title: "Android 上 Impeller 的 Vulkan 与 OpenGLES 后端有什么差异？"
+topics: [flutter, impeller, rendering]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "两个后端共用 Impeller 的显示列表与渲染实体，差别在资源管理、同步方式与管线创建。Vulkan 提供显式的内存与同步控制，但更依赖驱动质量；不满足条件或存在驱动问题的设备会退回 OpenGLES。"
+  keyPoints:
+    - "Impeller 在 Android 优先使用 Vulkan，设备或驱动不满足条件时回退 OpenGLES"
+    - "两个后端共享上层渲染逻辑，差异集中在 GPU 资源、命令缓冲与同步"
+    - "Vulkan 的管线与内存由应用显式管理，驱动缺陷会直接表现为花屏或崩溃"
+    - "OpenGLES 更依赖驱动的隐式状态管理，兼容性更广但状态切换开销更大"
+  pitfalls:
+    - "只在 Vulkan 机型上验证就上线，回退机型出现渲染差异"
+    - "遇到驱动问题就用全局开关关掉 Impeller，而不是按机型精准规避"
+  followups:
+    - "如何确认当前设备实际跑在哪个渲染后端？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

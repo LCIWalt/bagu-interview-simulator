@@ -1,0 +1,27 @@
+id: mo-flutter-554
+title: "请求取消后，重试定时器没清理会出什么问题？"
+topics: [flutter, network, lifecycle]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "CancelToken 通常只取消在途请求，如果退避等待由 Timer 或 Future.delayed 实现，取消后定时器仍会触发下一次请求。结果是页面已销毁、用户已离开，后台仍在重试并回调 UI。需要在取消时中止等待、取消订阅，并保证取消后不再触发任何回调。"
+  keyPoints:
+    - "退避等待要可取消，用 Completer 配合取消监听提前结束"
+    - "取消后不再发起新的重试，并清理已排队的定时器"
+    - "dispose 时同时取消 token、定时器与流订阅"
+    - "区分用户主动取消与超时取消，避免误报错误"
+  pitfalls:
+    - "只 cancel 了请求，没有 cancel 等待中的定时器"
+    - "页面销毁后回调里仍然 setState，抛出异常"
+followups:
+  - "多个请求共享一个 CancelToken 时要注意什么？"
+  - "取消与重试同时发生时，状态机应该如何设计？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

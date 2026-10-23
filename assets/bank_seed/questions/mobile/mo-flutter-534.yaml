@@ -1,0 +1,27 @@
+id: mo-flutter-534
+title: "桌面多窗口能不能共用一个 FlutterEngine？"
+topics: [flutter, desktop, engine]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "一个 FlutterEngine 在一个时刻通常只服务一个活跃的 FlutterView 与宿主页面，桌面多窗口的常规做法是一窗一引擎一视图，再通过原生侧状态或通道做同步。强行复用会出现视图被抢走、路由与焦点混乱。"
+  keyPoints:
+    - "引擎持有唯一的 UI isolate 与渲染管线，难以同时驱动两个窗口的视图"
+    - "多窗口一般一窗一引擎，用 FlutterEngineGroup 降低内存与启动成本"
+    - "窗口间共享状态放在原生侧或外部存储，再通过通道同步"
+    - "关闭窗口要销毁对应引擎，避免后台残留 Dart 定时器"
+  pitfalls:
+    - "把同一个 FlutterView 从 A 窗口移到 B 窗口，导致渲染黑屏"
+    - "多引擎各自初始化插件，单例状态互相覆盖"
+followups:
+  - "FlutterEngineGroup 在桌面端可用吗？"
+  - "多窗口应用的全局快捷键应该由谁处理？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

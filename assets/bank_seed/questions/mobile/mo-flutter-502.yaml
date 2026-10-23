@@ -1,0 +1,27 @@
+id: mo-flutter-502
+title: "FFI 回调 Dart 函数时，NativeCallable 有哪些硬约束？"
+topics: [flutter, ffi, callback]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "要把 Dart 函数地址交给 C，必须用 NativeCallable 包装，普通函数 tear-off 的地址不保证稳定；isolateLocal 只能在同 isolate 的线程同步回调，listener 则通过端口异步投递。回调对象必须保持存活并在不用时 close，否则 C 侧可能拿到失效地址。"
+  keyPoints:
+    - "NativeCallable.isolateLocal 要求回调发生在同一 isolate 的线程，跨线程会崩"
+    - "NativeCallable.listener 可跨线程，但回调是异步投递的，返回值不能用"
+    - "必须持有 NativeCallable 引用防止被 GC，并在注销后调用 close()"
+    - "回调签名要用 native 类型，异常不能穿过 C 边界"
+  pitfalls:
+    - "把 Dart 闭包直接当函数指针传给 C，地址生命周期不可控"
+    - "在回调里做重活或同步等待，阻塞 C 调用方线程"
+followups:
+  - "C 侧在任意线程回调时，如何安全地把结果送回 Dart UI？"
+  - "close 之后 C 仍调用回调会发生什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

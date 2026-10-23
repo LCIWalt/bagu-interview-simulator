@@ -1,0 +1,27 @@
+id: mo-android-089
+title: "Android: 唤醒锁与后台任务的电量代价"
+topics: [android, battery, background]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "WakeLock 持有期间会阻止 CPU 进入低功耗状态，无超时的锁或忘记释放会持续耗电。多数后台任务应交给 WorkManager 或 JobScheduler 由系统调度，只有在用户可感知的前台场景才考虑长时间持锁。"
+  keyPoints:
+    - "PARTIAL_WAKE_LOCK 只保持 CPU 运行，屏幕和键盘仍可关闭，必须设置 timeout"
+    - "优先用 WorkManager/JobScheduler 的调度约束，而不是自持锁轮询"
+    - "前台服务场景才考虑长持有，并向用户说明原因"
+    - "用 dumpsys power 与 Battery Historian 核对 wakelock 的实际时长"
+  pitfalls:
+    - "acquire 后忘记 release，或用无 timeout 的锁做轮询"
+    - "用 wakelock 保活长连接，绕过系统后台限制"
+followups:
+  - "Doze 模式下 wakelock 还能阻止休眠吗？"
+  - "如何排查第三方 SDK 偷偷持有的 wakelock？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

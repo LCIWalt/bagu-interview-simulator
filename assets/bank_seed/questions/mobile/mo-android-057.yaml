@@ -1,0 +1,27 @@
+id: mo-android-057
+title: "Android: 触摸事件分发与滑动冲突"
+topics: [android, view, touch]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "事件从 Activity.dispatchTouchEvent 开始，经 ViewGroup 的 onInterceptTouchEvent 决定是否拦截，最终交给子 View 的 onTouchEvent 消费。某个 View 消费 ACTION_DOWN 后，整个事件序列默认归它处理，父容器中途拦截时子 View 会先收到 ACTION_CANCEL。"
+  keyPoints:
+    - "dispatchTouchEvent 返回 true 表示事件已消费，返回 false 则交回父容器继续分发"
+    - "DOWN 的消费结果决定后续 MOVE 与 UP 的接收者，中途拦截必须先发 CANCEL"
+    - "外部拦截法在父容器 onInterceptTouchEvent 按滑动方向判断，内部拦截法用 requestDisallowInterceptTouchEvent"
+    - "requestDisallowInterceptTouchEvent 对 ACTION_DOWN 无效，父容器仍可先拦截"
+  pitfalls:
+    - "在 onInterceptTouchEvent 中无条件返回 true，子 View 永远收不到任何事件"
+    - "只在 MOVE 中判断方向，忽略 DOWN 时的初始位移，横向滑动被误判为纵向"
+followups:
+  - "子 View 收到 ACTION_CANCEL 后需要做哪些状态清理？"
+  - "NestedScrollingParent 机制如何替代传统的拦截式滑动冲突处理？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-548
+title: "加密密钥需要轮换时，旧数据怎么迁移？"
+topics: [flutter, security, migration]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "轮换要区分主密钥与数据密钥，采用信封加密：主密钥放安全存储，用它包裹数据密钥，数据密钥再加密业务数据。轮换主密钥时只需重新包裹数据密钥，不必重写全部数据。迁移过程要可中断、可重入，并在完成前保留旧密钥。"
+  keyPoints:
+    - "采用信封加密，主密钥只用于包裹数据密钥"
+    - "密文附带 keyId 或版本号，读取时按版本选择对应密钥"
+    - "迁移分批进行并记录进度，失败后可从中断处继续"
+    - "确认全部数据迁移完成后再延迟删除旧密钥"
+  pitfalls:
+    - "轮换时立即删除旧密钥，导致旧数据永久无法解密"
+    - "迁移失败没有回滚路径，用户数据处于半迁移状态"
+followups:
+  - "用户换设备后主密钥不存在，数据应该如何恢复？"
+  - "密钥版本与数据库迁移应该如何协同发布？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

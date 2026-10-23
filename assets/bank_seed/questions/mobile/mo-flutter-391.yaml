@@ -1,0 +1,26 @@
+id: mo-flutter-391
+title: "ValueKey、ObjectKey 与 UniqueKey 的相等性差异如何影响复用？"
+topics: [flutter, key, widgets]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "ValueKey 按 value 的 == 比较，相同值视为同一个 key；ObjectKey 按对象身份比较，适合值相等但对象不同的场景；UniqueKey 每次构造都不相等，等于强制重建。选错会让本应复用的 Element 被销毁，或让不同数据错误地共用 State。"
+  keyPoints:
+    - "ValueKey 的相等性取决于 value 的 == 与 hashCode"
+    - "ObjectKey 用 identical 比较被包裹的对象"
+    - "UniqueKey 每次实例都唯一，可用于强制替换子树"
+    - "key 稳定且与数据身份对应，才能在增删排序中正确复用"
+  pitfalls:
+    - "用 UniqueKey 做列表项 key，每次 build 都重建所有子项"
+    - "用 ValueKey(index) 后插入数据，State 仍按位置错配"
+followups:
+  - "LocalKey 在 MultiChildRenderObjectElement 中如何参与匹配？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "TME 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

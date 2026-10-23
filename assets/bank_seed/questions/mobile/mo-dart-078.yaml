@@ -1,0 +1,27 @@
+id: mo-dart-078
+title: "Completer 的重复完成与取消语义"
+topics: [dart, async, future]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Completer 用于把回调式 API 桥接成 Future，由持有者决定何时 complete 或 completeError。重复完成会抛 StateError，因此回调可能多次触发时要先用 isCompleted 保护。Completer 本身不支持取消，取消语义需要额外的信号并在完成前检查。"
+  keyPoints:
+    - "complete 只能调用一次，重复调用抛 StateError"
+    - "completeError 同样只能调用一次"
+    - "isCompleted 可用于幂等保护"
+    - "取消需要额外标志，并在完成前判断"
+  pitfalls:
+    - "底层回调可能触发两次时直接 complete"
+    - "以为取消 future 就能阻止后续 complete"
+followups:
+  - "Completer.sync 的回调在哪个时机执行？"
+  - "如何用 Completer 包装带超时的回调 API？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

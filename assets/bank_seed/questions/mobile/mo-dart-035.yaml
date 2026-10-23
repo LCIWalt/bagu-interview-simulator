@@ -1,0 +1,26 @@
+id: mo-dart-035
+title: "泛型的运行时表示：Type、is 检查与具化"
+topics: [dart, generics, runtime]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Dart 的泛型在运行时是具化的，List<int> 与 List<String> 是不同的运行时类型，is 检查与 Type 对象都保留实参信息。默认的协变规则又允许 List<Dog> 赋给 List<Animal>，于是写入需要运行时检查，读出来仍是 Animal。"
+  keyPoints:
+    - "泛型实参在运行时保留，可用于 is 判断与 Type 比较"
+    - "泛型默认协变，List<Dog> 可赋给 List<Animal>，但 add 会被运行时检查拦截"
+    - "泛型方法由实参向下推断类型参数，必要时用 <T> 显式指定"
+    - "Type 对象不能替代 is，直接比较 Type 会丢掉子类型关系"
+  pitfalls:
+    - "用 runtimeType == List<int> 判断，遇到子类或不同实例化就失败"
+    - "以为可以按类型参数重载方法，Dart 不支持这种重载"
+  followups:
+    - "为什么把 List<Dog> 赋给 List<Animal> 后再 add(Cat) 会抛错？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

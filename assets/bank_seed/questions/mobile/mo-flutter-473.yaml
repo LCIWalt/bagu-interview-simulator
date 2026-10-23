@@ -1,0 +1,26 @@
+id: mo-flutter-473
+title: "timeDilation 会影响哪些计时，什么时候该用？"
+topics: [flutter, animation, debugging]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "timeDilation 放大帧时间戳之间的间隔，让基于 Ticker 的动画变慢，方便观察转场与手势动画的细节。它只作用于帧回调的时间轴，不会改变 Timer、Future 或网络超时。"
+  keyPoints:
+    - "timeDilation 大于 1 时动画变慢，等于 1 恢复正常速度"
+    - "影响范围是 SchedulerBinding 提供的帧时间戳，Ticker 与 AnimationController 都基于它"
+    - "Timer、Future.delayed 与平台回调按真实时间运行，不受影响"
+    - "运行期修改它会让时间轴跳变，只适合调试而不适合做产品级慢动作"
+  pitfalls:
+    - "release 里留下非 1.0 的 timeDilation，用户看到的动画速度异常"
+    - "用它验证超时逻辑，结果与真实计时完全不符"
+  followups:
+    - "除了 timeDilation，还有哪些不改业务代码的动画调试手段？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

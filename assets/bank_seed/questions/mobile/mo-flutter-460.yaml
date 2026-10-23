@@ -1,0 +1,26 @@
+id: mo-flutter-460
+title: "CustomPainter 的 shouldRepaint 与 repaint 参数该怎么选？"
+topics: [flutter, canvas, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "shouldRepaint 在 CustomPaint 拿到新的 painter 实例时调用，用来判断新旧配置是否真的画出不同结果；repaint 是一个 Listenable，通知时直接触发重绘而不经过 build。静态配置适合比较 shouldRepaint，逐帧变化的数据适合用 repaint 驱动。"
+  keyPoints:
+    - "shouldRepaint 的入参是旧 painter，返回 false 表示可以沿用上一帧的绘制结果"
+    - "新旧 painter 的 runtimeType 不同时会直接重绘，shouldRepaint 不会被调用"
+    - "repaint 通知只触发 paint，不触发 build 与 layout，适合动画驱动的画布"
+    - "shouldRebuildSemantics 默认沿用 shouldRepaint 的结论，自绘控件要单独确认语义是否过期"
+  pitfalls:
+    - "shouldRepaint 永远返回 true，页面每次重建都把整个画布重绘一遍"
+    - "用 repaint 驱动却把可变状态放在 painter 外部，画面与数据对不上"
+  followups:
+    - "CustomPaint 的 isComplex 与 willChange 会影响什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

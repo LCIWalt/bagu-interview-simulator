@@ -1,0 +1,27 @@
+id: mo-android-095
+title: "Android: CI 构建缓存与测试分片"
+topics: [android, ci, build]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android CI 的反馈时间主要花在重复编译和串行测试上，开启 Gradle 构建缓存、配置缓存与远程缓存可以复用产物。测试按类或模块分片并行，再配合设备农场，能明显缩短流水线时长。"
+  keyPoints:
+    - "开启 Gradle build cache 与 configuration cache，缓存依赖解析和任务产物"
+    - "使用 --parallel 与模块增量构建，避免每次 clean"
+    - "单元测试按 shard 拆分并行，Instrumented 测试用多设备分片"
+    - "缓存 key 绑定 JDK、Gradle 版本和依赖锁文件，避免脏缓存"
+  pitfalls:
+    - "缓存没有失效条件，命中脏产物导致难以复现的失败"
+    - "每次流水线都 clean build，缓存形同虚设"
+followups:
+  - "configuration cache 与哪些 Gradle 插件容易不兼容？"
+  - "如何兼顾缓存命中率和构建正确性？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

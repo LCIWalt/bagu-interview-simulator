@@ -1,0 +1,26 @@
+id: mo-flutter-430
+title: "Future 不能 cancel，页面退出时如何真正中止请求？"
+topics: [flutter, async, cancellation]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Future 本身没有取消语义，忽略结果不等于停止工作，底层 IO 仍在跑。要在网络层提供取消能力，例如 HttpClientRequest.abort、dio 的 CancelToken 或 package:async 的 CancelableOperation，并在页面 dispose 时触发，同时用令牌在回写前拦截。"
+  keyPoints:
+    - "Future 无 cancel，忽略结果不等于停止工作"
+    - "取消能力必须由发起方（HTTP 客户端、任务队列）提供"
+    - "CancelableOperation 可组合取消信号与结果"
+    - "dispose 中取消，并在回调里检查令牌与 mounted"
+  pitfalls:
+    - "只判断 mounted 不取消请求，流量与内存继续消耗"
+    - "多个请求共享一个令牌，取消一个把其它也带走"
+followups:
+  - "被取消的请求应该以什么形式反馈给 UI？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "移动端 Flutter 面经：并发、取消与超时"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

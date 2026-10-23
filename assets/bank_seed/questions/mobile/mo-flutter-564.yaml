@@ -1,0 +1,27 @@
+id: mo-flutter-564
+title: "versionCode / build number 该怎么设计才不会被商店拒收？"
+topics: [flutter, release, versioning]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 的 versionCode 必须单调递增且不超过商店上限，iOS 在同一 version 下 build 号必须递增且不可重复。手工改号容易在多人协作时冲突或漏改，交给 CI 统一生成更可靠。version name 面向用户，build number 面向商店，两者要分开管理。"
+  keyPoints:
+    - "versionCode 与 CFBundleVersion 单调递增，CI 统一生成"
+    - "同一 versionName 下 iOS build 号不可重复，重复上传会被拒"
+    - "提前确认商店的号段上限与回滚限制，版本号不能降级"
+    - "versionName 语义化，build number 只用于发布追踪"
+  pitfalls:
+    - "用 git commit 数量生成 versionCode，分支合并后可能回退"
+    - "本地打包与 CI 打包使用不同号段，互相覆盖"
+followups:
+  - "Android 的 versionCode 上限是多少，超了怎么办？"
+  - "如何把构建号与 git tag 关联起来便于追溯？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

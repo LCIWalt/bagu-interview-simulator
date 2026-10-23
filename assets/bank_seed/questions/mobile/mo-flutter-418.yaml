@@ -1,0 +1,27 @@
+id: mo-flutter-418
+title: "asBroadcastStream 之后，为什么订阅前的事件收不到？"
+topics: [dart, stream]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "asBroadcastStream 在第一个监听者出现时才订阅源流，此后默认一直保持订阅，直到源流结束或被回调取消；订阅之前产生的事件没有接收者，直接丢弃。想在无人监听时暂停或取消源流，必须显式传入 onCancel 与 onListen。"
+  keyPoints:
+    - "广播流不缓存事件，只转发给当下存活的监听者"
+    - "首个监听时才订阅源，后加入者错过此前的事件"
+    - "默认在无人监听时仍保持订阅，事件继续被丢弃"
+    - "onCancel 可暂停或取消源订阅，onListen 负责恢复"
+  pitfalls:
+    - "先创建广播流、后 build StreamBuilder，初始化事件已经丢了"
+    - "以为无人监听会自动取消源流，后台仍在持续产生事件"
+followups:
+  - "broadcast 流的 pause 会不会暂停源流？"
+  - "StreamController.broadcast 的 onListen 何时触发？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

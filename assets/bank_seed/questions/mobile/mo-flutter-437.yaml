@@ -1,0 +1,26 @@
+id: mo-flutter-437
+title: "async 函数里 throw 与 return Future.error 等价吗？"
+topics: [dart, async, error-handling]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "在 async 函数体内，throw 不会同步抛出，而是让返回的 Future 以错误完成；return Future.error 会被 async 展开，最终效果接近。差别主要在堆栈生成位置与语义清晰度，非 async 函数里的 throw 则完全不同。"
+  keyPoints:
+    - "async 函数体的同步段抛错也会变成 Future 错误"
+    - "返回的 Future 会被展开，不会出现 Future<Future>"
+    - "Future.error 可携带指定 StackTrace，便于保留下游信息"
+    - "非 async 函数里的 throw 是同步抛出，调用方必须 try/catch"
+  pitfalls:
+    - "在 async 函数外期待用 try/catch 同步捕获内部错误"
+    - "用 return Future.error 掩盖本应同步校验的参数错误"
+followups:
+  - "async 函数的参数求值阶段抛错会怎样？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "Flutter 社招面经：Dart 基础与异步陷阱"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

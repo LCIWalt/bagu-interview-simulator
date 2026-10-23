@@ -1,0 +1,27 @@
+id: mo-flutter-506
+title: "PlatformView 的 VirtualDisplay、Hybrid Composition 与 TLHC 该怎么选？"
+topics: [flutter, platform-view, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "VirtualDisplay 把原生 View 渲染到虚拟屏幕再当纹理合成，兼容性好但有一帧延迟，触摸与文字输入需要额外转发；Hybrid Composition 用 SurfaceView 直接把原生层叠上去，交互最接近原生但层级与变换受限；TLHC 用纹理层承载 SurfaceView，兼顾交互与部分 Flutter 合成能力。三者不是版本新替旧的简单关系，要按交互复杂度与合成需求取舍。"
+  keyPoints:
+    - "VirtualDisplay 把原生 View 画到虚拟 Display，Flutter 只拿到纹理，存在一帧延迟"
+    - "Hybrid Composition 让 SurfaceView 参与窗口合成，手势与输入法由系统直接处理"
+    - "TLHC 把 SurfaceView 的内容作为纹理层进入 Flutter 合成，支持更多变换但仍有限制"
+    - "选择依据是交互复杂度、是否需要动画变换、列表复用频率与最低 Flutter 版本"
+  pitfalls:
+    - "在需要频繁滚动复用的列表里用重型模式，帧率与内存双降"
+    - "以为换模式能解决所有层级问题，忽略 SurfaceView 的 z-order 限制"
+followups:
+  - "AndroidView 默认走哪种模式，如何显式指定？"
+  - "TLHC 下 PlatformView 的圆角裁剪为什么仍可能失效？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

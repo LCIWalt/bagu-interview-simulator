@@ -1,0 +1,26 @@
+id: mo-flutter-445
+title: "Stream.multi 相比 StreamController 更适合什么场景？"
+topics: [dart, stream, api-design]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Stream.multi 为每个监听者创建一个独立的 MultiStreamController，适合把回调式 API 包装成流，并让每个订阅者拥有自己的状态与取消逻辑。单一 broadcast 控制器则所有监听者共享同一份生产逻辑与事件序列。"
+  keyPoints:
+    - "每个监听者触发一次 onListen，拿到自己的 controller"
+    - "控制器支持 addSync，便于在同步回调中派发"
+    - "isBroadcast 决定是否允许多个并发监听"
+    - "回调式 API 的取消可映射到 controller 的 onCancel"
+  pitfalls:
+    - "在 onListen 外复用 controller，造成事件串流"
+    - "包装的底层资源只释放一次，多监听时互相影响"
+followups:
+  - "Stream.multi 的 controller 关闭后还能再收到事件吗？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

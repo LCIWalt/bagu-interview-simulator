@@ -1,0 +1,27 @@
+id: mo-dart-059
+title: "await 一个已完成的 Future 为什么仍会挂起？"
+topics: [dart, event-loop, async]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "await 的续体总是通过 Future.then 注册，并在 Future 完成时以 microtask 形式排队，即使该 Future 早已完成也不会同步继续。事件循环会在当前同步代码清空调用栈后处理 microtask，因此续体要等到这一轮微任务清空。这保证了异步顺序的可预测性，但高频 await 也会带来额外的调度成本。"
+  keyPoints:
+    - "await 等价于注册 then 回调，续体不写入当前调用栈"
+    - "已完成 Future 的续体会被立即排入 microtask 队列"
+    - "microtask 在当前同步代码结束后、下一个 event 之前清空"
+    - "连续 await 已完成 Future 仍会形成多轮微任务让出"
+  pitfalls:
+    - "误以为 await 已完成的 Future 会同步执行后续代码"
+    - "在循环里 await 已完成的 Future，产生大量微任务拖慢渲染"
+followups:
+  - "return await 与直接 return Future 在堆栈保留上有什么区别？"
+  - "scheduleMicrotask 中再调度自身会发生什么？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

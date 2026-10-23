@@ -1,0 +1,27 @@
+id: mo-flutter-504
+title: "package:jni 能直接在 Dart 里调 Java，什么时候值得这么做？"
+topics: [flutter, ffi, android]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "package:jni 通过 FFI 桥接 JNI，让 Dart 直接持有 Java 对象引用并调用方法，省去为每个接口写 MethodChannel 胶水；代价是要自己管理局部与全局引用、线程 attach 和异常检查，而且只适用于 Android。接口稳定、调用频繁且参数复杂时收益最大，一次性调用仍以通道更简单。"
+  keyPoints:
+    - "基于 JNIEnv 与 jobject 直接调用，绕开通道的消息编解码与主线程派发"
+    - "局部引用只在当前 JNI 调用帧有效，跨调用持有要提升为全局引用并及时释放"
+    - "未 attach 的原生线程必须先 attach 才能拿到 JNIEnv"
+    - "JNI 异常不会自动变成 Dart 异常，调用后要显式检查并清理"
+  pitfalls:
+    - "长期缓存局部引用，导致 JNI 引用表溢出"
+    - "在非 Android 平台引入该依赖，构建期就失败"
+followups:
+  - "package:jni 与 Pigeon 生成的通道代码，性能差异主要在哪？"
+  - "如何安全地在后台 Isolate 里使用 JNI？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

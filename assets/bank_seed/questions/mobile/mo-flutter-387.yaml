@@ -1,0 +1,26 @@
+id: mo-flutter-387
+title: "reassemble 在热重载时扮演什么角色？"
+topics: [flutter, state-lifecycle, hot-reload]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "热重载时框架会从根开始对整棵树调用 reassemble，Element 会标记重建并递归子节点，使新代码重新执行 build。State.reassemble 是给 State 刷新自身缓存的钩子，默认实现为空；它只服务于开发期热重载，不能承担业务初始化。"
+  keyPoints:
+    - "Binding 在热重载时触发 reassemble，并沿 Element 树递归"
+    - "Element.reassemble 会 markNeedsBuild，并继续访问所有子 Element"
+    - "StatefulElement 会调用 State.reassemble，默认实现为空"
+    - "release 构建不会走这条路径，生产逻辑不能依赖它"
+  pitfalls:
+    - "把业务初始化放在 reassemble，线上永远不会执行"
+    - "在 reassemble 里重建 controller 或订阅，造成重复资源"
+followups:
+  - "热重载为什么能保留 State 而热重启不能？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

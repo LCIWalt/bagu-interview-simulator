@@ -1,0 +1,27 @@
+id: mo-flutter-540
+title: "深链参数来自外部，怎样校验与降级才安全？"
+topics: [flutter, deep-link, security]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "深链是外部可控输入，必须按不可信数据处理：路由白名单、参数类型与长度校验、资源归属校验都不能省。非法参数应该落到安全兜底页并埋点，而不是崩溃、白屏或静默跳首页。涉及敏感操作的深链还要在服务端做二次鉴权。"
+  keyPoints:
+    - "只允许白名单内的路由，未知路径统一走兜底页"
+    - "对参数做类型、长度与格式校验，id 类参数还要校验存在性与归属"
+    - "敏感操作在服务端二次鉴权，不能只依赖客户端深链携带的凭证"
+    - "解析失败统一降级并上报，便于发现恶意或过期链接"
+  pitfalls:
+    - "把深链里的 id 直接拼进请求或 SQL，造成越权访问"
+    - "用 extra 传递对象并信任其内容，跨进程或冷启动时可能为空或被伪造"
+followups:
+  - "冷启动与热启动处理深链的时机有什么不同？"
+  - "如何区分深链参数非法与资源已被删除？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

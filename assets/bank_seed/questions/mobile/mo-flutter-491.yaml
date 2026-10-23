@@ -1,0 +1,26 @@
+id: mo-flutter-491
+title: "instantiateImageCodec 的 targetWidth 与 allowUpscaling 如何影响内存？"
+topics: [flutter, image, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "解码时指定目标尺寸，可以让引擎直接输出缩小后的位图，避免先解出原图再缩小带来的峰值内存。只给一个维度会按比例推算另一个，两个都给则按指定值缩放，allowUpscaling 决定是否允许放大到超过原图。"
+  keyPoints:
+    - "解码后的内存约为宽乘高乘四字节，目标尺寸直接决定这部分开销"
+    - "只指定 targetWidth 或 targetHeight 时，另一维按原始比例计算"
+    - "同时指定宽高会按给定值缩放，比例可能与原图不同"
+    - "allowUpscaling 默认为 false，防止小图被放大后白白占用内存"
+  pitfalls:
+    - "在列表里按原图尺寸解码再交给 FittedBox 缩小，峰值内存翻倍"
+    - "同时传宽高做等比适配，图片被拉伸变形"
+  followups:
+    - "cacheWidth 与 cacheHeight 和直接传解码参数是什么关系？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/443a2746f3014d6aa4a788f199597550
+  title: "滴滴安卓二面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

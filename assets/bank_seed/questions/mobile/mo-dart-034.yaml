@@ -1,0 +1,26 @@
+id: mo-dart-034
+title: "Dart 类型系统：dynamic、Object? 与 Never 的边界"
+topics: [dart, type-system, soundness]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Dart 是健全的空安全类型系统，Object? 是所有类型的顶层类型，dynamic 则关闭静态检查、把成员解析推迟到运行时，Never 是没有值的底类型。三者都能“装下任意东西”，但对成员访问、类型提升和错误暴露时机的影响完全不同。"
+  keyPoints:
+    - "Object? 是顶层类型，访问成员前必须做类型提升或显式强转"
+    - "dynamic 关闭静态检查，成员调用在运行时按实际类型解析"
+    - "Never 是底类型，可赋给任意类型，常见于 throw 或永不返回的函数"
+    - "void 表示返回值不被使用，不能作为泛型实参或变量类型"
+  pitfalls:
+    - "把 dynamic 当 Object? 用，拼写错误要到运行时才变成 NoSuchMethodError"
+    - "在泛型实参位置写 dynamic 并沿调用链传播，整条链路失去类型检查"
+  followups:
+    - "为什么 Future<void> 合法而 List<void> 不合法？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

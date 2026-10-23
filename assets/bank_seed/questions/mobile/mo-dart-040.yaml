@@ -1,0 +1,26 @@
+id: mo-dart-040
+title: "空安全运算符：!、?? 与 ??= 的求值时机"
+topics: [dart, null-safety, operators]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "! 只是把可空类型断言为非空，值为 null 时抛 TypeError；?? 只在左侧为 null 时才求值右侧；??= 仅在左侧当前为 null 时写入。三者都不会做隐式转换，短路规则与求值次数是面试里的高频追问点。"
+  keyPoints:
+    - "! 是运行时断言，不产生默认值也不提供兜底"
+    - "?? 短路求值，左侧非 null 时右侧表达式完全不执行"
+    - "??= 要求左侧可赋值，且只在左侧为 null 时写入"
+    - "a?.b ?? c 在 a 为 null 时整条链跳过，直接取 c"
+  pitfalls:
+    - "用 ! 掩盖本应处理的空值，线上变成 TypeError"
+    - "在 ?? 右侧写有副作用的表达式，误以为它一定会执行"
+  followups:
+    - "late 变量在赋值前被读取会抛出什么错误？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

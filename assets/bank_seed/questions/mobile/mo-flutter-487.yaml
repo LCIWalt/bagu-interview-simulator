@@ -1,0 +1,26 @@
+id: mo-flutter-487
+title: "ensureSemantics 返回的 SemanticsHandle 不释放会怎样？"
+topics: [flutter, semantics, testing]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "ensureSemantics 让语义树在没有系统读屏服务时也保持构建，返回的句柄用于配对释放。句柄不释放会持续产生语义编译开销，还会让语义相关的断言与线上行为不一致。"
+  keyPoints:
+    - "每次 ensureSemantics 都要对应一次 SemanticsHandle.dispose"
+    - "还有句柄存活时 semanticsEnabled 保持为 true，语义树持续更新"
+    - "Widget 测试里常用 tester.ensureSemantics 来断言语义属性"
+    - "语义构建会增加每帧工作量，不应在正式页面里长期持有"
+  pitfalls:
+    - "在 initState 里申请句柄却忘了在 dispose 释放"
+    - "以为释放句柄会立刻清空已有语义节点，实际只是停止继续构建"
+  followups:
+    - "如何在不开启读屏的情况下检查语义树？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕）"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

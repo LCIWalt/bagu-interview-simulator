@@ -1,0 +1,27 @@
+id: mo-flutter-531
+title: "平台通道的 handler 没清理，为什么会让引擎无法回收？"
+topics: [flutter, platform-channel, memory]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "setMethodCallHandler 会把 Dart 闭包注册进 messenger，原生侧也常把插件实例挂到引擎上；页面退出时若只销毁 UI 而不移除 handler、不注销插件，闭包捕获的 State、Controller 会一直被引擎引用。多引擎场景下这种滞留会随打开次数累积。"
+  keyPoints:
+    - "同一 channel 用 setMethodCallHandler(null) 显式移除，别只置空本地变量"
+    - "原生插件在 onDetachedFromEngine 里移除 handler 与监听器"
+    - "闭包捕获 context 或 controller 会延长整棵对象图的生命周期"
+    - "用 DevTools 的 heap snapshot 对比页面进出前后的实例数验证"
+  pitfalls:
+    - "把 channel 和 handler 放全局单例，页面切换后仍持续响应"
+    - "只移除 FlutterView，不 detach 插件，引擎仍持有 Activity 引用"
+followups:
+  - "如何确认某个闭包是否被 messenger 强引用？"
+  - "多引擎下插件单例如何避免跨引擎共享状态？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "一些社招安卓面试记录"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

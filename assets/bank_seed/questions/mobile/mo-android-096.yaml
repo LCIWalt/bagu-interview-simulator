@@ -1,0 +1,27 @@
+id: mo-android-096
+title: "Android: APK 体积分析与 AAB 拆分"
+topics: [android, build, performance]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "APK 体积大头通常是 so、图片资源和 dex，先用 APK Analyzer 按类型和模块看清构成，再决定拆分或压缩策略。App Bundle 能让商店按设备下发对应 ABI 与密度，国内渠道则常用多 ABI 分包。"
+  keyPoints:
+    - "APK Analyzer 查看原始体积与下载体积，按文件类型和模块排序"
+    - "ABI 拆分或 App Bundle 只下发对应架构的 so"
+    - "图片转 WebP、改用矢量图，清理未用资源与重复依赖"
+    - "R8 收缩与资源压缩配合，去掉调试信息和冗余 dex"
+  pitfalls:
+    - "只看 APK 文件大小，不看安装后体积与实际下载体积"
+    - "为减体积删掉 so 或资源，导致部分机型启动崩溃"
+followups:
+  - "AAB 在国内多渠道分发场景怎么落地？"
+  - "如何定位某个 so 是被哪个依赖引入的？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

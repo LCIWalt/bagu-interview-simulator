@@ -1,0 +1,27 @@
+id: mo-flutter-549
+title: "把 API Key 写进 Dart 常量，为什么一定会泄露？"
+topics: [flutter, security, reverse-engineering]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "AOT 产物中的字符串常量仍可被提取，--dart-define 只是编译期注入，既不加密也不隐藏。抓包、反编译与动态调试都能拿到内置密钥。客户端不应持有能直接调用高权限接口的长期密钥，正确做法是通过自家后端换取短期凭证。"
+  keyPoints:
+    - "dart-define 只避免密钥进版本库，不会让它在产物中不可见"
+    - "长期密钥放服务端，客户端只拿短期、可撤销的 token"
+    - "必须内置的第三方 key 要加平台、包名、域名与用量限制"
+    - "混淆与加固只能提高提取成本，不能作为保密手段"
+  pitfalls:
+    - "以为 release 混淆后字符串就安全了"
+    - "把服务端密钥写进 flavor 配置文件并提交到仓库"
+followups:
+  - "短期凭证应该如何刷新，失败时如何降级？"
+  - "第三方 SDK 要求内置 key 时，有哪些降低风险的手段？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

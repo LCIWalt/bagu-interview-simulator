@@ -1,0 +1,26 @@
+id: mo-flutter-405
+title: "用 GlobalKey 拿子 State 与用回调提升状态，该如何取舍？"
+topics: [flutter, key, state]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "回调把事件上抛给父级，由父级修改状态再下发，数据流单向且组件解耦；GlobalKey 则直接拿到子 State 并调用其方法，适合表单校验、主动触发子组件动画这类命令式操作。前者适合业务状态，后者适合框架级句柄，滥用会让父子耦合变紧。"
+  keyPoints:
+    - "回调让父级持有状态，子组件只负责触发事件，易于测试"
+    - "GlobalKey.currentState 可直接调用子 State 的公开方法"
+    - "GlobalKey 让父子耦合变紧，子组件复用与替换更困难"
+    - "currentState 在挂载前与卸载后为 null，调用前要判空"
+  pitfalls:
+    - "在 build 中调用 currentState 的方法触发 setState，构建期异常"
+    - "列表项共用同一个 GlobalKey，多个实例互相覆盖"
+followups:
+  - "Flutter 自带的 GlobalKey<FormState> 为什么合理？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android 常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

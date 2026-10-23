@@ -1,0 +1,26 @@
+id: mo-flutter-434
+title: "use_build_context_synchronously 这条 lint 具体在检查什么？"
+topics: [flutter, async, lint]
+role: mobile
+level: mid
+difficulty: 3
+type: knowledge
+answer:
+  summary: "它检查在 await 或其他异步间隙之后继续使用 BuildContext，因为此时 Widget 可能已卸载，context 不再有效。合规写法是在使用前判断 context.mounted（State 内可判断 mounted），或把 context 相关操作移到异步之前。"
+  keyPoints:
+    - "lint 关注 await 之后的 context 使用，而非所有 context 访问"
+    - "context.mounted 是 BuildContext 的扩展属性，State 内可用 mounted"
+    - "提前取出 Navigator、Theme 等对象可减少跨间隙依赖"
+    - "同步 builder 回调内使用 context 不受该规则限制"
+  pitfalls:
+    - "把 mounted 检查写在 await 之前，等于没检查"
+    - "用 ignore 注释压掉告警而不处理生命周期"
+followups:
+  - "为什么 State.context 在 dispose 之后仍然非空？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/88853f406645496f803414c8c1b304c0
+  title: "Flutter 客户端面经：异步编程与状态管理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

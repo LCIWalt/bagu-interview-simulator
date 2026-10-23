@@ -1,0 +1,27 @@
+id: mo-android-054
+title: "Android: 多进程与 Application 重复初始化"
+topics: [android, process, architecture]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "在清单中为组件声明 android:process 后，每个进程都会创建独立的虚拟机、Application 实例并执行 onCreate，静态变量与单例不跨进程共享。多进程改造的第一步是识别当前进程名，并按进程跳过不必要的 SDK 初始化。"
+  keyPoints:
+    - "每个进程有独立的运行时与静态内存，单例和静态缓存互不可见"
+    - "可用 Application.getProcessName 或读取 /proc/self/cmdline 判断当前进程"
+    - "推送、统计等只需在主进程初始化的 SDK 应按进程名提前返回"
+    - "跨进程共享数据必须走 Binder、ContentProvider 或持久化，不能依赖内存"
+  pitfalls:
+    - "Application.onCreate 无差别初始化所有 SDK，子进程重复拉取导致内存与流量浪费"
+    - "用静态变量做跨进程缓存，两边读到各自副本造成状态不一致"
+followups:
+  - "多进程同时访问 SharedPreferences 为什么不可靠？"
+  - "ContentProvider 的 onCreate 与 Application.onCreate 的先后顺序是什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "百度暑期二面面经 安卓 移动端 客户端"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

@@ -1,0 +1,27 @@
+id: mo-flutter-503
+title: "DynamicLibrary.open 在 Android 与 iOS 上为什么写法不同？"
+topics: [flutter, ffi, packaging]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "Android 把 .so 打进 APK 的 jniLibs，运行时用库名或绝对路径打开；iOS 通常把静态库链进 Runner，用 DynamicLibrary.process() 或 executable() 取符号，动态 framework 则必须正确签名并嵌入。路径写死或符号被裁剪，往往到真机才暴露。"
+  keyPoints:
+    - "Android 用 DynamicLibrary.open('libfoo.so')，依赖 jniLibs 或 CMake 产物被打包"
+    - "iOS 静态链接时用 DynamicLibrary.process() 查全局符号，没有独立 so 可开"
+    - "iOS 动态 framework 需正确签名与嵌入，否则启动或加载阶段被系统拒绝"
+    - "release 构建可能裁剪符号，需在链接参数里保留入口符号"
+  pitfalls:
+    - "在 iOS 上照抄 DynamicLibrary.open('libfoo.so')，模拟器能跑真机失败"
+    - "只测模拟器架构，漏掉 arm64 切片或 32 位 ABI"
+followups:
+  - "如何用 ffigen 为两种平台生成同一套绑定？"
+  - "插件里打包预编译 .so 时，abiFilters 该怎么配？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

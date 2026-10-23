@@ -1,0 +1,27 @@
+id: mo-flutter-517
+title: "iOS 13+ 的 UIScene 生命周期，对 Flutter 嵌入有什么影响？"
+topics: [flutter, ios, lifecycle]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "引入 SceneDelegate 后，前后台与连接事件从 AppDelegate 转移到 scene 回调，Flutter 引擎若仍按 AppDelegate 的 applicationDidBecomeActive 恢复渲染，多窗口场景下会判断错。需要把引擎的暂停与恢复绑定到具体 scene，并处理 scene 断开时的清理。"
+  keyPoints:
+    - "sceneDidBecomeActive 与 sceneWillResignActive 取代了部分 AppDelegate 回调"
+    - "多窗口下每个 scene 可能有独立的 FlutterViewController，状态要按 scene 隔离"
+    - "引擎的暂停恢复应跟随承载它的 scene，而不是全局 App 状态"
+    - "sceneDidDisconnect 时释放该 scene 持有的引擎或 ViewController"
+  pitfalls:
+    - "继续在 AppDelegate 里统一处理，一个窗口退到后台就暂停了全部 Flutter"
+    - "Info.plist 未声明 scene manifest，UIScene 回调根本不触发"
+followups:
+  - "iPad 多窗口下同一个 FlutterEngine 能被两个 scene 共用吗？"
+  - "如何只在某个 scene 内响应深链？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26校招百度移动端一面（无手撕"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

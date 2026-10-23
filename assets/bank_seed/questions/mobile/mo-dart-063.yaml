@@ -1,0 +1,26 @@
+id: mo-dart-063
+title: "StreamController(sync: true) 的同步派发与重入风险"
+topics: [dart, stream, async]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "sync 控制器在 add 的调用栈内直接调用监听者，省去一次 microtask 调度，延迟更低。但监听者若在回调里再次 add、pause 或 close，就会打乱事件顺序甚至触发重入。默认的异步派发更安全，同步模式只适合内部确定无重入的管道。"
+  keyPoints:
+    - "sync 控制器在 add 的同一调用栈内派发事件"
+    - "异步控制器通过 microtask 派发，天然隔离重入"
+    - "重入 add 会让监听者处理 A 时又收到 B"
+    - "sync 下 cancel 后仍可能有事件正在栈上派发"
+  pitfalls:
+    - "为降低延迟盲目开启 sync，忽略重入条件"
+    - "在 sync 监听回调里 close 控制器，触发 StateError"
+followups:
+  - "sync 控制器与 StreamTransformer 组合时要注意什么？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/add9a90dc873473aa90c344855dabc00
+  title: "tme 移动安卓一面"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

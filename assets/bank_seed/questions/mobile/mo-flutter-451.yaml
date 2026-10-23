@@ -1,0 +1,26 @@
+id: mo-flutter-451
+title: "StreamController.close 之后再 add，会发生什么？"
+topics: [dart, stream, error-handling]
+role: mobile
+level: mid
+difficulty: 2
+type: knowledge
+answer:
+  summary: "close 之后控制器进入关闭状态，再调用 add 会抛 StateError；已经排队的事件与 onDone 仍会按顺序送达监听者。关闭是单向的，不能重新打开，需要重新创建控制器。"
+  keyPoints:
+    - "close 后的 add 与 addError 抛 StateError"
+    - "已入队事件仍会派发，随后才是 onDone"
+    - "close 返回的 Future 在 done 处理完或订阅取消后完成"
+    - "控制器不可重用，重开只能新建实例"
+  pitfalls:
+    - "异步回调晚到仍调用 add，线上偶发 StateError"
+    - "close 后立刻丢弃引用，未等待 done 就释放下游资源"
+followups:
+  - "如何在关闭前安全地冲刷缓冲的事件？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/6c2b6b3c15bc40e2b25fef6662c77988
+  title: "Flutter 开发面试记录：Stream、生命周期与错误处理"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

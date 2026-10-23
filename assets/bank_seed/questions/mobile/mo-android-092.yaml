@@ -1,0 +1,27 @@
+id: mo-android-092
+title: "Android: 崩溃捕获与崩溃率归因"
+topics: [android, crash, monitoring]
+role: mobile
+level: senior
+difficulty: 4
+type: knowledge
+answer:
+  summary: "Java 崩溃通过 Thread.setDefaultUncaughtExceptionHandler 捕获，Native 崩溃则依赖 signal handler 或成熟崩溃 SDK。上报时要带版本、机型、系统、页面和最近日志，并区分崩溃、ANR、OOM 与被系统杀死，保证指标口径一致。"
+  keyPoints:
+    - "主线程和子线程都要覆盖，handler 中先落盘再交回原 handler"
+    - "Native 崩溃需要 tombstone 或 Breakpad/Crashpad 做符号化"
+    - "上报附带版本、机型、系统版本、页面与面包屑日志，便于归因"
+    - "区分崩溃、ANR、OOM、被杀死，统一统计口径和去重规则"
+  pitfalls:
+    - "自定义 handler 后不调用原 handler，系统侧丢失崩溃记录"
+    - "只看崩溃次数，不看去重设备数与影响用户比例"
+followups:
+  - "如何捕获 Application 启动阶段的崩溃？"
+  - "Native 崩溃的符号化流程是怎样的？"
+source:
+  url: https://www.nowcoder.com/discuss/825101370242920448
+  title: "Android常见面试题"
+  license: Link-only (NowCoder)
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23

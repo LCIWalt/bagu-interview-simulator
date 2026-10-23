@@ -1,0 +1,26 @@
+id: mo-flutter-404
+title: "MaterialApp 的 builder 与 home 的职责有何不同？"
+topics: [flutter, widgets, navigator]
+role: mobile
+level: senior
+difficulty: 3
+type: knowledge
+answer:
+  summary: "home 只是 Navigator 的第一个路由页面，只影响首屏；builder 包裹在 Navigator 之上、MaterialApp 提供的 MediaQuery 与 Theme 之下，会影响所有路由。需要全局覆盖 MediaQuery、插入常驻浮层或统一包裹导航时用 builder，普通首页用 home。"
+  keyPoints:
+    - "home 被转换成首个路由，push 出来的新页面不受它包裹"
+    - "builder 收到 context 与 child，child 是 Navigator 或 Router"
+    - "builder 位于 MediaQuery、Theme、Localizations 之下，可覆盖这些默认值"
+    - "返回值必须包含 child，否则应用会失去 Navigator"
+  pitfalls:
+    - "用 home 做全局包裹，结果只影响第一个页面"
+    - "builder 返回时丢掉 child，所有路由都消失"
+followups:
+  - "为什么在 MaterialApp.builder 里 Navigator.of(context) 拿不到 Navigator？"
+source:
+  url: https://www.nowcoder.com/feed/main/detail/031e07dd3d844550b5c0821185c7611f
+  title: "26 校招百度移动端一面"
+  license: "Link-only (NowCoder)"
+  retrievedAt: 2026-10-23
+status: community
+updatedAt: 2026-10-23
