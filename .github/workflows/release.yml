@@ -52,9 +52,31 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+      - name: Remove stale release assets
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = context.ref.replace('refs/tags/', '');
+            try {
+              const { data } = await github.rest.repos.getReleaseByTag({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag,
+              });
+              for (const asset of data.assets) {
+                await github.rest.repos.deleteReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  asset_id: asset.id,
+                });
+              }
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
       - uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          overwrite_assets: true
           files: |
             artifacts/mockmate-macos/*.dmg
             artifacts/mockmate-android/*.apk

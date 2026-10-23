@@ -2,7 +2,7 @@ name: mockmate
 description: "Bagu Interview Simulator（八股文面试模拟助手）— 三端本地优先的 AI 技术面试练习工具。"
 publish_to: 'none'
 
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.13.0
