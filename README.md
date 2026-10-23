@@ -96,3 +96,9 @@ test/               单元 / widget / 契约测试
 - API Key 只存 Keychain / Keystore，不落数据库、不进日志（日志统一 `redact()`）。
 - v1 不申请麦克风权限；语音输入使用系统输入法听写。
 - 不做面试中实时提词/读屏答题。
+
+## License
+
+本项目采用 [Apache License 2.0](LICENSE)。
+
+第三方依赖与题库内容许可见 [LICENSES.md](LICENSES.md)。
